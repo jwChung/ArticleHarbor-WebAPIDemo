@@ -6,6 +6,6 @@
     {
         IArticleRepository Articles { get; }
 
-        void Save();
+        int Save();
     }
 }

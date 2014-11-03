@@ -27,7 +27,7 @@
             get { return this.context; }
         }
 
-        public void Save()
+        public int Save()
         {
             throw new System.NotImplementedException();
         }
