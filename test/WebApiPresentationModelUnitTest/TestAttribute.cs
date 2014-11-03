@@ -1,8 +1,8 @@
-﻿namespace Jwc.CIBuild
+﻿namespace WebApiPresentationModelUnitTest
 {
-    using Experiment;
-    using Experiment.AutoFixture;
-    using Experiment.Xunit;
+    using Jwc.Experiment;
+    using Jwc.Experiment.AutoFixture;
+    using Jwc.Experiment.Xunit;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.AutoMoq;
 

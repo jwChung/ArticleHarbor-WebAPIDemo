@@ -1,8 +1,7 @@
-﻿namespace Jwc.CIBuild
+﻿namespace WebApiPresentationModel
 {
     using System.Web.Http;
-    using Ploeh.AutoFixture.Xunit;
-    using WebApiPresentationModel;
+    using WebApiPresentationModelUnitTest;
     using Xunit;
 
     public class ArticlesControllerTest
