@@ -3,18 +3,18 @@
     using System;
     using System.Collections.Generic;
     using System.Net.Http;
+    using System.Web.Http;
     using System.Web.Http.Controllers;
     using System.Web.Http.Dispatcher;
     using WebApiPresentationModel;
 
     public class CompositeRoot : IHttpControllerActivator
     {
-        private readonly IDictionary<Type, Func<object>> container;
+        private readonly IDictionary<Type, Func<ApiController>> controllers;
 
         public CompositeRoot()
         {
-            this.container = new Dictionary<Type, Func<object>>();
-            new ServiceRegistrations().Register(this.container);
+            this.controllers = ControllerRegistrations.GetControllers();
         }
 
         public IHttpController Create(
@@ -22,18 +22,25 @@
             HttpControllerDescriptor controllerDescriptor,
             Type controllerType)
         {
-            Func<object> value;
-            if (this.container.TryGetValue(controllerType, out value))
-                return (IHttpController)value();
+            Func<ApiController> value;
+            if (!this.controllers.TryGetValue(controllerType, out value))
+                return null;
 
-            return null;
+            var controller = value();
+            request.RegisterForDispose(controller);
+            return controller;
         }
 
-        private class ServiceRegistrations
+        private static class ControllerRegistrations
         {
-            public void Register(IDictionary<Type, Func<object>> container)
+            public static IDictionary<Type, Func<ApiController>> GetControllers()
             {
-                container[typeof(ArticlesController)] = () => new ArticlesController();
+                return new Dictionary<Type, Func<ApiController>>
+                {
+                    {
+                        typeof(ArticlesController), () => new ArticlesController()
+                    }
+                };
             }
         }
     }

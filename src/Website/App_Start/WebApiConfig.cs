@@ -1,5 +1,6 @@
 ﻿namespace Website
 {
+    using System;
     using System.Web.Http;
     using System.Web.Http.Dispatcher;
 
@@ -7,6 +8,9 @@
     {
         public static void Register(HttpConfiguration config)
         {
+            if (config == null)
+                throw new ArgumentNullException("config");
+
             // Web API configuration and services
             config.Services.Replace(
                 typeof(IAssembliesResolver),

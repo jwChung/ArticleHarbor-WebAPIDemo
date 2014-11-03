@@ -10,7 +10,7 @@
         {
             using (var client = HttpClientFactory.Create())
             {
-                var response = client.GetAsync("api/articles/").Result;
+                var response = client.GetAsync("api/articles").Result;
                 Assert.True(
                     response.IsSuccessStatusCode,
                     "Actual status code: " + response.StatusCode);

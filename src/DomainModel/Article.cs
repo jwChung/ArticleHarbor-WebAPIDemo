@@ -78,12 +78,12 @@
             get { return this.url; }
         }
 
-        public Article WithId(int id)
+        public Article WithId(int newId)
         {
             return new Article(
                 this.provider, this.no, this.subject, this.body, this.date, this.url)
             {
-                id = id
+                id = newId
             };
         }
     }
