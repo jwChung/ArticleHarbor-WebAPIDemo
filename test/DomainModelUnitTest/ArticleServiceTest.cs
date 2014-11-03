@@ -5,6 +5,7 @@
     using System.Reflection;
     using System.Threading.Tasks;
     using DomainModel;
+    using Moq;
     using Xunit;
 
     public class ArticleServiceTest : IdiomaticTest<ArticleService>
@@ -14,6 +15,7 @@
             ArticleService sut,
             Article article)
         {
+            sut.Repository.ToMock().DefaultValue = DefaultValue.Empty;
             await sut.AddAsync(article);
             sut.Repository.ToMock().Verify(x => x.Insert(article));
         }

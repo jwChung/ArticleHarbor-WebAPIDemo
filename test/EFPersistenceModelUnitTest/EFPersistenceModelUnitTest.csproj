@@ -58,7 +58,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="Ploeh.Albedo">
+    <Reference Include="Ploeh.Albedo, Version=1.0.2.0, Culture=neutral, PublicKeyToken=179ef6dd03497bbd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Albedo.1.0.2\lib\net35\Ploeh.Albedo.dll</HintPath>
     </Reference>
     <Reference Include="Ploeh.AutoFixture">
@@ -69,6 +70,9 @@
     </Reference>
     <Reference Include="Ploeh.AutoFixture.Xunit">
       <HintPath>..\..\packages\AutoFixture.Xunit.3.21.0\lib\net40\Ploeh.AutoFixture.Xunit.dll</HintPath>
+    </Reference>
+    <Reference Include="Ploeh.SemanticComparison">
+      <HintPath>..\..\packages\SemanticComparison.3.21.0\lib\net40\Ploeh.SemanticComparison.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -91,6 +95,9 @@
     </Compile>
     <Compile Include="..\DomainModelUnitTest\IdiomaticTest.cs">
       <Link>IdiomaticTest.cs</Link>
+    </Compile>
+    <Compile Include="..\DomainModelUnitTest\Mocked.cs">
+      <Link>Mocked.cs</Link>
     </Compile>
     <Compile Include="..\DomainModelUnitTest\TestAttribute.cs">
       <Link>TestAttribute.cs</Link>

@@ -1,12 +1,44 @@
 ﻿namespace EFPersistenceModel
 {
+    using System;
+    using System.Data.Entity;
     using DomainModel;
 
     public class ArticleRepository : IArticleRepository
     {
-        public void Insert(Article article)
+        private readonly IDbSet<EFDataAccess.Article> articles;
+
+        public ArticleRepository(IDbSet<EFDataAccess.Article> articles)
         {
-            throw new System.NotImplementedException();
+            if (articles == null)
+                throw new ArgumentNullException("articles");
+
+            this.articles = articles;
+        }
+
+        public IDbSet<EFDataAccess.Article> Articles
+        {
+            get { return this.articles; }
+        }
+
+        public Article Insert(Article article)
+        {
+            if (article == null)
+                throw new ArgumentNullException("article");
+
+            var newArticle = new EFDataAccess.Article
+            {
+                Provider = article.Provider,
+                No = article.No,
+                Subject = article.Subject,
+                Summary = article.Summary,
+                Date = article.Date,
+                Url = article.Url
+            };
+
+            this.articles.Add(newArticle);
+
+            return null;
         }
     }
 }
