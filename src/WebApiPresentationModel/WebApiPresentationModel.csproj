@@ -64,6 +64,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="ArticlesController.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

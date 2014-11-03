@@ -18,8 +18,9 @@
 
         public DateTime Date { get; set; }
 
-        public string Url { get; set; }
+        public Uri Url { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "EntityFramework의 Lazy Loading을 위한 Property.")]
         public virtual ICollection<ArticleWord> ArticleWords { get; set; }
     }
 }

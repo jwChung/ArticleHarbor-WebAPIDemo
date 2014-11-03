@@ -6,8 +6,8 @@
       <Word>xunit</Word>
       <Word>sut</Word>
       <Word>ctor</Word>
-      <Word>ungaruded</Word>
       <Word>moq</Word>
+      <Word>api</Word>
     </Recognized>
     <Unrecognized>
       <Word></Word>
@@ -16,9 +16,7 @@
       <Term PreferredAlternate=""></Term>
     </Deprecated>
     <Compound>
-      <Term CompoundAlternate="SubClass">subclass</Term>
-      <Term CompoundAlternate="NonPublic">nonpublic</Term>
-      <Term CompoundAlternate="NonEmpty">nonempty</Term>
+      <Term CompoundAlternate=""></Term>
     </Compound>
     <DiscreteExceptions>
       <Term></Term>
