@@ -32,16 +32,12 @@
             get { return this.context; }
         }
 
-        public int Save()
-        {
-            return this.context.SaveChanges();
-        }
-
         public void Dispose()
         {
             if (this.context == null)
                 return;
 
+            this.context.SaveChanges();
             this.context.Dispose();
             this.context = null;
         }

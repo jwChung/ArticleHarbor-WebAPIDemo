@@ -38,21 +38,6 @@
         }
 
         [Test]
-        public void SaveReturnsCorrectRowCountAfterSave(
-            Mock<ArticleHarborContext> context,
-            IFixture fixture,
-            int rowCount)
-        {
-            fixture.Inject(context.Object);
-            var sut = fixture.Create<DatabaseContext>();
-            context.Object.Of(x => x.SaveChanges() == rowCount);
-
-            var actual = sut.Save();
-
-            Assert.Equal(rowCount, actual);
-        }
-
-        [Test]
         public void DisposeCorrectlyDisposesEFContext(
             Mock<ArticleHarborContext> context,
             IFixture fixture)
@@ -64,6 +49,19 @@
             sut.Dispose();
 
             context.Protected().Verify("Dispose", Times.Once(), true);
+        }
+
+        [Test]
+        public void DisposeSavesChanges(
+            Mock<ArticleHarborContext> context,
+            IFixture fixture)
+        {
+            fixture.Inject(context.Object);
+            var sut = fixture.Create<DatabaseContext>();
+
+            sut.Dispose();
+
+            context.Verify(x => x.SaveChanges(), Times.Once());
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
