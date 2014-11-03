@@ -4,5 +4,8 @@
 
     public class ArticlesController : ApiController
     {
+        public void Get()
+        {
+        }
     }
 }

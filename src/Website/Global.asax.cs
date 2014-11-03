@@ -1,8 +1,9 @@
 ﻿namespace Website
 {
+    using System.Web;
     using System.Web.Http;
 
-    public class WebApiApplication : System.Web.HttpApplication
+    public class WebApiApplication : HttpApplication
     {
         protected void Application_Start()
         {
