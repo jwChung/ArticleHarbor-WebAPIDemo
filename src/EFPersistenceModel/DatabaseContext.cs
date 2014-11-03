@@ -5,9 +5,10 @@
     using DomainModel;
     using EFDataAccess;
 
-    public class DatabaseContext : IDatabaseContext
+    public sealed class DatabaseContext : IDatabaseContext
     {
-        private readonly ArticleHarborContext context;
+        private readonly ArticleRepository articles;
+        private ArticleHarborContext context;
 
         public DatabaseContext(ArticleHarborContext context)
         {
@@ -15,11 +16,15 @@
                 throw new ArgumentNullException("context");
 
             this.context = context;
+            this.articles = new ArticleRepository(this.context.Articles);
         }
 
         public IArticleRepository Articles
         {
-            get { return null; }
+            get
+            {
+                return this.articles;
+            }
         }
 
         public ArticleHarborContext Context
@@ -29,12 +34,16 @@
 
         public int Save()
         {
-            throw new System.NotImplementedException();
+            return this.context.SaveChanges();
         }
 
         public void Dispose()
         {
-            throw new System.NotImplementedException();
+            if (this.context == null)
+                return;
+
+            this.context.Dispose();
+            this.context = null;
         }
     }
 }
