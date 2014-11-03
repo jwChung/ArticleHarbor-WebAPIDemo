@@ -7,7 +7,7 @@
         private readonly string provider;
         private readonly string no;
         private readonly string subject;
-        private readonly string summary;
+        private readonly string body;
         private readonly DateTime date;
         private readonly Uri url;
         private int id = -1;
@@ -16,7 +16,7 @@
             string provider,
             string no,
             string subject,
-            string summary,
+            string body,
             DateTime date,
             Uri url)
         {
@@ -29,8 +29,8 @@
             if (subject == null)
                 throw new ArgumentNullException("subject");
 
-            if (summary == null)
-                throw new ArgumentNullException("summary");
+            if (body == null)
+                throw new ArgumentNullException("body");
 
             if (url == null)
                 throw new ArgumentNullException("url");
@@ -38,7 +38,7 @@
             this.provider = provider;
             this.no = no;
             this.subject = subject;
-            this.summary = summary;
+            this.body = body;
             this.date = date;
             this.url = url;
         }
@@ -63,9 +63,9 @@
             get { return this.subject; }
         }
 
-        public string Summary
+        public string Body
         {
-            get { return this.summary; }
+            get { return this.body; }
         }
 
         public DateTime Date
@@ -81,7 +81,7 @@
         public Article WithId(int id)
         {
             return new Article(
-                this.provider, this.no, this.subject, this.summary, this.date, this.url)
+                this.provider, this.no, this.subject, this.body, this.date, this.url)
             {
                 id = id
             };

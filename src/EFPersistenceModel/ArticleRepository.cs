@@ -32,7 +32,7 @@
                     Provider = article.Provider,
                     No = article.No,
                     Subject = article.Subject,
-                    Summary = article.Summary,
+                    Body = article.Body,
                     Date = article.Date,
                     Url = article.Url
                 });
