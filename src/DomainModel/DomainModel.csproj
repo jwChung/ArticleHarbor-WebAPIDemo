@@ -50,6 +50,7 @@
     <Compile Include="Article.cs" />
     <Compile Include="ArticleService.cs" />
     <Compile Include="IArticleRepository.cs" />
+    <Compile Include="IDatabaseContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
