@@ -1,4 +1,4 @@
-﻿namespace DomainModelUnitTest
+﻿namespace EFPersistenceModelUnitTest
 {
     using System.Reflection;
     using Jwc.Experiment.Idioms;
@@ -12,21 +12,23 @@
             {
                 Assembly.Load("mscorlib"),
                 Assembly.Load("System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"),
-                Assembly.Load("NHanNanum")
+                Assembly.Load("System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"),
+                Assembly.Load("EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"),
+                Assembly.Load("EFDataAccess"),
+                Assembly.Load("DomainModel"),
             };
             new RestrictiveReferenceAssertion(restrictiveReferences)
-                .Verify(Assembly.Load("DomainModel"));
+                .Verify(Assembly.Load("EFPersistenceModel"));
         }
 
         [Test]
         public void SutDoesNotExposeAnyTypesOfSpecifiedAssemblies()
         {
-            var indirectReferences = new[]
+            var indirectReferences = new Assembly[]
             {
-                Assembly.Load("NHanNanum")
             };
             new IndirectReferenceAssertion(indirectReferences)
-                .Verify(Assembly.Load("DomainModel"));
+                .Verify(Assembly.Load("EFPersistenceModel"));
         }
     }
 }
