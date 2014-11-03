@@ -94,6 +94,7 @@
     <Compile Include="..\DomainModelUnitTest\TestAttribute.cs">
       <Link>TestAttribute.cs</Link>
     </Compile>
+    <Compile Include="ArticleRepositoryTest.cs" />
     <Compile Include="DatabaseContextTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
