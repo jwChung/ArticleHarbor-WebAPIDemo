@@ -23,7 +23,7 @@
             if (property == null)
                 throw new ArgumentNullException("property");
 
-            var value = fixture.Create(property.MemberType);
+            var value = fixture.Create(property.PropertyType);
             var target = fixture.Create(property.ReflectedType);
             property.SetValue(target, value);
             var atcual = property.GetValue(target);

@@ -97,9 +97,11 @@
     <Compile Include="..\..\build\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="..\DomainModelUnitTest\TestAttribute.cs">
+      <Link>TestAttribute.cs</Link>
+    </Compile>
     <Compile Include="ArticlesControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
