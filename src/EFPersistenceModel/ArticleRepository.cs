@@ -26,19 +26,18 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            var newArticle = new EFDataAccess.Article
-            {
-                Provider = article.Provider,
-                No = article.No,
-                Subject = article.Subject,
-                Summary = article.Summary,
-                Date = article.Date,
-                Url = article.Url
-            };
+            var newArticle = this.articles.Add(
+                new EFDataAccess.Article
+                {
+                    Provider = article.Provider,
+                    No = article.No,
+                    Subject = article.Subject,
+                    Summary = article.Summary,
+                    Date = article.Date,
+                    Url = article.Url
+                });
 
-            this.articles.Add(newArticle);
-
-            return null;
+            return article.WithId(newArticle.Id);
         }
     }
 }

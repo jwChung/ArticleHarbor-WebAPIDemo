@@ -36,5 +36,20 @@
                 x => x.Add(It.Is<EFDataAccess.Article>(p => likeness.Equals(p))),
                 Times.Once());
         }
+
+        [Test]
+        public void InsertReturnsArticleWithId(
+            ArticleRepository sut,
+            Article article,
+            EFDataAccess.Article newArticle)
+        {
+            sut.Articles.ToMock()
+                .Setup(x => x.Add(It.IsAny<EFDataAccess.Article>())).Returns(newArticle);
+            
+            var actual = sut.Insert(article);
+
+            Assert.NotSame(article, sut);
+            actual.AsSource().OfLikeness<Article>().ShouldEqual(article.WithId(actual.Id));
+        }
     }
 }
