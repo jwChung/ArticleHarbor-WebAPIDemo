@@ -1,0 +1,6 @@
+*.suo
+bin/
+obj/
+StyleCop.Cache
+*.user
+/Build.sh
