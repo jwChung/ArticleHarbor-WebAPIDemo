@@ -1,4 +1,4 @@
-namespace DomainModel
+namespace EFPersistenceModel
 {
     using System.Threading;
     using System.Threading.Tasks;

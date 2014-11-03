@@ -2,6 +2,7 @@
 {
     using System;
     using System.Data.Entity;
+    using System.Threading.Tasks;
     using DomainModel;
     using EFDataAccess;
 
@@ -32,12 +33,14 @@
             get { return this.context; }
         }
 
-        public void Dispose()
+        public async void Dispose()
         {
             if (this.context == null)
                 return;
 
-            this.context.SaveChanges();
+            await this.context.SaveChangesAsync()
+                .ThrowIfFaulted().ConfigureAwait(false);
+
             this.context.Dispose();
             this.context = null;
         }
