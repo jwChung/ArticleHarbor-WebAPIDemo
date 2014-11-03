@@ -45,7 +45,7 @@
 
         public int Id
         {
-            get { return id; }
+            get { return this.id; }
         }
 
         public string Provider

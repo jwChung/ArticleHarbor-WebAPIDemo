@@ -49,6 +49,7 @@
     </Compile>
     <Compile Include="Article.cs" />
     <Compile Include="ArticleService.cs" />
+    <Compile Include="ArticleWord.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IArticleRepository.cs" />
     <Compile Include="IDatabaseContext.cs" />
