@@ -10,6 +10,7 @@
         private readonly string summary;
         private readonly DateTime date;
         private readonly Uri url;
+        private int id = -1;
 
         public Article(
             string provider,
@@ -42,6 +43,11 @@
             this.url = url;
         }
 
+        public int Id
+        {
+            get { return id; }
+        }
+
         public string Provider
         {
             get { return this.provider; }
@@ -70,6 +76,15 @@
         public Uri Url
         {
             get { return this.url; }
+        }
+
+        public Article WithId(int id)
+        {
+            return new Article(
+                this.provider, this.no, this.subject, this.summary, this.date, this.url)
+            {
+                id = id
+            };
         }
     }
 }
