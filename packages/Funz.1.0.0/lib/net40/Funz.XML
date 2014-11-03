@@ -1,0 +1,1645 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Funz</name>
+    </assembly>
+    <members>
+        <member name="T:Jwc.Funz.CompositeContainerVisitor`1">
+            <summary>
+            Represents a composite container visitor.
+            </summary>
+            <typeparam name="TResult">The type of a enumerable result.</typeparam>
+        </member>
+        <member name="T:Jwc.Funz.IContainerVisitor`1">
+            <summary>
+            Represents a container visitor.
+            </summary>
+            <typeparam name="TResult">A result type.</typeparam>
+        </member>
+        <member name="M:Jwc.Funz.IContainerVisitor`1.Visit(Jwc.Funz.Container)">
+            <summary>
+            Visits a container.
+            </summary>
+            <param name="container">A target container for visiting.</param>
+            <returns>A visitor to provide a result.</returns>
+        </member>
+        <member name="P:Jwc.Funz.IContainerVisitor`1.Result">
+            <summary>
+            Gets a value to indicating the result produced after visiting.
+            </summary>
+        </member>
+        <member name="M:Jwc.Funz.CompositeContainerVisitor`1.#ctor(Jwc.Funz.IContainerVisitor{`0}[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Funz.CompositeContainerVisitor`1"/> class
+            with visitors to compose.
+            </summary>
+            <param name="visitors">The visitors to compose.</param>
+        </member>
+        <member name="M:Jwc.Funz.CompositeContainerVisitor`1.Visit(Jwc.Funz.Container)">
+            <summary>
+            Visits a container, which lets each visitor of composed visitors visit the container.
+            </summary>
+            <param name="container">A target container for visiting.</param>
+            <returns>A composite container visitor to provide a enumerable result.</returns>
+        </member>
+        <member name="P:Jwc.Funz.CompositeContainerVisitor`1.Result">
+            <summary>
+            Gets a value to indicating the enumerable result produced after visiting.
+            </summary>
+        </member>
+        <member name="P:Jwc.Funz.CompositeContainerVisitor`1.Visitors">
+            <summary>
+            Gets a value indicating the visitors composed.
+            </summary>
+        </member>
+        <member name="T:Jwc.Funz.Container">
+            <summary>
+            Main container class for components, supporting container hierarchies and
+            lifetime management of <see cref="T:System.IDisposable"/> instances.
+            </summary>
+            <summary>
+            Main container class for components, supporting container hierarchies and
+            lifetime management of <see cref="T:System.IDisposable"/> instances.
+            </summary>
+            <summary>
+            Main container class for components, supporting container hierarchies and
+            lifetime management of <see cref="T:System.IDisposable"/> instances.
+            </summary>
+            <summary>
+            Main container class for components, supporting container hierarchies and
+            lifetime management of <see cref="T:System.IDisposable"/> instances.
+            </summary>
+            <summary>
+            Main container class for components, supporting container hierarchies and
+            lifetime management of <see cref="T:System.IDisposable"/> instances.
+            </summary>
+            <summary>
+            Main container class for components, supporting container hierarchies and
+            lifetime management of <see cref="T:System.IDisposable"/> instances.
+            </summary>
+            <summary>
+            Main container class for components, supporting container hierarchies and
+            lifetime management of <see cref="T:System.IDisposable"/> instances.
+            </summary>
+        </member>
+        <member name="M:Jwc.Funz.Container.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Funz.Container"/> class.
+            </summary>
+        </member>
+        <member name="M:Jwc.Funz.Container.#ctor(System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Funz.Container"/> class with container scope.
+            </summary>
+            <param name="scope">The scope to represent custom lifetime.</param>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``1(System.Func{Jwc.Funz.Container,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <typeparam name="TService">The service type to register.</typeparam>
+            <param name="factory">The factory delegate to initialize new instances of the service when needed.</param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``2(System.Func{Jwc.Funz.Container,``1,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <typeparam name="TService">The service type to register.</typeparam>
+            <typeparam name="TArg">First argument that should be passed to the factory delegate to create the instance.</typeparam>
+            <param name="factory">The factory delegate to initialize new instances of the service when needed.</param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``1(System.Object,System.Func{Jwc.Funz.Container,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <typeparam name="TService">The service type to register.</typeparam>
+            <param name="key">A key used to differenciate this service registration.</param>
+            <param name="factory">The factory delegate to initialize new instances of the service when needed.</param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``2(System.Object,System.Func{Jwc.Funz.Container,``1,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <typeparam name="TService">The service type to register.</typeparam>
+            <typeparam name="TArg">First argument that should be passed to the factory delegate to create the instance.</typeparam>
+            <param name="key">A key used to differenciate this service registration.</param>
+            <param name="factory">The factory delegate to initialize new instances of the service when needed.</param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Resolve``1">
+            <summary>
+            Resolves the given service by type, without passing any arguments for its construction.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Resolve``2(``1)">
+            <summary>
+            Resolves the given service by type, without passing any arguments for its construction.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <typeparam name="TArg">The type of the first argument.</typeparam>
+            <param name="arg">The first argument to pass to the factory delegate that may create the instance.</param>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ResolveKeyed``1(System.Object)">
+            <summary>
+            Resolves the given service by type and key, without passing arguments for its initialization.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <param name="key">The key of the service to retrieve.</param>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ResolveKeyed``2(System.Object,``1)">
+            <summary>
+            Resolves the given service by type and key, without passing arguments for its initialization.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <typeparam name="TArg">The type of the first argument.</typeparam>
+            <param name="key">The key of the service to retrieve.</param>
+            <param name="arg">The first argument to pass to the factory delegate that may create the instance.</param>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolve``1">
+            <summary>
+            Tries to resolve the given service by type, without passing any arguments for its construction.
+            If the service is not registered, it will return a default value of the type.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolve``2(``1)">
+            <summary>
+            Tries to resolve the given service by type, without passing any arguments for its construction.
+            If the service is not registered, it will return a default value of the type.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <typeparam name="TArg">The type of the first argument.</typeparam>
+            <param name="arg">The first argument to pass to the factory delegate that may create the instance.</param>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolveKeyed``1(System.Object)">
+            <summary>
+            Tries to resolve the given service by type and key, without passing arguments for its initialization.
+            If the service is not registered, it will return a default value of the type.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <param name="key">The key of the service to retrieve.</param>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolveKeyed``2(System.Object,``1)">
+            <summary>
+            Tries to resolve the given service by type and key, without passing arguments for its initialization.
+            If the service is not registered, it will return a default value of the type.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <typeparam name="TArg">The type of the first argument.</typeparam>
+            <param name="key">The key of the service to retrieve.</param>
+            <param name="arg">
+            The first argument to pass to the factory delegate that may create the instance.
+            </param>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolve``1">
+            <summary>
+            Resolves the given factory by type, without passing any arguments for its construction.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolve``2">
+            <summary>
+            Resolves the given factory by type, without passing any arguments for its construction.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <typeparam name="TArg">The type of the first argument.</typeparam>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolveKeyed``1(System.Object)">
+            <summary>
+            Resolves the given factory by type and key, without passing arguments for its initialization.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <param name="key">The key of the service to retrieve.</param>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolveKeyed``2(System.Object)">
+            <summary>
+            Resolves the given factory by type and key, without passing arguments for its initialization.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <typeparam name="TArg">The type of the first argument.</typeparam>
+            <param name="key">The key of the service to retrieve.</param>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolve``1">
+            <summary>
+            Determines whether this container can resolve a service of the type or not.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolve``2">
+            <summary>
+            Determines whether this container can resolve a service of the type or not.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <typeparam name="TArg">The type of the first argument.</typeparam>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolveKeyed``1(System.Object)">
+            <summary>
+            Determines whether this container can resolve a service of the type with the key or not.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <param name="key">The key of the service to retrieve.</param>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolveKeyed``2(System.Object)">
+            <summary>
+            Determines whether this container can resolve a service of the type with the key or not.
+            </summary>
+            <typeparam name="TService">The type of the service to retrieve.</typeparam>
+            <typeparam name="TArg">The type of the first argument.</typeparam>
+            <param name="key">The key of the service to retrieve.</param>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CreateChild">
+            <summary>
+            Creates a child container of the current one, which exposes its
+            current service registration to the new child container.
+            </summary>
+            <returns>
+            The new child container.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CreateChild(System.Object)">
+            <summary>
+            Creates a child container of the current one with custom scope, which exposes its
+            current service registration to the new child container.
+            </summary>
+            <param name="childScope">
+            The scope to represent custom lifetime.
+            </param>
+            <returns>
+            The new child container.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Dispose">
+            <summary>
+            Disposes the container and all instances owned by it, as well as all child containers
+            created through <see cref="M:Jwc.Funz.Container.CreateChild"/>.
+            </summary>
+        </member>
+        <member name="M:Jwc.Funz.Container.Accept``1(Jwc.Funz.IContainerVisitor{``0})">
+            <summary>
+            Accepts a container visitor.
+            </summary>
+            <param name="visitor">A container visitor.</param>
+            <typeparam name="TResult">A result type.</typeparam>
+            <returns>A visitor to provide a result produced after visiting.</returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Dispose(System.Boolean)">
+            <summary>
+            Disposes the container and all instances owned by it, as well as all child containers
+            created through <see cref="M:Jwc.Funz.Container.CreateChild"/>.
+            </summary>
+            <param name="disposing">
+            Indicates whether managed resources are included to be disposed.
+            </param>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``3(System.Func{Jwc.Funz.Container,``1,``2,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``3(System.Object,System.Func{Jwc.Funz.Container,``1,``2,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="key">
+            A key used to differenciate this service registration.
+            </param>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``4(System.Func{Jwc.Funz.Container,``1,``2,``3,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``4(System.Object,System.Func{Jwc.Funz.Container,``1,``2,``3,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="key">
+            A key used to differenciate this service registration.
+            </param>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``5(System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``5(System.Object,System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="key">
+            A key used to differenciate this service registration.
+            </param>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``6(System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``6(System.Object,System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="key">
+            A key used to differenciate this service registration.
+            </param>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``7(System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``7(System.Object,System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="key">
+            A key used to differenciate this service registration.
+            </param>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``8(System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``8(System.Object,System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="key">
+            A key used to differenciate this service registration.
+            </param>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``9(System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``8,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``9(System.Object,System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``8,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="key">
+            A key used to differenciate this service registration.
+            </param>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``10(System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``8,``9,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``10(System.Object,System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``8,``9,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="key">
+            A key used to differenciate this service registration.
+            </param>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``11(System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``11(System.Object,System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="key">
+            A key used to differenciate this service registration.
+            </param>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``12(System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``12(System.Object,System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="key">
+            A key used to differenciate this service registration.
+            </param>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``13(System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``13(System.Object,System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="key">
+            A key used to differenciate this service registration.
+            </param>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``14(System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``14(System.Object,System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="key">
+            A key used to differenciate this service registration.
+            </param>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``15(System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13,``14,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Register``15(System.Object,System.Func{Jwc.Funz.Container,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13,``14,``0})">
+            <summary>
+            Registers the given service by providing a factory delegate to instantiate it.
+            </summary>
+            <param name="key">
+            A key used to differenciate this service registration.
+            </param>
+            <param name="factory">
+            The factory delegate to initialize new instances of the service when needed.
+            </param>
+            <returns>
+            The registration object to perform further configuration via its fluent interface.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolve``3">
+            <summary>
+            Resolves the given factory by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolveKeyed``3(System.Object)">
+            <summary>
+            Resolves the given factory by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolve``4">
+            <summary>
+            Resolves the given factory by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolveKeyed``4(System.Object)">
+            <summary>
+            Resolves the given factory by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolve``5">
+            <summary>
+            Resolves the given factory by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolveKeyed``5(System.Object)">
+            <summary>
+            Resolves the given factory by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolve``6">
+            <summary>
+            Resolves the given factory by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolveKeyed``6(System.Object)">
+            <summary>
+            Resolves the given factory by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolve``7">
+            <summary>
+            Resolves the given factory by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolveKeyed``7(System.Object)">
+            <summary>
+            Resolves the given factory by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolve``8">
+            <summary>
+            Resolves the given factory by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolveKeyed``8(System.Object)">
+            <summary>
+            Resolves the given factory by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolve``9">
+            <summary>
+            Resolves the given factory by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolveKeyed``9(System.Object)">
+            <summary>
+            Resolves the given factory by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolve``10">
+            <summary>
+            Resolves the given factory by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolveKeyed``10(System.Object)">
+            <summary>
+            Resolves the given factory by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolve``11">
+            <summary>
+            Resolves the given factory by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolveKeyed``11(System.Object)">
+            <summary>
+            Resolves the given factory by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolve``12">
+            <summary>
+            Resolves the given factory by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolveKeyed``12(System.Object)">
+            <summary>
+            Resolves the given factory by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolve``13">
+            <summary>
+            Resolves the given factory by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolveKeyed``13(System.Object)">
+            <summary>
+            Resolves the given factory by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolve``14">
+            <summary>
+            Resolves the given factory by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolveKeyed``14(System.Object)">
+            <summary>
+            Resolves the given factory by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolve``15">
+            <summary>
+            Resolves the given factory by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.LazyResolveKeyed``15(System.Object)">
+            <summary>
+            Resolves the given factory by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service factory.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolve``3">
+            <summary>
+            Determines whether this container can resolve a service of the type or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolveKeyed``3(System.Object)">
+            <summary>
+            Determines whether this container can resolve a service of the type with the key or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolve``4">
+            <summary>
+            Determines whether this container can resolve a service of the type or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolveKeyed``4(System.Object)">
+            <summary>
+            Determines whether this container can resolve a service of the type with the key or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolve``5">
+            <summary>
+            Determines whether this container can resolve a service of the type or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolveKeyed``5(System.Object)">
+            <summary>
+            Determines whether this container can resolve a service of the type with the key or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolve``6">
+            <summary>
+            Determines whether this container can resolve a service of the type or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolveKeyed``6(System.Object)">
+            <summary>
+            Determines whether this container can resolve a service of the type with the key or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolve``7">
+            <summary>
+            Determines whether this container can resolve a service of the type or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolveKeyed``7(System.Object)">
+            <summary>
+            Determines whether this container can resolve a service of the type with the key or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolve``8">
+            <summary>
+            Determines whether this container can resolve a service of the type or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolveKeyed``8(System.Object)">
+            <summary>
+            Determines whether this container can resolve a service of the type with the key or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolve``9">
+            <summary>
+            Determines whether this container can resolve a service of the type or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolveKeyed``9(System.Object)">
+            <summary>
+            Determines whether this container can resolve a service of the type with the key or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolve``10">
+            <summary>
+            Determines whether this container can resolve a service of the type or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolveKeyed``10(System.Object)">
+            <summary>
+            Determines whether this container can resolve a service of the type with the key or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolve``11">
+            <summary>
+            Determines whether this container can resolve a service of the type or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolveKeyed``11(System.Object)">
+            <summary>
+            Determines whether this container can resolve a service of the type with the key or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolve``12">
+            <summary>
+            Determines whether this container can resolve a service of the type or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolveKeyed``12(System.Object)">
+            <summary>
+            Determines whether this container can resolve a service of the type with the key or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolve``13">
+            <summary>
+            Determines whether this container can resolve a service of the type or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolveKeyed``13(System.Object)">
+            <summary>
+            Determines whether this container can resolve a service of the type with the key or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolve``14">
+            <summary>
+            Determines whether this container can resolve a service of the type or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolveKeyed``14(System.Object)">
+            <summary>
+            Determines whether this container can resolve a service of the type with the key or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolve``15">
+            <summary>
+            Determines whether this container can resolve a service of the type or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.CanResolveKeyed``15(System.Object)">
+            <summary>
+            Determines whether this container can resolve a service of the type with the key or not.
+            </summary>
+            <returns>
+            The result whether this container can resolve.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolve``3(``1,``2)">
+            <summary>
+            Tries to resolve the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolveKeyed``3(System.Object,``1,``2)">
+            <summary>
+            Tries to resolve the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolve``4(``1,``2,``3)">
+            <summary>
+            Tries to resolve the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolveKeyed``4(System.Object,``1,``2,``3)">
+            <summary>
+            Tries to resolve the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolve``5(``1,``2,``3,``4)">
+            <summary>
+            Tries to resolve the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolveKeyed``5(System.Object,``1,``2,``3,``4)">
+            <summary>
+            Tries to resolve the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolve``6(``1,``2,``3,``4,``5)">
+            <summary>
+            Tries to resolve the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolveKeyed``6(System.Object,``1,``2,``3,``4,``5)">
+            <summary>
+            Tries to resolve the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolve``7(``1,``2,``3,``4,``5,``6)">
+            <summary>
+            Tries to resolve the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolveKeyed``7(System.Object,``1,``2,``3,``4,``5,``6)">
+            <summary>
+            Tries to resolve the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolve``8(``1,``2,``3,``4,``5,``6,``7)">
+            <summary>
+            Tries to resolve the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolveKeyed``8(System.Object,``1,``2,``3,``4,``5,``6,``7)">
+            <summary>
+            Tries to resolve the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolve``9(``1,``2,``3,``4,``5,``6,``7,``8)">
+            <summary>
+            Tries to resolve the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolveKeyed``9(System.Object,``1,``2,``3,``4,``5,``6,``7,``8)">
+            <summary>
+            Tries to resolve the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolve``10(``1,``2,``3,``4,``5,``6,``7,``8,``9)">
+            <summary>
+            Tries to resolve the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolveKeyed``10(System.Object,``1,``2,``3,``4,``5,``6,``7,``8,``9)">
+            <summary>
+            Tries to resolve the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolve``11(``1,``2,``3,``4,``5,``6,``7,``8,``9,``10)">
+            <summary>
+            Tries to resolve the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolveKeyed``11(System.Object,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10)">
+            <summary>
+            Tries to resolve the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolve``12(``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11)">
+            <summary>
+            Tries to resolve the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolveKeyed``12(System.Object,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11)">
+            <summary>
+            Tries to resolve the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolve``13(``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12)">
+            <summary>
+            Tries to resolve the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolveKeyed``13(System.Object,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12)">
+            <summary>
+            Tries to resolve the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolve``14(``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13)">
+            <summary>
+            Tries to resolve the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolveKeyed``14(System.Object,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13)">
+            <summary>
+            Tries to resolve the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolve``15(``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13,``14)">
+            <summary>
+            Tries to resolve the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.TryResolveKeyed``15(System.Object,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13,``14)">
+            <summary>
+            Tries to resolve the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Resolve``3(``1,``2)">
+            <summary>
+            Resolves the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ResolveKeyed``3(System.Object,``1,``2)">
+            <summary>
+            Resolves the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Resolve``4(``1,``2,``3)">
+            <summary>
+            Resolves the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ResolveKeyed``4(System.Object,``1,``2,``3)">
+            <summary>
+            Resolves the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Resolve``5(``1,``2,``3,``4)">
+            <summary>
+            Resolves the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ResolveKeyed``5(System.Object,``1,``2,``3,``4)">
+            <summary>
+            Resolves the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Resolve``6(``1,``2,``3,``4,``5)">
+            <summary>
+            Resolves the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ResolveKeyed``6(System.Object,``1,``2,``3,``4,``5)">
+            <summary>
+            Resolves the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Resolve``7(``1,``2,``3,``4,``5,``6)">
+            <summary>
+            Resolves the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ResolveKeyed``7(System.Object,``1,``2,``3,``4,``5,``6)">
+            <summary>
+            Resolves the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Resolve``8(``1,``2,``3,``4,``5,``6,``7)">
+            <summary>
+            Resolves the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ResolveKeyed``8(System.Object,``1,``2,``3,``4,``5,``6,``7)">
+            <summary>
+            Resolves the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Resolve``9(``1,``2,``3,``4,``5,``6,``7,``8)">
+            <summary>
+            Resolves the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ResolveKeyed``9(System.Object,``1,``2,``3,``4,``5,``6,``7,``8)">
+            <summary>
+            Resolves the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Resolve``10(``1,``2,``3,``4,``5,``6,``7,``8,``9)">
+            <summary>
+            Resolves the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ResolveKeyed``10(System.Object,``1,``2,``3,``4,``5,``6,``7,``8,``9)">
+            <summary>
+            Resolves the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Resolve``11(``1,``2,``3,``4,``5,``6,``7,``8,``9,``10)">
+            <summary>
+            Resolves the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ResolveKeyed``11(System.Object,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10)">
+            <summary>
+            Resolves the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Resolve``12(``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11)">
+            <summary>
+            Resolves the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ResolveKeyed``12(System.Object,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11)">
+            <summary>
+            Resolves the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Resolve``13(``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12)">
+            <summary>
+            Resolves the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ResolveKeyed``13(System.Object,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12)">
+            <summary>
+            Resolves the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Resolve``14(``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13)">
+            <summary>
+            Resolves the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ResolveKeyed``14(System.Object,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13)">
+            <summary>
+            Resolves the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.Resolve``15(``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13,``14)">
+            <summary>
+            Resolves the given service by type, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.Container.ResolveKeyed``15(System.Object,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13,``14)">
+            <summary>
+            Resolves the given service by type and key, with passing arguments for its construction.
+            </summary>
+            <returns>
+            The resolved service instance.
+            </returns>
+        </member>
+        <member name="P:Jwc.Funz.Container.Scope">
+            <summary>
+            Gets a value indicating the container scope.
+            </summary>
+            <value>
+            The scope.
+            </value>
+        </member>
+        <member name="T:Jwc.Funz.IRegistration">
+            <summary>
+            Fluent API for customizing the registration of a service.
+            </summary>
+        </member>
+        <member name="T:Jwc.Funz.IReused">
+            <summary>
+            Fluent API that allows specifying the reuse instances.
+            </summary>
+        </member>
+        <member name="T:Jwc.Funz.IFluentInterface">
+            <summary>
+            Helper interface used to hide the base <see cref="T:System.Object"/>
+            members from the fluent API to make for much cleaner
+            Visual Studio intelligence experience.
+            </summary>
+        </member>
+        <member name="M:Jwc.Funz.IFluentInterface.GetType">
+            <summary />
+        </member>
+        <member name="M:Jwc.Funz.IFluentInterface.GetHashCode">
+            <summary />
+        </member>
+        <member name="M:Jwc.Funz.IFluentInterface.ToString">
+            <summary />
+        </member>
+        <member name="M:Jwc.Funz.IFluentInterface.Equals(System.Object)">
+            <summary />
+        </member>
+        <member name="M:Jwc.Funz.IReused.ReusedWithinNone">
+            <summary>
+            Specifies each request to resolve the dependency will result in a new
+            instance being returned.
+            </summary>
+            <returns>
+            The fluent API instance about how to specifying the owner of instances.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.IReused.ReusedWithinContainer">
+            <summary>
+            Specifies instances are reused only at the given container. Descendent
+            containers do not reuse parent container instances and get
+            a new instance at their level.
+            </summary>
+            <returns>
+            The fluent API instance about how to specifying the owner of instances.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.IReused.ReusedWithinHierarchy">
+            <summary>
+            Specifies instances are reused within a container hierarchy. Instances
+            are created (if necessary) in the container where the registration
+            was performed, and are reused by all descendent containers.
+            </summary>
+            <returns>
+            The fluent API instance about how to specifying the owner of instances.
+            </returns>
+        </member>
+        <member name="M:Jwc.Funz.IReused.ReusedWithin(System.Object)">
+            <summary>
+            Specifies instances are reused within the given scope. To reuse instances,
+            a container should have same scope with the given scope, which can be
+            passed when constructed.
+            </summary>
+            <param name="scope">
+            The custom scope, within which instances are reused.
+            </param>
+            <returns>
+            The fluent API instance about how to specifying the owner of instances.
+            </returns>
+        </member>
+        <member name="T:Jwc.Funz.IOwned">
+            <summary>
+            Fluent API that allows specifying the owner of instances
+            created from a registration.
+            </summary>
+        </member>
+        <member name="M:Jwc.Funz.IOwned.OwnedByContainer">
+            <summary>
+            Specifies that container should dispose provided instances when it is disposed. (default)
+            </summary>
+        </member>
+        <member name="M:Jwc.Funz.IOwned.OwnedByExternal">
+            <summary>
+            Specifies that container does not dispose provided instances.
+            </summary>
+        </member>
+        <member name="T:Jwc.Funz.ResolutionException">
+            <summary>
+            Exception thrown by the container when a service cannot be resolved.
+            </summary>
+        </member>
+        <member name="M:Jwc.Funz.ResolutionException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Funz.ResolutionException"/> class.
+            </summary>
+        </member>
+        <member name="M:Jwc.Funz.ResolutionException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Funz.ResolutionException"/> class
+            with a message.
+            </summary>
+            <param name="message">The exception message.</param>
+        </member>
+        <member name="M:Jwc.Funz.ResolutionException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Funz.ResolutionException"/> class
+            with a message and an inner exception.
+            </summary>
+            <param name="message">The exception message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="M:Jwc.Funz.ResolutionException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Funz.ResolutionException"/> class.
+            </summary>
+        </member>
+    </members>
+</doc>

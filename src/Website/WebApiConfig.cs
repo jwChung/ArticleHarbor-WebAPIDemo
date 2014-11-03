@@ -3,6 +3,7 @@
     using System;
     using System.Web.Http;
     using System.Web.Http.Dispatcher;
+    using Jwc.Funz;
 
     public static class WebApiConfig
     {
@@ -12,13 +13,9 @@
                 throw new ArgumentNullException("config");
 
             // Web API configuration and services
-            config.Services.Replace(
-                typeof(IAssembliesResolver),
-                new ArticleHarborAssembliesResolver());
-
-            config.Services.Replace(
-                typeof(IHttpControllerActivator),
-                new CompositeRoot());
+            var container = new Container();
+            container.Accept(new DependencyRegistrations());
+            config.DependencyResolver = new DependencyResolver(container);
 
             // Web API routes
             config.MapHttpAttributeRoutes();

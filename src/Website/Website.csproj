@@ -43,6 +43,17 @@
     <CodeAnalysisRuleSet>..\..\build\ArticleHarbor.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Funz">
+      <HintPath>..\..\packages\Funz.1.0.0\lib\net40\Funz.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
@@ -87,9 +98,10 @@
     <Compile Include="..\..\build\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="WebApiConfig.cs" />
     <Compile Include="ArticleHarborAssembliesResolver .cs" />
-    <Compile Include="CompositeRoot.cs" />
+    <Compile Include="DependencyResolver.cs" />
+    <Compile Include="DependencyRegistrations.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -105,10 +117,20 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\DomainModel\DomainModel.csproj">
+      <Project>{860494BF-26A2-4D57-B091-A8825E5D8200}</Project>
+      <Name>DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EFDataAccess\EFDataAccess.csproj">
+      <Project>{6BE72200-8525-4453-960E-FCA034773137}</Project>
+      <Name>EFDataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EFPersistenceModel\EFPersistenceModel.csproj">
+      <Project>{FDC0EF52-1C4F-4465-B744-216B65EA8850}</Project>
+      <Name>EFPersistenceModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebApiPresentationModel\WebApiPresentationModel.csproj">
       <Project>{1baec422-3d13-49be-82aa-18986a62e24d}</Project>
       <Name>WebApiPresentationModel</Name>
