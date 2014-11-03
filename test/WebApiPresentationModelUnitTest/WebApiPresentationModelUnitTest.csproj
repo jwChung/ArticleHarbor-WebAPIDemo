@@ -112,6 +112,7 @@
       <Link>TestAttribute.cs</Link>
     </Compile>
     <Compile Include="ArticlesControllerTest.cs" />
+    <Compile Include="AssemblyTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
