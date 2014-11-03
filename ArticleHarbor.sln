@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainModel", "src\DomainMo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainModelUnitTest", "test\DomainModelUnitTest\DomainModelUnitTest.csproj", "{2EED7A98-54D5-4B96-826E-7866F70C95BA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{BE06B466-525C-4F91-9AA6-4FE5B95F7D42}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{EB8E3D97-61B9-4998-81F0-545773DA3A2B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +46,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B2B50410-34DF-4CF5-8F1D-4DDA6D24D46B} = {BE06B466-525C-4F91-9AA6-4FE5B95F7D42}
+		{1BAEC422-3D13-49BE-82AA-18986A62E24D} = {BE06B466-525C-4F91-9AA6-4FE5B95F7D42}
+		{422BDEFA-EB99-41F9-97CC-3931D47FB482} = {EB8E3D97-61B9-4998-81F0-545773DA3A2B}
+		{860494BF-26A2-4D57-B091-A8825E5D8200} = {BE06B466-525C-4F91-9AA6-4FE5B95F7D42}
+		{2EED7A98-54D5-4B96-826E-7866F70C95BA} = {EB8E3D97-61B9-4998-81F0-545773DA3A2B}
 	EndGlobalSection
 EndGlobal
