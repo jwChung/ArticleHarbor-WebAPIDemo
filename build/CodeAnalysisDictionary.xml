@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dictionary>
+  <Words>
+    <Recognized>
+      <Word>jwc</Word>
+      <Word>xunit</Word>
+      <Word>sut</Word>
+      <Word>ctor</Word>
+      <Word>ungaruded</Word>
+      <Word>moq</Word>
+    </Recognized>
+    <Unrecognized>
+      <Word></Word>
+    </Unrecognized>
+    <Deprecated>
+      <Term PreferredAlternate=""></Term>
+    </Deprecated>
+    <Compound>
+      <Term CompoundAlternate="SubClass">subclass</Term>
+      <Term CompoundAlternate="NonPublic">nonpublic</Term>
+      <Term CompoundAlternate="NonEmpty">nonempty</Term>
+    </Compound>
+    <DiscreteExceptions>
+      <Term></Term>
+    </DiscreteExceptions>
+  </Words>
+  <Acronyms>
+    <CasingExceptions>
+      <Acronym>Nu</Acronym>
+    </CasingExceptions>
+  </Acronyms>
+</Dictionary>
