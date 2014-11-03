@@ -89,7 +89,7 @@
     </Compile>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ArticleHarborAssembliesResolver .cs" />
-    <Compile Include="ControllerActivator.cs" />
+    <Compile Include="CompositeRoot.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -14,7 +14,7 @@
 
             config.Services.Replace(
                 typeof(IHttpControllerActivator),
-                new ControllerActivator());
+                new CompositeRoot());
 
             // Web API routes
             config.MapHttpAttributeRoutes();
