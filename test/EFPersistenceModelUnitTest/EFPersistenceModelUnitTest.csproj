@@ -35,6 +35,13 @@
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Jwc.Experiment">
       <HintPath>..\..\packages\Experiment.AutoFixture.2.1.1\lib\net40\Jwc.Experiment.dll</HintPath>
     </Reference>
@@ -63,6 +70,7 @@
       <HintPath>..\..\packages\AutoFixture.Xunit.3.21.0\lib\net40\Ploeh.AutoFixture.Xunit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -102,6 +110,10 @@
     <ProjectReference Include="..\..\src\DomainModel\DomainModel.csproj">
       <Project>{860494BF-26A2-4D57-B091-A8825E5D8200}</Project>
       <Name>DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\EFDataAccess\EFDataAccess.csproj">
+      <Project>{6be72200-8525-4453-960e-fca034773137}</Project>
+      <Name>EFDataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\EFPersistenceModel\EFPersistenceModel.csproj">
       <Project>{FDC0EF52-1C4F-4465-B744-216B65EA8850}</Project>
