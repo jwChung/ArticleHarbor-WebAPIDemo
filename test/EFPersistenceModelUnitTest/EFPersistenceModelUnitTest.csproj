@@ -80,6 +80,13 @@
     <Compile Include="..\..\build\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="..\DomainModelUnitTest\IdiomaticTest.cs">
+      <Link>IdiomaticTest.cs</Link>
+    </Compile>
+    <Compile Include="..\DomainModelUnitTest\TestAttribute.cs">
+      <Link>TestAttribute.cs</Link>
+    </Compile>
+    <Compile Include="DatabaseContextTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +97,16 @@
     <CodeAnalysisDictionary Include="..\..\build\CodeAnalysisDictionary.xml">
       <Link>Properties\CodeAnalysisDictionary.xml</Link>
     </CodeAnalysisDictionary>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\DomainModel\DomainModel.csproj">
+      <Project>{860494BF-26A2-4D57-B091-A8825E5D8200}</Project>
+      <Name>DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\EFPersistenceModel\EFPersistenceModel.csproj">
+      <Project>{FDC0EF52-1C4F-4465-B744-216B65EA8850}</Project>
+      <Name>EFPersistenceModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets')" />
