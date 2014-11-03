@@ -52,6 +52,7 @@
     <Compile Include="ArticleWord.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IArticleRepository.cs" />
+    <Compile Include="IArticleWordRepository.cs" />
     <Compile Include="IDatabaseContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
