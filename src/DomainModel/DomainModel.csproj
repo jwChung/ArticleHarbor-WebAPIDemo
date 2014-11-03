@@ -35,6 +35,9 @@
     <CodeAnalysisRuleSet>..\..\build\ArticleHarbor.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NHanNanum">
+      <HintPath>..\..\lib\NHanNanum.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -54,6 +57,7 @@
     <Compile Include="IArticleRepository.cs" />
     <Compile Include="IArticleWordRepository.cs" />
     <Compile Include="IDatabaseContext.cs" />
+    <Compile Include="KoreanNounExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

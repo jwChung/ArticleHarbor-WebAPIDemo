@@ -105,6 +105,9 @@
     <Compile Include="..\DomainModelUnitTest\IdiomaticTest.cs">
       <Link>IdiomaticTest.cs</Link>
     </Compile>
+    <Compile Include="..\DomainModelUnitTest\RunOn.cs">
+      <Link>RunOn.cs</Link>
+    </Compile>
     <Compile Include="..\DomainModelUnitTest\TestAttribute.cs">
       <Link>TestAttribute.cs</Link>
     </Compile>
