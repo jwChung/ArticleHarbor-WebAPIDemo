@@ -35,6 +35,24 @@
     <CodeAnalysisRuleSet>..\..\build\ArticleHarborTest.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Jwc.Experiment">
+      <HintPath>..\..\packages\Experiment.Idioms.2.1.1\lib\net40\Jwc.Experiment.dll</HintPath>
+    </Reference>
+    <Reference Include="Jwc.Experiment.AutoFixture">
+      <HintPath>..\..\packages\Experiment.AutoFixture.2.1.1\lib\net40\Jwc.Experiment.AutoFixture.dll</HintPath>
+    </Reference>
+    <Reference Include="Jwc.Experiment.Idioms">
+      <HintPath>..\..\packages\Experiment.Idioms.2.1.1\lib\net40\Jwc.Experiment.Idioms.dll</HintPath>
+    </Reference>
+    <Reference Include="Jwc.Experiment.Xunit">
+      <HintPath>..\..\packages\Experiment.Xunit.2.1.1\lib\net40\Jwc.Experiment.Xunit.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\packages\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Ploeh.AutoFixture">
+      <HintPath>..\..\packages\AutoFixture.3.18.7\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,6 +60,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="xunit">
+      <HintPath>..\..\packages\xunit.1.9.0.1566\lib\xunit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\build\SolutionInfo.cs">
@@ -50,6 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

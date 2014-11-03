@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Jwc.Experiment.AutoFixture</name>
+    </assembly>
+    <members>
+        <member name="T:Jwc.Experiment.AutoFixture.OmitAutoPropertiesCustomization">
+            <summary>
+            Represents fixture customization to set false to <see cref="P:Ploeh.AutoFixture.IFixture.OmitAutoProperties"/>.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.AutoFixture.OmitAutoPropertiesCustomization.Customize(Ploeh.AutoFixture.IFixture)">
+            <summary>
+            Customizes the specified fixture.
+            </summary>
+            <param name="fixture">
+            The fixture to customize.
+            </param>
+        </member>
+        <member name="T:Jwc.Experiment.AutoFixture.TestFixture">
+            <summary>
+            <see cref="T:Ploeh.AutoFixture.IFixture"/>를 <see cref="T:Jwc.Experiment.ITestFixture"/> 인터페이스에 맞춘다. auto data기능을
+            AutoFixture library로부터 채용하게 된다.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.AutoFixture.TestFixture.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.AutoFixture.TestFixture"/> class.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.AutoFixture.TestFixture.#ctor(Ploeh.AutoFixture.IFixture)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.AutoFixture.TestFixture"/> class.
+            </summary>
+            <param name="fixture">
+            The fixture.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.AutoFixture.TestFixture.Create(System.Object)">
+            <summary>
+            request를 통해 테스트에 필요한 specimen를 만듦.
+            </summary>
+            <param name="request">
+            specimen을 만들기 위해 필요한 정보를 제공. 일반적으로 <see cref="T:System.Type"/>을 많이 활용.
+            </param>
+            <returns>
+            만들어진 specimen 객체.
+            </returns>
+        </member>
+        <member name="P:Jwc.Experiment.AutoFixture.TestFixture.Fixture">
+            <summary>
+            Gets the fixture.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.AutoFixture.TestFixtureFactory">
+            <summary>
+            Represents a factory to create test fixtures.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.AutoFixture.TestFixtureFactory.Create(Jwc.Experiment.ITestMethodContext)">
+            <summary>
+            Creates a test fixture.
+            </summary>
+            <param name="context">
+            The test method context to provide information for creating the test fixture.
+            </param>
+            <returns>
+            The test fixture.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.AutoFixture.TestFixtureFactory.GetCustomization(Jwc.Experiment.ITestMethodContext)">
+            <summary>
+            Gets a customization.
+            </summary>
+            <param name="context">
+            The test method context to provide information for getting the customization.
+            </param>
+            <returns>
+            The customization.
+            </returns>
+        </member>
+        <member name="T:Jwc.Experiment.AutoFixture.TestParametersCustomization">
+            <summary>
+            Represents a customization to support <see cref="T:Ploeh.AutoFixture.Xunit.CustomizeAttribute"/>(s).
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.AutoFixture.TestParametersCustomization.#ctor(System.Collections.Generic.IEnumerable{System.Reflection.ParameterInfo})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.AutoFixture.TestParametersCustomization"/> class.
+            </summary>
+            <param name="parameters">
+            Test parameters to get <see cref="T:Ploeh.AutoFixture.Xunit.CustomizeAttribute"/> to customize fixture.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.AutoFixture.TestParametersCustomization.Customize(Ploeh.AutoFixture.IFixture)">
+            <summary>
+            Customizes the specified fixture.
+            </summary>
+            <param name="fixture">
+            The fixture to customize.
+            </param>
+        </member>
+        <member name="P:Jwc.Experiment.AutoFixture.TestParametersCustomization.Parameters">
+            <summary>
+            Gets the test parameters.
+            </summary>
+        </member>
+    </members>
+</doc>

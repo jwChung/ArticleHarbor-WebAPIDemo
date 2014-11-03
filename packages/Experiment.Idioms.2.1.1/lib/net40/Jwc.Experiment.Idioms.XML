@@ -1,0 +1,1592 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Jwc.Experiment.Idioms</name>
+    </assembly>
+    <members>
+        <member name="T:Jwc.Experiment.Accessibilities">
+            <summary>
+            Specifies flags than represents accessibilities.
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.Accessibilities.None">
+            <summary>
+            The none accessibility.
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.Accessibilities.Public">
+            <summary>
+            The public accessibility.
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.Accessibilities.Protected">
+            <summary>
+            The protected accessibility.
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.Accessibilities.Internal">
+            <summary>
+            The internal accessibility.
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.Accessibilities.Private">
+            <summary>
+            The private accessibility.
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.Accessibilities.ProtectedInternal">
+            <summary>
+            The protected or internal accessibility.
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.Accessibilities.Exposed">
+            <summary>
+            The public or protected accessibility.
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.Accessibilities.All">
+            <summary>
+            The all accessibilities.
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.Accessibilities.Default">
+            <summary>
+            The default accessibilities.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.AccessibilityCollector">
+            <summary>
+            Represents a class to collect <see cref="T:Jwc.Experiment.Accessibilities"/>.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.AccessibilityCollector.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.AccessibilityCollector"/> class.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.AccessibilityCollector.#ctor(System.Collections.Generic.IEnumerable{Jwc.Experiment.Accessibilities})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.AccessibilityCollector"/> class.
+            </summary>
+            <param name="values">
+            The value.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.AccessibilityCollector.Visit(Ploeh.Albedo.TypeElement)">
+            <summary>
+            Allows an <see cref="T:Ploeh.Albedo.TypeElement"/> to be visited. This method is called when the
+            element accepts this visitor instance.
+            </summary>
+            <param name="typeElement">
+            The <see cref="T:Ploeh.Albedo.TypeElement"/> being visited.
+            </param>
+            <returns>
+            A <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to continue the
+            visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.AccessibilityCollector.Visit(Ploeh.Albedo.FieldInfoElement)">
+            <summary>
+            Allows an <see cref="T:Ploeh.Albedo.FieldInfoElement"/> to be visited. This method is called when the
+            element accepts this visitor instance.
+            </summary>
+            <param name="fieldInfoElement">
+            The <see cref="T:Ploeh.Albedo.FieldInfoElement"/> being visited.
+            </param>
+            <returns>
+            A <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to continue the
+            visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.AccessibilityCollector.Visit(Ploeh.Albedo.ConstructorInfoElement)">
+            <summary>
+            Allows an <see cref="T:Ploeh.Albedo.ConstructorInfoElement"/> to be visited. This method is called
+            when the element accepts this visitor instance.
+            </summary>
+            <param name="constructorInfoElement">
+            The <see cref="T:Ploeh.Albedo.ConstructorInfoElement"/> being visited.
+            </param>
+            <returns>
+            A <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to continue the
+            visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.AccessibilityCollector.Visit(Ploeh.Albedo.PropertyInfoElement)">
+            <summary>
+            Allows an <see cref="T:Ploeh.Albedo.PropertyInfoElement"/> to be visited. This method is called when
+            the element accepts this visitor instance.
+            </summary>
+            <param name="propertyInfoElement">
+            The <see cref="T:Ploeh.Albedo.PropertyInfoElement"/> being visited.
+            </param>
+            <returns>
+            A <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to continue the
+            visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.AccessibilityCollector.Visit(Ploeh.Albedo.MethodInfoElement)">
+            <summary>
+            Allows an <see cref="T:Ploeh.Albedo.MethodInfoElement"/> to be visited. This method is called when
+            the element accepts this visitor instance.
+            </summary>
+            <param name="methodInfoElement">
+            The <see cref="T:Ploeh.Albedo.MethodInfoElement"/> being visited.
+            </param>
+            <returns>
+            A <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to continue the
+            visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.AccessibilityCollector.Visit(Ploeh.Albedo.EventInfoElement)">
+            <summary>
+            Allows an <see cref="T:Ploeh.Albedo.EventInfoElement"/> to be visited. This method is called when
+            the element accepts this visitor instance.
+            </summary>
+            <param name="eventInfoElement">
+            The <see cref="T:Ploeh.Albedo.EventInfoElement"/> being visited.
+            </param>
+            <returns>
+            A <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to continue the
+            visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="P:Jwc.Experiment.AccessibilityCollector.Value">
+            <summary>
+            Gets the observation or value produced by this instance.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.Idioms.IdiomaticAssertion">
+            <summary>
+            Represents base class implementing <see cref="T:Jwc.Experiment.Idioms.IIdiomaticAssemblyAssertion"/>,
+            <see cref="T:Jwc.Experiment.Idioms.IIdiomaticTypeAssertion"/> and <see cref="T:Jwc.Experiment.Idioms.IIdiomaticMemberAssertion"/>.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.Idioms.IdiomaticMemberAssertion">
+            <summary>
+            Base implementation of <see cref="T:Jwc.Experiment.Idioms.IIdiomaticMemberAssertion"/>.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.Idioms.IIdiomaticMemberAssertion">
+            <summary>
+            Represents an encapsulation of an idiomatic unit test assertion based on
+            <see cref="T:System.Reflection.MemberInfo"/>.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IIdiomaticMemberAssertion.Verify(System.Reflection.MemberInfo)">
+            <summary>
+            Verifies that the idiomatic assertion can be verified for the specified member.
+            </summary>
+            <param name="member">
+            The member.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IdiomaticMemberAssertion.Verify(System.Reflection.MemberInfo)">
+            <summary>
+            Verifies that the idiomatic assertion can be verified for the specified member.
+            </summary>
+            <param name="member">
+            The member.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IdiomaticMemberAssertion.Verify(System.Reflection.FieldInfo)">
+            <summary>
+            Verifies that the idiomatic assertion can be verified for the specified field.
+            </summary>
+            <param name="field">
+            The field.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IdiomaticMemberAssertion.Verify(System.Reflection.ConstructorInfo)">
+            <summary>
+            Verifies that the idiomatic assertion can be verified for the specified constructor.
+            </summary>
+            <param name="constructor">
+            The constructor.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IdiomaticMemberAssertion.Verify(System.Reflection.PropertyInfo)">
+            <summary>
+            Verifies that the idiomatic assertion can be verified for the specified property.
+            </summary>
+            <param name="property">
+            The property.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IdiomaticMemberAssertion.Verify(System.Reflection.MethodInfo)">
+            <summary>
+            Verifies that the idiomatic assertion can be verified for the specified method.
+            </summary>
+            <param name="method">
+            The method.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IdiomaticMemberAssertion.Verify(System.Reflection.EventInfo)">
+            <summary>
+            Verifies that the idiomatic assertion can be verified for the specified event.
+            </summary>
+            <param name="event">
+            The event.
+            </param>
+        </member>
+        <member name="T:Jwc.Experiment.Idioms.IIdiomaticAssemblyAssertion">
+            <summary>
+            Represents an encapsulation of an idiomatic unit test assertion based on
+            <see cref="T:System.Reflection.Assembly"/>.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IIdiomaticAssemblyAssertion.Verify(System.Reflection.Assembly)">
+            <summary>
+            Verifies that the idiomatic assertion can be verified for the specified assembly.
+            </summary>
+            <param name="assembly">
+            The assembly.
+            </param>
+        </member>
+        <member name="T:Jwc.Experiment.Idioms.IIdiomaticTypeAssertion">
+            <summary>
+            Represents an encapsulation of an idiomatic unit test assertion based on
+            <see cref="T:System.Type"/>.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IIdiomaticTypeAssertion.Verify(System.Type)">
+            <summary>
+            Verifies that the idiomatic assertion can be verified for the specified type.
+            </summary>
+            <param name="type">
+            The type.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IdiomaticAssertion.Verify(System.Reflection.Assembly)">
+            <summary>
+            Verifies that the idiomatic assertion can be verified for the specified assembly.
+            </summary>
+            <param name="assembly">
+            The assembly.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IdiomaticAssertion.Verify(System.Type)">
+            <summary>
+            Verifies that the idiomatic assertion can be verified for the specified type.
+            </summary>
+            <param name="type">
+            The type.
+            </param>
+        </member>
+        <member name="T:Jwc.Experiment.Idioms.ObjectDisposalAssertion">
+            <summary>
+            Encapsulates a unit test that verifies that members throw
+            <see cref="T:System.ObjectDisposedException"/> after its owner(object) is disposed.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.ObjectDisposalAssertion.#ctor(Jwc.Experiment.ITestFixture)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.Idioms.ObjectDisposalAssertion"/> class.
+            </summary>
+            <param name="testFixture">
+            The test fixture to create an owner object.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.ObjectDisposalAssertion.Verify(System.Type)">
+            <summary>
+            Verifies that instance properties and methods of a given type throw
+            <see cref="T:System.ObjectDisposedException"/> after the instance of the type is disposed.
+            </summary>
+            <param name="type">
+            The type.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.ObjectDisposalAssertion.Verify(System.Reflection.PropertyInfo)">
+            <summary>
+            Verifies that a property throws <see cref="T:System.ObjectDisposedException"/> after its
+            owner(object) is disposed.
+            </summary>
+            <param name="property">
+            The property.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.ObjectDisposalAssertion.Verify(System.Reflection.MethodInfo)">
+            <summary>
+            Verifies that a method throws <see cref="T:System.ObjectDisposedException"/> after its
+            owner(object) is disposed.
+            </summary>
+            <param name="method">
+            The method.
+            </param>
+        </member>
+        <member name="P:Jwc.Experiment.Idioms.ObjectDisposalAssertion.TestFixture">
+            <summary>
+            Gets a value indicating the test fixture.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.MemberInfoExtensions">
+            <summary>
+            Defines <see cref="T:System.Reflection.MemberInfo"/> extension methods.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.MemberInfoExtensions.GetDisplayName(System.Reflection.MemberInfo)">
+            <summary>
+            Gets the display name of a member.
+            </summary>
+            <param name="member">
+            The member.
+            </param>
+            <returns>
+            the display name.
+            </returns>
+        </member>
+        <member name="T:Jwc.Experiment.DisplayNameCollector">
+            <summary>
+            Represents a display name of a reflection member.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.DisplayNameCollector.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.DisplayNameCollector"/> class.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.DisplayNameCollector.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.DisplayNameCollector"/> class.
+            </summary>
+            <param name="displayNames">
+            The collected display names.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.DisplayNameCollector.Visit(Ploeh.Albedo.AssemblyElement)">
+            <summary>
+            Visits an assembly element to collect a display name of it.
+            </summary>
+            <param name="assemblyElement">
+            The assembly element whose display name is collected.
+            </param>
+            <returns>
+            The visitor which collected a display name.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.DisplayNameCollector.Visit(Ploeh.Albedo.TypeElement)">
+            <summary>
+            Visits a type element to collect a display name of it.
+            </summary>
+            <param name="typeElement">
+            The type element whose display name is collected.
+            </param>
+            <returns>
+            The visitor which collected a display name.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.DisplayNameCollector.Visit(Ploeh.Albedo.FieldInfoElement)">
+            <summary>
+            Visits a field element to collect a display name of it.
+            </summary>
+            <param name="fieldInfoElement">
+            The field element whose display name is collected.
+            </param>
+            <returns>
+            The visitor which collected a display name.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.DisplayNameCollector.Visit(Ploeh.Albedo.ConstructorInfoElement)">
+            <summary>
+            Visits a constructor element to collect a display name of it.
+            </summary>
+            <param name="constructorInfoElement">
+            The constructor element whose display name is collected.
+            </param>
+            <returns>
+            The visitor which collected a display name.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.DisplayNameCollector.Visit(Ploeh.Albedo.PropertyInfoElement)">
+            <summary>
+            Visits a property element to collect a display name of it.
+            </summary>
+            <param name="propertyInfoElement">
+            The property element whose display name is collected.
+            </param>
+            <returns>
+            The visitor which collected a display name.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.DisplayNameCollector.Visit(Ploeh.Albedo.MethodInfoElement)">
+            <summary>
+            Visits a method element to collect a display name of it.
+            </summary>
+            <param name="methodInfoElement">
+            The method element whose display name is collected.
+            </param>
+            <returns>
+            The visitor which collected a display name.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.DisplayNameCollector.Visit(Ploeh.Albedo.EventInfoElement)">
+            <summary>
+            Visits an event element to collect a display name of it.
+            </summary>
+            <param name="eventInfoElement">
+            The event element whose display name is collected.
+            </param>
+            <returns>
+            The visitor which collected a display name.
+            </returns>
+        </member>
+        <member name="P:Jwc.Experiment.DisplayNameCollector.Value">
+            <summary>
+            Gets a value indicating the collected display names.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.MemberReferenceCollector">
+            <summary>
+            Represents <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> to collect reference assemblies for a given
+            reflection meta-data on member level.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.MemberReferenceCollector.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.MemberReferenceCollector"/> class.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.MemberReferenceCollector.#ctor(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.MemberReferenceCollector"/> class.
+            </summary>
+            <param name="references">
+            The references.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.MemberReferenceCollector.Visit(Ploeh.Albedo.TypeElement)">
+            <summary>
+            Collects references of a specified type element.
+            </summary>
+            <param name="typeElement">
+            The type element.
+            </param>
+            <returns>
+            The result visitor which collected assemblies.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.MemberReferenceCollector.Visit(Ploeh.Albedo.FieldInfoElement)">
+            <summary>
+            Collects references of a specified field element.
+            </summary>
+            <param name="fieldInfoElement">
+            The field element.
+            </param>
+            <returns>
+            The result visitor which collected assemblies.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.MemberReferenceCollector.Visit(Ploeh.Albedo.MethodInfoElement)">
+            <summary>
+            Collects references of a specified method element.
+            </summary>
+            <param name="methodInfoElement">
+            The method element.
+            </param>
+            <returns>
+            The result visitor which collected assemblies.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.MemberReferenceCollector.Visit(Ploeh.Albedo.LocalVariableInfoElement[])">
+            <summary>
+            Ignores references of local variable elements.
+            </summary>
+            <param name="localVariableInfoElements">
+            The local variable elements.
+            </param>
+            <returns>
+            This instance.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.MemberReferenceCollector.Visit(Ploeh.Albedo.ParameterInfoElement)">
+            <summary>
+            Collects references of a specified parameter element.
+            </summary>
+            <param name="parameterInfoElement">
+            The parameter element.
+            </param>
+            <returns>
+            The result visitor which collected assemblies.
+            </returns>
+        </member>
+        <member name="P:Jwc.Experiment.MemberReferenceCollector.Value">
+            <summary>
+            Gets a value indicating references collected for a given reflection meta-data on member
+            level.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.TypeExtensions">
+            <summary>
+            Defines <see cref="T:System.Type"/> extension methods.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.TypeExtensions.GetIdiomaticMembers(System.Type)">
+            <summary>
+            Gets idiomatic members of a type.
+            </summary>
+            <param name="type">
+            A type to enumerate the idiomatic members.
+            </param>
+            <returns>
+            The idiomatic members.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.TypeExtensions.GetIdiomaticMembers(System.Type,Jwc.Experiment.MemberKinds)">
+            <summary>
+            Gets idiomatic members of a type corresponding to member kinds.
+            </summary>
+            <param name="type">
+            A type to enumerate the idiomatic members.
+            </param>
+            <param name="memberKinds">
+            The member kinds.
+            </param>
+            <returns>
+            The idiomatic members.
+            </returns>
+        </member>
+        <member name="T:Jwc.Experiment.ObjectDisposalException">
+            <summary>
+            Represents a verification error when testing whether members throw
+            <see cref="T:System.ObjectDisposedException"/> after its owner(object) is disposed.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.ObjectDisposalException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.ObjectDisposalException"/> class.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.ObjectDisposalException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.ObjectDisposalException"/> class.
+            </summary>
+            <param name="message">
+            The message that describes the error.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.ObjectDisposalException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.ObjectDisposalException"/> class.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="inner">
+            The inner.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.ObjectDisposalException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.ObjectDisposalException"/> class.
+            </summary>
+            <param name="info">
+            The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the
+            serialized object data about the exception being thrown.
+            </param>
+            <param name="context">
+            The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that contains
+            contextual information about the source or destination.
+            </param>
+        </member>
+        <member name="T:Jwc.Experiment.IdiomaticMembers">
+            <summary>
+            Represents members of a certain <see cref="P:Jwc.Experiment.IdiomaticMembers.Type"/> which will be verified by idiomatic
+            assertions.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.IdiomaticMembers.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.IdiomaticMembers"/> class.
+            </summary>
+            <param name="type">
+            A type to enumerate members.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.IdiomaticMembers.#ctor(System.Type,Jwc.Experiment.MemberKinds)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.IdiomaticMembers"/> class.
+            </summary>
+            <param name="type">
+            A type to enumerate members.
+            </param>
+            <param name="memberKinds">
+            Member kinds to filter members.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.IdiomaticMembers.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to
+            iterate through the collection.
+            </returns>
+        </member>
+        <member name="P:Jwc.Experiment.IdiomaticMembers.Type">
+            <summary>
+            Gets a value indicating the type to enumerate members.
+            </summary>
+        </member>
+        <member name="P:Jwc.Experiment.IdiomaticMembers.MemberKinds">
+            <summary>
+            Gets a value indicating the member kinds to be enumerated.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.IndirectReferenceException">
+            <summary>
+            Represents a verification error when testing whether certain assemblies are not exposed
+            through public API.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.IndirectReferenceException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.IndirectReferenceException"/> class.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.IndirectReferenceException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.IndirectReferenceException"/> class.
+            </summary>
+            <param name="message">
+            The message that describes the error.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.IndirectReferenceException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.IndirectReferenceException"/> class.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="inner">
+            The inner.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.IndirectReferenceException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.IndirectReferenceException"/> class.
+            </summary>
+            <param name="info">
+            The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the
+            serialized object data about the exception being thrown.
+            </param>
+            <param name="context">
+            The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that contains
+            contextual information about the source or destination.
+            </param>
+        </member>
+        <member name="T:Jwc.Experiment.Idioms.IndirectReferenceAssertion">
+            <summary>
+            Encapsulates a unit test that verifies that certain assemblies are not exposed through public API.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IndirectReferenceAssertion.#ctor(System.Reflection.Assembly[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.Idioms.IndirectReferenceAssertion"/> class.
+            </summary>
+            <param name="indirectReferences">
+            The indirect references which should not be exposed though API.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IndirectReferenceAssertion.Verify(System.Reflection.Assembly)">
+            <summary>
+            Verifies that an assembly does not expose the indirect references through public APIs.
+            </summary>
+            <param name="assembly">
+            The assembly.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IndirectReferenceAssertion.Verify(System.Type)">
+            <summary>
+            Verifies that a type does not expose the indirect references through public APIs.
+            </summary>
+            <param name="type">
+            A type to be verified.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IndirectReferenceAssertion.Verify(System.Reflection.FieldInfo)">
+            <summary>
+            Verifies that a field does not expose the indirect references through public APIs.
+            </summary>
+            <param name="field">
+            The field.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IndirectReferenceAssertion.Verify(System.Reflection.ConstructorInfo)">
+            <summary>
+            Verifies that a constructor does not expose the indirect references through public APIs.
+            </summary>
+            <param name="constructor">
+            The constructor.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IndirectReferenceAssertion.Verify(System.Reflection.PropertyInfo)">
+            <summary>
+            Verifies that a property does not expose the indirect references through public APIs.
+            </summary>
+            <param name="property">
+            The field.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IndirectReferenceAssertion.Verify(System.Reflection.MethodInfo)">
+            <summary>
+            Verifies that a method does not expose the indirect references through public APIs.
+            </summary>
+            <param name="method">
+            The method.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.IndirectReferenceAssertion.Verify(System.Reflection.EventInfo)">
+            <summary>
+            Verifies that an event does not expose the indirect references through public APIs.
+            </summary>
+            <param name="event">
+            The event.
+            </param>
+        </member>
+        <member name="P:Jwc.Experiment.Idioms.IndirectReferenceAssertion.IndirectReferences">
+            <summary>
+            Gets a value indicating the indirect references.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.Idioms.MemberInitializationAssertion">
+            <summary>
+            Encapsulates a unit test that verifies that members (property or field) are correctly
+            initialized by a constructor.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.MemberInitializationAssertion.#ctor(Jwc.Experiment.ITestFixture)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.Idioms.MemberInitializationAssertion"/> class.
+            </summary>
+            <param name="testFixture">
+            A test fixture to crete auto-data.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.MemberInitializationAssertion.#ctor(System.Collections.Generic.IEqualityComparer{Ploeh.Albedo.IReflectionElement},System.Collections.Generic.IEqualityComparer{Ploeh.Albedo.IReflectionElement})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.Idioms.MemberInitializationAssertion"/> class.
+            </summary>
+            <param name="parameterToMemberComparer">
+            A comparer to determine if a given parameter value of a constructor equals to a
+            member(property or field) value.
+            </param>
+            <param name="memberToParameterComparer">
+            A comparer to determine if a given member(property or field) value equals to a parameter
+            value of a constructor.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.MemberInitializationAssertion.Verify(System.Reflection.FieldInfo)">
+            <summary>
+            Verifies that a field correctly exposes a certain parameter of a constructor.
+            </summary>
+            <param name="field">
+            The field.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.MemberInitializationAssertion.Verify(System.Reflection.ConstructorInfo)">
+            <summary>
+            Verifies that all parameters of a constructor are correctly exposed through fields or
+            properties.
+            </summary>
+            <param name="constructor">
+            The constructor.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.MemberInitializationAssertion.Verify(System.Reflection.PropertyInfo)">
+            <summary>
+            Verifies that a field correctly exposes a certain parameter of a constructor.
+            </summary>
+            <param name="property">
+            The property.
+            </param>
+        </member>
+        <member name="P:Jwc.Experiment.Idioms.MemberInitializationAssertion.TestFixture">
+            <summary>
+            Gets a value indicating the test fixture.
+            </summary>
+        </member>
+        <member name="P:Jwc.Experiment.Idioms.MemberInitializationAssertion.ParameterToMemberComparer">
+            <summary>
+            Gets a value to compare a parameter with a member(field or property).
+            </summary>
+        </member>
+        <member name="P:Jwc.Experiment.Idioms.MemberInitializationAssertion.MemberToParameterComparer">
+            <summary>
+            Gets a value to compare a member(field or property) with a parameter.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.Idioms.GuardClauseAssertion">
+            <summary>
+            Encapsulates a unit test that verifies that a method or constructor has appropriate Null
+            Guard Clauses in place.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.GuardClauseAssertion.#ctor(Jwc.Experiment.ITestFixture)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.Idioms.GuardClauseAssertion"/> class.
+            </summary>
+            <param name="testFixture">
+            A test fixture to create auto-data.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.GuardClauseAssertion.Verify(System.Reflection.ConstructorInfo)">
+            <summary>
+            Verifies that a constructor has appropriate Null Guard Clause in place.
+            </summary>
+            <param name="constructor">
+            The constructor.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.GuardClauseAssertion.Verify(System.Reflection.PropertyInfo)">
+            <summary>
+            Verifies that a property has appropriate Null Guard Clause in place.
+            </summary>
+            <param name="property">
+            The property.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.GuardClauseAssertion.Verify(System.Reflection.MethodInfo)">
+            <summary>
+            Verifies that a method has appropriate Null Guard Clause in place.
+            </summary>
+            <param name="method">
+            The method.
+            </param>
+        </member>
+        <member name="P:Jwc.Experiment.Idioms.GuardClauseAssertion.TestFixture">
+            <summary>
+            Gets a value indicating the test fixture.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.MemberInitializationException">
+            <summary>
+            Represents a verification error when testing whether members (property or field) are
+            correctly initialized by a constructor.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.MemberInitializationException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.MemberInitializationException"/> class.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.MemberInitializationException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.MemberInitializationException"/> class.
+            </summary>
+            <param name="message">
+            The message that describes the error.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.MemberInitializationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.MemberInitializationException"/> class.
+            </summary>
+            <param name="message">
+            The exception message.
+            </param>
+            <param name="inner">
+            The inner exception.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.MemberInitializationException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.MemberInitializationException"/> class.
+            </summary>
+            <param name="info">
+            The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data about the
+            exception being thrown.
+            </param>
+            <param name="context">
+            The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the
+            source or destination.
+            </param>
+        </member>
+        <member name="T:Jwc.Experiment.FieldToParameterComparer">
+            <summary>
+            Represent comparer to determine that a field value equals to a parameter value.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.FieldToParameterComparer.#ctor(Jwc.Experiment.ITestFixture)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.FieldToParameterComparer"/> class.
+            </summary>
+            <param name="testFixture">
+            The test fixture.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.FieldToParameterComparer.Equals(Ploeh.Albedo.IReflectionElement,Ploeh.Albedo.IReflectionElement)">
+            <summary>
+            Determines whether the specified objects are equal.
+            </summary>
+            <param name="x">
+            The first object of type <paramref name="x" /> to compare.
+            </param>
+            <param name="y">
+            The second object of type <paramref name="y" /> to compare.
+            </param>
+            <returns>
+            true if the specified objects are equal; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.FieldToParameterComparer.GetHashCode(Ploeh.Albedo.IReflectionElement)">
+            <summary>
+            Always returns zero(constant) to use the <see cref="M:Jwc.Experiment.FieldToParameterComparer.Equals(Ploeh.Albedo.IReflectionElement,Ploeh.Albedo.IReflectionElement)"/> method to determine
+            whether the specified objects are equal.
+            </summary>
+            <param name="obj">
+            The object to get the hash code.
+            </param>
+            <returns>
+            The zero
+            </returns>
+        </member>
+        <member name="P:Jwc.Experiment.FieldToParameterComparer.TestFixture">
+            <summary>
+            Gets a value indicating the test fixture.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.MemberKindCollector">
+            <summary>
+            Represents a class to collect <see cref="T:Jwc.Experiment.MemberKinds"/>.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.MemberKindCollector.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.MemberKindCollector"/> class.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.MemberKindCollector.#ctor(System.Collections.Generic.IEnumerable{Jwc.Experiment.MemberKinds})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.MemberKindCollector"/> class.
+            </summary>
+            <param name="memberKinds">
+            The initial member kinds.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.MemberKindCollector.Visit(Ploeh.Albedo.FieldInfoElement)">
+            <summary>
+            Collects a <see cref="T:Jwc.Experiment.MemberKinds"/> value corresponding to the
+            <paramref name="fieldInfoElement"/>.
+            </summary>
+            <param name="fieldInfoElement">
+            A field element to collect <see cref="T:Jwc.Experiment.MemberKinds"/>.
+            </param>
+            <returns>
+            A new instance of <see cref="T:Jwc.Experiment.MemberKindCollector"/> having collected
+            <see cref="T:Jwc.Experiment.MemberKinds"/>.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.MemberKindCollector.Visit(Ploeh.Albedo.ConstructorInfoElement)">
+            <summary>
+            Collects a <see cref="T:Jwc.Experiment.MemberKinds"/> value corresponding to the
+            <paramref name="constructorInfoElement"/>.
+            </summary>
+            <param name="constructorInfoElement">
+            A constructor element to collect <see cref="T:Jwc.Experiment.MemberKinds"/>.
+            </param>
+            <returns>
+            A new instance of <see cref="T:Jwc.Experiment.MemberKindCollector"/> having collected
+            <see cref="T:Jwc.Experiment.MemberKinds"/>.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.MemberKindCollector.Visit(Ploeh.Albedo.PropertyInfoElement)">
+            <summary>
+            Collects a <see cref="T:Jwc.Experiment.MemberKinds"/> value corresponding to the
+            <paramref name="propertyInfoElement"/>.
+            </summary>
+            <param name="propertyInfoElement">
+            A property element to collect <see cref="T:Jwc.Experiment.MemberKinds"/>.
+            </param>
+            <returns>
+            A new instance of <see cref="T:Jwc.Experiment.MemberKindCollector"/> having collected
+            <see cref="T:Jwc.Experiment.MemberKinds"/>.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.MemberKindCollector.Visit(Ploeh.Albedo.MethodInfoElement)">
+            <summary>
+            Collects a <see cref="T:Jwc.Experiment.MemberKinds"/> value corresponding to the
+            <paramref name="methodInfoElement"/>.
+            </summary>
+            <param name="methodInfoElement">
+            A method element to collect <see cref="T:Jwc.Experiment.MemberKinds"/>.
+            </param>
+            <returns>
+            A new instance of <see cref="T:Jwc.Experiment.MemberKindCollector"/> having collected
+            <see cref="T:Jwc.Experiment.MemberKinds"/>.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.MemberKindCollector.Visit(Ploeh.Albedo.EventInfoElement)">
+            <summary>
+            Collects a <see cref="T:Jwc.Experiment.MemberKinds"/> value corresponding to the
+            <paramref name="eventInfoElement"/>.
+            </summary>
+            <param name="eventInfoElement">
+            An event element to collect <see cref="T:Jwc.Experiment.MemberKinds"/>.
+            </param>
+            <returns>
+            A new instance of <see cref="T:Jwc.Experiment.MemberKindCollector"/> having collected
+            <see cref="T:Jwc.Experiment.MemberKinds"/>.
+            </returns>
+        </member>
+        <member name="P:Jwc.Experiment.MemberKindCollector.Value">
+            <summary>
+            Gets a value indicating the collected <see cref="T:Jwc.Experiment.MemberKinds"/>(s).
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.ReferenceCollector">
+            <summary>
+            Represents <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> to collect reference assemblies for a given
+            reflection meta-data.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.ReferenceCollector.Visit(Ploeh.Albedo.AssemblyElement)">
+            <summary>
+            Visits an assembly element to collect reference assemblies to attributes.
+            </summary>
+            <param name="assemblyElement">
+            The assembly element.
+            </param>
+            <returns>
+            The result visitor collecting reference assemblies.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.ReferenceCollector.Visit(Ploeh.Albedo.TypeElement)">
+            <summary>
+            Allows an <see cref="T:Ploeh.Albedo.TypeElement"/> to be visited. This method is called when the
+            element accepts this visitor instance.
+            </summary>
+            <param name="typeElement">
+            The <see cref="T:Ploeh.Albedo.TypeElement"/> being visited.
+            </param>
+            <returns>
+            A <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to continue the
+            visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.ReferenceCollector.Visit(Ploeh.Albedo.FieldInfoElement[])">
+            <summary>
+            Allows <see cref="T:Ploeh.Albedo.FieldInfoElement"/> instances to be 'visited'. This method is called
+            when the elements 'accepts' this visitor instance.
+            </summary>
+            <param name="fieldInfoElements">
+            The <see cref="T:Ploeh.Albedo.FieldInfoElement"/> instances being visited.
+            </param>
+            <returns>
+            A (potentially) new <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to
+            continue the visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.ReferenceCollector.Visit(Ploeh.Albedo.PropertyInfoElement[])">
+            <summary>
+            Allows <see cref="T:Ploeh.Albedo.PropertyInfoElement"/> instances to be 'visited'. This method is
+            called when the elements 'accepts' this visitor instance.
+            </summary>
+            <param name="propertyInfoElements">
+            The <see cref="T:Ploeh.Albedo.PropertyInfoElement"/> instances being visited.
+            </param>
+            <returns>
+            A (potentially) new <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to
+            continue the visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.ReferenceCollector.Visit(Ploeh.Albedo.MethodInfoElement[])">
+            <summary>
+            Allows <see cref="T:Ploeh.Albedo.MethodInfoElement"/> instances to be 'visited'. This method is
+            called when the elements 'accepts' this visitor instance.
+            </summary>
+            <param name="methodInfoElements">
+            The <see cref="T:Ploeh.Albedo.MethodInfoElement"/> instances being visited.
+            </param>
+            <returns>
+            A (potentially) new <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to
+            continue the visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.ReferenceCollector.Visit(Ploeh.Albedo.EventInfoElement[])">
+            <summary>
+            Allows <see cref="T:Ploeh.Albedo.EventInfoElement"/> instances to be 'visited'. This method is
+            called when the elements 'accepts' this visitor instance.
+            </summary>
+            <param name="eventInfoElements">
+            The <see cref="T:Ploeh.Albedo.EventInfoElement"/> instances being visited.
+            </param>
+            <returns>
+            A (potentially) new <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to
+            continue the visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.ReferenceCollector.Visit(Ploeh.Albedo.FieldInfoElement)">
+            <summary>
+            Allows an <see cref="T:Ploeh.Albedo.FieldInfoElement"/> to be visited. This method is called when
+            the element accepts this visitor instance.
+            </summary>
+            <param name="fieldInfoElement">
+            The <see cref="T:Ploeh.Albedo.FieldInfoElement"/> being visited.
+            </param>
+            <returns>
+            A <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to continue the
+            visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.ReferenceCollector.Visit(Ploeh.Albedo.ConstructorInfoElement)">
+            <summary>
+            Allows an <see cref="T:Ploeh.Albedo.ConstructorInfoElement"/> to be visited. This method is called
+            when the element accepts this visitor instance.
+            </summary>
+            <param name="constructorInfoElement">
+            The <see cref="T:Ploeh.Albedo.ConstructorInfoElement"/> being visited.
+            </param>
+            <returns>
+            A <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to continue the
+            visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.ReferenceCollector.Visit(Ploeh.Albedo.PropertyInfoElement)">
+            <summary>
+            Visits a property element to collect reference assemblies to attributes.
+            </summary>
+            <param name="propertyInfoElement">
+            The property element.
+            </param>
+            <returns>
+            The result visitor collecting reference assemblies.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.ReferenceCollector.Visit(Ploeh.Albedo.MethodInfoElement)">
+            <summary>
+            Allows an <see cref="T:Ploeh.Albedo.MethodInfoElement"/> to be visited. This method is called when
+            the element accepts this visitor instance.
+            </summary>
+            <param name="methodInfoElement">
+            The <see cref="T:Ploeh.Albedo.MethodInfoElement"/> being visited.
+            </param>
+            <returns>
+            A <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to continue the
+            visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.ReferenceCollector.Visit(Ploeh.Albedo.EventInfoElement)">
+            <summary>
+            Visits an event element to collect reference assemblies to attributes.
+            </summary>
+            <param name="eventInfoElement">
+            The event element.
+            </param>
+            <returns>
+            The result visitor collecting reference assemblies.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.ReferenceCollector.Visit(Ploeh.Albedo.ParameterInfoElement)">
+            <summary>
+            Allows an <see cref="T:Ploeh.Albedo.ParameterInfoElement"/> to be visited. This method is called
+            when the element accepts this visitor instance.
+            </summary>
+            <param name="parameterInfoElement">
+            The <see cref="T:Ploeh.Albedo.ParameterInfoElement"/> being visited.
+            </param>
+            <returns>
+            A <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to continue the
+            visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.ReferenceCollector.Visit(Ploeh.Albedo.LocalVariableInfoElement)">
+            <summary>
+            Allows an <see cref="T:Ploeh.Albedo.LocalVariableInfoElement"/> to be visited. This method is
+            called when the element accepts this visitor instance.
+            </summary>
+            <param name="localVariableInfoElement">
+            The <see cref="T:Ploeh.Albedo.LocalVariableInfoElement"/> being visited.
+            </param>
+            <returns>
+            A <see cref="T:Ploeh.Albedo.IReflectionVisitor`1"/> instance which can be used to continue the
+            visiting process with potentially updated observations.
+            </returns>
+        </member>
+        <member name="P:Jwc.Experiment.ReferenceCollector.Value">
+            <summary>
+            Gets the observation or value produced by this instance.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.MemberKinds">
+            <summary>
+            Represents kinds of idiomatic members.
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.None">
+            <summary>
+            None
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.InstanceField">
+            <summary>
+            The instance field
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.InstanceConstructor">
+            <summary>
+            The instance constructor
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.InstanceGetProperty">
+            <summary>
+            The instance get property
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.InstanceSetProperty">
+            <summary>
+            The instance set property
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.InstanceProperty">
+            <summary>
+            The instance property
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.InstanceMethod">
+            <summary>
+            The instance method
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.InstanceEvent">
+            <summary>
+            The instance event
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.StaticField">
+            <summary>
+            The static field
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.StaticConstructor">
+            <summary>
+            The static constructor
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.StaticGetProperty">
+            <summary>
+            The static get property
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.StaticSetProperty">
+            <summary>
+            The static set property
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.StaticProperty">
+            <summary>
+            The static property
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.StaticMethod">
+            <summary>
+            The static method
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.StaticEvent">
+            <summary>
+            The static event
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.Field">
+            <summary>
+            The field
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.Constructor">
+            <summary>
+            The constructor
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.GetProperty">
+            <summary>
+            The get property
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.SetProperty">
+            <summary>
+            The set property
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.Property">
+            <summary>
+            The property
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.Method">
+            <summary>
+            The method
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.Event">
+            <summary>
+            The event
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.Instance">
+            <summary>
+            All the instance members
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.Static">
+            <summary>
+            All the static members
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.All">
+            <summary>
+            All the members
+            </summary>
+        </member>
+        <member name="F:Jwc.Experiment.MemberKinds.Default">
+            <summary>
+            The default members (All)
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.OrEqualityComparer`1">
+            <summary>
+            Represents logical or operator for <see cref="T:System.Collections.Generic.IEqualityComparer`1"/>
+            </summary>
+            <typeparam name="T">
+            The compared type.
+            </typeparam>
+        </member>
+        <member name="M:Jwc.Experiment.OrEqualityComparer`1.#ctor(System.Collections.Generic.IEqualityComparer{`0}[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.OrEqualityComparer`1"/> class.
+            </summary>
+            <param name="equalityComparers">
+            The equality comparers.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.OrEqualityComparer`1.Equals(`0,`0)">
+            <summary>
+            Determines whether the specified objects are equal.
+            </summary>
+            <returns>
+            true if the specified objects are equal; otherwise, false.
+            </returns>
+            <param name="x">
+            The first object of type <paramref name="x" /> to compare.
+            </param>
+            <param name="y">
+            The second object of type <paramref name="y" /> to compare.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.OrEqualityComparer`1.GetHashCode(`0)">
+            <summary>
+            Returns a hash code for the specified object.
+            </summary>
+            <returns>
+            A hash code for the specified object.
+            </returns>
+            <param name="obj">
+            The <see cref="T:System.Object"/> for which a hash code is to be returned.
+            </param>
+        </member>
+        <member name="P:Jwc.Experiment.OrEqualityComparer`1.EqualityComparers">
+            <summary>
+            Gets a value indicating the equality comparers.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.ParameterToFieldComparer">
+            <summary>
+            Represent comparer to determine that a parameter value equals to a field value.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.ParameterToFieldComparer.#ctor(Jwc.Experiment.ITestFixture)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.ParameterToFieldComparer"/> class.
+            </summary>
+            <param name="testFixture">
+            The test fixture to create an anonymous specimen.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.ParameterToFieldComparer.Equals(Ploeh.Albedo.IReflectionElement,Ploeh.Albedo.IReflectionElement)">
+            <summary>
+            Determines whether the specified objects are equal.
+            </summary>
+            <returns>
+            true if the specified objects are equal; otherwise, false.
+            </returns>
+            <param name="x">
+            The first object of type <paramref name="x" /> to compare.
+            </param>
+            <param name="y">
+            The second object of type <paramref name="y" /> to compare.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.ParameterToFieldComparer.GetHashCode(Ploeh.Albedo.IReflectionElement)">
+            <summary>
+            Returns a hash code for the specified object.
+            </summary>
+            <returns>
+            A hash code for the specified object.
+            </returns>
+            <param name="obj">
+            The <see cref="T:System.Object"/> for which a hash code is to be returned.
+            </param>
+        </member>
+        <member name="P:Jwc.Experiment.ParameterToFieldComparer.TestFixture">
+            <summary>
+            Gets a value indicating the test fixture.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.ParameterToPropertyComparer">
+            <summary>
+            Represent comparer to determine that a parameter value equals to a property value.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.ParameterToPropertyComparer.#ctor(Jwc.Experiment.ITestFixture)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.ParameterToPropertyComparer"/> class.
+            </summary>
+            <param name="testFixture">
+            The test fixture to create an anonymous specimen.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.ParameterToPropertyComparer.Equals(Ploeh.Albedo.IReflectionElement,Ploeh.Albedo.IReflectionElement)">
+            <summary>
+            Determines whether the specified objects are equal.
+            </summary>
+            <returns>
+            true if the specified objects are equal; otherwise, false.
+            </returns>
+            <param name="x">
+            The first object of type <paramref name="x" /> to compare.
+            </param>
+            <param name="y">
+            The second object of type <paramref name="y" /> to compare.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.ParameterToPropertyComparer.GetHashCode(Ploeh.Albedo.IReflectionElement)">
+            <summary>
+            Returns a hash code for the specified object.
+            </summary>
+            <returns>
+            A hash code for the specified object.
+            </returns>
+            <param name="obj">
+            The <see cref="T:System.Object"/> for which a hash code is to be returned.
+            </param>
+        </member>
+        <member name="P:Jwc.Experiment.ParameterToPropertyComparer.TestFixture">
+            <summary>
+            Gets a value indicating the test fixture.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.PropertyToParameterComparer">
+            <summary>
+            Represent comparer to determine that a property value equals to a parameter value.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.PropertyToParameterComparer.#ctor(Jwc.Experiment.ITestFixture)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.PropertyToParameterComparer"/> class.
+            </summary>
+            <param name="testFixture">
+            The test fixture.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.PropertyToParameterComparer.Equals(Ploeh.Albedo.IReflectionElement,Ploeh.Albedo.IReflectionElement)">
+            <summary>
+            Determines whether the specified objects are equal.
+            </summary>
+            <param name="x">
+            The first object of type <paramref name="x" /> to compare.
+            </param>
+            <param name="y">
+            The second object of type <paramref name="y" /> to compare.
+            </param>
+            <returns>
+            true if the specified objects are equal; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:Jwc.Experiment.PropertyToParameterComparer.GetHashCode(Ploeh.Albedo.IReflectionElement)">
+            <summary>
+            Always returns zero(constant) to use the <see cref="M:Jwc.Experiment.PropertyToParameterComparer.Equals(Ploeh.Albedo.IReflectionElement,Ploeh.Albedo.IReflectionElement)"/> method to determine
+            whether the specified objects are equal.
+            </summary>
+            <param name="obj">
+            The object to get the hash code.
+            </param>
+            <returns>
+            The zero
+            </returns>
+        </member>
+        <member name="P:Jwc.Experiment.PropertyToParameterComparer.TestFixture">
+            <summary>
+            Gets a value indicating the test fixture.
+            </summary>
+        </member>
+        <member name="T:Jwc.Experiment.RestrictiveReferenceException">
+            <summary>
+            Represents a verification error when testing whether all references of a certain assembly
+            are specified.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.RestrictiveReferenceException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.RestrictiveReferenceException"/> class.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.RestrictiveReferenceException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.RestrictiveReferenceException"/> class.
+            </summary>
+            <param name="message">
+            The message that describes the error.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.RestrictiveReferenceException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.RestrictiveReferenceException"/> class.
+            </summary>
+            <param name="message">
+            The exception message.
+            </param>
+            <param name="inner">
+            The inner exception.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.RestrictiveReferenceException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.RestrictiveReferenceException"/> class.
+            </summary>
+            <param name="info">
+            The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data about the
+            exception being thrown.
+            </param>
+            <param name="context">
+            The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the
+            source or destination.
+            </param>
+        </member>
+        <member name="T:Jwc.Experiment.Idioms.RestrictiveReferenceAssertion">
+            <summary>
+            Encapsulates a unit test that verifies that all references of an assembly are specified.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.RestrictiveReferenceAssertion.#ctor(System.Reflection.Assembly[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jwc.Experiment.Idioms.RestrictiveReferenceAssertion"/> class.
+            </summary>
+            <param name="restrictiveReferences">
+            The restrictive references to specify all references of a certain assembly.
+            </param>
+        </member>
+        <member name="M:Jwc.Experiment.Idioms.RestrictiveReferenceAssertion.Verify(System.Reflection.Assembly)">
+            <summary>
+            Verifies that all references of an assembly are specified through the restrictive
+            references.
+            </summary>
+            <param name="assembly">
+            The assembly.
+            </param>
+        </member>
+        <member name="P:Jwc.Experiment.Idioms.RestrictiveReferenceAssertion.RestrictiveReferences">
+            <summary>
+            Gets a value indicating the restrictive references.
+            </summary>
+        </member>
+    </members>
+</doc>

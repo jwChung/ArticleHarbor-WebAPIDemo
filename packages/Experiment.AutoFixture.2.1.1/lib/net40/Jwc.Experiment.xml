@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Jwc.Experiment</name>
+    </assembly>
+    <members>
+        <member name="T:Jwc.Experiment.ITestFixture">
+            <summary>
+            test fixture를 표현.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.ITestFixture.Create(System.Object)">
+            <summary>
+            request를 통해 테스트에 필요한 specimen를 만듦.
+            </summary>
+            <param name="request">
+            specimen을 만들기 위해 필요한 정보를 제공. 일반적으로 <see cref="T:System.Type"/>을 많이 활용.
+            </param>
+            <returns>
+            만들어진 specimen 객체.
+            </returns>
+        </member>
+        <member name="T:Jwc.Experiment.ITestFixtureFactory">
+            <summary>
+            Represents a factory to create an instance of <see cref="T:Jwc.Experiment.ITestFixture"/>.
+            </summary>
+        </member>
+        <member name="M:Jwc.Experiment.ITestFixtureFactory.Create(Jwc.Experiment.ITestMethodContext)">
+            <summary>
+            Creates a test fixture.
+            </summary>
+            <param name="context">
+            Information about a test method.
+            </param>
+            <returns>
+            The test fixture.
+            </returns>
+        </member>
+        <member name="T:Jwc.Experiment.ITestMethodContext">
+            <summary>
+            Defines information about a test method.
+            </summary>
+        </member>
+        <member name="P:Jwc.Experiment.ITestMethodContext.TestMethod">
+            <summary>
+            Gets the test method adorned with a test attribute.
+            </summary>
+        </member>
+        <member name="P:Jwc.Experiment.ITestMethodContext.ActualMethod">
+            <summary>
+            Gets the test method to be actually executed.
+            </summary>
+        </member>
+        <member name="P:Jwc.Experiment.ITestMethodContext.TestObject">
+            <summary>
+            Gets the test object declaring a adorned test method.
+            </summary>
+        </member>
+        <member name="P:Jwc.Experiment.ITestMethodContext.ActualObject">
+            <summary>
+            Gets the test object declaring a actual test method.
+            </summary>
+        </member>
+    </members>
+</doc>
