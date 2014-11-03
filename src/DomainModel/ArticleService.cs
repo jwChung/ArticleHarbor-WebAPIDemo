@@ -1,6 +1,7 @@
 ﻿namespace DomainModel
 {
     using System;
+    using System.Threading.Tasks;
 
     public class ArticleService
     {
@@ -19,12 +20,9 @@
             get { return this.repository; }
         }
 
-        public void Add(Article article)
+        public async Task AddAsync(Article article)
         {
-            if (article == null)
-                throw new ArgumentNullException("article");
-
-            this.repository.Insert(article);
+            await Task.Run(() => this.repository.Insert(article)).ConfigureAwait(false);
         }
     }
 }
