@@ -34,7 +34,7 @@
                     Subject = article.Subject,
                     Body = article.Body,
                     Date = article.Date,
-                    Url = article.Url
+                    Url = article.Url.ToString()
                 });
 
             return article.WithId(newArticle.Id);
