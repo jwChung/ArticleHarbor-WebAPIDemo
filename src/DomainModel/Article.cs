@@ -5,39 +5,39 @@
     public class Article
     {
         private readonly string provider;
-        private readonly string id;
+        private readonly string no;
         private readonly string subject;
-        private readonly string body;
+        private readonly string summary;
         private readonly DateTime date;
         private readonly string url;
 
         public Article(
             string provider,
-            string id,
+            string no,
             string subject,
-            string body,
+            string summary,
             DateTime date,
             string url)
         {
             if (provider == null)
                 throw new ArgumentNullException("provider");
 
-            if (id == null)
-                throw new ArgumentNullException("id");
+            if (no == null)
+                throw new ArgumentNullException("no");
 
             if (subject == null)
                 throw new ArgumentNullException("subject");
 
-            if (body == null)
-                throw new ArgumentNullException("body");
+            if (summary == null)
+                throw new ArgumentNullException("summary");
 
             if (url == null)
                 throw new ArgumentNullException("url");
 
             this.provider = provider;
-            this.id = id;
+            this.no = no;
             this.subject = subject;
-            this.body = body;
+            this.summary = summary;
             this.date = date;
             this.url = url;
         }
@@ -47,9 +47,9 @@
             get { return this.provider; }
         }
 
-        public string Id
+        public string No
         {
-            get { return this.id; }
+            get { return this.no; }
         }
 
         public string Subject
@@ -57,9 +57,9 @@
             get { return this.subject; }
         }
 
-        public string Body
+        public string Summary
         {
-            get { return this.body; }
+            get { return this.summary; }
         }
 
         public DateTime Date
