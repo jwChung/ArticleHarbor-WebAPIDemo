@@ -12,7 +12,8 @@
         {
             var customization = new CompositeCustomization(
                 new AutoMoqCustomization(),
-                new TestParametersCustomization(context.ActualMethod.GetParameters()));
+                new TestParametersCustomization(context.ActualMethod.GetParameters()),
+                new OmitAutoPropertiesCustomization());
 
             return new TestFixture(new Fixture().Customize(customization));
         }
