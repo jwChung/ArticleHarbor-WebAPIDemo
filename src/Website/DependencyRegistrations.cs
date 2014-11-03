@@ -15,8 +15,12 @@ namespace Website
             get { throw new NotSupportedException(); }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "DependencyResolver가 알아서 Dispose함.")]
         public IContainerVisitor<object> Visit(Container container)
         {
+            if (container == null)
+                throw new ArgumentNullException("container");
+
             // Transient scope
             container.Register<IAssembliesResolver>(
                 c => new ArticleHarborAssembliesResolver())

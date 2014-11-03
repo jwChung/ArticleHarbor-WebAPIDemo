@@ -8,6 +8,8 @@
       <Word>ctor</Word>
       <Word>moq</Word>
       <Word>api</Word>
+      <!-- Test Specific Sub-class -->
+      <Word>tss</Word>
     </Recognized>
     <Unrecognized>
       <Word></Word>
@@ -24,7 +26,7 @@
   </Words>
   <Acronyms>
     <CasingExceptions>
-      <Acronym>Nu</Acronym>
+      <Acronym></Acronym>
     </CasingExceptions>
   </Acronyms>
 </Dictionary>

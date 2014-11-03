@@ -55,7 +55,7 @@
         }
 
         [Test]
-        public void DisposeAsyncronouslySavesChanges(
+        public void DisposeAsynchronouslySavesChanges(
             Mock<ArticleHarborContext> context,
             IFixture fixture)
         {
