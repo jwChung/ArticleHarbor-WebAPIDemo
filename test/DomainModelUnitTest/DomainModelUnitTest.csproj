@@ -92,6 +92,7 @@
     <Compile Include="ArticleServiceTest.cs" />
     <Compile Include="ArticleTest.cs" />
     <Compile Include="ArticleWordTest.cs" />
+    <Compile Include="AssemblyTest.cs" />
     <Compile Include="KoreanNounExtractorTest.cs" />
     <Compile Include="Mocked.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

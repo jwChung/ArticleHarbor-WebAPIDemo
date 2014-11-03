@@ -7,7 +7,6 @@
     using System.Threading;
     using DomainModel;
     using Jwc.Experiment.Xunit;
-    using Ploeh.AutoFixture;
     using Xunit;
 
     public class KoreanNounExtractorTest

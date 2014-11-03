@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
     using kr.ac.kaist.swrc.jhannanum.comm;
     using kr.ac.kaist.swrc.jhannanum.hannanum;
 
