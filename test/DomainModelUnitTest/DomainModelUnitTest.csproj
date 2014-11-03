@@ -85,7 +85,9 @@
     <Compile Include="..\..\build\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="ArticleServiceTest.cs" />
     <Compile Include="ArticleTest.cs" />
+    <Compile Include="Mocked.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadWritablePropertyAssertion.cs" />
     <Compile Include="TestAttribute.cs" />
