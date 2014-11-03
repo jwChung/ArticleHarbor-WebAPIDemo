@@ -20,9 +20,9 @@
             get { return this.repository; }
         }
 
-        public async Task AddAsync(Article article)
+        public Task AddAsync(Article article)
         {
-            await Task.Run(() => this.repository.Insert(article)).ConfigureAwait(false);
+            return Task.Run(() => this.repository.Insert(article));
         }
     }
 }
