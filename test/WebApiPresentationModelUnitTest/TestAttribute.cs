@@ -1,21 +1,80 @@
-﻿namespace WebApiPresentationModelUnitTest
+﻿using System;
+using System.Web.Http.Controllers;
+using Jwc.Experiment;
+using Jwc.Experiment.AutoFixture;
+using Jwc.Experiment.Xunit;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.AutoMoq;
+using Ploeh.AutoFixture.Kernel;
+
+public class TestAttribute : TestBaseAttribute
 {
-    using Jwc.Experiment;
-    using Jwc.Experiment.AutoFixture;
-    using Jwc.Experiment.Xunit;
-    using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.AutoMoq;
+    private readonly RunOn runOn;
 
-    public class TestAttribute : TestBaseAttribute
+    public TestAttribute()
+        : this(RunOn.Any)
     {
-        protected override ITestFixture Create(ITestMethodContext context)
-        {
-            var customization = new CompositeCustomization(
-                new AutoMoqCustomization(),
-                new TestParametersCustomization(context.ActualMethod.GetParameters()),
-                new OmitAutoPropertiesCustomization());
+    }
 
-            return new TestFixture(new Fixture().Customize(customization));
+    public TestAttribute(RunOn runOn)
+    {
+        this.runOn = runOn;
+    }
+
+    public RunOn RunOn
+    {
+        get { return this.runOn; }
+    }
+
+    public override string Skip
+    {
+        get
+        {
+#if !CI
+            if (base.Skip == null && this.runOn == RunOn.CI)
+                return "Run this test only on CI server.";
+#else
+            if (base.Skip == null && this.runOn == RunOn.Local)
+                return "Run this test only on Local machine.";
+#endif
+
+            return base.Skip;
+        }
+
+        set
+        {
+            base.Skip = value;
+        }
+    }
+
+    protected override ITestFixture Create(ITestMethodContext context)
+    {
+        var customization = new CompositeCustomization(
+            new AutoMoqCustomization(),
+            new TestParametersCustomization(context.ActualMethod.GetParameters()));
+
+        var fixture = new Fixture().Customize(customization);
+        fixture.Customizations.Add(new OmitAutoPropertiesBuilder(typeof(IHttpController)));
+        return new TestFixture(fixture);
+    }
+
+    private class OmitAutoPropertiesBuilder : ISpecimenBuilder
+    {
+        private readonly Type target;
+
+        public OmitAutoPropertiesBuilder(Type target)
+        {
+            this.target = target;
+        }
+
+        public object Create(object request, ISpecimenContext context)
+        {
+            var type = request as Type;
+            if (type == null || type.IsAbstract || !this.target.IsAssignableFrom(type))
+                return new NoSpecimen(request);
+
+            return new MethodInvoker(new ModestConstructorQuery())
+                .Create(request, context);
         }
     }
 }

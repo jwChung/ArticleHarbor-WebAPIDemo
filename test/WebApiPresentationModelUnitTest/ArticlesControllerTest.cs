@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Web.Http;
     using DomainModel;
+    using Ploeh.AutoFixture.Xunit;
     using Xunit;
 
     public class ArticlesControllerTest : IdiomaticTest<ArticlesController>

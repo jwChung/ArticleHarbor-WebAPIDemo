@@ -45,7 +45,7 @@
         public void InsertReturnsArticleWithId(
             ArticleRepository sut,
             Article article,
-            EFArticle efArticle)
+            [NoAutoProperties] EFArticle efArticle)
         {
             sut.EFArticles.ToMock()
                 .Setup(x => x.Add(It.IsAny<EFArticle>())).Returns(efArticle);

@@ -48,8 +48,7 @@ public class TestAttribute : TestBaseAttribute
     {
         var customization = new CompositeCustomization(
             new AutoMoqCustomization(),
-            new TestParametersCustomization(context.ActualMethod.GetParameters()),
-            new OmitAutoPropertiesCustomization());
+            new TestParametersCustomization(context.ActualMethod.GetParameters()));
 
         return new TestFixture(new Fixture().Customize(customization));
     }
