@@ -45,10 +45,10 @@
         public void InsertReturnsArticleWithId(
             ArticleRepository sut,
             Article article,
-            EFArticle EFArticle)
+            EFArticle efArticle)
         {
             sut.EFArticles.ToMock()
-                .Setup(x => x.Add(It.IsAny<EFArticle>())).Returns(EFArticle);
+                .Setup(x => x.Add(It.IsAny<EFArticle>())).Returns(efArticle);
 
             var actual = sut.Insert(article);
 

@@ -35,15 +35,9 @@
           Build;
           RunTests;
           GetSemanticVersion;
-          DetermineCanPush;
-          Publish" />
-
-  <Target Name ="Publish" Condition=" '$(CanPush)' == 'true' " DependsOnTargets="
-          VersioningNuspecs;
           GetReleaseNotes;
-          SetReleaseNotes;
           MakeTagOnGitHub" />
-  
+
   <Target Name="MakePrivateKey">
     <Base64StringToFile Input="$(PrivateKeyBase64String)" OutputFile="PrivateKey.snk" />
   </Target>
@@ -160,9 +154,9 @@
   <!-- Cleanup -->
   <Target Name="Cleanup" DependsOnTargets="UndoVersioningNuspecs">
     <Delete Files="PrivateKey.snk" />
-    <XmlPoke XmlInputPath="%(NuspecFiles.FullPath)"
+    <!--<XmlPoke XmlInputPath="%(NuspecFiles.FullPath)"
              Query="//metadata/releaseNotes"
-             Value="releaseNotes" />
+             Value="releaseNotes" />-->
     <ItemGroup>
       <NupkgFiles Include="*.nupkg" />
     </ItemGroup>
@@ -173,11 +167,11 @@
     <PropertyGroup>
       <NuspecFile>%(NuspecFiles.FullPath)</NuspecFile>
     </PropertyGroup>
-    <XmlPoke XmlInputPath="$(NuspecFile)"
+    <!--<XmlPoke XmlInputPath="$(NuspecFile)"
              Query="//metadata/version"
              Value="0.0.0" />
     <XmlPoke XmlInputPath="$(NuspecFile)"
              Query="//metadata/dependencies/dependency[@id='%(CopyNuspecFiles.Filename)']/@version"
-             Value="0.0.0" />
+             Value="0.0.0" />-->
   </Target>
 </Project>

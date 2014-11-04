@@ -8,5 +8,10 @@ public enum RunOn
     /// <summary>
     /// Run tests on wherever.
     /// </summary>
-    Any
+    Any,
+
+    /// <summary>
+    /// Run tests only on local.
+    /// </summary>
+    Local
 }

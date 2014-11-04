@@ -10,6 +10,7 @@
       <Word>api</Word>
       <!-- Test Specific Sub-class -->
       <Word>tss</Word>
+      <Word>ef</Word>
     </Recognized>
     <Unrecognized>
       <Word></Word>

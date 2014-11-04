@@ -67,7 +67,7 @@
             context.Verify(x => x.SaveChangesAsync(), Times.Once());
         }
 
-        [Test]
+        [Test(RunOn.Local)]
         public void DisposeThrowsUnhandledExceptionWhenSaveChangesAsyncThrows(
             TssArticleHarborContext context,
             IFixture fixture)
@@ -82,7 +82,7 @@
 
                 sut.Dispose();
 
-                Thread.Sleep(100);
+                Thread.Sleep(150);
                 Assert.True(throws);
             }
             finally

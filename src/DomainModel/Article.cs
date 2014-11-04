@@ -12,6 +12,7 @@
         private readonly string url;
         private int id = -1;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "5#", Justification = "데이터베이스에 저장하기 위해 문자열로 취급.")]
         public Article(
             string provider,
             string no,
@@ -73,6 +74,7 @@
             get { return this.date; }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Justification = "데이터베이스에 저장하기 위해 문자열로 취급.")]
         public string Url
         {
             get { return this.url; }
