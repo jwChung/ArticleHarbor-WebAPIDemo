@@ -35,5 +35,23 @@
                 Assert.NotNull(json);
             }
         }
+        
+        [Fact]
+        public async Task GetDoesNotSupportXmlContent()
+        {
+            using (var client = HttpClientFactory.Create())
+            {
+                client.DefaultRequestHeaders.Accept.ParseAdd("application/xml");
+                client.DefaultRequestHeaders.Accept.ParseAdd("application/json;q=0.8");
+                var response = await client.GetAsync("api/articles");
+
+                Assert.Equal(
+                    "application/json",
+                    response.Content.Headers.ContentType.MediaType);
+                var json = await response.Content.ReadAsStringAsync()
+                    .ContinueWith(t => JsonConvert.DeserializeObject(t.Result));
+                Assert.NotNull(json);
+            }
+        }
     }
 }

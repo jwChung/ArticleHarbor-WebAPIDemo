@@ -18,6 +18,8 @@
             container.Accept(new DependencyRegistrations());
             config.DependencyResolver = new DependencyResolver(container);
 
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 
