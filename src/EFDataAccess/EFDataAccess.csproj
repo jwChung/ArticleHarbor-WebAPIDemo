@@ -56,6 +56,7 @@
     </Compile>
     <Compile Include="Article.cs" />
     <Compile Include="ArticleHarborContext.cs" />
+    <Compile Include="ArticleHarborContextInitializer.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ArticleWord.cs" />
