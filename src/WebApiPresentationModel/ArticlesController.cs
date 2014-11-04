@@ -1,12 +1,31 @@
 ﻿namespace WebApiPresentationModel
 {
+    using System;
+    using System.Collections.Generic;
     using System.Web.Http;
+    using DomainModel;
 
     public class ArticlesController : ApiController
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "This is Web-API-action method.")]
-        public void Get()
+        private readonly IArticleRepository repository;
+
+        public ArticlesController(IArticleRepository repository)
         {
+            if (repository == null)
+                throw new ArgumentNullException("repository");
+
+            this.repository = repository;
+        }
+
+        public IArticleRepository Repository
+        {
+            get { return this.repository; }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "This is Web-API-action method.")]
+        public IEnumerable<Article> Get()
+        {
+            return this.repository.Select();
         }
     }
 }

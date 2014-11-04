@@ -105,6 +105,9 @@
     <Compile Include="..\DomainModelUnitTest\IdiomaticTest.cs">
       <Link>IdiomaticTest.cs</Link>
     </Compile>
+    <Compile Include="..\DomainModelUnitTest\Mocked.cs">
+      <Link>Mocked.cs</Link>
+    </Compile>
     <Compile Include="..\DomainModelUnitTest\RunOn.cs">
       <Link>RunOn.cs</Link>
     </Compile>
@@ -125,6 +128,10 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\DomainModel\DomainModel.csproj">
+      <Project>{860494bf-26a2-4d57-b091-a8825e5d8200}</Project>
+      <Name>DomainModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\WebApiPresentationModel\WebApiPresentationModel.csproj">
       <Project>{1BAEC422-3D13-49BE-82AA-18986A62E24D}</Project>
       <Name>WebApiPresentationModel</Name>

@@ -25,7 +25,7 @@ namespace Website
             container.Register<IAssembliesResolver>(
                 c => new ArticleHarborAssembliesResolver())
                 .ReusedWithinNone();
-            container.Register(c => new ArticlesController())
+            container.Register(c => new ArticlesController(c.Resolve<IArticleRepository>()))
                 .ReusedWithinNone();
 
             // Request scope
