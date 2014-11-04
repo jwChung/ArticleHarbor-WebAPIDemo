@@ -24,6 +24,6 @@
         public string Url { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "EntityFramework의 Lazy Loading을 위한 Property.")]
-        public virtual ICollection<ArticleWord> ArticleWords { get; set; }
+        public virtual ICollection<EFArticleWord> ArticleWords { get; set; }
     }
 }

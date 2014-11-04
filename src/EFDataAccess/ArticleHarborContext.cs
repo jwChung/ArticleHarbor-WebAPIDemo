@@ -17,6 +17,6 @@
 
         public IDbSet<EFArticle> Articles { get; set; }
 
-        public IDbSet<ArticleWord> ArticleWords { get; set; }
+        public IDbSet<EFArticleWord> ArticleWords { get; set; }
     }
 }

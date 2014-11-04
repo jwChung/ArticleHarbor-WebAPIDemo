@@ -1,6 +1,6 @@
 ﻿namespace EFDataAccess
 {
-    public class ArticleWord
+    public class EFArticleWord
     {
         public int Id { get; set; }
 
