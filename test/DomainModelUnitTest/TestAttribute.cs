@@ -30,9 +30,10 @@ public class TestAttribute : TestBaseAttribute
 #if !CI
             if (base.Skip == null && this.runOn == RunOn.CI)
                 return "Run this test only on CI server.";
-#endif
+#else
             if (base.Skip == null && this.runOn == RunOn.Local)
                 return "Run this test only on Local machine.";
+#endif
 
             return base.Skip;
         }

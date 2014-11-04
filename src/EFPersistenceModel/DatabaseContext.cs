@@ -38,9 +38,7 @@
             if (this.context == null)
                 return;
 
-            await this.context.SaveChangesAsync()
-                .ThrowIfFaulted().ConfigureAwait(false);
-
+            await this.context.SaveChangesAsync().ConfigureAwait(false);
             this.context.Dispose();
             this.context = null;
         }
