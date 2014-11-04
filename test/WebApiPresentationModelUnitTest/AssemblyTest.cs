@@ -12,6 +12,7 @@
             {
                 Assembly.Load("mscorlib"),
                 Assembly.Load("System.Web.Http, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"),
+                Assembly.Load("DomainModel"),
             };
             new RestrictiveReferenceAssertion(restrictiveReferences)
                 .Verify(Assembly.Load("WebApiPresentationModel"));
