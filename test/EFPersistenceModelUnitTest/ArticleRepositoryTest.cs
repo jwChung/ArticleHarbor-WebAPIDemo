@@ -60,7 +60,7 @@
         public void SelectReturnsCorrectArticleSet(
             IFixture fixture)
         {
-            var articles = new ArticleHarborContext(new ArticlesInitializer()).Articles;
+            var articles = new ArticleHarborContext().Articles;
             fixture.Inject(articles);
             var sut = fixture.Create<ArticleRepository>();
             var values = articles.Take(50).ToArray();
@@ -68,32 +68,8 @@
             var actual = sut.Select().ToArray();
 
             for (int i = 0; i < values.Length; i++)
-                values[i].AsSource().OfLikeness<Article>().ShouldEqual(actual[i]);
-        }
-
-        private class ArticlesInitializer : DropCreateDatabaseAlways<ArticleHarborContext>
-        {
-            public override void InitializeDatabase(ArticleHarborContext context)
-            {
-                this.InitializeArticles(context.Articles);
-                base.InitializeDatabase(context);
-            }
-
-            private void InitializeArticles(IDbSet<EFArticle> articles)
-            {
-                for (int i = 0; i < 100; i++)
-                {
-                    articles.Add(new EFArticle
-                    {
-                        No = i.ToString(),
-                        Provider = "뉴스",
-                        Subject = "제목" + i,
-                        Body = "본문" + i,
-                        Url = "url" + i,
-                        Date = DateTime.Now
-                    });
-                }
-            }
+                values[i].AsSource().OfLikeness<Article>()
+                    .ShouldEqual(actual[i]);
         }
     }
 }
