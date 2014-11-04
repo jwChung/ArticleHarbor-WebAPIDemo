@@ -36,12 +36,13 @@
                 new ArgumentOutOfRangeException()
             };
 
-            return TestCases.WithArgs(testData).WithAuto<UnhandledExceptionLogger, IFixture>()
-                .Create((exception, sut, fixture) =>
+            return TestCases.WithArgs(testData).WithAuto<IFixture>()
+                .Create((exception, fixture) =>
                 {
                     fixture.Inject<Exception>(exception);
                     var context = fixture.Create<ExceptionLoggerContext>();
-
+                    var sut = fixture.Create<UnhandledExceptionLogger>();
+                        
                     var actual = sut.ShouldLog(context);
 
                     Assert.False(actual);
