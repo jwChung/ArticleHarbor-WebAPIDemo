@@ -54,7 +54,7 @@
     <Compile Include="..\..\build\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="Article.cs" />
+    <Compile Include="EFArticle.cs" />
     <Compile Include="ArticleHarborContext.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

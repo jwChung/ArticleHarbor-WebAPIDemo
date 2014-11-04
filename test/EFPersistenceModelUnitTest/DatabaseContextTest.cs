@@ -30,7 +30,7 @@
             var actual = sut.Articles;
 
             var repository = Assert.IsAssignableFrom<ArticleRepository>(sut.Articles);
-            Assert.Same(sut.Context.Articles, repository.Articles);
+            Assert.Same(sut.Context.Articles, repository.EFArticles);
         }
 
         [Test]

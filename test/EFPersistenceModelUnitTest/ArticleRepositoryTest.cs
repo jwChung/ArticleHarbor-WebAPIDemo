@@ -30,14 +30,14 @@
             Article article)
         {
             var likeness = article.AsSource()
-                .OfLikeness<EFDataAccess.Article>()
+                .OfLikeness<EFArticle>()
                 .Without(x => x.ArticleWords)
                 .Without(x => x.Id);
 
             sut.Insert(article);
 
-            sut.Articles.ToMock().Verify(
-                x => x.Add(It.Is<EFDataAccess.Article>(p => likeness.Equals(p))),
+            sut.EFArticles.ToMock().Verify(
+                x => x.Add(It.Is<EFArticle>(p => likeness.Equals(p))),
                 Times.Once());
         }
 
@@ -45,11 +45,11 @@
         public void InsertReturnsArticleWithId(
             ArticleRepository sut,
             Article article,
-            EFDataAccess.Article newArticle)
+            EFArticle EFArticle)
         {
-            sut.Articles.ToMock()
-                .Setup(x => x.Add(It.IsAny<EFDataAccess.Article>())).Returns(newArticle);
-            
+            sut.EFArticles.ToMock()
+                .Setup(x => x.Add(It.IsAny<EFArticle>())).Returns(EFArticle);
+
             var actual = sut.Insert(article);
 
             Assert.NotSame(article, sut);
@@ -61,12 +61,12 @@
             IFixture fixture)
         {
             var articles = new ArticleHarborContext(new ArticlesInitializer()).Articles;
-            fixture.Inject<IDbSet<EFDataAccess.Article>>(articles);
+            fixture.Inject(articles);
             var sut = fixture.Create<ArticleRepository>();
             var values = articles.Take(50).ToArray();
 
             var actual = sut.Select().ToArray();
-            
+
             for (int i = 0; i < values.Length; i++)
                 values[i].AsSource().OfLikeness<Article>().ShouldEqual(actual[i]);
         }
@@ -79,11 +79,11 @@
                 base.InitializeDatabase(context);
             }
 
-            private void InitializeArticles(IDbSet<EFDataAccess.Article> articles)
+            private void InitializeArticles(IDbSet<EFArticle> articles)
             {
                 for (int i = 0; i < 100; i++)
                 {
-                    articles.Add(new EFDataAccess.Article
+                    articles.Add(new EFArticle
                     {
                         No = i.ToString(),
                         Provider = "뉴스",

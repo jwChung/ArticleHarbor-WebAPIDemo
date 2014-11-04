@@ -5,32 +5,32 @@
     using System.Data.Entity;
     using System.Linq;
     using DomainModel;
-    using Article = EFDataAccess.Article;
+    using EFDataAccess;
 
     public class ArticleRepository : IArticleRepository
     {
-        private readonly IDbSet<Article> articles;
+        private readonly IDbSet<EFArticle> efArticles;
 
-        public ArticleRepository(IDbSet<Article> articles)
+        public ArticleRepository(IDbSet<EFArticle> efArticles)
         {
-            if (articles == null)
-                throw new ArgumentNullException("articles");
+            if (efArticles == null)
+                throw new ArgumentNullException("efArticles");
 
-            this.articles = articles;
+            this.efArticles = efArticles;
         }
 
-        public IDbSet<Article> Articles
+        public IDbSet<EFArticle> EFArticles
         {
-            get { return this.articles; }
+            get { return this.efArticles; }
         }
 
-        public DomainModel.Article Insert(DomainModel.Article article)
+        public Article Insert(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            var newArticle = this.articles.Add(
-                new Article
+            var efArticle = this.efArticles.Add(
+                new EFArticle
                 {
                     Provider = article.Provider,
                     No = article.No,
@@ -40,14 +40,14 @@
                     Url = article.Url
                 });
 
-            return article.WithId(newArticle.Id);
+            return article.WithId(efArticle.Id);
         }
 
-        public IEnumerable<DomainModel.Article> Select()
+        public IEnumerable<Article> Select()
         {
-            foreach (var article in this.articles.Take(50))
+            foreach (var article in this.efArticles.Take(50))
             {
-                yield return new DomainModel.Article(
+                yield return new Article(
                     article.Provider,
                     article.No,
                     article.Subject,

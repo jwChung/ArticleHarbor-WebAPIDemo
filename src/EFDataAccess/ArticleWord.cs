@@ -6,6 +6,6 @@
 
         public string Name { get; set; }
 
-        public virtual Article Article { get; set; }
+        public virtual EFArticle EFArticle { get; set; }
     }
 }

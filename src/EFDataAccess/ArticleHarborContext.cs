@@ -15,7 +15,7 @@
             Database.SetInitializer(initializer);
         }
 
-        public IDbSet<Article> Articles { get; set; }
+        public IDbSet<EFArticle> Articles { get; set; }
 
         public IDbSet<ArticleWord> ArticleWords { get; set; }
     }
