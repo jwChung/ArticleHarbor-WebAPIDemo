@@ -9,7 +9,7 @@
     using WebApiPresentationModel;
     using Xunit;
 
-    public class UnhandledExceptionLoggerTest
+    public class UnhandledExceptionLoggerTest : IdiomaticTest<UnhandledExceptionLogger>
     {
         [Test]
         public void SutIsExceptionLogger(UnhandledExceptionLogger sut)
