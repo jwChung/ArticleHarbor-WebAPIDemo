@@ -1,0 +1,50 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  
+  <PropertyGroup>
+    <!--Root directory absolute path-->
+    <RootDir>$(MSBuildProjectDirectory)\..\</RootDir>
+    
+    <!--True to run code-analysis, otherwise false-->
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    
+    <!--Private key string encoded using Base64String.-->
+    <PrivateKeyBase64String>$(PrivateKeyBase64String)</PrivateKeyBase64String>
+    
+    <!--Nuget account id used to delete packages when pre-release version is pushed.-->
+    <NugetId>$(NugetId)</NugetId>
+    
+    <!--Nuget accout password used to delete packages when pre-release version is pushed.-->
+    <NugetPassword>$(NugetPassword)</NugetPassword>
+    
+    <!--Nuget api key used to push packages to Nuget server.-->
+    <SetApiKey>$(SetApiKey)</SetApiKey>
+    
+    <!--Access token of github used to make git tag on GitHub.-->
+    <GitHubAccessToken>$(GitHubAccessToken)</GitHubAccessToken>
+
+    <!--Github account id used to identify the repository on GitHub. -->
+    <GitHubId>jwChung</GitHubId>
+
+    <!--Github repository name used to identify the repository on GitHub.-->
+    <GitHubRepository>ArticleHarbor-WebAPIDemo-</GitHubRepository>
+    
+    <!--Ref or sha to create a tag for, which can be ommited as the default is
+        'refs/heads/master'.-->
+    <RefOrShaForTag>$(APPVEYOR_REPO_COMMIT)</RefOrShaForTag>
+
+    <!--Author name for making git tag.-->
+    <AuthorName>Jin-Wook Chung</AuthorName>
+    
+    <!--Author email for making git tag.-->
+    <AuthorEmail>$(AuthorEmail)</AuthorEmail>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Projects Include="$(RootDir)src\**\*.csproj" />
+    <TestProjects Include="$(RootDir)test\**\*.csproj" />
+    <SolutionInfo Include="$(RootDir)**\SolutionInfo.cs" />
+    <NuspecFiles Include="$(RootDir)**\*.nuspec" />
+  </ItemGroup>
+  
+  <Import Project="$(RootDir)build\Build.targets"/>
+</Project>
