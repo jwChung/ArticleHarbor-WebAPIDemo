@@ -11,7 +11,6 @@
             var restrictiveReferences = new[]
             {
                 Assembly.Load("mscorlib"),
-                Assembly.Load("System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"),
                 Assembly.Load("NHanNanum")
             };
             new RestrictiveReferenceAssertion(restrictiveReferences)

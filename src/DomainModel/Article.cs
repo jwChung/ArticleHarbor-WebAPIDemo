@@ -9,7 +9,7 @@
         private readonly string subject;
         private readonly string body;
         private readonly DateTime date;
-        private readonly Uri url;
+        private readonly string url;
         private int id = -1;
 
         public Article(
@@ -18,7 +18,7 @@
             string subject,
             string body,
             DateTime date,
-            Uri url)
+            string url)
         {
             if (provider == null)
                 throw new ArgumentNullException("provider");
@@ -73,7 +73,7 @@
             get { return this.date; }
         }
 
-        public Uri Url
+        public string Url
         {
             get { return this.url; }
         }

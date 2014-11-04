@@ -5,8 +5,14 @@
     public class ArticleHarborContext : DbContext
     {
         public ArticleHarborContext()
+            : this(new NullDatabaseInitializer<ArticleHarborContext>())
         {
-            Database.SetInitializer(new ArticleHarborContextInitializer());
+        }
+
+        public ArticleHarborContext(
+            IDatabaseInitializer<ArticleHarborContext> initializer)
+        {
+            Database.SetInitializer(initializer);
         }
 
         public IDbSet<Article> Articles { get; set; }
