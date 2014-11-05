@@ -49,13 +49,13 @@
             await this.efArticles.Take(50).LoadAsync();
             return this.efArticles.ToArray().Select(
                 efa => new Article(
+                    efa.Id,
                     efa.Provider,
                     efa.No,
                     efa.Subject,
                     efa.Body,
                     efa.Date,
-                    efa.Url)
-                    .WithId(efa.Id));
+                    efa.Url));
         }
     }
 }
