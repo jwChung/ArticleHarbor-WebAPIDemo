@@ -63,7 +63,7 @@
     <Compile Include="FileLogger.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ILogger.cs" />
-    <Compile Include="JsonConstructorFormatter.cs" />
+    <Compile Include="JsonConstructorDeserializer.cs" />
     <Compile Include="JsonConstructorMediaTypeFormatter.cs" />
     <Compile Include="LogContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

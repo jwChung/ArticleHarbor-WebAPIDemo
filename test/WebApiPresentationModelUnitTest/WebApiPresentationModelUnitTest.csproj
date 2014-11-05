@@ -118,7 +118,7 @@
     <Compile Include="ArticlesControllerTest.cs" />
     <Compile Include="AssemblyTest.cs" />
     <Compile Include="FileLoggerTest.cs" />
-    <Compile Include="JsonConstructorFormatterTest.cs" />
+    <Compile Include="JsonConstructorDeserializerTest.cs" />
     <Compile Include="JsonConstructorMediaTypeFormatterTest.cs" />
     <Compile Include="LogContextTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,5 +1,6 @@
 ﻿namespace WebApiPresentationModelUnitTest
 {
+    using System;
     using System.Collections.Generic;
     using Jwc.Experiment;
     using Jwc.Experiment.Idioms;
@@ -9,12 +10,12 @@
     using WebApiPresentationModel;
     using Xunit;
 
-    public class JsonConstructorFormatterTest
+    public class JsonConstructorDeserializerTest
     {
         [Test]
         public IEnumerable<ITestCase> SutHasAppropriateGuards()
         {
-            var members = typeof(JsonConstructorFormatter).GetIdiomaticMembers();
+            var members = typeof(JsonConstructorDeserializer).GetIdiomaticMembers();
             return TestCases.WithArgs(members).WithAuto<GuardClauseAssertion>()
                 .Create((m, a) => a.Verify(m));
         }
@@ -24,7 +25,7 @@
         {
             var json = JsonConvert.SerializeObject(foo);
             
-            var actual = (Foo)JsonConstructorFormatter.Read(typeof(Foo), json);
+            var actual = (Foo)JsonConstructorDeserializer.Read(typeof(Foo), json);
 
             Assert.Equal(foo.Name, actual.Name);
             Assert.Equal(-1, actual.Age);
@@ -36,7 +37,7 @@
         {
             var json = JsonConvert.SerializeObject(foo);
 
-            var actual = (Foo)JsonConstructorFormatter.Read(typeof(Foo), json);
+            var actual = (Foo)JsonConstructorDeserializer.Read(typeof(Foo), json);
 
             Assert.Equal(foo.Age, actual.Age);
             Assert.Equal(foo.Name, actual.Name);
@@ -48,10 +49,26 @@
         {
             var json = JsonConvert.SerializeObject(bar);
 
-            var actual = (Bar)JsonConstructorFormatter.Read(typeof(Bar), json);
+            var actual = (Bar)JsonConstructorDeserializer.Read(typeof(Bar), json);
 
             Assert.Null(actual.Name);
             Assert.Equal(bar.Name, actual.Name2);
+        }
+
+        [Test]
+        public void ReadSetsDefaultValueToCtoArgumentWhenTypeCannotBeConvertedFromString(Baz baz)
+        {
+            var json = JsonConvert.SerializeObject(baz);
+            var actual = (Baz)JsonConstructorDeserializer.Read(typeof(Baz), json);
+            Assert.Null(actual.Type);
+        }
+
+        [Test]
+        public void ReadSetsDefaultValueToPropertyWhenTypeCannotBeConvertedFromString(Abc baz)
+        {
+            var json = JsonConvert.SerializeObject(baz);
+            var actual = (Abc)JsonConstructorDeserializer.Read(typeof(Abc), json);
+            Assert.Null(actual.Type);
         }
 
         public class Foo
@@ -102,8 +119,32 @@
             {
                 get
                 {
-                    return name;
+                    return this.name;
                 }
+            }
+        }
+
+        public class Baz
+        {
+            private readonly Type type;
+
+            public Baz(Type type)
+            {
+                this.type = type;
+            }
+
+            public Type Type
+            {
+                get { return this.type; }
+            }
+        }
+
+        public class Abc
+        {
+            public Type Type
+            {
+                get;
+                set;
             }
         }
     }
