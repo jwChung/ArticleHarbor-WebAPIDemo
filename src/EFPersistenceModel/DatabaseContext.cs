@@ -9,7 +9,8 @@
     public sealed class DatabaseContext : IDatabaseContext
     {
         private readonly ArticleRepository articles;
-        private ArticleHarborContext context;
+        private readonly ArticleHarborContext context;
+        private bool disposed = false;
 
         public DatabaseContext(ArticleHarborContext context)
         {
@@ -35,12 +36,12 @@
 
         public async void Dispose()
         {
-            if (this.context == null)
+            if (this.disposed)
                 return;
 
             await this.context.SaveChangesAsync().ConfigureAwait(false);
             this.context.Dispose();
-            this.context = null;
+            this.disposed = true;
         }
     }
 }
