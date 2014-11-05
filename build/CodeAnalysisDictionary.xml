@@ -11,6 +11,9 @@
       <!-- Test Specific Sub-class -->
       <Word>tss</Word>
       <Word>ef</Word>
+      <Word>deserializer</Word>
+      <Word>deserialize</Word>
+      <Word>deserializes</Word>
     </Recognized>
     <Unrecognized>
       <Word></Word>
