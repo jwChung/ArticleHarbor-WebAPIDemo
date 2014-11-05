@@ -17,7 +17,7 @@
         }
 
         [Test]
-        public async Task LogAsyncCollectlyLogs(LogContext context, IFixture fixture)
+        public async Task LogAsyncCorrectlyLogs(LogContext context, IFixture fixture)
         {
             try
             {

@@ -52,7 +52,7 @@
         }
 
         [Test]
-        public IEnumerable<ITestCase> ShouldLogReturnsFlaseWithArgumentException()
+        public IEnumerable<ITestCase> ShouldLogReturnsFalseWithArgumentException()
         {
             var testData = new[]
             {
