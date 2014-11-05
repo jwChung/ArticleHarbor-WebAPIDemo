@@ -29,8 +29,8 @@
 
             var actual = sut.Articles;
 
-            var repository = Assert.IsAssignableFrom<ArticleRepository2>(sut.Articles);
-            Assert.Same(sut.Context.Articles, repository.EFArticles);
+            var repository = Assert.IsAssignableFrom<ArticleRepository>(sut.Articles);
+            Assert.Same(sut.Context, repository.Context);
         }
 
         [Test]
