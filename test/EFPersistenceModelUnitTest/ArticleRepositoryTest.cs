@@ -58,6 +58,10 @@
             catch (ArgumentNullException)
             {
             }
+            catch
+            {
+                throw;
+            }
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
