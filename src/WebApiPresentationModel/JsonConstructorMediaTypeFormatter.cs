@@ -2,12 +2,33 @@
 {
     using System;
     using System.ComponentModel;
+    using System.IO;
+    using System.Net.Http;
     using System.Net.Http.Formatting;
+    using System.Threading.Tasks;
 
-    public class JsonConstructorMediaTypeFormatter : MediaTypeFormatter
+    public class JsonConstructorMediaTypeFormatter : JsonMediaTypeFormatter
     {
+        private readonly Func<Type, string, object> formatter;
+
+        public JsonConstructorMediaTypeFormatter(Func<Type, string, object> formatter)
+        {
+            if (formatter == null)
+                throw new ArgumentNullException("formatter");
+
+            this.formatter = formatter;
+        }
+
+        public Func<Type, string, object> Formatter
+        {
+            get { return this.formatter; }
+        }
+
         public override bool CanReadType(Type type)
         {
+            if (type == null)
+                throw new ArgumentNullException("type");
+
             return !TypeHelper.CanConvertFromString(type);
         }
 
@@ -16,6 +37,25 @@
             return false;
         }
 
+        public override async Task<object> ReadFromStreamAsync(
+            Type type,
+            Stream readStream,
+            HttpContent content,
+            IFormatterLogger formatterLogger)
+        {
+            if (readStream == null)
+                throw new ArgumentNullException("content");
+
+            if (content == null)
+                throw new ArgumentNullException("content");
+
+            byte[] buffer = new byte[Math.Min(content.Headers.ContentLength.Value, 256)];
+            string jsonString = this.SelectCharacterEncoding(content.Headers).GetString(
+                buffer, 0, await readStream.ReadAsync(buffer, 0, buffer.Length));
+
+            return this.formatter(type, jsonString);
+        }
+        
         private static class TypeHelper
         {
             public static bool CanConvertFromString(Type type)

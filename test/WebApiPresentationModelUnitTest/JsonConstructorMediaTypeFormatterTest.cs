@@ -2,18 +2,24 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Net.Http;
     using System.Net.Http.Formatting;
+    using System.Reflection;
+    using System.Text;
+    using System.Threading.Tasks;
     using Jwc.Experiment.Xunit;
+    using Ploeh.AutoFixture;
     using WebApiPresentationModel;
     using Xunit;
 
-    public class JsonConstructorMediaTypeFormatterTest
+    public class JsonConstructorMediaTypeFormatterTest : IdiomaticTest<JsonConstructorMediaTypeFormatter>
     {
         [Test]
-        public void SubIsMediaTypeFormatter(
+        public void SubIsJsonMediaTypeFormatter(
             JsonConstructorMediaTypeFormatter sut)
         {
-            Assert.IsAssignableFrom<MediaTypeFormatter>(sut);
+            Assert.IsAssignableFrom<JsonMediaTypeFormatter>(sut);
         }
 
         [Test]
@@ -72,11 +78,60 @@
                 });
         }
 
-        public class Person
+        [Test]
+        public async Task ReadFromStreamAsyncReturnsCorrectResult(
+            string value,
+            object expected,
+            Type type,
+            StreamContent content,
+            IFormatterLogger formatterLogger,
+            IFixture fixture)
         {
-            public Person(string name, int age)
+            Func<Type, string, object> formatter = (t, s) =>
             {
-            }
+                Assert.Equal(type, t);
+                Assert.Equal(value, s);
+                return expected;
+            };
+            fixture.Inject(formatter);
+            var sut = fixture.Create<JsonConstructorMediaTypeFormatter>();
+            var stream = new MemoryStream(Encoding.Unicode.GetBytes(value));
+            content.Headers.Add("Content-Type", "text/html; charset=utf-16");
+            content.Headers.Add("Content-Length", "100");
+
+            var actual = await sut.ReadFromStreamAsync(type, stream, content, formatterLogger);
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Test]
+        public void ReadFromStreamAsyncWithNullStreamThrows(
+            JsonConstructorMediaTypeFormatter sut,
+            Type type,
+            HttpContent content,
+            IFormatterLogger formatterLogger)
+        {
+            var exception = Assert.Throws<AggregateException>(
+                () => sut.ReadFromStreamAsync(type, null, content, formatterLogger).Result);
+            Assert.IsType<ArgumentNullException>(exception.InnerException);
+        }
+        
+        [Test]
+        public void ReadFromStreamAsyncWithNullHttpContentThrows(
+            JsonConstructorMediaTypeFormatter sut,
+            Type type,
+            Stream stream,
+            IFormatterLogger formatterLogger)
+        {
+            var exception = Assert.Throws<AggregateException>(
+                () => sut.ReadFromStreamAsync(type, stream, null, formatterLogger).Result);
+            Assert.IsType<ArgumentNullException>(exception.InnerException);
+        }
+
+        protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
+        {
+            yield return this.Methods.Select(x => x.CanWriteType(null));
+            yield return this.Methods.Select(x => x.ReadFromStreamAsync(null, null, null, null));
         }
     }
 }
