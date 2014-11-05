@@ -1,13 +1,14 @@
 ﻿namespace DomainModel
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public interface IArticleService
     {
-        IEnumerable<Article> Get();
+        Task<IEnumerable<Article>> GetAsync();
 
         Article AddOrModify(Article article);
 
-        Article Remove(Article article);
+        void Remove(Article article);
     }
 }
