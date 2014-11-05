@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Formatting;
 using System.Security.Cryptography.X509Certificates;
 using System.Web.Http.Controllers;
 using Jwc.Experiment;
@@ -59,8 +62,9 @@ public class TestAttribute : TestBaseAttribute
 
         fixture.Customizations.Add(
             new OmitAutoPropertiesBuilder(
-                typeof(IHttpController),
                 typeof(X509Certificate2)));
+        fixture.Register<Stream>(() => new MemoryStream());
+        fixture.Register<CultureInfo>(() => CultureInfo.CurrentCulture);
 
         return new TestFixture(fixture);
     }
