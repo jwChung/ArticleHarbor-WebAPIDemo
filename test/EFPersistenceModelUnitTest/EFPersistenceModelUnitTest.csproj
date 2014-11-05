@@ -102,7 +102,6 @@
     <Compile Include="..\DomainModelUnitTest\RunOn.cs">
       <Link>RunOn.cs</Link>
     </Compile>
-    <Compile Include="ArticleRepository2Test.cs" />
     <Compile Include="ArticleRepositoryTest.cs" />
     <Compile Include="AssemblyTest.cs" />
     <Compile Include="DatabaseContextTest.cs" />

@@ -47,7 +47,6 @@
     </Compile>
     <Compile Include="ArticleExtensions.cs" />
     <Compile Include="ArticleRepository.cs" />
-    <Compile Include="ArticleRepository2.cs" />
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
