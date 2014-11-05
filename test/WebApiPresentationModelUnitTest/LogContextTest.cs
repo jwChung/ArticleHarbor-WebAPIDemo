@@ -15,7 +15,7 @@
             var actual = sut.Date;
 
             TimeSpan timeSpane = DateTime.Now - actual;
-            Assert.True(timeSpane.Milliseconds < 10);
+            Assert.True(timeSpane.Milliseconds < 50, timeSpane.Milliseconds.ToString());
         }
 
         [Test]

@@ -5,11 +5,11 @@
 
     public class LogContext
     {
-        private readonly string requestUrl;
+        private readonly Uri requestUrl;
         private readonly string message;
         private readonly DateTime date = DateTime.Now;
 
-        public LogContext(string requestUrl, string message)
+        public LogContext(Uri requestUrl, string message)
         {
             if (requestUrl == null)
                 throw new ArgumentNullException("requestUrl");
@@ -21,7 +21,7 @@
             this.message = message;
         }
 
-        public string RequestUrl
+        public Uri RequestUrl
         {
             get { return this.requestUrl; }
         }
