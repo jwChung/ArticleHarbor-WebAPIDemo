@@ -5,13 +5,9 @@
     using kr.ac.kaist.swrc.jhannanum.comm;
     using kr.ac.kaist.swrc.jhannanum.hannanum;
 
-    public sealed class KoreanNounExtractor
+    public static class KoreanNounExtractor
     {
         private static object syncLock = new object();
-
-        private KoreanNounExtractor()
-        {
-        }
 
         public static IEnumerable<string> Execute(string document)
         {
