@@ -98,6 +98,7 @@
     <Compile Include="..\..\build\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="ThrowController.cs" />
     <Compile Include="WebApiConfig.cs" />
     <Compile Include="ArticleHarborAssembliesResolver .cs" />
     <Compile Include="DependencyResolver.cs" />
