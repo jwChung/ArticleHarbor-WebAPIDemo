@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Linq;
     using System.Threading.Tasks;
     using DomainModel;
     using EFDataAccess;
@@ -23,14 +25,16 @@
             get { return this.context; }
         }
 
-        public Task<IEnumerable<Article>> SelectAsync()
+        public async Task<IEnumerable<Article>> SelectAsync()
         {
-            throw new NotImplementedException();
+            var result = await this.context.Articles.Take(50).ToArrayAsync();
+            return result.Select(x => x.ToArticle());
         }
 
-        public Task<Article> SelectAsync(int id)
+        public async Task<Article> SelectAsync(int id)
         {
-            throw new NotImplementedException();
+            var efArticle = await Task.Run<EFArticle>(() => this.context.Articles.Find(id));
+            return efArticle.ToArticle();
         }
 
         public Article Insert(Article article)
@@ -38,7 +42,9 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            throw new NotImplementedException();
+            var efArticle = this.context.Articles.Add(article.ToEFArticle());
+            this.context.SaveChanges();
+            return efArticle.ToArticle();
         }
     }
 }

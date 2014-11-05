@@ -39,6 +39,7 @@
                     articles.Add(
                         new EFArticle
                         {
+                            Id = -1,
                             No = i.ToString(CultureInfo.CurrentCulture),
                             Provider = "뉴스",
                             Subject = "제목" + i,
