@@ -7,6 +7,8 @@
     {
         Task<IEnumerable<Article>> SelectAsync();
 
+        Task<Article> SelectAsync(int id);
+
         Article Insert(Article article);
     }
 }

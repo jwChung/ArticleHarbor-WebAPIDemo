@@ -72,5 +72,31 @@
                 values[i].AsSource().OfLikeness<Article>()
                     .ShouldEqual(actual[i]);
         }
+
+        [Test]
+        public async Task SelectAsyncWithIdReturnsCorrectResult(
+            ArticleRepository sut,
+            int id,
+            IFixture fixture)
+        {
+            var efArticle = fixture.Build<EFArticle>().Without(x => x.ArticleWords).Create();
+            var likeness = efArticle.AsSource().OfLikeness<Article>();
+            sut.EFArticles.ToMock().Setup(x => x.Find(new object[] { id })).Returns(efArticle);
+
+            var actual = await sut.SelectAsync(id);
+
+            likeness.ShouldEqual(actual);
+        }
+
+        [Test]
+        public async Task SelectAsyncCanReturnNull(
+            ArticleRepository sut,
+            int id,
+            IFixture fixture)
+        {
+            sut.EFArticles.ToMock().Setup(x => x.Find(new object[] { id })).Returns(() => null);
+            var actual = await sut.SelectAsync(id);
+            Assert.Null(actual);
+        }
     }
 }

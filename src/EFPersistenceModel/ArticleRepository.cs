@@ -25,37 +25,27 @@
             get { return this.efArticles; }
         }
 
+        public async Task<IEnumerable<Article>> SelectAsync()
+        {
+            await this.efArticles.Take(50).LoadAsync();
+            return this.efArticles.ToArray().Select(efa => efa.ToArticle());
+        }
+
+        public async Task<Article> SelectAsync(int id)
+        {
+            var result = await Task.Run<EFArticle>(() => this.efArticles.Find(id))
+                .ConfigureAwait(false);
+
+            return result != null ? result.ToArticle() : null;
+        }
+
         public Article Insert(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            var efArticle = this.efArticles.Add(
-                new EFArticle
-                {
-                    Provider = article.Provider,
-                    No = article.No,
-                    Subject = article.Subject,
-                    Body = article.Body,
-                    Date = article.Date,
-                    Url = article.Url
-                });
-
+            var efArticle = this.efArticles.Add(article.ToEFArticle());
             return article.WithId(efArticle.Id);
-        }
-
-        public async Task<IEnumerable<Article>> SelectAsync()
-        {
-            await this.efArticles.Take(50).LoadAsync();
-            return this.efArticles.ToArray().Select(
-                efa => new Article(
-                    efa.Id,
-                    efa.Provider,
-                    efa.No,
-                    efa.Subject,
-                    efa.Body,
-                    efa.Date,
-                    efa.Url));
         }
     }
 }
