@@ -17,17 +17,17 @@
     using Xunit;
     using Article = DomainModel.Article;
 
-    public class ArticleRepositoryTest : IdiomaticTest<ArticleRepository>
+    public class ArticleRepository2Test : IdiomaticTest<ArticleRepository2>
     {
         [Test]
-        public void SutIsArticleRepository(ArticleRepository sut)
+        public void SutIsArticleRepository(ArticleRepository2 sut)
         {
             Assert.IsAssignableFrom<IArticleRepository>(sut);
         }
 
         [Test]
         public void InsertCorrectlyInsertsArticle(
-            ArticleRepository sut,
+            ArticleRepository2 sut,
             Article article)
         {
             var likeness = article.AsSource()
@@ -44,7 +44,7 @@
 
         [Test]
         public void InsertReturnsArticleWithId(
-            ArticleRepository sut,
+            ArticleRepository2 sut,
             Article article,
             [NoAutoProperties] EFArticle efArticle)
         {
@@ -63,7 +63,7 @@
         {
             var articles = new ArticleHarborContext().Articles;
             fixture.Inject(articles);
-            var sut = fixture.Create<ArticleRepository>();
+            var sut = fixture.Create<ArticleRepository2>();
             var values = articles.Take(50).ToArray();
 
             var actual = (await sut.SelectAsync()).ToArray();
@@ -75,7 +75,7 @@
 
         [Test]
         public async Task SelectAsyncWithIdReturnsCorrectResult(
-            ArticleRepository sut,
+            ArticleRepository2 sut,
             int id,
             IFixture fixture)
         {
@@ -90,7 +90,7 @@
 
         [Test]
         public async Task SelectAsyncCanReturnNull(
-            ArticleRepository sut,
+            ArticleRepository2 sut,
             int id,
             IFixture fixture)
         {

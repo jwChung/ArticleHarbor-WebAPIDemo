@@ -8,11 +8,11 @@
     using DomainModel;
     using EFDataAccess;
 
-    public class ArticleRepository : IArticleRepository
+    public class ArticleRepository2 : IArticleRepository
     {
         private readonly IDbSet<EFArticle> efArticles;
 
-        public ArticleRepository(IDbSet<EFArticle> efArticles)
+        public ArticleRepository2(IDbSet<EFArticle> efArticles)
         {
             if (efArticles == null)
                 throw new ArgumentNullException("efArticles");

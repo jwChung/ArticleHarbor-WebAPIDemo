@@ -8,7 +8,7 @@
 
     public sealed class DatabaseContext : IDatabaseContext
     {
-        private readonly ArticleRepository articles;
+        private readonly ArticleRepository2 articles;
         private readonly ArticleHarborContext context;
         private bool disposed = false;
 
@@ -18,7 +18,7 @@
                 throw new ArgumentNullException("context");
 
             this.context = context;
-            this.articles = new ArticleRepository(this.context.Articles);
+            this.articles = new ArticleRepository2(this.context.Articles);
         }
 
         public IArticleRepository Articles
