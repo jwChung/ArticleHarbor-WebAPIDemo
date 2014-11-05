@@ -3,15 +3,30 @@
     using System.Collections.Generic;
     using System.Reflection;
     using DomainModel;
+    using Jwc.Experiment.Xunit;
+    using Ploeh.AutoFixture;
+    using Ploeh.AutoFixture.Kernel;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 
     public class ArticleTest : IdiomaticTest<Article>
     {
         [Test]
-        public void IdReturnsDefaultValue(Article sut)
+        public IEnumerable<ITestCase> IdIsCorrect()
         {
-            Assert.Equal(-1, sut.Id);
+            yield return TestCase.WithAuto<Article>().Create(
+                sut => Assert.Equal(-1, sut.Id));
+
+            yield return TestCase.WithAuto<IFixture>().Create(
+                fixture =>
+                {
+                    var id = fixture.Freeze<int>();
+                    var sut = fixture.Build<Article>()
+                        .FromFactory(
+                            new MethodInvoker(new GreedyConstructorQuery()))
+                        .Create();
+                    Assert.Equal(id, sut.Id);
+                });
         }
 
         [Test]

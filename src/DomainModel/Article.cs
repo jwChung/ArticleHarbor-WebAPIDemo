@@ -10,10 +10,21 @@
         private readonly string body;
         private readonly DateTime date;
         private readonly string url;
-        private int id = -1;
+        private int id;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "5#", Justification = "데이터베이스에 저장하기 위해 문자열로 취급.")]
         public Article(
+            string provider,
+            string no,
+            string subject,
+            string body,
+            DateTime date,
+            string url) : this(-1, provider, no, subject, body, date, url)
+        {
+        }
+
+        public Article(
+            int id,
             string provider,
             string no,
             string subject,
@@ -36,6 +47,7 @@
             if (url == null)
                 throw new ArgumentNullException("url");
 
+            this.id = id;
             this.provider = provider;
             this.no = no;
             this.subject = subject;
