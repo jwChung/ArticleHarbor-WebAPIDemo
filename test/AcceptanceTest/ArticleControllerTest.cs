@@ -47,12 +47,12 @@
                 client.DefaultRequestHeaders.Accept.ParseAdd("application/json;q=0.8");
                 var response = await client.GetAsync("api/articles");
 
+                Assert.True(
+                   response.IsSuccessStatusCode,
+                   "Actual status code: " + response.StatusCode);
                 Assert.Equal(
                     "application/json",
                     response.Content.Headers.ContentType.MediaType);
-                var json = await response.Content.ReadAsStringAsync()
-                    .ContinueWith(t => JsonConvert.DeserializeObject(t.Result));
-                Assert.NotNull(json);
             }
         }
     }
