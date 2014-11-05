@@ -2,15 +2,40 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
     using System.Web.Http.ExceptionHandling;
     using Jwc.Experiment.Xunit;
+    using Moq;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit;
+    using Ploeh.SemanticComparison;
+    using Ploeh.SemanticComparison.Fluent;
     using WebApiPresentationModel;
     using Xunit;
 
     public class UnhandledExceptionLoggerTest : IdiomaticTest<UnhandledExceptionLogger>
     {
+        [Test]
+        public async Task LogAsyncCorrectlyLogs(
+            [Frozen] Uri url,
+            [Frozen] Exception exception,
+            UnhandledExceptionLogger sut,
+            ExceptionLoggerContext context,
+            CancellationToken token)
+        {
+            Assert.Equal(url, context.Request.RequestUri);
+            Assert.Equal(exception, context.Exception);
+            var likeness = new LogContext(url, exception.ToString()).AsSource()
+                .OfLikeness<LogContext>()
+                .Without(x => x.Date);
+
+            await sut.LogAsync(context, token);
+            
+            sut.Logger.ToMock().Verify(
+                x => x.LogAsync(It.Is<LogContext>(p => likeness.Equals(p))));
+        }
+        
         [Test]
         public void SutIsExceptionLogger(UnhandledExceptionLogger sut)
         {

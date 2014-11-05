@@ -12,6 +12,7 @@
             {
                 Assembly.Load("mscorlib"),
                 Assembly.Load("System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"),
+                Assembly.Load("System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),
                 Assembly.Load("System.Web.Http, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"),
                 Assembly.Load("DomainModel"),
             };
