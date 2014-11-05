@@ -51,6 +51,14 @@
                 return result;
             }
 
+            private static object GetValue(Type type, JToken token)
+            {
+                var converter = TypeDescriptor.GetConverter(type);
+                return converter.CanConvertFrom(typeof(string))
+                    ? converter.ConvertFromString(token.Value<string>())
+                    : null;
+            }
+
             private ConstructorInfo GetConstructor()
             {
                 return this.type.GetConstructors()
@@ -85,14 +93,6 @@
                     var value = GetValue(property.PropertyType, token);
                     property.SetValue(result, value);
                 }
-            }
-
-            private static object GetValue(Type type, JToken token)
-            {
-                var converter = TypeDescriptor.GetConverter(type);
-                return converter.CanConvertFrom(typeof(string))
-                    ? converter.ConvertFromString(token.Value<string>())
-                    : null;
             }
         }
     }
