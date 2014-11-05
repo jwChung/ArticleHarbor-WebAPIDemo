@@ -36,7 +36,10 @@
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            return new object[0];
+            var services = (IEnumerable<object>)this.GetService(
+                typeof(IEnumerable<>).MakeGenericType(serviceType));
+
+            return services == null ? new object[0] : services;
         }
 
         public void Dispose()

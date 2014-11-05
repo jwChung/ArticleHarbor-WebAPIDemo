@@ -124,6 +124,7 @@
     <Compile Include="ArticleControllerTest.cs" />
     <Compile Include="HttpClientFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThrowControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

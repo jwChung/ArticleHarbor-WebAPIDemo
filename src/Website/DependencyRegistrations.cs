@@ -1,7 +1,9 @@
 namespace Website
 {
     using System;
+    using System.Collections.Generic;
     using System.Web.Http.Dispatcher;
+    using System.Web.Http.ExceptionHandling;
     using DomainModel;
     using EFDataAccess;
     using EFPersistenceModel;
@@ -25,7 +27,17 @@ namespace Website
             container.Register<IAssembliesResolver>(
                 c => new ArticleHarborAssembliesResolver())
                 .ReusedWithinNone();
-            container.Register(c => new ArticlesController(c.Resolve<IArticleRepository>()))
+            container.Register(
+                c => new ArticlesController(c.Resolve<IArticleRepository>()))
+                .ReusedWithinNone();
+            container.Register<ILogger>(
+                c => new FileLogger(Environment.CurrentDirectory))
+                .ReusedWithinNone();
+            container.Register<IEnumerable<IExceptionLogger>>(
+                c => new IExceptionLogger[]
+                {
+                    new UnhandledExceptionLogger(c.Resolve<ILogger>())
+                })
                 .ReusedWithinNone();
 
             // Request scope

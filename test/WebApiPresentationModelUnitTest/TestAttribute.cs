@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Http.Controllers;
 using Jwc.Experiment;
 using Jwc.Experiment.AutoFixture;
@@ -49,28 +51,35 @@ public class TestAttribute : TestBaseAttribute
 
     protected override ITestFixture Create(ITestMethodContext context)
     {
-        var customization = new CompositeCustomization(
-            new AutoMoqCustomization(),
-            new TestParametersCustomization(context.ActualMethod.GetParameters()));
+        var fixture = new Fixture().Customize(
+            new CompositeCustomization(
+                new AutoMoqCustomization(),
+                new TestParametersCustomization(
+                    context.ActualMethod.GetParameters())));
 
-        var fixture = new Fixture().Customize(customization);
-        fixture.Customizations.Add(new OmitAutoPropertiesBuilder(typeof(IHttpController)));
+        fixture.Customizations.Add(
+            new OmitAutoPropertiesBuilder(
+                typeof(IHttpController),
+                typeof(X509Certificate2)));
+
         return new TestFixture(fixture);
     }
 
     private class OmitAutoPropertiesBuilder : ISpecimenBuilder
     {
-        private readonly Type target;
+        private readonly Type[] targets;
 
-        public OmitAutoPropertiesBuilder(Type target)
+        public OmitAutoPropertiesBuilder(params Type[] targets)
         {
-            this.target = target;
+            this.targets = targets;
         }
 
         public object Create(object request, ISpecimenContext context)
         {
             var type = request as Type;
-            if (type == null || type.IsAbstract || !this.target.IsAssignableFrom(type))
+            if (type == null
+                || type.IsAbstract
+                || this.targets.All(t => !t.IsAssignableFrom(type)))
                 return new NoSpecimen(request);
 
             return new MethodInvoker(new ModestConstructorQuery())
