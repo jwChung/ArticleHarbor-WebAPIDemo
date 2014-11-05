@@ -21,11 +21,11 @@
         }
 
         [Test]
-        public void ReadReturnsCorrectResultUsingModestConstructor(Foo foo)
+        public void DeserializeReturnsCorrectResultUsingModestConstructor(Foo foo)
         {
             var json = JsonConvert.SerializeObject(foo);
             
-            var actual = (Foo)JsonConstructorDeserializer.Read(typeof(Foo), json);
+            var actual = (Foo)JsonConstructorDeserializer.Deserialize(typeof(Foo), json);
 
             Assert.Equal(foo.Name, actual.Name);
             Assert.Equal(-1, actual.Age);
@@ -33,11 +33,11 @@
         }
 
         [Test]
-        public void ReadReturnsCorrectResultUsingGreedyConstructor([Greedy] Foo foo)
+        public void DeserializeReturnsCorrectResultUsingGreedyConstructor([Greedy] Foo foo)
         {
             var json = JsonConvert.SerializeObject(foo);
 
-            var actual = (Foo)JsonConstructorDeserializer.Read(typeof(Foo), json);
+            var actual = (Foo)JsonConstructorDeserializer.Deserialize(typeof(Foo), json);
 
             Assert.Equal(foo.Age, actual.Age);
             Assert.Equal(foo.Name, actual.Name);
@@ -45,29 +45,29 @@
         }
 
         [Test]
-        public void ReadDoesNotUseSameValueTwice(Bar bar)
+        public void DeserializeDoesNotUseSameValueTwice(Bar bar)
         {
             var json = JsonConvert.SerializeObject(bar);
 
-            var actual = (Bar)JsonConstructorDeserializer.Read(typeof(Bar), json);
+            var actual = (Bar)JsonConstructorDeserializer.Deserialize(typeof(Bar), json);
 
             Assert.Null(actual.Name);
             Assert.Equal(bar.Name, actual.Name2);
         }
 
         [Test]
-        public void ReadSetsDefaultValueToCtoArgumentWhenTypeCannotBeConvertedFromString(Baz baz)
+        public void DeserializeSetsDefaultValueToCtoArgumentWhenTypeCannotBeConvertedFromString(Baz baz)
         {
             var json = JsonConvert.SerializeObject(baz);
-            var actual = (Baz)JsonConstructorDeserializer.Read(typeof(Baz), json);
+            var actual = (Baz)JsonConstructorDeserializer.Deserialize(typeof(Baz), json);
             Assert.Null(actual.Type);
         }
 
         [Test]
-        public void ReadSetsDefaultValueToPropertyWhenTypeCannotBeConvertedFromString(Abc baz)
+        public void DeserializeSetsDefaultValueToPropertyWhenTypeCannotBeConvertedFromString(Abc baz)
         {
             var json = JsonConvert.SerializeObject(baz);
-            var actual = (Abc)JsonConstructorDeserializer.Read(typeof(Abc), json);
+            var actual = (Abc)JsonConstructorDeserializer.Deserialize(typeof(Abc), json);
             Assert.Null(actual.Type);
         }
 

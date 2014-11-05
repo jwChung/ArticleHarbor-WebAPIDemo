@@ -10,7 +10,7 @@
 
     public static class JsonConstructorDeserializer
     {
-        public static object Read(Type type, string json)
+        public static object Deserialize(Type type, string json)
         {
             if (type == null)
                 throw new ArgumentNullException("type");
