@@ -11,7 +11,7 @@ namespace Website
         [Route("ArgumentException")]
         public void ThrowArgumentException()
         {
-            throw new ArgumentException();
+            throw new ArgumentException("anonymous");
         }
 
         [HttpGet]

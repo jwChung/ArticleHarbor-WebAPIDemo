@@ -22,7 +22,6 @@
             get { return this.repository; }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "This is Web-API-action method.")]
         public IEnumerable<Article> Get()
         {
             return this.repository.Select();
