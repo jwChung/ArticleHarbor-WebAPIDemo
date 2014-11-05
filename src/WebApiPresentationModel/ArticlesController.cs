@@ -23,6 +23,7 @@
             get { return this.repository; }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Method is more appropriate.")]
         public async Task<IEnumerable<Article>> GetAsync()
         {
             return await this.repository.SelectAsync();

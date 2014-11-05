@@ -23,6 +23,7 @@
         {
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "6#", Justification = "데이터베이스에 저장하기 위해 문자열로 취급.")]
         public Article(
             int id,
             string provider,
