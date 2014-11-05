@@ -5,6 +5,7 @@
     using System.Data.Entity;
     using System.Linq;
     using System.Reflection;
+    using System.Threading.Tasks;
     using DomainModel;
     using EFDataAccess;
     using EFPersistenceModel;
@@ -57,7 +58,7 @@
         }
 
         [Test(RunOn.CI)]
-        public void SelectReturnsCorrectArticleSet(
+        public async Task SelectAsyncReturnsCorrectArticleSet(
             IFixture fixture)
         {
             var articles = new ArticleHarborContext().Articles;
@@ -65,7 +66,7 @@
             var sut = fixture.Create<ArticleRepository>();
             var values = articles.Take(50).ToArray();
 
-            var actual = sut.Select().ToArray();
+            var actual = (await sut.SelectAsync()).ToArray();
 
             for (int i = 0; i < values.Length; i++)
                 values[i].AsSource().OfLikeness<Article>()

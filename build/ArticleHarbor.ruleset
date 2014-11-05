@@ -5,4 +5,7 @@
     <Description Resource="ArticleHarbor All Rules" />
   </Localization>
   <IncludeAll Action="Warning" />
+  <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+    <Rule Id="CA1006" Action="None" />
+  </Rules>
 </RuleSet>

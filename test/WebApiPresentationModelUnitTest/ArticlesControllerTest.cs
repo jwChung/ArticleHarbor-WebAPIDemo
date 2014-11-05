@@ -1,6 +1,7 @@
 ﻿namespace WebApiPresentationModel
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using System.Web.Http;
     using DomainModel;
     using Ploeh.AutoFixture.Xunit;
@@ -15,10 +16,12 @@
         }
 
         [Test]
-        public void GetReturnsCorrectResult(ArticlesController sut, IEnumerable<Article> articles)
+        public async Task GetAsyncReturnsCorrectResult(
+            ArticlesController sut,
+            IEnumerable<Article> articles)
         {
-            sut.Repository.Of(x => x.Select() == articles);
-            var actual = sut.Get();
+            sut.Repository.Of(x => x.SelectAsync() == Task.FromResult(articles));
+            var actual = await sut.GetAsync();
             Assert.Equal(articles, actual);
         }
     }

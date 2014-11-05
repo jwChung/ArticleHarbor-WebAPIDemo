@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using System.Web.Http;
     using DomainModel;
 
@@ -22,9 +23,9 @@
             get { return this.repository; }
         }
 
-        public IEnumerable<Article> Get()
+        public async Task<IEnumerable<Article>> GetAsync()
         {
-            return this.repository.Select();
+            return await this.repository.SelectAsync();
         }
     }
 }

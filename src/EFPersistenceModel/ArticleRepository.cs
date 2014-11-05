@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
+    using System.Threading.Tasks;
     using DomainModel;
     using EFDataAccess;
 
@@ -43,19 +44,18 @@
             return article.WithId(efArticle.Id);
         }
 
-        public IEnumerable<Article> Select()
+        public async Task<IEnumerable<Article>> SelectAsync()
         {
-            foreach (var article in this.efArticles.Take(50))
-            {
-                yield return new Article(
-                    article.Provider,
-                    article.No,
-                    article.Subject,
-                    article.Body,
-                    article.Date,
-                    article.Url)
-                    .WithId(article.Id);
-            }
+            await this.efArticles.Take(50).LoadAsync();
+            return this.efArticles.ToArray().Select(
+                efa => new Article(
+                    efa.Provider,
+                    efa.No,
+                    efa.Subject,
+                    efa.Body,
+                    efa.Date,
+                    efa.Url)
+                    .WithId(efa.Id));
         }
     }
 }
