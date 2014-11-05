@@ -47,6 +47,26 @@
             if (url == null)
                 throw new ArgumentNullException("url");
 
+            if (provider.Length == 0)
+                throw new ArgumentException(
+                    "The 'provider' value should not be empty string.", "provider");
+
+            if (no.Length == 0)
+                throw new ArgumentException(
+                    "The 'no' value should not be empty string.", "no");
+
+            if (subject.Length == 0)
+                throw new ArgumentException(
+                    "The 'subject' value should not be empty string.", "subject");
+
+            if (body.Length == 0)
+                throw new ArgumentException(
+                    "The 'body' value should not be empty string.", "body");
+
+            if (url.Length == 0)
+                throw new ArgumentException(
+                    "The 'url' value should not be empty string.", "url");
+
             this.id = id;
             this.provider = provider;
             this.no = no;

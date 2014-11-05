@@ -1,5 +1,6 @@
 ﻿namespace DomainModelUnitTest
 {
+    using System;
     using System.Collections.Generic;
     using System.Reflection;
     using DomainModel;
@@ -11,6 +12,32 @@
 
     public class ArticleTest : IdiomaticTest<Article>
     {
+        [Test]
+        public IEnumerable<ITestCase> InitializeWithAnyEmptyStringThrows(int id, string value, DateTime date)
+        {
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(string.Empty, value, value, value, date, value)));
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(value, string.Empty, value, value, date, value)));
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(value, value, string.Empty, value, date, value)));
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(value, value, value, string.Empty, date, value)));
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(value, value, value, value, date, string.Empty)));
+
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(id, string.Empty, value, value, value, date, value)));
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(id, value, string.Empty, value, value, date, value)));
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(id, value, value, string.Empty, value, date, value)));
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(id, value, value, value, string.Empty, date, value)));
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(id, value, value, value, value, date, string.Empty)));
+        }
+
         [Test]
         public IEnumerable<ITestCase> IdIsCorrect()
         {
