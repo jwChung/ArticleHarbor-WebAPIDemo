@@ -11,7 +11,7 @@
 
     public static class JsonConstructorDeserializer
     {
-        private static readonly DeserializerContext context = new DeserializerContext(
+        private static readonly DeserializerContext Context = new DeserializerContext(
             new JsonObjectDeserializer(),
             new JsonValueDeserializer(),
             new JsonArrayDeserializer(),
@@ -20,12 +20,17 @@
             new JsonIListDeserializer(),
             new JsonCollectionDeserializer());
 
+        private interface IDeserializer
+        {
+            object Deserialize(Type type, JToken token, DeserializerContext context);
+        }
+
         public static object Deserialize(Type type, string json)
         {
             if (type == null)
                 throw new ArgumentNullException("type");
 
-            return context.GetValue(
+            return Context.GetValue(
                 type,
                 JsonConvert.DeserializeObject<JToken>(json));
         }
@@ -54,11 +59,6 @@
                     "There is no deserializer for the type '{0}'.",
                     type));
             }
-        }
-
-        private interface IDeserializer
-        {
-            object Deserialize(Type type, JToken token, DeserializerContext context);
         }
 
         private class JsonValueDeserializer : IDeserializer
