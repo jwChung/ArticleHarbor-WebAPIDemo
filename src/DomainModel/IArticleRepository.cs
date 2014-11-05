@@ -9,8 +9,6 @@
 
         Task<Article> SelectAsync(int id);
 
-        Article Insert(Article article);
-
         Task<Article> InsertAsync(Article article);
     }
 }

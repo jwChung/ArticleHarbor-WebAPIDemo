@@ -37,16 +37,6 @@
             return efArticle.ToArticle();
         }
 
-        public Article Insert(Article article)
-        {
-            if (article == null)
-                throw new ArgumentNullException("article");
-
-            var efArticle = this.context.Articles.Add(article.ToEFArticle());
-            this.context.SaveChanges();
-            return efArticle.ToArticle();
-        }
-
         public async Task<Article> InsertAsync(Article article)
         {
             if (article == null)

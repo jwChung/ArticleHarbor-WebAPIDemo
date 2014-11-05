@@ -51,14 +51,14 @@ public class TestAttribute : TestBaseAttribute
 
     protected override ITestFixture Create(ITestMethodContext context)
     {
-        var fixture = new Fixture().Customize(
-            new CompositeCustomization(
-                new AutoMoqCustomization(),
-                new TestParametersCustomization(
-                    context.ActualMethod.GetParameters())));
-        
-        fixture.Register<ArticleHarborContext>(
-            () => new ArticleHarborContext());
+        var fixture = new Fixture().Customize(new AutoMoqCustomization());
+
+        var dbContext = new ArticleHarborContext();
+        fixture.Inject(dbContext);
+        fixture.Inject(dbContext.Database.BeginTransaction());
+
+        fixture.Customize(new TestParametersCustomization(
+            context.ActualMethod.GetParameters()));
 
         return new TestFixture(fixture);
     }
