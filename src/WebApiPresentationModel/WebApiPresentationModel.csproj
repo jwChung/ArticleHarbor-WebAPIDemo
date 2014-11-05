@@ -47,6 +47,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="ArticlesController.cs" />
+    <Compile Include="FileLogger.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="LogContext.cs" />
