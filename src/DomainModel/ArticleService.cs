@@ -6,9 +6,24 @@
 
     public class ArticleService : IArticleService
     {
+        private readonly IArticleRepository repository;
+
+        public ArticleService(IArticleRepository repository)
+        {
+            if (repository == null)
+                throw new ArgumentNullException("repository");
+
+            this.repository = repository;
+        }
+
+        public IArticleRepository Repository
+        {
+            get { return this.repository; }
+        }
+
         public Task<IEnumerable<Article>> GetAsync()
         {
-            throw new NotImplementedException();
+            return this.repository.SelectAsync();
         }
 
         public Article AddOrModify(Article article)
