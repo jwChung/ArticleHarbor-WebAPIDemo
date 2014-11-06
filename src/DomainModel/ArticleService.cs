@@ -39,12 +39,9 @@
             return Task.FromResult(article);
         }
 
-        public void Remove(Article article)
+        public void Remove(int id)
         {
-            if (article == null)
-                throw new ArgumentNullException("article");
-
-            throw new NotImplementedException();
+            this.repository.Delete(id);
         }
     }
 }

@@ -51,5 +51,14 @@
             Assert.Equal(newArticle, actual);
             sut.Repository.ToMock().Verify(x => x.Update(newArticle));
         }
+
+        [Test]
+        public void RemoveCorrectlyRemoves(
+            ArticleService sut,
+            int id)
+        {
+            sut.Remove(id);
+            sut.Repository.ToMock().Verify(x => x.Delete(id));
+        }
     }
 }

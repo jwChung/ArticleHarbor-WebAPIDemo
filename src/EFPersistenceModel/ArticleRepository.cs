@@ -61,5 +61,10 @@
                 this.context.Entry(article.ToEFArticle()).State = EntityState.Modified;
             }
         }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

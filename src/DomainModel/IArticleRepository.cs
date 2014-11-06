@@ -13,5 +13,7 @@
         Task<Article> InsertAsync(Article article);
 
         void Update(Article article);
+
+        void Delete(int id);
     }
 }

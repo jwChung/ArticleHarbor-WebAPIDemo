@@ -9,6 +9,6 @@
 
         Task<Article> AddOrModifyAsync(Article article);
 
-        void Remove(Article article);
+        void Remove(int id);
     }
 }
