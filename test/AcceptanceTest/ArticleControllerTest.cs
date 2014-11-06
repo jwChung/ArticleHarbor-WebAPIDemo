@@ -59,7 +59,7 @@
         }
 
         [Test]
-        public async Task PostAsyncCanAddCorrectArticle(Article article)
+        public async Task PostAsyncCorrectlyAddsArticle(Article article)
         {
             using (var client = HttpClientFactory.Create())
             {
@@ -76,7 +76,7 @@
         }
 
         [Test]
-        public async Task PostAsyncCanModifyArticle(Article article)
+        public async Task PostAsyncCorrectlyModifiesArticle(Article article)
         {
             using (var client = HttpClientFactory.Create())
             {
