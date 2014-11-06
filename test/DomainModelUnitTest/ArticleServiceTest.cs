@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
     using DomainModel;
     using Moq;
@@ -57,7 +58,7 @@
         }
 
         [Test]
-        public async Task AddOrModifyAddsArticleWordsWhenAddingArticle(
+        public async Task AddOrModifyAsyncAddsArticleWordsWhenAddingArticle(
             Article article,
             Article newArticle,
             string[] words,
@@ -76,6 +77,7 @@
 
             // Exercise system
             await sut.AddOrModifyAsync(article);
+            Thread.Sleep(100);
 
             // Verify outcome
             foreach (var word in words)
@@ -84,6 +86,41 @@
                     .AsSource().OfLikeness<ArticleWord>();
                 sut.ArticleWords.ToMock().Verify(
                     x => x.Insert(It.Is<ArticleWord>(p => likeness.Equals(p))));
+            }
+        }
+
+        [Test]
+        public async Task AddOrModifyAsyncThrowsWhenThrowingWhileAddingArticleWord(
+            Article article,
+            IFixture fixture)
+        {
+            // Fixture setup
+            var verifies = 0;
+            UnhandledExceptionEventHandler handler = (s, e) => verifies++;
+            try
+            {
+                AppDomain.CurrentDomain.UnhandledException += handler;
+                fixture.Inject<Func<string, IEnumerable<string>>>(
+                    x =>
+                    {
+                        verifies++;
+                        throw new Exception();
+                    });
+                var sut = fixture.Create<ArticleService>();
+                sut.Articles.ToMock().Setup(x => x.Select(article.Id)).Returns(() => null);
+                sut.Articles.Of(x => x.InsertAsync(article) == Task.FromResult(article));
+
+                // Exercise system
+                await sut.AddOrModifyAsync(article);
+                Thread.Sleep(100);
+
+                // Verify outcome
+                Assert.Equal(2, verifies);
+            }
+            finally
+            {
+                // Teardown
+                AppDomain.CurrentDomain.UnhandledException -= handler;
             }
         }
 

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
 
     public class ArticleService : IArticleService
@@ -58,7 +59,13 @@
             if (oldArticle == null)
             {
                 var newArticle = await this.articles.InsertAsync(article);
-                this.InsertArticleWords(newArticle);
+
+#pragma warning disable 4014
+                Task.Run(() => this.InsertArticleWords(newArticle)).ContinueWith(
+                    t => ThreadPool.QueueUserWorkItem(x => { throw t.Exception; }),
+                    TaskContinuationOptions.OnlyOnFaulted);
+#pragma warning restore 4014
+
                 return newArticle;
             }
 
