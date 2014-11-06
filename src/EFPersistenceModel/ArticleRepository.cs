@@ -64,7 +64,11 @@
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var efArticle = this.context.Articles.Find(id);
+            if (efArticle == null)
+                return;
+
+            this.context.Articles.Remove(efArticle);
         }
     }
 }
