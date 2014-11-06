@@ -59,8 +59,16 @@
         }
 
         [Test]
-        public async Task PostAsyncCorrectlyAddsArticle(Article article)
+        public async Task PostAsyncCorrectlyAddsArticleAndArticeWords(Article article)
         {
+            article = new Article(
+                article.Provider,
+                article.No,
+                "문장에서 단어만 추출해서 입력되는지 DB에서 확인필요.",
+                article.Body,
+                article.Date,
+                article.Url);
+
             using (var client = HttpClientFactory.Create())
             {
                 var content = new StringContent(
