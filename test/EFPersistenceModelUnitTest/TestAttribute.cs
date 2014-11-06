@@ -59,6 +59,7 @@ public class TestAttribute : TestBaseAttribute
         fixture.Inject(dbContext.Database.BeginTransaction());
 
         fixture.Customize<EFArticle>(c => c.Without(x => x.ArticleWords));
+        fixture.Customize<EFArticleWord>(c => c.Without(x => x.EFArticle));
 
         fixture.Customize(new TestParametersCustomization(
             context.ActualMethod.GetParameters()));
