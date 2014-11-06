@@ -34,7 +34,8 @@
 
         public Article Select(int id)
         {
-            return this.context.Articles.Find(id).ToArticle();
+            var efArticle = this.context.Articles.Find(id);
+            return efArticle == null ? null : efArticle.ToArticle();
         }
 
         public async Task<Article> InsertAsync(Article article)
