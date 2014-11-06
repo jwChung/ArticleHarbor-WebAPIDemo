@@ -28,6 +28,9 @@
             if (articleWord == null)
                 throw new ArgumentNullException("articleWord");
 
+            if (this.Select(articleWord.ArticleId, articleWord.Word) != null)
+                return;
+
             this.context.ArticleWords.Add(articleWord.ToPersistence());
         }
 

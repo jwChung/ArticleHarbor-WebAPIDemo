@@ -47,6 +47,30 @@
         }
 
         [Test]
+        public void InsertDuplicateEntityDoesNotThrow(
+            DbContextTransaction transaction,
+            ArticleWordRepository sut,
+            EFDataAccess.Article article,
+            string word)
+        {
+            try
+            {
+                var addedArticle = sut.Context.Articles.Add(article);
+                sut.Context.SaveChanges();
+                sut.Insert(new DomainModel.ArticleWord(addedArticle.Id, word));
+
+                sut.Insert(new DomainModel.ArticleWord(addedArticle.Id, word));
+
+                Assert.DoesNotThrow(() => sut.Context.SaveChanges());
+            }
+            finally
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+            }
+        }
+
+        [Test]
         public void SelectReturnsNullWhenThereIsNoArticleWordWithGivenIdentity(
             ArticleWordRepository sut,
             string word,
