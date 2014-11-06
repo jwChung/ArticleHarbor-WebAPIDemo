@@ -77,15 +77,14 @@
                 sut.Context.SaveChanges();
 
                 sut.Delete(addedArticle1.Id);
-                sut.Context.SaveChanges();
 
+                sut.Context.SaveChanges();
                 Assert.Empty(
                     sut.Context.ArticleWords.Where(
                         x => x.ArticleId == addedArticle1.Id).ToArray());
-                Assert.Equal(
-                    word3,
-                    sut.Context.ArticleWords.Where(
-                        x => x.ArticleId == addedArticle2.Id).Single().Word);
+                string actual = sut.Context.ArticleWords.Where(
+                    x => x.ArticleId == addedArticle2.Id).Single().Word;
+                Assert.Equal(word3, actual);
             }
             finally
             {
