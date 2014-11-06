@@ -23,14 +23,12 @@
         public void InsertCorrectlyInsertsArticleWord(
             DbContextTransaction transaction,
             ArticleWordRepository sut,
-            string word,
-            EFDataAccess.Article article)
+            string word)
         {
             try
             {
-                var addedArticle = sut.Context.Articles.Add(article);
-                sut.Context.SaveChanges();
-                var articleWord = new DomainModel.ArticleWord(addedArticle.Id, word);
+                var article = sut.Context.Articles.First();
+                var articleWord = new DomainModel.ArticleWord(article.Id, word);
                 
                 sut.Insert(articleWord);
 
@@ -50,16 +48,14 @@
         public void InsertDuplicateEntityDoesNotThrow(
             DbContextTransaction transaction,
             ArticleWordRepository sut,
-            EFDataAccess.Article article,
             string word)
         {
             try
             {
-                var addedArticle = sut.Context.Articles.Add(article);
-                sut.Context.SaveChanges();
-                sut.Insert(new DomainModel.ArticleWord(addedArticle.Id, word));
+                var article = sut.Context.Articles.First();
+                sut.Insert(new DomainModel.ArticleWord(article.Id, word));
 
-                sut.Insert(new DomainModel.ArticleWord(addedArticle.Id, word));
+                sut.Insert(new DomainModel.ArticleWord(article.Id, word));
 
                 Assert.DoesNotThrow(() => sut.Context.SaveChanges());
             }
@@ -83,32 +79,19 @@
         [Test]
         public void DeleteWithIdDeletesAllArticleWordsByArticleId(
             DbContextTransaction transaction,
-            ArticleWordRepository sut,
-            EFDataAccess.Article article1,
-            EFDataAccess.Article article2,
-            string word1,
-            string word2,
-            string word3)
+            ArticleWordRepository sut)
         {
             try
             {
-                var addedArticle1 = sut.Context.Articles.Add(article1);
-                var addedArticle2 = sut.Context.Articles.Add(article2);
-                sut.Context.SaveChanges();
-                sut.Insert(new DomainModel.ArticleWord(addedArticle1.Id, word1));
-                sut.Insert(new DomainModel.ArticleWord(addedArticle1.Id, word2));
-                sut.Insert(new DomainModel.ArticleWord(addedArticle2.Id, word3));
-                sut.Context.SaveChanges();
+                var article = sut.Context.Articles.First();
 
-                sut.Delete(addedArticle1.Id);
+                sut.Delete(article.Id);
 
                 sut.Context.SaveChanges();
                 Assert.Empty(
                     sut.Context.ArticleWords.Where(
-                        x => x.ArticleId == addedArticle1.Id).ToArray());
-                string actual = sut.Context.ArticleWords.Where(
-                    x => x.ArticleId == addedArticle2.Id).Single().Word;
-                Assert.Equal(word3, actual);
+                        x => x.ArticleId == article.Id).ToArray());
+                Assert.Equal(2, sut.Context.ArticleWords.Count());
             }
             finally
             {
