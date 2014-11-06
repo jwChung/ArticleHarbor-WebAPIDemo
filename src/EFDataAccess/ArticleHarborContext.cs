@@ -7,7 +7,7 @@
     public class ArticleHarborContext : DbContext
     {
         public ArticleHarborContext()
-            : this(new NullDatabaseInitializer<ArticleHarborContext>())
+            : this(new ArticlesInitializer())
         {
         }
 
