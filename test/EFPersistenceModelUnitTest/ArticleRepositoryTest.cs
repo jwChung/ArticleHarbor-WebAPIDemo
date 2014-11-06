@@ -35,6 +35,7 @@
             finally
             {
                 transaction.Rollback();
+                transaction.Dispose();
             }
         }
 
@@ -56,6 +57,7 @@
             finally
             {
                 transaction.Rollback();
+                transaction.Dispose();
             }
         }
 
