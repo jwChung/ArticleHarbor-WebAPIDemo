@@ -28,7 +28,10 @@ namespace Website
                 c => new ArticleHarborAssembliesResolver())
                 .ReusedWithinNone();
             container.Register<IArticleService>(
-                c => new ArticleService(c.Resolve<IArticleRepository>()))
+                c => new ArticleService(
+                    c.Resolve<IArticleRepository>(),
+                    c.Resolve<IArticleWordRepository>(),
+                    KoreanNounExtractor.Execute))
                 .ReusedWithinNone();
             container.Register<ILogger>(
                 c => new FileLogger(Environment.CurrentDirectory))

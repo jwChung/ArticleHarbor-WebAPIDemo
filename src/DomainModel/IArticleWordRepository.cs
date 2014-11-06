@@ -2,6 +2,6 @@
 {
     public interface IArticleWordRepository
     {
-        ArticleWord Insert(ArticleWord articleWord);
+        void Insert(ArticleWord articleWord);
     }
 }
