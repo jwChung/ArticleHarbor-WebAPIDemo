@@ -59,7 +59,7 @@
         }
 
         [Test]
-        public async Task PostAsyncCorrectlyAddsArticleAndArticeWords(Article article)
+        public async Task PostAsyncCorrectlyAddsArticleAndArticleWords(Article article)
         {
             article = new Article(
                 article.Provider,
