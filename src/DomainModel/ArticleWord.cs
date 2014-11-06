@@ -4,26 +4,26 @@
 
     public class ArticleWord
     {
-        private readonly int id;
         private readonly string word;
+        private readonly int articleId;
 
-        public ArticleWord(int id, string word)
+        public ArticleWord(string word, int articleId)
         {
             if (word == null)
                 throw new ArgumentNullException("word");
 
-            this.id = id;
             this.word = word;
-        }
-
-        public int Id
-        {
-            get { return this.id; }
+            this.articleId = articleId;
         }
 
         public string Word
         {
             get { return this.word; }
+        }
+
+        public int ArticleId
+        {
+            get { return this.articleId; }
         }
     }
 }
