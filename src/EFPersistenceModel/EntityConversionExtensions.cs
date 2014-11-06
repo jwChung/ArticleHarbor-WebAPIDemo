@@ -33,18 +33,18 @@ namespace EFPersistenceModel
             };
         }
 
-        public static ArticleWord ToDomain(this DomainModel.ArticleWord articleWord)
+        public static DomainModel.ArticleWord ToDomain(this ArticleWord articleWord)
+        {
+            return new DomainModel.ArticleWord(articleWord.ArticleId, articleWord.Word);
+        }
+
+        public static ArticleWord ToPersistence(this DomainModel.ArticleWord articleWord)
         {
             return new ArticleWord
             {
-                Word = articleWord.Word,
-                ArticleId = articleWord.ArticleId
+                ArticleId = articleWord.ArticleId,
+                Word = articleWord.Word
             };
-        }
-
-        public static DomainModel.ArticleWord ToPersistence(this ArticleWord articleWord)
-        {
-            return new DomainModel.ArticleWord(articleWord.ArticleId, articleWord.Word);
         }
     }
 }

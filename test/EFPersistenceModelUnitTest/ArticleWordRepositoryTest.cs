@@ -10,8 +10,6 @@
     using EFPersistenceModel;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
-    using Article = EFDataAccess.Article;
-    using ArticleWord = DomainModel.ArticleWord;
 
     public class ArticleWordRepositoryTest : IdiomaticTest<ArticleWordRepository>
     {
@@ -26,19 +24,19 @@
             DbContextTransaction transaction,
             ArticleWordRepository sut,
             string word,
-            Article article)
+            EFDataAccess.Article article)
         {
             try
             {
-                var articleWord = new ArticleWord(1, word);
-                sut.Context.Articles.Add(article);
-
-                sut.Insert(articleWord);
+                var addedArticle = sut.Context.Articles.Add(article);
                 sut.Context.SaveChanges();
+                var articleWord = new DomainModel.ArticleWord(addedArticle.Id, word);
+                
+                sut.Insert(articleWord);
 
-                var expected = sut.Select(articleWord.Word, articleWord.ArticleId);
+                var expected = sut.Select(articleWord.ArticleId, articleWord.Word);
                 articleWord.AsSource()
-                    .OfLikeness<ArticleWord>()
+                    .OfLikeness<DomainModel.ArticleWord>()
                     .ShouldEqual(expected);
             }
             finally
@@ -54,7 +52,7 @@
             string word,
             int articleId)
         {
-            var actual = sut.Select(word, articleId);
+            var actual = sut.Select(articleId, word);
             Assert.Null(actual);
         }
 
@@ -62,29 +60,32 @@
         public void DeleteWithIdDeletesAllArticleWordsByArticleId(
             DbContextTransaction transaction,
             ArticleWordRepository sut,
-            Article article1,
-            Article article2,
+            EFDataAccess.Article article1,
+            EFDataAccess.Article article2,
             string word1,
             string word2,
             string word3)
         {
             try
             {
-                sut.Context.Articles.Add(article1);
-                sut.Context.Articles.Add(article2);
-                sut.Insert(new ArticleWord(1, word1));
-                sut.Insert(new ArticleWord(1, word2));
-                sut.Insert(new ArticleWord(2, word3));
+                var addedArticle1 = sut.Context.Articles.Add(article1);
+                var addedArticle2 = sut.Context.Articles.Add(article2);
+                sut.Context.SaveChanges();
+                sut.Insert(new DomainModel.ArticleWord(addedArticle1.Id, word1));
+                sut.Insert(new DomainModel.ArticleWord(addedArticle1.Id, word2));
+                sut.Insert(new DomainModel.ArticleWord(addedArticle2.Id, word3));
                 sut.Context.SaveChanges();
 
-                sut.Delete(1);
+                sut.Delete(addedArticle1.Id);
                 sut.Context.SaveChanges();
 
                 Assert.Empty(
-                    sut.Context.ArticleWords.Where(x => x.ArticleId == 1).ToArray());
+                    sut.Context.ArticleWords.Where(
+                        x => x.ArticleId == addedArticle1.Id).ToArray());
                 Assert.Equal(
                     word3,
-                    sut.Context.ArticleWords.Where(x => x.ArticleId == 2).Single().Word);
+                    sut.Context.ArticleWords.Where(
+                        x => x.ArticleId == addedArticle2.Id).Single().Word);
             }
             finally
             {

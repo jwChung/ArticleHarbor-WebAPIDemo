@@ -46,7 +46,6 @@
 
             var persistence = this.context.Articles.Add(article.ToPersistence());
             await this.context.SaveChangesAsync();
-            var test = this.context.Entry(persistence).State;
             return persistence.ToDomain();
         }
 

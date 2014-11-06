@@ -5,7 +5,6 @@
     using System.Linq;
     using DomainModel;
     using EFDataAccess;
-    using ArticleWord = DomainModel.ArticleWord;
 
     public class ArticleWordRepository : IArticleWordRepository
     {
@@ -24,21 +23,21 @@
             get { return this.context; }
         }
 
-        public void Insert(ArticleWord articleWord)
+        public void Insert(DomainModel.ArticleWord articleWord)
         {
             if (articleWord == null)
                 throw new ArgumentNullException("articleWord");
 
-            this.context.ArticleWords.Add(articleWord.ToDomain());
+            this.context.ArticleWords.Add(articleWord.ToPersistence());
         }
 
-        public ArticleWord Select(string word, int articleId)
+        public DomainModel.ArticleWord Select(int articleId, string word)
         {
             if (word == null)
                 throw new ArgumentNullException("word");
 
-            var articleWord = this.context.ArticleWords.Find(word, articleId);
-            return articleWord == null ? null : articleWord.ToPersistence();
+            var articleWord = this.context.ArticleWords.Find(articleId, word);
+            return articleWord == null ? null : articleWord.ToDomain();
         }
 
         public void Delete(int articleId)
