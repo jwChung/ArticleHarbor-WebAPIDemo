@@ -7,7 +7,8 @@
 
     public sealed class DependencyResolver : IDependencyResolver
     {
-        private Container container;
+        private readonly Container container;
+        private bool disposed = false;
 
         public DependencyResolver(Container container)
         {
@@ -44,11 +45,11 @@
 
         public void Dispose()
         {
-            if (this.container == null)
+            if (this.disposed)
                 return;
 
             this.container.Dispose();
-            this.container = null;
+            this.disposed = true;
         }
     }
 }
