@@ -49,7 +49,6 @@
             if (content == null)
                 throw new ArgumentNullException("content");
 
-            byte[] buffer = new byte[Math.Min(content.Headers.ContentLength.Value, 256)];
             using (var reader = new StreamReader(
                 readStream, this.SelectCharacterEncoding(content.Headers)))
             {
