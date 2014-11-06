@@ -8,25 +8,25 @@
 
     public class ArticlesController : ApiController
     {
-        private readonly IArticleRepository repository;
+        private readonly IArticleService articleService;
 
-        public ArticlesController(IArticleRepository repository)
+        public ArticlesController(IArticleService articleService)
         {
-            if (repository == null)
-                throw new ArgumentNullException("repository");
+            if (articleService == null)
+                throw new ArgumentNullException("articleService");
 
-            this.repository = repository;
+            this.articleService = articleService;
         }
 
-        public IArticleRepository Repository
+        public IArticleService ArticleService
         {
-            get { return this.repository; }
+            get { return this.articleService; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Method is more appropriate.")]
         public Task<IEnumerable<Article>> GetAsync()
         {
-            return this.repository.SelectAsync();
+            return this.articleService.GetAsync();
         }
     }
 }

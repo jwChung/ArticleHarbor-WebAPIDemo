@@ -27,8 +27,11 @@ namespace Website
             container.Register<IAssembliesResolver>(
                 c => new ArticleHarborAssembliesResolver())
                 .ReusedWithinNone();
+            container.Register<IArticleService>(
+                c => new ArticleService(c.Resolve<IArticleRepository>()))
+                .ReusedWithinNone();
             container.Register(
-                c => new ArticlesController(c.Resolve<IArticleRepository>()))
+                c => new ArticlesController(c.Resolve<IArticleService>()))
                 .ReusedWithinNone();
             container.Register<ILogger>(
                 c => new FileLogger(Environment.CurrentDirectory))
