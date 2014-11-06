@@ -5,6 +5,7 @@
 
     public interface IArticleService
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "The method form is more appropriate than property form.")]
         Task<IEnumerable<Article>> GetAsync();
 
         Task<Article> AddOrModifyAsync(Article article);
