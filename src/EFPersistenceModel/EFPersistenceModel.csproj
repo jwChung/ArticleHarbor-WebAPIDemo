@@ -45,7 +45,7 @@
     <Compile Include="..\..\build\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="ArticleExtensions.cs" />
+    <Compile Include="EntityConversionExtensions.cs" />
     <Compile Include="ArticleRepository.cs" />
     <Compile Include="ArticleWordRepository.cs" />
     <Compile Include="DatabaseContext.cs" />

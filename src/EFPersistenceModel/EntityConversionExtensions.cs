@@ -3,7 +3,7 @@ namespace EFPersistenceModel
     using DomainModel;
     using EFDataAccess;
 
-    internal static class ArticleExtensions
+    internal static class EntityConversionExtensions
     {
         public static Article ToArticle(this EFArticle efArticle)
         {
@@ -29,6 +29,20 @@ namespace EFPersistenceModel
                 Date = article.Date,
                 Url = article.Url
             };
+        }
+
+        public static EFArticleWord ToEArticleWord(this ArticleWord articleWord)
+        {
+            return new EFArticleWord
+            {
+                Word = articleWord.Word,
+                EFArticleId = articleWord.ArticleId
+            };
+        }
+
+        public static ArticleWord ToArticleWord(this EFArticleWord efArticleWord)
+        {
+            return new ArticleWord(efArticleWord.Word, efArticleWord.EFArticleId);
         }
     }
 }

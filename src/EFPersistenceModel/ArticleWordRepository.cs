@@ -26,7 +26,16 @@
             if (articleWord == null)
                 throw new ArgumentNullException("articleWord");
 
-            throw new System.NotImplementedException();
+            this.context.ArticleWords.Add(articleWord.ToEArticleWord());
+        }
+
+        public ArticleWord Select(string word, int articleId)
+        {
+            if (word == null)
+                throw new ArgumentNullException("word");
+
+            var efArticleWord = this.context.ArticleWords.Find(word, articleId);
+            return efArticleWord == null ? null : efArticleWord.ToArticleWord();
         }
     }
 }
