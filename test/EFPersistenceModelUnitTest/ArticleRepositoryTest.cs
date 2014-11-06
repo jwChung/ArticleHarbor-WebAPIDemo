@@ -57,6 +57,25 @@
         }
 
         [Test]
+        public async Task InsertAsyncWithDuplicateArticleDoesNotThrow(
+            DbContextTransaction transaction,
+            ArticleRepository sut,
+            Article article)
+        {
+            try
+            {
+                await sut.InsertAsync(article);
+                Assert.DoesNotThrow(
+                    () => { var dummy = sut.InsertAsync(article).Result; });
+            }
+            finally
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+            }
+        }
+
+        [Test]
         public async Task SelectAsyncReturnsCorrectResult(
             DbContextTransaction transaction,
             ArticleRepository sut,
