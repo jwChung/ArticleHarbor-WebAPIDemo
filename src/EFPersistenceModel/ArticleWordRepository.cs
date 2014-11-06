@@ -37,5 +37,10 @@
             var efArticleWord = this.context.ArticleWords.Find(word, articleId);
             return efArticleWord == null ? null : efArticleWord.ToArticleWord();
         }
+        
+        public void Delete(int articleId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

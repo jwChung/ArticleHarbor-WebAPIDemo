@@ -5,6 +5,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using DomainModel;
+    using Jwc.Experiment.Xunit;
     using Moq;
     using Ploeh.AutoFixture;
     using Ploeh.SemanticComparison.Fluent;
@@ -55,6 +56,72 @@
 
             Assert.Equal(newArticle, actual);
             sut.Articles.ToMock().Verify(x => x.Update(newArticle));
+        }
+
+        [Test]
+        public IEnumerable<ITestCase> AddOrModifyAsyncRenewsArticleWordsWhenSubjectIsModifiedWithGivenId(
+            Article article,
+            string subject,
+            string[] words,
+            IFixture fixture)
+        {
+            // Fixture setup
+            var modifiedArticle = new Article(
+                article.Id,
+                article.Provider,
+                article.No,
+                subject,
+                article.Body,
+                article.Date,
+                article.Url);
+            fixture.Inject<Func<string, IEnumerable<string>>>(
+               x =>
+               {
+                   Assert.Equal(subject, x);
+                   return words;
+               });
+            var sut = fixture.Create<ArticleService>();
+            sut.Articles.Of(x => x.Select(article.Id) == article);
+
+            // Verify outcome
+            sut.AddOrModifyAsync(modifiedArticle).Wait();
+
+            // Excercise system
+            yield return TestCase.Create(() =>
+                sut.ArticleWords.ToMock().Verify(x => x.Delete(modifiedArticle.Id)));
+
+            yield return TestCase.Create(() =>
+            {
+                foreach (var word in words)
+                {
+                    var likeness = new ArticleWord(word, modifiedArticle.Id)
+                        .AsSource().OfLikeness<ArticleWord>();
+                    sut.ArticleWords.ToMock().Verify(
+                        x => x.Insert(It.Is<ArticleWord>(p => likeness.Equals(p))));
+                }
+            });
+        }
+
+        [Test]
+        public async Task AddOrModifyAsyncDoesNotDeleteArticleWordsWhenSubjectIsNotModifiedWithGivenId(
+            ArticleService sut,
+            Article article,
+            Article modifiedArticle)
+        {
+            modifiedArticle = new Article(
+                modifiedArticle.Id,
+                modifiedArticle.Provider,
+                modifiedArticle.No,
+                article.Subject,
+                modifiedArticle.Body,
+                modifiedArticle.Date,
+                modifiedArticle.Url);
+            sut.Articles.Of(x => x.Select(article.Id) == article);
+
+            await sut.AddOrModifyAsync(modifiedArticle);
+
+            sut.ArticleWords.ToMock().Verify(x => x.Delete(modifiedArticle.Id), Times.Never());
+            sut.ArticleWords.ToMock().Verify(x => x.Insert(It.IsAny<ArticleWord>()), Times.Never());
         }
 
         [Test]

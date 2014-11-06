@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -59,14 +60,17 @@
             if (oldArticle == null)
             {
                 var newArticle = await this.articles.InsertAsync(article);
-
-                await Task.Run(() => this.InsertArticleWords(newArticle))
-                    .ConfigureAwait(false);
-
+                await this.InsertArticleWordsAsync(newArticle);
                 return newArticle;
             }
 
             this.articles.Update(article);
+            if (article.Subject != oldArticle.Subject)
+            {
+                this.ArticleWords.Delete(article.Id);
+                await this.InsertArticleWordsAsync(article);
+            }
+
             return article;
         }
 
@@ -75,12 +79,13 @@
             this.articles.Delete(id);
         }
 
-        private void InsertArticleWords(Article newArticle)
+        private async Task InsertArticleWordsAsync(Article article)
         {
-            var words = this.nounExtractor(newArticle.Subject);
+            var words = await Task.Run(() => this.nounExtractor(article.Subject).ToArray())
+                .ConfigureAwait(false);
             foreach (var word in words)
             {
-                var articleWord = new ArticleWord(word, newArticle.Id);
+                var articleWord = new ArticleWord(word, article.Id);
                 this.ArticleWords.Insert(articleWord);
             }
         }
