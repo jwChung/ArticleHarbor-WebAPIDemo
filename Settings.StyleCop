@@ -44,7 +44,6 @@
       <AnalyzerSettings>
         <CollectionProperty Name="Hungarian">
           <Value>db</Value>
-          <Value>ef</Value>
         </CollectionProperty>
       </AnalyzerSettings>
     </Analyzer>

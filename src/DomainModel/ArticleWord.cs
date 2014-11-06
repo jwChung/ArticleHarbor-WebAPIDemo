@@ -7,7 +7,7 @@
         private readonly string word;
         private readonly int articleId;
 
-        public ArticleWord(string word, int articleId)
+        public ArticleWord(int articleId, string word)
         {
             if (word == null)
                 throw new ArgumentNullException("word");
@@ -16,14 +16,14 @@
             this.articleId = articleId;
         }
 
-        public string Word
-        {
-            get { return this.word; }
-        }
-
         public int ArticleId
         {
             get { return this.articleId; }
+        }
+
+        public string Word
+        {
+            get { return this.word; }
         }
     }
 }

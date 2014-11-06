@@ -10,6 +10,8 @@
     using EFPersistenceModel;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
+    using Article = EFDataAccess.Article;
+    using ArticleWord = DomainModel.ArticleWord;
 
     public class ArticleWordRepositoryTest : IdiomaticTest<ArticleWordRepository>
     {
@@ -24,12 +26,12 @@
             DbContextTransaction transaction,
             ArticleWordRepository sut,
             string word,
-            EFArticle efArticle)
+            Article article)
         {
             try
             {
-                var articleWord = new ArticleWord(word, 1);
-                sut.Context.Articles.Add(efArticle);
+                var articleWord = new ArticleWord(1, word);
+                sut.Context.Articles.Add(article);
 
                 sut.Insert(articleWord);
                 sut.Context.SaveChanges();
@@ -57,32 +59,32 @@
         }
 
         [Test]
-        public void DeleteWithIdDeletesAllArticleWordsRelatedWithId(
+        public void DeleteWithIdDeletesAllArticleWordsByArticleId(
             DbContextTransaction transaction,
             ArticleWordRepository sut,
-            EFArticle efArticle1,
-            EFArticle efArticle2,
+            Article article1,
+            Article article2,
             string word1,
             string word2,
             string word3)
         {
             try
             {
-                sut.Context.Articles.Add(efArticle1);
-                sut.Context.Articles.Add(efArticle2);
-                sut.Insert(new ArticleWord(word1, 1));
-                sut.Insert(new ArticleWord(word2, 1));
-                sut.Insert(new ArticleWord(word3, 2));
+                sut.Context.Articles.Add(article1);
+                sut.Context.Articles.Add(article2);
+                sut.Insert(new ArticleWord(1, word1));
+                sut.Insert(new ArticleWord(1, word2));
+                sut.Insert(new ArticleWord(2, word3));
                 sut.Context.SaveChanges();
 
                 sut.Delete(1);
                 sut.Context.SaveChanges();
 
                 Assert.Empty(
-                    sut.Context.ArticleWords.Where(x => x.EFArticleId == 1).ToArray());
+                    sut.Context.ArticleWords.Where(x => x.ArticleId == 1).ToArray());
                 Assert.Equal(
                     word3,
-                    sut.Context.ArticleWords.Where(x => x.EFArticleId == 2).Single().Word);
+                    sut.Context.ArticleWords.Where(x => x.ArticleId == 2).Single().Word);
             }
             finally
             {

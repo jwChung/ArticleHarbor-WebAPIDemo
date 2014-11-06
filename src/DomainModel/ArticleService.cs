@@ -85,7 +85,7 @@
                 .ConfigureAwait(false);
             foreach (var word in words)
             {
-                var articleWord = new ArticleWord(word, article.Id);
+                var articleWord = new ArticleWord(article.Id, word);
                 this.ArticleWords.Insert(articleWord);
             }
         }

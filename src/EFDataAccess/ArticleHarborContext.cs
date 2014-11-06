@@ -17,9 +17,9 @@
             Database.SetInitializer(initializer);
         }
 
-        public IDbSet<EFArticle> Articles { get; set; }
+        public IDbSet<Article> Articles { get; set; }
 
-        public IDbSet<EFArticleWord> ArticleWords { get; set; }
+        public IDbSet<ArticleWord> ArticleWords { get; set; }
 
         private class ArticlesInitializer : DropCreateDatabaseAlways<ArticleHarborContext>
         {
@@ -32,12 +32,12 @@
                 base.InitializeDatabase(context);
             }
 
-            private static void InitializeArticles(IDbSet<EFArticle> articles)
+            private static void InitializeArticles(IDbSet<Article> articles)
             {
                 for (int i = 0; i < 100; i++)
                 {
                     articles.Add(
-                        new EFArticle
+                        new Article
                         {
                             Id = -1,
                             No = i.ToString(CultureInfo.CurrentCulture),

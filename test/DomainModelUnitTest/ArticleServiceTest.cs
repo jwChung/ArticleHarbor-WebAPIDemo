@@ -94,7 +94,7 @@
             {
                 foreach (var word in words)
                 {
-                    var likeness = new ArticleWord(word, modifiedArticle.Id)
+                    var likeness = new ArticleWord(modifiedArticle.Id, word)
                         .AsSource().OfLikeness<ArticleWord>();
                     sut.ArticleWords.ToMock().Verify(
                         x => x.Insert(It.Is<ArticleWord>(p => likeness.Equals(p))));
@@ -148,7 +148,7 @@
             // Verify outcome
             foreach (var word in words)
             {
-                var likeness = new ArticleWord(word, newArticle.Id)
+                var likeness = new ArticleWord(newArticle.Id, word)
                     .AsSource().OfLikeness<ArticleWord>();
                 sut.ArticleWords.ToMock().Verify(
                     x => x.Insert(It.Is<ArticleWord>(p => likeness.Equals(p))));

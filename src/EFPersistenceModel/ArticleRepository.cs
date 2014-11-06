@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
     using DomainModel;
     using EFDataAccess;
+    using Article = DomainModel.Article;
 
     public class ArticleRepository : IArticleRepository
     {
@@ -29,13 +30,13 @@
         public async Task<IEnumerable<Article>> SelectAsync()
         {
             var result = await this.context.Articles.Take(50).ToArrayAsync();
-            return result.Select(x => x.ToArticle());
+            return result.Select(x => x.ToDomain());
         }
 
         public Article Select(int id)
         {
-            var efArticle = this.context.Articles.Find(id);
-            return efArticle == null ? null : efArticle.ToArticle();
+            var article = this.context.Articles.Find(id);
+            return article == null ? null : article.ToDomain();
         }
 
         public async Task<Article> InsertAsync(Article article)
@@ -43,10 +44,10 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            var efArticle = this.context.Articles.Add(article.ToEFArticle());
+            var persistence = this.context.Articles.Add(article.ToPersistence());
             await this.context.SaveChangesAsync();
-            var test = this.context.Entry(efArticle).State;
-            return efArticle.ToArticle();
+            var test = this.context.Entry(persistence).State;
+            return persistence.ToDomain();
         }
 
         public void Update(Article article)
@@ -54,21 +55,21 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            var efArticle = this.context.Articles.Find(article.Id);
-            if (efArticle != null)
+            var persistence = this.context.Articles.Find(article.Id);
+            if (persistence != null)
             {
-                ((IObjectContextAdapter)this.context).ObjectContext.Detach(efArticle);
-                this.context.Entry(article.ToEFArticle()).State = EntityState.Modified;
+                ((IObjectContextAdapter)this.context).ObjectContext.Detach(persistence);
+                this.context.Entry(article.ToPersistence()).State = EntityState.Modified;
             }
         }
 
         public void Delete(int id)
         {
-            var efArticle = this.context.Articles.Find(id);
-            if (efArticle == null)
+            var article = this.context.Articles.Find(id);
+            if (article == null)
                 return;
 
-            this.context.Articles.Remove(efArticle);
+            this.context.Articles.Remove(article);
         }
     }
 }

@@ -2,24 +2,26 @@ namespace EFPersistenceModel
 {
     using DomainModel;
     using EFDataAccess;
+    using Article = EFDataAccess.Article;
+    using ArticleWord = EFDataAccess.ArticleWord;
 
     internal static class EntityConversionExtensions
     {
-        public static Article ToArticle(this EFArticle efArticle)
+        public static DomainModel.Article ToDomain(this Article article)
         {
-            return new Article(
-                efArticle.Id,
-                efArticle.Provider,
-                efArticle.No,
-                efArticle.Subject,
-                efArticle.Body,
-                efArticle.Date,
-                efArticle.Url);
+            return new DomainModel.Article(
+                article.Id,
+                article.Provider,
+                article.No,
+                article.Subject,
+                article.Body,
+                article.Date,
+                article.Url);
         }
 
-        public static EFArticle ToEFArticle(this Article article)
+        public static Article ToPersistence(this DomainModel.Article article)
         {
-            return new EFArticle
+            return new Article
             {
                 Id = article.Id,
                 Provider = article.Provider,
@@ -31,18 +33,18 @@ namespace EFPersistenceModel
             };
         }
 
-        public static EFArticleWord ToEArticleWord(this ArticleWord articleWord)
+        public static ArticleWord ToDomain(this DomainModel.ArticleWord articleWord)
         {
-            return new EFArticleWord
+            return new ArticleWord
             {
                 Word = articleWord.Word,
-                EFArticleId = articleWord.ArticleId
+                ArticleId = articleWord.ArticleId
             };
         }
 
-        public static ArticleWord ToArticleWord(this EFArticleWord efArticleWord)
+        public static DomainModel.ArticleWord ToPersistence(this ArticleWord articleWord)
         {
-            return new ArticleWord(efArticleWord.Word, efArticleWord.EFArticleId);
+            return new DomainModel.ArticleWord(articleWord.ArticleId, articleWord.Word);
         }
     }
 }
