@@ -29,7 +29,7 @@
             try
             {
                 var newArticle = await sut.InsertAsync(article1);
-                var expected = await sut.SelectAsync(newArticle.Id);
+                var expected = sut.Select(newArticle.Id);
                 newArticle.AsSource().OfLikeness<Article>().ShouldEqual(expected);
             }
             finally
@@ -93,7 +93,7 @@
                 sut.Update(modifiedArticle);
 
                 sut.Context.SaveChanges();
-                var actual = await sut.SelectAsync(insertedArticle.Id);
+                var actual = sut.Select(insertedArticle.Id);
                 actual.AsSource().OfLikeness<Article>().ShouldEqual(modifiedArticle);
             }
             finally

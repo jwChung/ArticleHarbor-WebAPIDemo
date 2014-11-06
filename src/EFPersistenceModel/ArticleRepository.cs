@@ -32,10 +32,9 @@
             return result.Select(x => x.ToArticle());
         }
 
-        public async Task<Article> SelectAsync(int id)
+        public Article Select(int id)
         {
-            var efArticle = await Task.Run(() => this.context.Articles.Find(id));
-            return efArticle.ToArticle();
+            return this.context.Articles.Find(id).ToArticle();
         }
 
         public async Task<Article> InsertAsync(Article article)
