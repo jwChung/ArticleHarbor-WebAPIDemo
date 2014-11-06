@@ -60,11 +60,8 @@
             {
                 var newArticle = await this.articles.InsertAsync(article);
 
-#pragma warning disable 4014
-                Task.Run(() => this.InsertArticleWords(newArticle)).ContinueWith(
-                    t => ThreadPool.QueueUserWorkItem(x => { throw t.Exception; }),
-                    TaskContinuationOptions.OnlyOnFaulted);
-#pragma warning restore 4014
+                await Task.Run(() => this.InsertArticleWords(newArticle))
+                    .ConfigureAwait(false);
 
                 return newArticle;
             }
