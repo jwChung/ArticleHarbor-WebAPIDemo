@@ -44,6 +44,9 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
+            if (this.Select(article.Id) != null)
+                return article;
+
             var persistence = this.context.Articles.Add(article.ToPersistence());
             await this.context.SaveChangesAsync();
             return persistence.ToDomain();

@@ -57,6 +57,29 @@
         }
 
         [Test]
+        public async Task InsertAsyncDuplicateArticleDoesNotInsert(
+            DbContextTransaction transaction,
+            ArticleRepository sut,
+            Article article)
+        {
+            try
+            {
+                var persistence = sut.Context.Articles.First();
+                article = article.WithId(persistence.Id);
+
+                var actual = await sut.InsertAsync(article);
+
+                actual.AsSource().OfLikeness<Article>().ShouldEqual(article);
+                Assert.Equal(3, sut.Context.Articles.Count());
+            }
+            finally
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+            }
+        }
+
+        [Test]
         public async Task SelectAsyncReturnsCorrectResult(
             DbContextTransaction transaction,
             ArticleRepository sut,

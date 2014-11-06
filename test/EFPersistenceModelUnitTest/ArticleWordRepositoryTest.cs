@@ -86,8 +86,8 @@
                 var article = sut.Context.Articles.First();
 
                 sut.Delete(article.Id);
-
                 sut.Context.SaveChanges();
+
                 Assert.Empty(
                     sut.Context.ArticleWords.Where(
                         x => x.ArticleId == article.Id).ToArray());
