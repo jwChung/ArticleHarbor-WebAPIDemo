@@ -74,5 +74,22 @@
                    "Actual status code: " + response.StatusCode);
             }
         }
+
+        [Test]
+        public async Task PostAsyncCanModifyArticle(Article article)
+        {
+            using (var client = HttpClientFactory.Create())
+            {
+                var content = new StringContent(
+                    JsonConvert.SerializeObject(article.WithId(1)));
+                content.Headers.ContentType.MediaType = "application/json";
+
+                var response = await client.PostAsync("api/articles", content);
+
+                Assert.True(
+                   response.IsSuccessStatusCode,
+                   "Actual status code: " + response.StatusCode);
+            }
+        }
     }
 }
