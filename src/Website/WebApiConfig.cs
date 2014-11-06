@@ -4,6 +4,7 @@
     using System.Web.Http;
     using System.Web.Http.Dispatcher;
     using Jwc.Funz;
+    using WebApiPresentationModel;
 
     public static class WebApiConfig
     {
@@ -19,6 +20,8 @@
             config.DependencyResolver = new DependencyResolver(container);
 
             config.Formatters.Remove(config.Formatters.XmlFormatter);
+            config.Formatters.Insert(
+                0, new JsonConstructorMediaTypeFormatter(JsonConstructorDeserializer.Deserialize));
 
             // Web API routes
             config.MapHttpAttributeRoutes();

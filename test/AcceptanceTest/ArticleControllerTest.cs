@@ -1,14 +1,16 @@
 ﻿namespace AcceptanceTest
 {
     using System;
+    using System.Net.Http;
     using System.Threading.Tasks;
+    using DomainModel;
     using Newtonsoft.Json;
     using Xunit;
 
     public class ArticleControllerTest
     {
         [Test]
-        public async Task GetReturnsResponseWithCorrectStatusCode()
+        public async Task GetAsyncReturnsResponseWithCorrectStatusCode()
         {
             using (var client = HttpClientFactory.Create())
             {
@@ -19,8 +21,8 @@
             }
         }
 
-        [Fact]
-        public async Task GetReturnsJsonContent()
+        [Test]
+        public async Task GetAsyncReturnsJsonContent()
         {
             using (var client = HttpClientFactory.Create())
             {
@@ -37,9 +39,9 @@
                 Assert.NotNull(json);
             }
         }
-        
-        [Fact]
-        public async Task GetDoesNotSupportXmlContent()
+
+        [Test]
+        public async Task GetAsyncDoesNotSupportXmlContent()
         {
             using (var client = HttpClientFactory.Create())
             {
@@ -53,6 +55,23 @@
                 Assert.Equal(
                     "application/json",
                     response.Content.Headers.ContentType.MediaType);
+            }
+        }
+
+        [Test]
+        public async Task PostAsyncCanAddCorrectArticle(Article article)
+        {
+            using (var client = HttpClientFactory.Create())
+            {
+                var content = new StringContent(
+                    JsonConvert.SerializeObject(article.WithId(1000)));
+                content.Headers.ContentType.MediaType = "application/json";
+
+                var response = await client.PostAsync("api/articles", content);
+
+                Assert.True(
+                   response.IsSuccessStatusCode,
+                   "Actual status code: " + response.StatusCode);
             }
         }
     }

@@ -50,10 +50,12 @@
                 throw new ArgumentNullException("content");
 
             byte[] buffer = new byte[Math.Min(content.Headers.ContentLength.Value, 256)];
-            string jsonString = this.SelectCharacterEncoding(content.Headers).GetString(
-                buffer, 0, await readStream.ReadAsync(buffer, 0, buffer.Length));
-
-            return this.formatter(type, jsonString);
+            using (var reader = new StreamReader(
+                readStream, this.SelectCharacterEncoding(content.Headers)))
+            {
+                string jsonString = await reader.ReadToEndAsync();
+                return this.formatter(type, jsonString);    
+            }
         }
         
         private static class TypeHelper
