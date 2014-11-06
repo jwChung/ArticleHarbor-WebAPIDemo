@@ -53,7 +53,9 @@ namespace Website
             container.Register<IArticleRepository>(
                 c => c.Resolve<IDatabaseContext>().Articles)
                 .ReusedWithinContainer();
-
+            container.Register<IArticleWordRepository>(
+                c => c.Resolve<IDatabaseContext>().ArticleWords)
+                .ReusedWithinContainer();
             return this;
         }
     }
