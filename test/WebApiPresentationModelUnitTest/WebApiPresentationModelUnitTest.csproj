@@ -119,7 +119,7 @@
     <Compile Include="AssemblyTest.cs" />
     <Compile Include="FileLoggerTest.cs" />
     <Compile Include="JsonConstructorDeserializerTest.cs" />
-    <Compile Include="JsonConstructorMediaTypeFormatterTest.cs" />
+    <Compile Include="JsonCustomMediaTypeFormatterTest.cs" />
     <Compile Include="LogContextTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestAttribute.cs" />

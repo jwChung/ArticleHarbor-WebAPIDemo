@@ -7,21 +7,21 @@
     using System.Net.Http.Formatting;
     using System.Threading.Tasks;
 
-    public class JsonConstructorMediaTypeFormatter : JsonMediaTypeFormatter
+    public class JsonCustomMediaTypeFormatter : JsonMediaTypeFormatter
     {
-        private readonly Func<Type, string, object> formatter;
+        private readonly Func<Type, string, object> deserializer;
 
-        public JsonConstructorMediaTypeFormatter(Func<Type, string, object> formatter)
+        public JsonCustomMediaTypeFormatter(Func<Type, string, object> deserializer)
         {
-            if (formatter == null)
-                throw new ArgumentNullException("formatter");
+            if (deserializer == null)
+                throw new ArgumentNullException("deserializer");
 
-            this.formatter = formatter;
+            this.deserializer = deserializer;
         }
 
-        public Func<Type, string, object> Formatter
+        public Func<Type, string, object> Deserializer
         {
-            get { return this.formatter; }
+            get { return this.deserializer; }
         }
 
         public override bool CanReadType(Type type)
@@ -54,7 +54,7 @@
                 readStream, this.SelectCharacterEncoding(content.Headers)))
             {
                 string jsonString = await reader.ReadToEndAsync();
-                return this.formatter(type, jsonString);    
+                return this.deserializer(type, jsonString);    
             }
         }
         

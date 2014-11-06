@@ -21,7 +21,7 @@
 
             config.Formatters.Remove(config.Formatters.XmlFormatter);
             config.Formatters.Insert(
-                0, new JsonConstructorMediaTypeFormatter(JsonConstructorDeserializer.Deserialize));
+                0, new JsonCustomMediaTypeFormatter(JsonConstructorDeserializer.Deserialize));
 
             // Web API routes
             config.MapHttpAttributeRoutes();

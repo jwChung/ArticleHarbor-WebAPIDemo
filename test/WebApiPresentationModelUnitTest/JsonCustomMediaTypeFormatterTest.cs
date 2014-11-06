@@ -13,18 +13,18 @@
     using WebApiPresentationModel;
     using Xunit;
 
-    public class JsonConstructorMediaTypeFormatterTest : IdiomaticTest<JsonConstructorMediaTypeFormatter>
+    public class JsonCustomMediaTypeFormatterTest : IdiomaticTest<JsonCustomMediaTypeFormatter>
     {
         [Test]
         public void SubIsJsonMediaTypeFormatter(
-            JsonConstructorMediaTypeFormatter sut)
+            JsonCustomMediaTypeFormatter sut)
         {
             Assert.IsAssignableFrom<JsonMediaTypeFormatter>(sut);
         }
 
         [Test]
         public void CanWriteTypeWithAnyTypeReturnsFalse(
-            JsonConstructorMediaTypeFormatter sut,
+            JsonCustomMediaTypeFormatter sut,
             Type type)
         {
             bool actual = sut.CanWriteType(type);
@@ -54,7 +54,7 @@
                 typeof(double),
                 typeof(decimal)
             };
-            return TestCases.WithArgs(simpleTypes).WithAuto<JsonConstructorMediaTypeFormatter>()
+            return TestCases.WithArgs(simpleTypes).WithAuto<JsonCustomMediaTypeFormatter>()
                 .Create((type, sut) =>
                 {
                     var actual = sut.CanReadType(type);
@@ -70,7 +70,7 @@
                 typeof(object),
                 this.GetType()
             };
-            return TestCases.WithArgs(simpleTypes).WithAuto<JsonConstructorMediaTypeFormatter>()
+            return TestCases.WithArgs(simpleTypes).WithAuto<JsonCustomMediaTypeFormatter>()
                 .Create((type, sut) =>
                 {
                     var actual = sut.CanReadType(type);
@@ -94,7 +94,7 @@
                 return expected;
             };
             fixture.Inject(formatter);
-            var sut = fixture.Create<JsonConstructorMediaTypeFormatter>();
+            var sut = fixture.Create<JsonCustomMediaTypeFormatter>();
             var stream = new MemoryStream(Encoding.Unicode.GetBytes(value));
             content.Headers.Add("Content-Type", "text/html; charset=utf-16");
             content.Headers.Add("Content-Length", "100");
@@ -106,7 +106,7 @@
 
         [Test]
         public void ReadFromStreamAsyncWithNullStreamThrows(
-            JsonConstructorMediaTypeFormatter sut,
+            JsonCustomMediaTypeFormatter sut,
             Type type,
             HttpContent content,
             IFormatterLogger formatterLogger)
@@ -118,7 +118,7 @@
         
         [Test]
         public void ReadFromStreamAsyncWithNullHttpContentThrows(
-            JsonConstructorMediaTypeFormatter sut,
+            JsonCustomMediaTypeFormatter sut,
             Type type,
             Stream stream,
             IFormatterLogger formatterLogger)
