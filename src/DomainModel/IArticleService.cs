@@ -7,7 +7,7 @@
     {
         Task<IEnumerable<Article>> GetAsync();
 
-        Article AddOrModify(Article article);
+        Task<Article> AddOrModifyAsync(Article article);
 
         void Remove(Article article);
     }

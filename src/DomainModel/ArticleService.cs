@@ -26,12 +26,17 @@
             return this.repository.SelectAsync();
         }
 
-        public Article AddOrModify(Article article)
+        public Task<Article> AddOrModifyAsync(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            throw new NotImplementedException();
+            var oldArticle = this.repository.Select(article.Id);
+            if (oldArticle == null)
+                return this.repository.InsertAsync(article);
+
+            this.repository.Update(article);
+            return Task.FromResult(article);
         }
 
         public void Remove(Article article)
