@@ -24,11 +24,11 @@
         public async Task InsertAsyncCorrectlyInsertsArticle(
             DbContextTransaction transaction,
             ArticleRepository sut,
-            Article article)
+            Article article1)
         {
             try
             {
-                var newArticle = await sut.InsertAsync(article);
+                var newArticle = await sut.InsertAsync(article1);
                 var expected = await sut.SelectAsync(newArticle.Id);
                 newArticle.AsSource().OfLikeness<Article>().ShouldEqual(expected);
             }
@@ -36,6 +36,23 @@
             {
                 transaction.Rollback();
                 transaction.Dispose();
+            }
+        }
+
+        [Test]
+        public async Task InsertAsyncWithNullArticleThrows(ArticleRepository sut)
+        {
+            try
+            {
+                await sut.InsertAsync(null);
+                throw new Exception();
+            }
+            catch (ArgumentNullException)
+            {
+            }
+            catch
+            {
+                throw;
             }
         }
 
@@ -62,19 +79,48 @@
         }
 
         [Test]
-        public async Task InsertAsyncWithNullArticleThrows(ArticleRepository sut)
+        public async Task UpdateCorrectlyUpdatesArticle(
+            DbContextTransaction transaction,
+            ArticleRepository sut,
+            Article article1,
+            Article article2)
         {
             try
             {
-                await sut.InsertAsync(null);
-                throw new Exception();
+                var insertedArticle = await sut.InsertAsync(article1);
+                var modifiedArticle = article2.WithId(insertedArticle.Id);
+
+                sut.Update(modifiedArticle);
+
+                sut.Context.SaveChanges();
+                var actual = await sut.SelectAsync(insertedArticle.Id);
+                actual.AsSource().OfLikeness<Article>().ShouldEqual(modifiedArticle);
             }
-            catch (ArgumentNullException)
+            finally
             {
+                transaction.Rollback();
+                transaction.Dispose();
             }
-            catch
+        }
+
+        [Test]
+        public void UpdateDoesNotThrowWhenThereIsNoArticleWithGivenId(
+            DbContextTransaction transaction,
+            ArticleRepository sut,
+            Article article)
+        {
+            try
             {
-                throw;
+                Assert.DoesNotThrow(() =>
+                {
+                    sut.Update(article);
+                    sut.Context.SaveChanges();
+                });
+            }
+            finally
+            {
+                transaction.Rollback();
+                transaction.Dispose();
             }
         }
 

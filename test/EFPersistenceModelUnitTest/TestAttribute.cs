@@ -53,7 +53,8 @@ public class TestAttribute : TestBaseAttribute
     {
         var fixture = new Fixture().Customize(new AutoMoqCustomization());
 
-        var dbContext = new ArticleHarborContext(new DropCreateDatabaseAlways<ArticleHarborContext>());
+        var dbContext = new ArticleHarborContext(
+            new DropCreateDatabaseAlways<ArticleHarborContext>());
         fixture.Inject(dbContext);
         fixture.Inject(dbContext.Database.BeginTransaction());
 

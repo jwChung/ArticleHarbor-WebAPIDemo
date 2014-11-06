@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Threading.Tasks;
     using DomainModel;
@@ -33,7 +34,7 @@
 
         public async Task<Article> SelectAsync(int id)
         {
-            var efArticle = await Task.Run<EFArticle>(() => this.context.Articles.Find(id));
+            var efArticle = await Task.Run(() => this.context.Articles.Find(id));
             return efArticle.ToArticle();
         }
 
@@ -44,7 +45,21 @@
 
             var efArticle = this.context.Articles.Add(article.ToEFArticle());
             await this.context.SaveChangesAsync();
+            var test = this.context.Entry(efArticle).State;
             return efArticle.ToArticle();
+        }
+
+        public void Update(Article article)
+        {
+            if (article == null)
+                throw new ArgumentNullException("article");
+
+            var efArticle = this.context.Articles.Find(article.Id);
+            if (efArticle != null)
+            {
+                ((IObjectContextAdapter)this.context).ObjectContext.Detach(efArticle);
+                this.context.Entry(article.ToEFArticle()).State = EntityState.Modified;
+            }
         }
     }
 }
