@@ -29,7 +29,7 @@
 
             var actual = sut.Articles;
 
-            var repository = Assert.IsAssignableFrom<ArticleRepository>(sut.Articles);
+            var repository = Assert.IsAssignableFrom<ArticleRepository>(actual);
             Assert.Same(sut.Context, repository.Context);
         }
 
@@ -38,6 +38,24 @@
         {
             var actual = sut.Articles;
             Assert.Same(sut.Articles, actual);
+        }
+
+        [Test]
+        public void ArticleWordsIsCorrect(DatabaseContext sut)
+        {
+            Assert.NotNull(sut.Context.ArticleWords);
+
+            var actual = sut.ArticleWords;
+
+            var repository = Assert.IsAssignableFrom<ArticleWordRepository>(actual);
+            Assert.Same(sut.Context, repository.Context);
+        }
+
+        [Test]
+        public void ArticleWordsAlwaysReturnsSameInstance(DatabaseContext sut)
+        {
+            var actual = sut.ArticleWords;
+            Assert.Same(sut.ArticleWords, actual);
         }
 
         [Test]
@@ -108,6 +126,7 @@
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.Articles);
+            yield return this.Properties.Select(x => x.ArticleWords);
         }
 
         public class TssArticleHarborContext : ArticleHarborContext

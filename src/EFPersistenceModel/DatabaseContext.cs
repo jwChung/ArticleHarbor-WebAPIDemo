@@ -9,6 +9,7 @@
     public sealed class DatabaseContext : IDatabaseContext
     {
         private readonly ArticleRepository articles;
+        private readonly ArticleWordRepository articleWords;
         private readonly ArticleHarborContext context;
         private bool disposed = false;
 
@@ -19,6 +20,12 @@
 
             this.context = context;
             this.articles = new ArticleRepository(this.context);
+            this.articleWords = new ArticleWordRepository(this.context);
+        }
+
+        public ArticleHarborContext Context
+        {
+            get { return this.context; }
         }
 
         public IArticleRepository Articles
@@ -29,9 +36,12 @@
             }
         }
 
-        public ArticleHarborContext Context
+        public IArticleWordRepository ArticleWords
         {
-            get { return this.context; }
+            get
+            {
+                return this.articleWords;
+            }
         }
 
         public async void Dispose()
