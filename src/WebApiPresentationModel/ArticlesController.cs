@@ -28,5 +28,13 @@
         {
             return this.articleService.GetAsync();
         }
+
+        public Task<Article> PostAsync(Article article)
+        {
+            if (article == null)
+                throw new ArgumentNullException("article");
+
+            return this.articleService.AddOrModifyAsync(article);
+        }
     }
 }

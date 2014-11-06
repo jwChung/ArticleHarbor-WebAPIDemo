@@ -25,5 +25,16 @@
             var actual = await sut.GetAsync();
             Assert.Equal(articles, actual);
         }
+
+        [Test]
+        public async Task PostAsyncReturnsCorrectResult(
+            ArticlesController sut,
+            Article article,
+            Article newArticle)
+        {
+            sut.ArticleService.Of(x => x.AddOrModifyAsync(article) == Task.FromResult(newArticle));
+            var actual = await sut.PostAsync(article);
+            Assert.Equal(newArticle, actual);
+        }
     }
 }
