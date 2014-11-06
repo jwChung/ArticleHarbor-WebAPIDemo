@@ -5,7 +5,7 @@
     public class EFArticleWord
     {
         [Key]
-        public string Name { get; set; }
+        public string Word { get; set; }
 
         public int EFArticleId { get; set; }
 
