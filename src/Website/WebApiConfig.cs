@@ -13,8 +13,10 @@
         {
             if (config == null)
                 throw new ArgumentNullException("config");
-            
-            Environment.CurrentDirectory = HostingEnvironment.MapPath("~");
+
+            var serverRoot = HostingEnvironment.MapPath("~");
+            if (serverRoot != null)
+                Environment.CurrentDirectory = HostingEnvironment.MapPath("~");
 
             // DependencyResolver
             var container = new Container();
@@ -25,6 +27,8 @@
             config.Formatters.Remove(config.Formatters.XmlFormatter);
             config.Formatters.Insert(
                 0, new JsonCustomMediaTypeFormatter(JsonConstructorDeserializer.Deserialize));
+
+            config.Filters.Add(new SaveUnitOfWorkActionFilterAttribute());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

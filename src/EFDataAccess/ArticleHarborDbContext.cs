@@ -13,5 +13,10 @@
         public IDbSet<Article> Articles { get; set; }
 
         public IDbSet<ArticleWord> ArticleWords { get; set; }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
     }
 }

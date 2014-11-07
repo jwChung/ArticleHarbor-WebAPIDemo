@@ -1,11 +1,8 @@
 ﻿namespace EFPersistenceModelUnitTest
 {
-    using System;
     using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Linq;
     using System.Reflection;
-    using System.Threading;
     using System.Threading.Tasks;
     using DomainModel;
     using EFDataAccess;
@@ -60,117 +57,23 @@
         }
 
         [Test]
-        public void DisposeCorrectlyDisposesEFContext(
+        public async Task SaveAsyncCorrectlySaves(
             Mock<ArticleHarborDbContext> context,
             IFixture fixture)
         {
+            context.CallBase = false;
             fixture.Inject(context.Object);
             var sut = fixture.Create<UnitOfWork>();
 
-            sut.Dispose();
-            sut.Dispose();
+            await sut.SaveAsync();
 
-            context.Protected().Verify("Dispose", Times.Once(), true);
+            context.Verify(x => x.SaveChangesAsync());
         }
-
-        [Test]
-        public void DisposeAsynchronouslySavesChanges(
-            Mock<ArticleHarborDbContext> context,
-            IFixture fixture)
-        {
-            fixture.Inject(context.Object);
-            var sut = fixture.Create<UnitOfWork>();
-
-            sut.Dispose();
-
-            context.Verify(x => x.SaveChangesAsync(), Times.Once());
-        }
-
-        [Test(RunOn.Local)]
-        public void DisposeThrowsUnhandledExceptionWhenSaveChangesAsyncThrows(
-            TssArticleHarborDbContext context,
-            IFixture fixture)
-        {
-            var throws = false;
-            UnhandledExceptionEventHandler handler = (s, e) => throws = true;
-            try
-            {
-                AppDomain.CurrentDomain.UnhandledException += handler;
-                fixture.Inject<ArticleHarborDbContext>(context);
-                var sut = fixture.Create<UnitOfWork>();
-
-                sut.Dispose();
-
-                Thread.Sleep(150);
-                Assert.True(throws);
-            }
-            finally
-            {
-                AppDomain.CurrentDomain.UnhandledException -= handler;
-            }
-        }
-
-        [Test]
-        public void DisposeShouldSaveChangesBeforeDisposing(
-            TssArticleHarborDbContext2 context,
-            IFixture fixture)
-        {
-            fixture.Inject<ArticleHarborDbContext>(context);
-            var sut = fixture.Create<UnitOfWork>();
-
-            sut.Dispose();
-
-            Thread.Sleep(150);
-            Assert.Equal(new[] { 1, 2 }, context.Order.ToArray());
-        }
-
+        
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.Articles);
             yield return this.Properties.Select(x => x.ArticleWords);
-        }
-
-        public class TssArticleHarborDbContext : ArticleHarborDbContext
-        {
-            public TssArticleHarborDbContext()
-                : base(new NullDatabaseInitializer<ArticleHarborDbContext>())
-            {
-            }
-
-            public override Task<int> SaveChangesAsync()
-            {
-                return Task.Run(new Func<int>(() => { throw new Exception(); }));
-            }
-        }
-
-        public class TssArticleHarborDbContext2 : ArticleHarborDbContext
-        {
-            private readonly IList<int> order = new List<int>();
-
-            public TssArticleHarborDbContext2()
-                : base(new NullDatabaseInitializer<ArticleHarborDbContext>())
-            {
-            }
-
-            public IList<int> Order
-            {
-                get { return this.order; }
-            }
-
-            public override Task<int> SaveChangesAsync()
-            {
-                return Task.Run(() =>
-                {
-                    Thread.Sleep(100);
-                    this.order.Add(1);
-                    return 0;
-                });
-            }
-
-            protected override void Dispose(bool disposing)
-            {
-                this.order.Add(2);
-            }
         }
     }
 }

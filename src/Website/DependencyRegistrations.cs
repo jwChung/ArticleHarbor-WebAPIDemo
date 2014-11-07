@@ -56,10 +56,18 @@ namespace Website
                 c => new ArticleHarborDbContextTestInitializer())
                 .ReusedWithinContainer();
 
+            container.Register(
+                c => new ArticleHarborDbContext(
+                    c.Resolve<IDatabaseInitializer<ArticleHarborDbContext>>()))
+                .ReusedWithinContainer();
+
+            container.Register(
+                c => new LazyUnitOfWork(
+                    () => new UnitOfWork(c.Resolve<ArticleHarborDbContext>())))
+                .ReusedWithinContainer();
+
             container.Register<IUnitOfWork>(
-                c => new UnitOfWork(
-                    new ArticleHarborDbContext(
-                        c.Resolve<IDatabaseInitializer<ArticleHarborDbContext>>())))
+                c => c.Resolve<LazyUnitOfWork>().Value)
                 .ReusedWithinContainer();
 
             container.Register(

@@ -21,7 +21,7 @@
       <Term PreferredAlternate=""></Term>
     </Deprecated>
     <Compound>
-      <Term CompoundAlternate=""></Term>
+      <Term CompoundAlternate="InAction">inaction</Term>
     </Compound>
     <DiscreteExceptions>
       <Term></Term>
