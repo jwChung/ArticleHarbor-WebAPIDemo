@@ -60,6 +60,20 @@
         }
 
         [Test]
+        public async Task SaveAsyncCorrectlySaves(
+            Mock<ArticleHarborDbContext> context,
+            IFixture fixture)
+        {
+            context.CallBase = false;
+            fixture.Inject(context.Object);
+            var sut = fixture.Create<UnitOfWork>();
+
+            await sut.SaveAsync();
+
+            context.Verify(x => x.SaveChangesAsync());
+        }
+
+        [Test]
         public void DisposeCorrectlyDisposesEFContext(
             Mock<ArticleHarborDbContext> context,
             IFixture fixture)

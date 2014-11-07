@@ -44,6 +44,11 @@
             }
         }
 
+        public async Task SaveAsync()
+        {
+            await this.Context.SaveChangesAsync();
+        }
+
         public async void Dispose()
         {
             if (this.disposed)
