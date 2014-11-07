@@ -168,9 +168,9 @@
 
             private static IDictionary<string, JToken> GetJsonObject(JObject obj)
             {
-                var jsonObject = new Dictionary<string, JToken>();
+                var jsonObject = new Dictionary<string, JToken>(StringComparer.CurrentCultureIgnoreCase);
                 foreach (KeyValuePair<string, JToken> pair in obj)
-                    jsonObject[pair.Key.ToUpper(CultureInfo.CurrentCulture)] = pair.Value;
+                    jsonObject[pair.Key] = pair.Value;
 
                 return jsonObject;
             }
@@ -205,7 +205,7 @@
                     var constructor = this.type.GetConstructors()
                         .OrderByDescending(c => c.GetParameters().Length)
                         .Where(c => c.GetParameters()
-                            .Select(p => p.Name.ToUpper(CultureInfo.CurrentCulture))
+                            .Select(p => p.Name)
                             .All(n => this.jsonObject.ContainsKey(n)))
                         .FirstOrDefault();
 
@@ -219,9 +219,8 @@
                 {
                     foreach (var parameter in parameters)
                     {
-                        var key = parameter.Name.ToUpper();
-                        var token = this.jsonObject[key];
-                        this.jsonObject.Remove(key);
+                        var token = this.jsonObject[parameter.Name];
+                        this.jsonObject.Remove(parameter.Name);
 
                         yield return this.context.GetValue(parameter.ParameterType, token);
                     }
@@ -235,8 +234,7 @@
                     foreach (var property in properties)
                     {
                         JToken token;
-                        if (!this.jsonObject.TryGetValue(
-                            property.Name.ToUpper(CultureInfo.CurrentCulture), out token))
+                        if (!this.jsonObject.TryGetValue(property.Name, out token))
                             continue;
 
                         var value = this.context.GetValue(property.PropertyType, token);
