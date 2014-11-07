@@ -13,26 +13,27 @@
     using WebApiPresentationModel;
     using Xunit;
 
-    public class SaveUnitOfWorkActionFilterTest : IdiomaticTest<SaveUnitOfWorkActionFilter>
+    public class SaveUnitOfWorkActionFilterAttributeTest
+        : IdiomaticTest<SaveUnitOfWorkActionFilterAttribute>
     {
         [Test]
         public void SutIsActionFilterAttribute(
-            SaveUnitOfWorkActionFilter sut)
+            SaveUnitOfWorkActionFilterAttribute sut)
         {
             Assert.IsAssignableFrom<ActionFilterAttribute>(sut);
         }
 
         [Test]
         public async Task OnActionExecutedAsyncSavesUnitOfWorkWhenUnitOfWorkWasConstructedInActionMethod(
-            SaveUnitOfWorkActionFilter sut,
+            SaveUnitOfWorkActionFilterAttribute sut,
             HttpActionExecutedContext actionExecutedContext,
-            IDependencyScope depedencyScope,
+            IDependencyScope dependencyScope,
             LazyUnitOfWork layUnitOfWork)
         {
             var unitOfWork = layUnitOfWork.Value;
-            depedencyScope.Of(x => x.GetService(typeof(LazyUnitOfWork)) == layUnitOfWork);
+            dependencyScope.Of(x => x.GetService(typeof(LazyUnitOfWork)) == layUnitOfWork);
             actionExecutedContext.Request.Properties[HttpPropertyKeys.DependencyScope]
-                = depedencyScope;
+                = dependencyScope;
 
             await sut.OnActionExecutedAsync(actionExecutedContext, CancellationToken.None);
 
@@ -41,14 +42,14 @@
 
         [Test]
         public async Task OnActionExecutedAsyncDoesNotSaveUnitOfWorkWhenUnitOfWorkWasNotConstructedInActionMethod(
-            SaveUnitOfWorkActionFilter sut,
+            SaveUnitOfWorkActionFilterAttribute sut,
             HttpActionExecutedContext actionExecutedContext,
-            IDependencyScope depedencyScope,
+            IDependencyScope dependencyScope,
             LazyUnitOfWork layUnitOfWork)
         {
-            depedencyScope.Of(x => x.GetService(typeof(LazyUnitOfWork)) == layUnitOfWork);
+            dependencyScope.Of(x => x.GetService(typeof(LazyUnitOfWork)) == layUnitOfWork);
             actionExecutedContext.Request.Properties[HttpPropertyKeys.DependencyScope]
-                = depedencyScope;
+                = dependencyScope;
 
             await sut.OnActionExecutedAsync(actionExecutedContext, CancellationToken.None);
 

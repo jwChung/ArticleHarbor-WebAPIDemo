@@ -6,7 +6,8 @@
     using System.Threading.Tasks;
     using System.Web.Http.Filters;
 
-    public class SaveUnitOfWorkActionFilter : ActionFilterAttribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public sealed class SaveUnitOfWorkActionFilterAttribute : ActionFilterAttribute
     {
         public override Task OnActionExecutedAsync(
             HttpActionExecutedContext actionExecutedContext,
