@@ -52,18 +52,18 @@ namespace Website
                 .ReusedWithinNone();
 
             // Request scope
-            container.Register<IDatabaseInitializer<ArticleHarborContext>>(
-                c => new ArticleHarborContextTestInitializer())
+            container.Register<IDatabaseInitializer<ArticleHarborDbContext>>(
+                c => new ArticleHarborDbContextTestInitializer())
                 .ReusedWithinContainer();
 
             container.Register(
-                c => new ArticleHarborContext(
-                    c.Resolve<IDatabaseInitializer<ArticleHarborContext>>()))
+                c => new ArticleHarborDbContext(
+                    c.Resolve<IDatabaseInitializer<ArticleHarborDbContext>>()))
                 .ReusedWithinContainer();
 
             container.Register<IDatabaseContext>(
                 c => new DatabaseContext(
-                    c.Resolve<ArticleHarborContext>()))
+                    c.Resolve<ArticleHarborDbContext>()))
                 .ReusedWithinContainer();
 
             container.Register(

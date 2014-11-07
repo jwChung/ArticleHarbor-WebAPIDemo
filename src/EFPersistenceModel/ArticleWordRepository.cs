@@ -8,9 +8,9 @@
 
     public class ArticleWordRepository : IArticleWordRepository
     {
-        private readonly ArticleHarborContext context;
+        private readonly ArticleHarborDbContext context;
 
-        public ArticleWordRepository(ArticleHarborContext context)
+        public ArticleWordRepository(ArticleHarborDbContext context)
         {
             if (context == null)
                 throw new ArgumentNullException("context");
@@ -18,7 +18,7 @@
             this.context = context;
         }
 
-        public ArticleHarborContext Context
+        public ArticleHarborDbContext Context
         {
             get { return this.context; }
         }

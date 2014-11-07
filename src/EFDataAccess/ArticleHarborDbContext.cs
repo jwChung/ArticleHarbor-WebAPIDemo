@@ -2,10 +2,10 @@
 {
     using System.Data.Entity;
 
-    public class ArticleHarborContext : DbContext
+    public class ArticleHarborDbContext : DbContext
     {
-        public ArticleHarborContext(
-            IDatabaseInitializer<ArticleHarborContext> initializer)
+        public ArticleHarborDbContext(
+            IDatabaseInitializer<ArticleHarborDbContext> initializer)
         {
             Database.SetInitializer(initializer);
         }

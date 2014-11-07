@@ -55,7 +55,7 @@ public class TestAttribute : TestBaseAttribute
         fixture.Customize<Article>(c => c.Without(x => x.ArticleWords));
         fixture.Customize<ArticleWord>(c => c.Without(x => x.Article));
 
-        var dbContext = new ArticleHarborContext(new ArticleHarborContextTestInitializer());
+        var dbContext = new ArticleHarborDbContext(new ArticleHarborDbContextTestInitializer());
         fixture.Inject(dbContext);
         fixture.Inject(dbContext.Database.BeginTransaction());
 

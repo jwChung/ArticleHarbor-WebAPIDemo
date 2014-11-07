@@ -12,9 +12,9 @@
 
     public class ArticleRepository : IArticleRepository
     {
-        private readonly ArticleHarborContext context;
+        private readonly ArticleHarborDbContext context;
 
-        public ArticleRepository(ArticleHarborContext context)
+        public ArticleRepository(ArticleHarborDbContext context)
         {
             if (context == null)
                 throw new ArgumentNullException("context");
@@ -22,7 +22,7 @@
             this.context = context;
         }
 
-        public ArticleHarborContext Context
+        public ArticleHarborDbContext Context
         {
             get { return this.context; }
         }

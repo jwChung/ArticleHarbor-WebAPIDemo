@@ -2,9 +2,9 @@
 using System.Data.Entity;
 using EFDataAccess;
 
-public class ArticleHarborContextTestInitializer : DropCreateDatabaseAlways<ArticleHarborContext>
+public class ArticleHarborDbContextTestInitializer : DropCreateDatabaseAlways<ArticleHarborDbContext>
 {
-    public override void InitializeDatabase(ArticleHarborContext context)
+    public override void InitializeDatabase(ArticleHarborDbContext context)
     {
         this.InitializeArticles(context.Articles);
         this.InitializeArticles(context.ArticleWords);

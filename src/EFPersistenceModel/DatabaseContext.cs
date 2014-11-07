@@ -10,10 +10,10 @@
     {
         private readonly ArticleRepository articles;
         private readonly ArticleWordRepository articleWords;
-        private readonly ArticleHarborContext context;
+        private readonly ArticleHarborDbContext context;
         private bool disposed = false;
 
-        public DatabaseContext(ArticleHarborContext context)
+        public DatabaseContext(ArticleHarborDbContext context)
         {
             if (context == null)
                 throw new ArgumentNullException("context");
@@ -23,7 +23,7 @@
             this.articleWords = new ArticleWordRepository(this.context);
         }
 
-        public ArticleHarborContext Context
+        public ArticleHarborDbContext Context
         {
             get { return this.context; }
         }

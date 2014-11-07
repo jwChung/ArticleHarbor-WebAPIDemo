@@ -61,7 +61,7 @@
 
         [Test]
         public void DisposeCorrectlyDisposesEFContext(
-            Mock<ArticleHarborContext> context,
+            Mock<ArticleHarborDbContext> context,
             IFixture fixture)
         {
             fixture.Inject(context.Object);
@@ -75,7 +75,7 @@
 
         [Test]
         public void DisposeAsynchronouslySavesChanges(
-            Mock<ArticleHarborContext> context,
+            Mock<ArticleHarborDbContext> context,
             IFixture fixture)
         {
             fixture.Inject(context.Object);
@@ -88,7 +88,7 @@
 
         [Test(RunOn.Local)]
         public void DisposeThrowsUnhandledExceptionWhenSaveChangesAsyncThrows(
-            TssArticleHarborContext context,
+            TssArticleHarborDbContext context,
             IFixture fixture)
         {
             var throws = false;
@@ -96,7 +96,7 @@
             try
             {
                 AppDomain.CurrentDomain.UnhandledException += handler;
-                fixture.Inject<ArticleHarborContext>(context);
+                fixture.Inject<ArticleHarborDbContext>(context);
                 var sut = fixture.Create<DatabaseContext>();
 
                 sut.Dispose();
@@ -112,10 +112,10 @@
 
         [Test]
         public void DisposeShouldSaveChangesBeforeDisposing(
-            TssArticleHarborContext2 context,
+            TssArticleHarborDbContext2 context,
             IFixture fixture)
         {
-            fixture.Inject<ArticleHarborContext>(context);
+            fixture.Inject<ArticleHarborDbContext>(context);
             var sut = fixture.Create<DatabaseContext>();
 
             sut.Dispose();
@@ -130,10 +130,10 @@
             yield return this.Properties.Select(x => x.ArticleWords);
         }
 
-        public class TssArticleHarborContext : ArticleHarborContext
+        public class TssArticleHarborDbContext : ArticleHarborDbContext
         {
-            public TssArticleHarborContext()
-                : base(new NullDatabaseInitializer<ArticleHarborContext>())
+            public TssArticleHarborDbContext()
+                : base(new NullDatabaseInitializer<ArticleHarborDbContext>())
             {
             }
 
@@ -143,12 +143,12 @@
             }
         }
 
-        public class TssArticleHarborContext2 : ArticleHarborContext
+        public class TssArticleHarborDbContext2 : ArticleHarborDbContext
         {
             private readonly IList<int> order = new List<int>();
 
-            public TssArticleHarborContext2()
-                : base(new NullDatabaseInitializer<ArticleHarborContext>())
+            public TssArticleHarborDbContext2()
+                : base(new NullDatabaseInitializer<ArticleHarborDbContext>())
             {
             }
 
