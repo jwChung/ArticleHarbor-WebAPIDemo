@@ -50,7 +50,7 @@ namespace Website
             container.Register(
                 c => new ArticlesController(c.Resolve<IArticleService>()))
                 .ReusedWithinNone();
-
+            
             // Request scope
             container.Register<IDatabaseInitializer<ArticleHarborDbContext>>(
                 c => new ArticleHarborDbContextTestInitializer())

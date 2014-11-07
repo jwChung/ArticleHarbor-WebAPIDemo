@@ -40,7 +40,9 @@
             var services = (IEnumerable<object>)this.GetService(
                 typeof(IEnumerable<>).MakeGenericType(serviceType));
 
-            return services == null ? new object[0] : services;
+            return services == null
+                ? (IEnumerable<object>)Array.CreateInstance(serviceType, 0)
+                : services;
         }
 
         public void Dispose()

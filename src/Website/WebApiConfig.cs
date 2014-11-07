@@ -14,13 +14,14 @@
             if (config == null)
                 throw new ArgumentNullException("config");
             
-            // Web API configuration and services
             Environment.CurrentDirectory = HostingEnvironment.MapPath("~");
 
+            // DependencyResolver
             var container = new Container();
             container.Accept(new DependencyRegistrations());
             config.DependencyResolver = new DependencyResolver(container);
 
+            // Web API configuration and services
             config.Formatters.Remove(config.Formatters.XmlFormatter);
             config.Formatters.Insert(
                 0, new JsonCustomMediaTypeFormatter(JsonConstructorDeserializer.Deserialize));
