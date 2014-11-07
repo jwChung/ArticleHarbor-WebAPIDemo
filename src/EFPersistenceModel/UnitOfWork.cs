@@ -6,13 +6,12 @@
     using DomainModel;
     using EFDataAccess;
 
-    public sealed class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ArticleRepository articles;
         private readonly ArticleWordRepository articleWords;
         private readonly ArticleHarborDbContext context;
-        private bool disposed = false;
-
+        
         public UnitOfWork(ArticleHarborDbContext context)
         {
             if (context == null)
@@ -47,16 +46,6 @@
         public async Task SaveAsync()
         {
             await this.Context.SaveChangesAsync();
-        }
-
-        public async void Dispose()
-        {
-            if (this.disposed)
-                return;
-
-            await this.context.SaveChangesAsync().ConfigureAwait(false);
-            this.context.Dispose();
-            this.disposed = true;
         }
     }
 }

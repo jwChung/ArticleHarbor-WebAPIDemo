@@ -15,7 +15,7 @@
                 throw new ArgumentNullException("config");
 
             var serverRoot = HostingEnvironment.MapPath("~");
-            if(serverRoot != null)
+            if (serverRoot != null)
                 Environment.CurrentDirectory = HostingEnvironment.MapPath("~");
 
             // DependencyResolver
