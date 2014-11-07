@@ -2,10 +2,14 @@
 using System.Data.Entity;
 using EFDataAccess;
 
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1050:DeclareTypesInNamespaces", Justification = "This class needs to be shared with this persistence test project, which has a different namespace.")]
 public class ArticleHarborDbContextTestInitializer : DropCreateDatabaseAlways<ArticleHarborDbContext>
 {
     public override void InitializeDatabase(ArticleHarborDbContext context)
     {
+        if (context == null)
+            throw new ArgumentNullException("context");
+
         this.InitializeArticles(context.Articles);
         this.InitializeArticles(context.ArticleWords);
         base.InitializeDatabase(context);
