@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Linq;
     using System.Reflection;
     using System.Threading;
@@ -131,6 +132,11 @@
 
         public class TssArticleHarborContext : ArticleHarborContext
         {
+            public TssArticleHarborContext()
+                : base(new NullDatabaseInitializer<ArticleHarborContext>())
+            {
+            }
+
             public override Task<int> SaveChangesAsync()
             {
                 return Task.Run(new Func<int>(() => { throw new Exception(); }));
@@ -140,6 +146,11 @@
         public class TssArticleHarborContext2 : ArticleHarborContext
         {
             private readonly IList<int> order = new List<int>();
+
+            public TssArticleHarborContext2()
+                : base(new NullDatabaseInitializer<ArticleHarborContext>())
+            {
+            }
 
             public IList<int> Order
             {

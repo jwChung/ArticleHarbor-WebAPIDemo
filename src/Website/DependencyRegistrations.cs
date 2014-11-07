@@ -2,6 +2,7 @@ namespace Website
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Web.Http.Dispatcher;
     using System.Web.Http.ExceptionHandling;
     using DomainModel;
@@ -27,33 +28,49 @@ namespace Website
             container.Register<IAssembliesResolver>(
                 c => new ArticleHarborAssembliesResolver())
                 .ReusedWithinNone();
+
             container.Register<IArticleService>(
                 c => new ArticleService(
                     c.Resolve<IArticleRepository>(),
                     c.Resolve<IArticleWordRepository>(),
                     KoreanNounExtractor.Execute))
                 .ReusedWithinNone();
+
             container.Register<ILogger>(
                 c => new FileLogger(Environment.CurrentDirectory))
                 .ReusedWithinNone();
+
             container.Register<IEnumerable<IExceptionLogger>>(
                 c => new IExceptionLogger[]
                 {
                     new UnhandledExceptionLogger(c.Resolve<ILogger>())
                 })
                 .ReusedWithinNone();
+
             container.Register(
                 c => new ArticlesController(c.Resolve<IArticleService>()))
                 .ReusedWithinNone();
 
             // Request scope
-            container.Register<IDatabaseContext>(
-                c => new DatabaseContext(new ArticleHarborContext()))
+            container.Register<IDatabaseInitializer<ArticleHarborContext>>(
+                c => new ArticleHarborContextTestInitializer())
                 .ReusedWithinContainer();
-            container.Register<IArticleRepository>(
+
+            container.Register(
+                c => new ArticleHarborContext(
+                    c.Resolve<IDatabaseInitializer<ArticleHarborContext>>()))
+                .ReusedWithinContainer();
+
+            container.Register<IDatabaseContext>(
+                c => new DatabaseContext(
+                    c.Resolve<ArticleHarborContext>()))
+                .ReusedWithinContainer();
+
+            container.Register(
                 c => c.Resolve<IDatabaseContext>().Articles)
                 .ReusedWithinContainer();
-            container.Register<IArticleWordRepository>(
+
+            container.Register(
                 c => c.Resolve<IDatabaseContext>().ArticleWords)
                 .ReusedWithinContainer();
             return this;

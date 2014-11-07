@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Linq;
 using EFDataAccess;
 using Jwc.Experiment;
@@ -56,39 +55,13 @@ public class TestAttribute : TestBaseAttribute
         fixture.Customize<Article>(c => c.Without(x => x.ArticleWords));
         fixture.Customize<ArticleWord>(c => c.Without(x => x.Article));
 
-        var dbContext = new ArticleHarborContext(new TestDatabaseInitializer(fixture));
+        var dbContext = new ArticleHarborContext(new ArticleHarborContextTestInitializer());
         fixture.Inject(dbContext);
         fixture.Inject(dbContext.Database.BeginTransaction());
 
         fixture.Customize(new TestParametersCustomization(
             context.ActualMethod.GetParameters()));
         return new TestFixture(fixture);
-    }
-
-    private class TestDatabaseInitializer : DropCreateDatabaseAlways<ArticleHarborContext>
-    {
-        private readonly IFixture fixture;
-
-        public TestDatabaseInitializer(IFixture fixture)
-        {
-            this.fixture = fixture;
-        }
-
-        public override void InitializeDatabase(ArticleHarborContext context)
-        {
-            var articles = this.fixture.Create<Article[]>();
-            foreach (var article in articles)
-                context.Articles.Add(article);
-
-            var articleWords = this.fixture.Create<ArticleWord[]>();
-            for (int i = 0; i < articleWords.Length; i++)
-            {
-                articleWords[i].ArticleId = articles[i].Id;
-                context.ArticleWords.Add(articleWords[i]);
-            }
-
-            base.InitializeDatabase(context);
-        }
     }
 
     private class OmitAutoPropertiesBuilder : ISpecimenBuilder

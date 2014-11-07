@@ -94,6 +94,9 @@
     <Compile Include="..\..\build\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\Website\ArticleHarborContextTestInitializer.cs">
+      <Link>ArticleHarborContextTestInitializer.cs</Link>
+    </Compile>
     <Compile Include="..\DomainModelUnitTest\IdiomaticTest.cs">
       <Link>IdiomaticTest.cs</Link>
     </Compile>
