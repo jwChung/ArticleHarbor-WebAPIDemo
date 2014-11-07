@@ -61,17 +61,17 @@ namespace Website
                     c.Resolve<IDatabaseInitializer<ArticleHarborDbContext>>()))
                 .ReusedWithinContainer();
 
-            container.Register<IDatabaseContext>(
-                c => new DatabaseContext(
+            container.Register<IUnitOfWork>(
+                c => new UnitOfWork(
                     c.Resolve<ArticleHarborDbContext>()))
                 .ReusedWithinContainer();
 
             container.Register(
-                c => c.Resolve<IDatabaseContext>().Articles)
+                c => c.Resolve<IUnitOfWork>().Articles)
                 .ReusedWithinContainer();
 
             container.Register(
-                c => c.Resolve<IDatabaseContext>().ArticleWords)
+                c => c.Resolve<IUnitOfWork>().ArticleWords)
                 .ReusedWithinContainer();
             return this;
         }

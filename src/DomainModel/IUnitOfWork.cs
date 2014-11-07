@@ -2,7 +2,7 @@
 {
     using System;
 
-    public interface IDatabaseContext : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         IArticleRepository Articles { get; }
 

@@ -6,14 +6,14 @@
     using DomainModel;
     using EFDataAccess;
 
-    public sealed class DatabaseContext : IDatabaseContext
+    public sealed class UnitOfWork : IUnitOfWork
     {
         private readonly ArticleRepository articles;
         private readonly ArticleWordRepository articleWords;
         private readonly ArticleHarborDbContext context;
         private bool disposed = false;
 
-        public DatabaseContext(ArticleHarborDbContext context)
+        public UnitOfWork(ArticleHarborDbContext context)
         {
             if (context == null)
                 throw new ArgumentNullException("context");

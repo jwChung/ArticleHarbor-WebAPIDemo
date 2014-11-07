@@ -15,16 +15,16 @@
     using Ploeh.AutoFixture;
     using Xunit;
 
-    public class DatabaseContextTest : IdiomaticTest<DatabaseContext>
+    public class UnitOfWorkTest : IdiomaticTest<UnitOfWork>
     {
         [Test]
-        public void SutIsDatabaseContext(DatabaseContext sut)
+        public void SutIsUnitOfWork(UnitOfWork sut)
         {
-            Assert.IsAssignableFrom<IDatabaseContext>(sut);
+            Assert.IsAssignableFrom<IUnitOfWork>(sut);
         }
 
         [Test]
-        public void ArticlesIsCorrect(DatabaseContext sut)
+        public void ArticlesIsCorrect(UnitOfWork sut)
         {
             Assert.NotNull(sut.Context.Articles);
 
@@ -35,14 +35,14 @@
         }
 
         [Test]
-        public void ArticlesAlwaysReturnsSameInstance(DatabaseContext sut)
+        public void ArticlesAlwaysReturnsSameInstance(UnitOfWork sut)
         {
             var actual = sut.Articles;
             Assert.Same(sut.Articles, actual);
         }
 
         [Test]
-        public void ArticleWordsIsCorrect(DatabaseContext sut)
+        public void ArticleWordsIsCorrect(UnitOfWork sut)
         {
             Assert.NotNull(sut.Context.ArticleWords);
 
@@ -53,7 +53,7 @@
         }
 
         [Test]
-        public void ArticleWordsAlwaysReturnsSameInstance(DatabaseContext sut)
+        public void ArticleWordsAlwaysReturnsSameInstance(UnitOfWork sut)
         {
             var actual = sut.ArticleWords;
             Assert.Same(sut.ArticleWords, actual);
@@ -65,7 +65,7 @@
             IFixture fixture)
         {
             fixture.Inject(context.Object);
-            var sut = fixture.Create<DatabaseContext>();
+            var sut = fixture.Create<UnitOfWork>();
 
             sut.Dispose();
             sut.Dispose();
@@ -79,7 +79,7 @@
             IFixture fixture)
         {
             fixture.Inject(context.Object);
-            var sut = fixture.Create<DatabaseContext>();
+            var sut = fixture.Create<UnitOfWork>();
 
             sut.Dispose();
 
@@ -97,7 +97,7 @@
             {
                 AppDomain.CurrentDomain.UnhandledException += handler;
                 fixture.Inject<ArticleHarborDbContext>(context);
-                var sut = fixture.Create<DatabaseContext>();
+                var sut = fixture.Create<UnitOfWork>();
 
                 sut.Dispose();
 
@@ -116,7 +116,7 @@
             IFixture fixture)
         {
             fixture.Inject<ArticleHarborDbContext>(context);
-            var sut = fixture.Create<DatabaseContext>();
+            var sut = fixture.Create<UnitOfWork>();
 
             sut.Dispose();
 

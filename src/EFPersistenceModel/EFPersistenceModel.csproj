@@ -53,7 +53,7 @@
     <Compile Include="EntityConversionExtensions.cs" />
     <Compile Include="ArticleRepository.cs" />
     <Compile Include="ArticleWordRepository.cs" />
-    <Compile Include="DatabaseContext.cs" />
+    <Compile Include="UnitOfWork.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
