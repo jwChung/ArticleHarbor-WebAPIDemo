@@ -30,7 +30,7 @@
         }
 
         [Test]
-        public async Task AddOrModifyAsyncAddsWhenThereIsNoArticleWithGivenId(
+        public async Task SaveAsyncAddsWhenThereIsNoArticleWithGivenId(
             ArticleService sut,
             Article article,
             Article newArticle)
@@ -38,13 +38,13 @@
             sut.Articles.ToMock().Setup(x => x.Select(article.Id)).Returns(() => null);
             sut.Articles.Of(x => x.InsertAsync(article) == Task.FromResult(newArticle));
 
-            var actual = await sut.AddOrModifyAsync(article);
+            var actual = await sut.SaveAsync(article);
 
             Assert.Equal(newArticle, actual);
         }
 
         [Test]
-        public async Task AddOrModifyAsyncModifiesWhenThereIsArticleWithGivenId(
+        public async Task SaveAsyncModifiesWhenThereIsArticleWithGivenId(
             ArticleService sut,
             Article article,
             Article newArticle)
@@ -52,14 +52,14 @@
             newArticle = newArticle.WithId(article.Id);
             sut.Articles.Of(x => x.Select(article.Id) == article);
 
-            var actual = await sut.AddOrModifyAsync(newArticle);
+            var actual = await sut.SaveAsync(newArticle);
 
             Assert.Equal(newArticle, actual);
             sut.Articles.ToMock().Verify(x => x.Update(newArticle));
         }
 
         [Test]
-        public IEnumerable<ITestCase> AddOrModifyAsyncRenewsArticleWordsWhenSubjectIsModifiedWithGivenId(
+        public IEnumerable<ITestCase> SaveAsyncRenewsArticleWordsWhenSubjectIsModifiedWithGivenId(
             Article article,
             string subject,
             string[] words,
@@ -84,7 +84,7 @@
             sut.Articles.Of(x => x.Select(article.Id) == article);
 
             // Verify outcome
-            sut.AddOrModifyAsync(modifiedArticle).Wait();
+            sut.SaveAsync(modifiedArticle).Wait();
 
             // Excercise system
             yield return TestCase.Create(() =>
@@ -103,7 +103,7 @@
         }
 
         [Test]
-        public async Task AddOrModifyAsyncDoesNotDeleteArticleWordsWhenSubjectIsNotModifiedWithGivenId(
+        public async Task SaveAsyncDoesNotDeleteArticleWordsWhenSubjectIsNotModifiedWithGivenId(
             ArticleService sut,
             Article article,
             Article modifiedArticle)
@@ -118,14 +118,14 @@
                 modifiedArticle.Url);
             sut.Articles.Of(x => x.Select(article.Id) == article);
 
-            await sut.AddOrModifyAsync(modifiedArticle);
+            await sut.SaveAsync(modifiedArticle);
 
             sut.ArticleWords.ToMock().Verify(x => x.Delete(modifiedArticle.Id), Times.Never());
             sut.ArticleWords.ToMock().Verify(x => x.Insert(It.IsAny<ArticleWord>()), Times.Never());
         }
 
         [Test]
-        public async Task AddOrModifyAsyncAddsArticleWordsWhenAddingArticle(
+        public async Task SaveAsyncAddsArticleWordsWhenAddingArticle(
             Article article,
             Article newArticle,
             string[] words,
@@ -143,7 +143,7 @@
             sut.Articles.Of(x => x.InsertAsync(article) == Task.FromResult(newArticle));
 
             // Exercise system
-            await sut.AddOrModifyAsync(article);
+            await sut.SaveAsync(article);
 
             // Verify outcome
             foreach (var word in words)
@@ -156,10 +156,10 @@
         }
 
         [Test]
-        public void AddOrModifyAsyncWithNullArticleThrows(
+        public void SaveAsyncWithNullArticleThrows(
             ArticleService sut)
         {
-            var e = Assert.Throws<AggregateException>(() => sut.AddOrModifyAsync(null).Result);
+            var e = Assert.Throws<AggregateException>(() => sut.SaveAsync(null).Result);
             Assert.IsType<ArgumentNullException>(e.InnerException);
         }
 
@@ -174,7 +174,7 @@
 
         protected override IEnumerable<System.Reflection.MemberInfo> ExceptToVerifyGuardClause()
         {
-            yield return this.Methods.Select(x => x.AddOrModifyAsync(null));
+            yield return this.Methods.Select(x => x.SaveAsync(null));
         }
     }
 }

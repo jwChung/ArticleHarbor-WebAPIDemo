@@ -51,7 +51,7 @@
             return this.articles.SelectAsync();
         }
 
-        public async Task<Article> AddOrModifyAsync(Article article)
+        public async Task<Article> SaveAsync(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");

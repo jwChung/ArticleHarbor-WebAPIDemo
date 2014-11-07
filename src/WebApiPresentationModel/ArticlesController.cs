@@ -34,7 +34,7 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            return this.articleService.AddOrModifyAsync(article);
+            return this.articleService.SaveAsync(article);
         }
     }
 }

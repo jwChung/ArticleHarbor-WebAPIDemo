@@ -32,7 +32,7 @@
             Article article,
             Article newArticle)
         {
-            sut.ArticleService.Of(x => x.AddOrModifyAsync(article) == Task.FromResult(newArticle));
+            sut.ArticleService.Of(x => x.SaveAsync(article) == Task.FromResult(newArticle));
             var actual = await sut.PostAsync(article);
             Assert.Equal(newArticle, actual);
         }
