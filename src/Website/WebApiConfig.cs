@@ -1,8 +1,8 @@
 ﻿namespace Website
 {
     using System;
+    using System.Web.Hosting;
     using System.Web.Http;
-    using System.Web.Http.Dispatcher;
     using Jwc.Funz;
     using WebApiPresentationModel;
 
@@ -13,8 +13,10 @@
         {
             if (config == null)
                 throw new ArgumentNullException("config");
-
+            
             // Web API configuration and services
+            Environment.CurrentDirectory = HostingEnvironment.MapPath("~");
+
             var container = new Container();
             container.Accept(new DependencyRegistrations());
             config.DependencyResolver = new DependencyResolver(container);
