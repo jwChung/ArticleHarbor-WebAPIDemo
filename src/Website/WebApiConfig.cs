@@ -13,8 +13,10 @@
         {
             if (config == null)
                 throw new ArgumentNullException("config");
-            
-            Environment.CurrentDirectory = HostingEnvironment.MapPath("~");
+
+            var serverRoot = HostingEnvironment.MapPath("~");
+            if(serverRoot != null)
+                Environment.CurrentDirectory = HostingEnvironment.MapPath("~");
 
             // DependencyResolver
             var container = new Container();
