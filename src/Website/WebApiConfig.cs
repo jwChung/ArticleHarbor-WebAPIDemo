@@ -28,6 +28,8 @@
             config.Formatters.Insert(
                 0, new JsonCustomMediaTypeFormatter(JsonConstructorDeserializer.Deserialize));
 
+            config.Filters.Add(new SaveUnitOfWorkActionFilter());
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 
