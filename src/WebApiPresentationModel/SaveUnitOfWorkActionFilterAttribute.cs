@@ -9,7 +9,7 @@
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public sealed class SaveUnitOfWorkActionFilterAttribute : ActionFilterAttribute
     {
-        public override Task OnActionExecutedAsync(
+        public async override Task OnActionExecutedAsync(
             HttpActionExecutedContext actionExecutedContext,
             CancellationToken cancellationToken)
         {
@@ -21,9 +21,9 @@
                 .GetService(typeof(LazyUnitOfWork));
 
             if (lazyUnitOfWork.Optional != null)
-                lazyUnitOfWork.Optional.SaveAsync();
+                await lazyUnitOfWork.Optional.SaveAsync();
 
-            return base.OnActionExecutedAsync(actionExecutedContext, cancellationToken);
+            await base.OnActionExecutedAsync(actionExecutedContext, cancellationToken);
         }
     }
 }
