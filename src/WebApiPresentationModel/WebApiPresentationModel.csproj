@@ -68,6 +68,7 @@
     <Compile Include="LazyUnitOfWork.cs" />
     <Compile Include="LogContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveUnitOfWorkActionFilter.cs" />
     <Compile Include="UnhandledExceptionLogger.cs" />
   </ItemGroup>
   <ItemGroup>
