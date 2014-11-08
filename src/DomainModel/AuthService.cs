@@ -28,7 +28,7 @@
             if (password == null)
                 throw new ArgumentNullException("password");
 
-            throw new NotImplementedException();
+            return this.users.SelectAsync(id, password);
         }
 
         public void Dispose()
