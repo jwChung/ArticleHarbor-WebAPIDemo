@@ -9,6 +9,8 @@
 
         IArticleWordRepository ArticleWords { get; }
 
+        IUserRepository Users { get; }
+
         Task SaveAsync();
     }
 }
