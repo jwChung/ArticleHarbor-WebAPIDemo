@@ -12,3 +12,4 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Microsoft.Design", "CA2210:AssembliesShouldHaveValidStrongNames", Justification = "Signing assembly is processed on CI build.")]
 [assembly: SuppressMessage("Microsoft.Usage", "CA2243:AttributeStringLiteralsShouldParseCorrectly", Justification = "This is suppressed to be able to represent pre-release version according to semantic versioning.")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "EFPersistenceModel", Justification = "This namespace is the root namespace of thie assembly and there is no namespace being able to represent it.")]
