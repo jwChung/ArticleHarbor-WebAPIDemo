@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Data.Entity;
 using EFDataAccess;
+using Microsoft.AspNet.Identity;
 
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1050:DeclareTypesInNamespaces", Justification = "This class needs to be shared with this persistence test project, which has a different namespace.")]
 public class ArticleHarborDbContextTestInitializer : DropCreateDatabaseAlways<ArticleHarborDbContext>
 {
-    public override void InitializeDatabase(ArticleHarborDbContext context)
+    protected override void Seed(ArticleHarborDbContext context)
     {
         if (context == null)
             throw new ArgumentNullException("context");
 
         this.InitializeArticles(context.Articles);
         this.InitializeArticles(context.ArticleWords);
-        base.InitializeDatabase(context);
+        this.InitializeUserRols(context.UserRoleManager);
+        this.InitializeUsers(context.UserManager);
+        base.Seed(context);
     }
 
     private void InitializeArticles(IDbSet<Article> articles)
@@ -67,5 +70,23 @@ public class ArticleHarborDbContextTestInitializer : DropCreateDatabaseAlways<Ar
             ArticleId = 3,
             Word = "WordC1"
         });
+    }
+
+    private void InitializeUserRols(UserRoleManager userRoleManager)
+    {
+        userRoleManager.Create(new UserRole { Name = "Administrator" });
+        userRoleManager.Create(new UserRole { Name = "Author" });
+        userRoleManager.Create(new UserRole { Name = "User" });
+    }
+
+    private void InitializeUsers(UserManager userManager)
+    {
+        userManager.Create(new User { UserName = "user1" }, "password1");
+        userManager.Create(new User { UserName = "user2" }, "password2");
+        userManager.Create(new User { UserName = "user3" }, "password3");
+
+        userManager.AddToRoles(userManager.FindByName("user1").Id, "Administrator", "Author", "User");
+        userManager.AddToRoles(userManager.FindByName("user2").Id, "Author", "User");
+        userManager.AddToRoles(userManager.FindByName("user3").Id, "User");
     }
 }

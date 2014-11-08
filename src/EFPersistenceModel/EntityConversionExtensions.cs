@@ -1,13 +1,14 @@
 namespace EFPersistenceModel
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using DomainModel;
     using EFDataAccess;
-    using Article = EFDataAccess.Article;
-    using ArticleWord = EFDataAccess.ArticleWord;
 
     internal static class EntityConversionExtensions
     {
-        public static DomainModel.Article ToDomain(this Article article)
+        public static DomainModel.Article ToDomain(this EFDataAccess.Article article)
         {
             return new DomainModel.Article(
                 article.Id,
@@ -19,9 +20,9 @@ namespace EFPersistenceModel
                 article.Url);
         }
 
-        public static Article ToPersistence(this DomainModel.Article article)
+        public static EFDataAccess.Article ToPersistence(this DomainModel.Article article)
         {
-            return new Article
+            return new EFDataAccess.Article
             {
                 Id = article.Id,
                 Provider = article.Provider,
@@ -33,18 +34,28 @@ namespace EFPersistenceModel
             };
         }
 
-        public static DomainModel.ArticleWord ToDomain(this ArticleWord articleWord)
+        public static DomainModel.ArticleWord ToDomain(this EFDataAccess.ArticleWord articleWord)
         {
             return new DomainModel.ArticleWord(articleWord.ArticleId, articleWord.Word);
         }
 
-        public static ArticleWord ToPersistence(this DomainModel.ArticleWord articleWord)
+        public static EFDataAccess.ArticleWord ToPersistence(
+            this DomainModel.ArticleWord articleWord)
         {
-            return new ArticleWord
+            return new EFDataAccess.ArticleWord
             {
                 ArticleId = articleWord.ArticleId,
                 Word = articleWord.Word
             };
+        }
+
+        public static DomainModel.User ToDomain(this EFDataAccess.User user, IEnumerable<string> roleNames)
+        {
+            Roles roles = Roles.None;
+            foreach (var roleName in roleNames)
+                roles |= (Roles)Enum.Parse(typeof(Roles), roleName);
+
+            return new DomainModel.User(user.UserName, roles);
         }
     }
 }

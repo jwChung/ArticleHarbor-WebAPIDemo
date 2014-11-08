@@ -1,14 +1,12 @@
 ﻿namespace EFPersistenceModelUnitTest
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
     using DomainModel;
     using EFDataAccess;
     using EFPersistenceModel;
     using Moq;
-    using Moq.Protected;
     using Ploeh.AutoFixture;
     using Xunit;
 
@@ -57,6 +55,22 @@
         }
 
         [Test]
+        public void UsersIsCorrect(UnitOfWork sut)
+        {
+            var actual = sut.Users;
+
+            var repository = Assert.IsAssignableFrom<UserRepository>(actual);
+            Assert.Same(sut.Context, repository.Context);
+        }
+
+        [Test]
+        public void UsersAlwaysReturnsSameInstance(UnitOfWork sut)
+        {
+            var actual = sut.Users;
+            Assert.Same(sut.Users, actual);
+        }
+
+        [Test]
         public async Task SaveAsyncCorrectlySaves(
             Mock<ArticleHarborDbContext> context,
             IFixture fixture)
@@ -74,6 +88,7 @@
         {
             yield return this.Properties.Select(x => x.Articles);
             yield return this.Properties.Select(x => x.ArticleWords);
+            yield return this.Properties.Select(x => x.Users);
         }
     }
 }
