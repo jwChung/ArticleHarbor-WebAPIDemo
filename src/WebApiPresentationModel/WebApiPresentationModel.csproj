@@ -71,6 +71,7 @@
     <Compile Include="..\..\build\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="ArticleHarborAuthProvider.cs" />
     <Compile Include="ArticlesController.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="GlobalSuppressions.cs" />
