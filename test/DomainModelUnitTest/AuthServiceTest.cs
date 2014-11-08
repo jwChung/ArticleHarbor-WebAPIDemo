@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using DomainModel;
+    using Moq;
     using Xunit;
 
     public class AuthServiceTest : IdiomaticTest<AuthService>
@@ -23,6 +24,16 @@
             sut.Users.Of(x => x.SelectAsync(id, password) == Task.FromResult(user));
             var actual = await sut.FindUserAsync(id, password);
             Assert.Equal(user, actual);
+        }
+
+        [Test]
+        public void DisposeCorrectlyDisposesOwnedService(
+            AuthService sut)
+        {
+            sut.Dispose();
+            sut.Dispose();
+
+            sut.Owned.ToMock().Verify(x => x.Dispose(), Times.Once());
         }
     }
 }

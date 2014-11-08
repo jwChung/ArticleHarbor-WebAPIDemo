@@ -7,6 +7,7 @@
     {
         private readonly IUserRepository users;
         private readonly IDisposable owned;
+        private bool disposed = false;
 
         public AuthService(IUserRepository users, IDisposable owned)
         {
@@ -43,7 +44,22 @@
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+             if (this.disposed)
+                return;
+
+             if (disposing)
+            {
+                this.owned.Dispose();
+                this.disposed = true;
+            }
+            
+             this.disposed = true;
         }
     }
 }
