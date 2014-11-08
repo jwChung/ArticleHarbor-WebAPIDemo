@@ -96,6 +96,7 @@
     <Compile Include="ArticleTest.cs" />
     <Compile Include="ArticleWordTest.cs" />
     <Compile Include="AssemblyTest.cs" />
+    <Compile Include="AuthServiceTest.cs" />
     <Compile Include="KoreanNounExtractorTest.cs" />
     <Compile Include="Mocked.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,7 +104,7 @@
     <Compile Include="RunOn.cs" />
     <Compile Include="TestAttribute.cs" />
     <Compile Include="IdiomaticTest.cs" />
-    <Compile Include="UserRolesTest.cs" />
+    <Compile Include="UserTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

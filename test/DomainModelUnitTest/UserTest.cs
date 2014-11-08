@@ -2,7 +2,7 @@
 {
     using DomainModel;
 
-    public class UserRolesTest : IdiomaticTest<UserRoles>
+    public class UserTest : IdiomaticTest<User>
     {
     }
 }

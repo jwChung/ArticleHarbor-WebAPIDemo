@@ -7,6 +7,7 @@
     using DomainModel;
     using Microsoft.Owin.Security.OAuth;
     using Moq;
+    using Ploeh.AutoFixture;
     using WebApiPresentationModel;
     using Xunit;
 
@@ -35,8 +36,8 @@
             OAuthGrantResourceOwnerCredentialsContext context)
         {
             sut.AuthServiceFactory().Of(
-                x => x.FindUserRolesAsync(context.UserName, context.Password)
-                    == Task.FromResult<UserRoles>(null));
+                x => x.FindUserAsync(context.UserName, context.Password)
+                    == Task.FromResult<User>(null));
 
             await sut.GrantResourceOwnerCredentials(context);
 
@@ -49,19 +50,24 @@
         public async Task GrantCorrectResourceOwnerCredentialsValidates(
             ArticleHarborAuthProvider sut,
             OAuthGrantResourceOwnerCredentialsContext context,
-            UserRoles userRoles)
+            IFixture fixture,
+            Roles roles)
         {
+            fixture.Inject(Roles.Administrator | Roles.Author | Roles.User);
+            var expected = new[] { "User", "Author", "Administrator" };
+            var user = fixture.Create<User>();
             sut.AuthServiceFactory().Of(
-                x => x.FindUserRolesAsync(context.UserName, context.Password)
-                    == Task.FromResult<UserRoles>(userRoles));
+                x => x.FindUserAsync(context.UserName, context.Password)
+                    == Task.FromResult<User>(user));
 
             await sut.GrantResourceOwnerCredentials(context);
 
             Assert.True(context.IsValidated);
-            Assert.Contains(userRoles.Id, context.Ticket.Identity.Name);
-            Assert.Equal(
-                userRoles.Roles,
-                context.Ticket.Identity.FindAll(ClaimTypes.Role).Select(r => r.Value));
+            Assert.Contains(user.Id, context.Ticket.Identity.Name);
+            var actualRoles = context.Ticket.Identity.FindAll(ClaimTypes.Role)
+                .Select(r => r.Value).ToArray();
+            Assert.Equal(expected.Length, actualRoles.Length);
+            Assert.Empty(expected.Except(actualRoles));
         }
 
         [Test]
@@ -79,7 +85,7 @@
             OAuthGrantResourceOwnerCredentialsContext context)
         {
             sut.AuthServiceFactory().ToMock().Setup(
-                x => x.FindUserRolesAsync(context.UserName, context.Password))
+                x => x.FindUserAsync(context.UserName, context.Password))
                 .Throws<Exception>();
             try
             {

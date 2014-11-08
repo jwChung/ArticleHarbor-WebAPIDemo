@@ -7,14 +7,18 @@
     {
         private readonly UserManager userManager;
         private readonly UserRoleManager userRoleManager;
+        private readonly UserStore<User> userStore;
+        private readonly RoleStore<UserRole> roleStore;
 
         public ArticleHarborDbContext(
             IDatabaseInitializer<ArticleHarborDbContext> initializer)
         {
             Database.SetInitializer(initializer);
 
-            this.userManager = new UserManager(new UserStore<User>(this));
-            this.userRoleManager = new UserRoleManager(new RoleStore<UserRole>(this));
+            this.userStore = new UserStore<User>(this);
+            this.roleStore = new RoleStore<UserRole>(this);
+            this.userManager = new UserManager(this.userStore);
+            this.userRoleManager = new UserRoleManager(this.roleStore);
         }
 
         public IDbSet<Article> Articles { get; set; }
@@ -29,11 +33,6 @@
         public UserRoleManager UserRoleManager
         {
             get { return this.userRoleManager; }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
         }
     }
 }

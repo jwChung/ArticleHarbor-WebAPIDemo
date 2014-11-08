@@ -56,7 +56,7 @@ public class TestAttribute : TestBaseAttribute
     protected override ITestFixture Create(ITestMethodContext context)
     {
         var fixture = new Fixture().Customize(new AutoMoqCustomization());
-
+        
         fixture.Customizations.Add(
             new OmitAutoPropertiesBuilder(
                 typeof(X509Certificate2)));
