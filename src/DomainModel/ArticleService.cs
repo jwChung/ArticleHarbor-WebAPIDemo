@@ -56,7 +56,7 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            var oldArticle = this.articles.Select(article.Id);
+            var oldArticle = await this.articles.SelectAsync(article.Id);
             if (oldArticle == null)
             {
                 var newArticle = await this.articles.InsertAsync(article);

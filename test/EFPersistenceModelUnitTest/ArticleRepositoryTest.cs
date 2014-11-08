@@ -85,15 +85,6 @@
         }
 
         [Test]
-        public void SelectWithIdReturnsNullWhenThereIsNoArticleWithGivenId(
-            ArticleRepository sut,
-            int id)
-        {
-            var actual = sut.Select(id);
-            Assert.Null(actual);
-        }
-
-        [Test]
         public async Task UpdateAsyncCorrectlyUpdatesArticle(
             DbContextTransaction transaction,
             ArticleRepository sut,

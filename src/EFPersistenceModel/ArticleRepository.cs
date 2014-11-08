@@ -33,12 +33,6 @@
             return result.Select(x => x.ToDomain());
         }
 
-        public Article Select(int id)
-        {
-            var article = this.context.Articles.Find(id);
-            return article == null ? null : article.ToDomain();
-        }
-
         public Task<Article> SelectAsync(int id)
         {
             var article = this.context.Articles.Find(id);
@@ -80,7 +74,7 @@
 
         private async Task<Article> InsertAsyncImpl(Article article)
         {
-            if (this.Select(article.Id) != null)
+            if ((await this.SelectAsync(article.Id)) != null)
                 return article;
 
             var persistence = this.context.Articles.Add(article.ToPersistence());
