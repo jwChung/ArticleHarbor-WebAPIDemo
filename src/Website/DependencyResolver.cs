@@ -12,6 +12,9 @@
 
         public DependencyResolver(Container container)
         {
+            if (container == null)
+                throw new ArgumentNullException("container");
+
             this.container = container;
         }
 
