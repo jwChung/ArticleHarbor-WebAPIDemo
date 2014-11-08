@@ -39,17 +39,12 @@
             return article == null ? null : article.ToDomain();
         }
 
-        public async Task<Article> InsertAsync(Article article)
+        public Task<Article> InsertAsync(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            if (this.Select(article.Id) != null)
-                return article;
-
-            var persistence = this.context.Articles.Add(article.ToPersistence());
-            await this.context.SaveChangesAsync();
-            return persistence.ToDomain();
+            return this.InsertAsyncImpl(article);
         }
 
         public void Update(Article article)
@@ -72,6 +67,29 @@
                 return;
 
             this.context.Articles.Remove(article);
+        }
+
+        public Task UpdateAsync(Article article)
+        {
+            if (article == null)
+                throw new ArgumentNullException("article");
+
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async Task<Article> InsertAsyncImpl(Article article)
+        {
+            if (this.Select(article.Id) != null)
+                return article;
+
+            var persistence = this.context.Articles.Add(article.ToPersistence());
+            await this.context.SaveChangesAsync();
+            return persistence.ToDomain();
         }
     }
 }

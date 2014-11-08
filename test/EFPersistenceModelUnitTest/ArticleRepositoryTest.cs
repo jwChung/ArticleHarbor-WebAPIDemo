@@ -40,23 +40,6 @@
         }
 
         [Test]
-        public async Task InsertAsyncWithNullArticleThrows(ArticleRepository sut)
-        {
-            try
-            {
-                await sut.InsertAsync(null);
-                throw new Exception();
-            }
-            catch (ArgumentNullException)
-            {
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        [Test]
         public async Task InsertAsyncDuplicateArticleDoesNotInsert(
             DbContextTransaction transaction,
             ArticleRepository sut,
@@ -185,11 +168,6 @@
             Article article)
         {
             Assert.DoesNotThrow(() => sut.Delete(article.Id));
-        }
-
-        protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
-        {
-            yield return this.Methods.Select(x => x.InsertAsync(null));
         }
     }
 }
