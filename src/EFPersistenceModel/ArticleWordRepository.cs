@@ -3,8 +3,10 @@
     using System;
     using System.Data.Entity;
     using System.Linq;
+    using System.Threading.Tasks;
     using DomainModel;
     using EFDataAccess;
+    using ArticleWord = DomainModel.ArticleWord;
 
     public class ArticleWordRepository : IArticleWordRepository
     {
@@ -50,6 +52,22 @@
 
             foreach (var articleWord in articleWords)
                 this.context.ArticleWords.Remove(articleWord);
+        }
+
+        public Task InsertAsync(ArticleWord articleWord)
+        {
+            if (articleWord == null)
+                throw new ArgumentNullException("articleWord");
+
+            if (this.Select(articleWord.ArticleId, articleWord.Word) == null)
+                this.context.ArticleWords.Add(articleWord.ToPersistence());
+
+            return Task.FromResult<object>(null);
+        }
+
+        public Task DeleteAsync(int articleId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
