@@ -147,5 +147,29 @@
                 transaction.Dispose();
             }
         }
+
+        [Test]
+        public async Task DeleteAsyncWithIdDeletesAllArticleWordsByArticleId(
+            DbContextTransaction transaction,
+            ArticleWordRepository sut)
+        {
+            try
+            {
+                var article = sut.Context.Articles.First();
+
+                await sut.DeleteAsync(article.Id);
+                sut.Context.SaveChanges();
+
+                Assert.Empty(
+                    sut.Context.ArticleWords.Where(
+                        x => x.ArticleId == article.Id).ToArray());
+                Assert.Equal(2, sut.Context.ArticleWords.Count());
+            }
+            finally
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+            }
+        }
     }
 }

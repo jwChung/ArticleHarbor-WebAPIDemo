@@ -67,7 +67,13 @@
 
         public Task DeleteAsync(int articleId)
         {
-            throw new NotImplementedException();
+            var articleWords = this.context.ArticleWords
+                .Where(x => x.ArticleId == articleId).ToArray();
+
+            foreach (var articleWord in articleWords)
+                this.context.ArticleWords.Remove(articleWord);
+
+            return Task.FromResult<object>(null);
         }
     }
 }
