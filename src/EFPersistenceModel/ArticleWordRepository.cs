@@ -34,15 +34,6 @@
             return articleWord == null ? null : articleWord.ToDomain();
         }
 
-        public void Delete(int articleId)
-        {
-            var articleWords = this.context.ArticleWords
-                .Where(x => x.ArticleId == articleId).ToArray();
-
-            foreach (var articleWord in articleWords)
-                this.context.ArticleWords.Remove(articleWord);
-        }
-
         public Task InsertAsync(ArticleWord articleWord)
         {
             if (articleWord == null)

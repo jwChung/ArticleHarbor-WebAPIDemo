@@ -4,8 +4,6 @@
 
     public interface IArticleWordRepository
     {
-        void Delete(int articleId);
-
         Task InsertAsync(ArticleWord articleWord);
 
         Task DeleteAsync(int articleId);

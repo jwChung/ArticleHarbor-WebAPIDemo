@@ -88,7 +88,7 @@
 
             // Excercise system
             yield return TestCase.Create(() =>
-                sut.ArticleWords.ToMock().Verify(x => x.Delete(modifiedArticle.Id)));
+                sut.ArticleWords.ToMock().Verify(x => x.DeleteAsync(modifiedArticle.Id)));
 
             yield return TestCase.Create(() =>
             {
@@ -120,7 +120,7 @@
 
             await sut.SaveAsync(modifiedArticle);
 
-            sut.ArticleWords.ToMock().Verify(x => x.Delete(modifiedArticle.Id), Times.Never());
+            sut.ArticleWords.ToMock().Verify(x => x.DeleteAsync(modifiedArticle.Id), Times.Never());
             sut.ArticleWords.ToMock().Verify(x => x.InsertAsync(It.IsAny<ArticleWord>()), Times.Never());
         }
 

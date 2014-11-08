@@ -67,7 +67,7 @@
             await this.articles.UpdateAsync(article);
             if (article.Subject != oldArticle.Subject)
             {
-                this.ArticleWords.Delete(article.Id);
+                await this.ArticleWords.DeleteAsync(article.Id);
                 await this.InsertArticleWordsAsync(article);
             }
 
