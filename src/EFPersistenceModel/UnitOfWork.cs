@@ -43,9 +43,9 @@
             }
         }
 
-        public async Task SaveAsync()
+        public Task SaveAsync()
         {
-            await this.Context.SaveChangesAsync();
+            return this.Context.SaveChangesAsync();
         }
     }
 }
