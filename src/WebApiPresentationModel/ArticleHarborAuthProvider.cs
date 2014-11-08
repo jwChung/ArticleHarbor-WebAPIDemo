@@ -46,8 +46,12 @@
         private async Task GrantResourceOwnerCredentialsImpl(
             OAuthGrantResourceOwnerCredentialsContext context)
         {
-            var userRoles = await this.authServiceFactory().FindUserRolesAsync(
+            UserRoles userRoles = null;
+            using (var serviceFactory = this.authServiceFactory())
+            {
+                userRoles = await serviceFactory.FindUserRolesAsync(
                 context.UserName, context.Password);
+            }
 
             if (userRoles == null)
             {

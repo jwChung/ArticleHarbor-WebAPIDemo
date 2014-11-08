@@ -1,5 +1,6 @@
 ﻿namespace WebApiPresentationModelUnitTest
 {
+    using System;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -61,6 +62,34 @@
             Assert.Equal(
                 userRoles.Roles,
                 context.Ticket.Identity.FindAll(ClaimTypes.Role).Select(r => r.Value));
+        }
+
+        [Test]
+        public async Task GrantResourceOwnerCredentialsDisposesAutoService(
+            ArticleHarborAuthProvider sut,
+            OAuthGrantResourceOwnerCredentialsContext context)
+        {
+            await sut.GrantResourceOwnerCredentials(context);
+            sut.AuthServiceFactory().ToMock().Verify(x => x.Dispose());
+        }
+
+        [Test]
+        public async Task GrantResourceOwnerCredentialsDisposesAutoServiceEvenIfFindUserRolesThrows(
+            ArticleHarborAuthProvider sut,
+            OAuthGrantResourceOwnerCredentialsContext context)
+        {
+            sut.AuthServiceFactory().ToMock().Setup(
+                x => x.FindUserRolesAsync(context.UserName, context.Password))
+                .Throws<Exception>();
+            try
+            {
+                await sut.GrantResourceOwnerCredentials(context);
+            }
+            catch (Exception)
+            {
+            }
+
+            sut.AuthServiceFactory().ToMock().Verify(x => x.Dispose());
         }
     }
 }
