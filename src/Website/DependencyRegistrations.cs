@@ -24,34 +24,7 @@ namespace Website
             if (container == null)
                 throw new ArgumentNullException("container");
 
-            // Transient scope
-            container.Register<IAssembliesResolver>(
-                c => new ArticleHarborAssembliesResolver())
-                .ReusedWithinNone();
-
-            container.Register<IArticleService>(
-                c => new ArticleService(
-                    c.Resolve<IArticleRepository>(),
-                    c.Resolve<IArticleWordRepository>(),
-                    KoreanNounExtractor.Execute))
-                .ReusedWithinNone();
-
-            container.Register<ILogger>(
-                c => new FileLogger(Environment.CurrentDirectory))
-                .ReusedWithinNone();
-
-            container.Register<IEnumerable<IExceptionLogger>>(
-                c => new IExceptionLogger[]
-                {
-                    new UnhandledExceptionLogger(c.Resolve<ILogger>())
-                })
-                .ReusedWithinNone();
-
-            container.Register(
-                c => new ArticlesController(c.Resolve<IArticleService>()))
-                .ReusedWithinNone();
-            
-            // Request scope
+            // IUnitOfWork & Repository interfaces
             container.Register<IDatabaseInitializer<ArticleHarborDbContext>>(
                 c => new ArticleHarborDbContextTestInitializer())
                 .ReusedWithinContainer();
@@ -77,6 +50,20 @@ namespace Website
             container.Register(
                 c => c.Resolve<IUnitOfWork>().ArticleWords)
                 .ReusedWithinContainer();
+
+            // Domain services
+            container.Register<IArticleService>(
+                c => new ArticleService(
+                    c.Resolve<IArticleRepository>(),
+                    c.Resolve<IArticleWordRepository>(),
+                    KoreanNounExtractor.Execute))
+                .ReusedWithinContainer();
+
+            // Presentation controllers
+            container.Register(
+                c => new ArticlesController(c.Resolve<IArticleService>()))
+                .ReusedWithinContainer();
+
             return this;
         }
     }

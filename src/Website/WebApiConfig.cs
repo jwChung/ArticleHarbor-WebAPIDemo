@@ -3,6 +3,8 @@
     using System;
     using System.Web.Hosting;
     using System.Web.Http;
+    using System.Web.Http.Dispatcher;
+    using System.Web.Http.ExceptionHandling;
     using Jwc.Funz;
     using WebApiPresentationModel;
 
@@ -27,6 +29,13 @@
             config.Formatters.Remove(config.Formatters.XmlFormatter);
             config.Formatters.Insert(
                 0, new JsonCustomMediaTypeFormatter(JsonConstructorDeserializer.Deserialize));
+
+            config.Services.Replace(
+                typeof(IAssembliesResolver), new ArticleHarborAssembliesResolver());
+
+            config.Services.Add(
+                typeof(IExceptionLogger),
+                new UnhandledExceptionLogger(new FileLogger(Environment.CurrentDirectory)));
 
             config.Filters.Add(new SaveUnitOfWorkActionFilterAttribute());
 
