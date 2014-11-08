@@ -157,25 +157,12 @@
         }
 
         [Test]
-        public void SaveAsyncWithNullArticleThrows(
-            ArticleService sut)
-        {
-            var e = Assert.Throws<AggregateException>(() => sut.SaveAsync(null).Result);
-            Assert.IsType<ArgumentNullException>(e.InnerException);
-        }
-
-        [Test]
         public async Task RemoveAsyncCorrectlyRemoves(
             ArticleService sut,
             int id)
         {
             await sut.RemoveAsync(id);
             sut.Articles.ToMock().Verify(x => x.DeleteAsync(id));
-        }
-
-        protected override IEnumerable<System.Reflection.MemberInfo> ExceptToVerifyGuardClause()
-        {
-            yield return this.Methods.Select(x => x.SaveAsync(null));
         }
     }
 }

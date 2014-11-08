@@ -9,13 +9,19 @@
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public sealed class SaveUnitOfWorkActionFilterAttribute : ActionFilterAttribute
     {
-        public async override Task OnActionExecutedAsync(
+        public override Task OnActionExecutedAsync(
             HttpActionExecutedContext actionExecutedContext,
             CancellationToken cancellationToken)
         {
             if (actionExecutedContext == null)
                 throw new ArgumentNullException("actionExecutedContext");
 
+            return this.OnActionExecutedAsyncImpl(actionExecutedContext, cancellationToken);
+        }
+
+        private async Task OnActionExecutedAsyncImpl(
+            HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
+        {
             var dependencyScope = actionExecutedContext.Request.GetDependencyScope();
             var lazyUnitOfWork = (LazyUnitOfWork)dependencyScope
                 .GetService(typeof(LazyUnitOfWork));

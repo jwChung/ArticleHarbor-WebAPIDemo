@@ -37,26 +37,38 @@
             return false;
         }
 
-        public override async Task<object> ReadFromStreamAsync(
+        public override Task<object> ReadFromStreamAsync(
             Type type,
             Stream readStream,
             HttpContent content,
             IFormatterLogger formatterLogger)
         {
+            if (type == null)
+                throw new ArgumentNullException("type");
+
             if (readStream == null)
                 throw new ArgumentNullException("content");
 
             if (content == null)
                 throw new ArgumentNullException("content");
 
+            if (formatterLogger == null)
+                throw new ArgumentNullException("formatterLogger");
+
+            return this.ReadFromStreamAsyncImpl(type, readStream, content);
+        }
+
+        private async Task<object> ReadFromStreamAsyncImpl(
+            Type type, Stream readStream, HttpContent content)
+        {
             using (var reader = new StreamReader(
                 readStream, this.SelectCharacterEncoding(content.Headers)))
             {
                 string jsonString = await reader.ReadToEndAsync();
-                return this.deserializer(type, jsonString);    
+                return this.deserializer(type, jsonString);
             }
         }
-        
+
         private static class TypeHelper
         {
             public static bool CanConvertFromString(Type type)

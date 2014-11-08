@@ -103,35 +103,10 @@
 
             Assert.Equal(expected, actual);
         }
-
-        [Test]
-        public void ReadFromStreamAsyncWithNullStreamThrows(
-            JsonCustomMediaTypeFormatter sut,
-            Type type,
-            HttpContent content,
-            IFormatterLogger formatterLogger)
-        {
-            var exception = Assert.Throws<AggregateException>(
-                () => sut.ReadFromStreamAsync(type, null, content, formatterLogger).Result);
-            Assert.IsType<ArgumentNullException>(exception.InnerException);
-        }
         
-        [Test]
-        public void ReadFromStreamAsyncWithNullHttpContentThrows(
-            JsonCustomMediaTypeFormatter sut,
-            Type type,
-            Stream stream,
-            IFormatterLogger formatterLogger)
-        {
-            var exception = Assert.Throws<AggregateException>(
-                () => sut.ReadFromStreamAsync(type, stream, null, formatterLogger).Result);
-            Assert.IsType<ArgumentNullException>(exception.InnerException);
-        }
-
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
             yield return this.Methods.Select(x => x.CanWriteType(null));
-            yield return this.Methods.Select(x => x.ReadFromStreamAsync(null, null, null, null));
         }
     }
 }

@@ -57,20 +57,5 @@
 
             layUnitOfWork.UnitOfWorkFactory().ToMock().Verify(x => x.SaveAsync(), Times.Never());
         }
-
-        [Test]
-        public void OnActionExecutedAsyncWithNullContextThrows(
-            SaveUnitOfWorkActionFilterAttribute sut)
-        {
-            var e = Assert.Throws<AggregateException>(
-                () => sut.OnActionExecutedAsync(null, CancellationToken.None).Wait());
-            Assert.IsAssignableFrom<ArgumentNullException>(e.InnerException);
-        }
-
-        protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
-        {
-            yield return this.Methods.Select(
-                x => x.OnActionExecutedAsync(null, CancellationToken.None));
-        }
     }
 }

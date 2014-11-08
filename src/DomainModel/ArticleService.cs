@@ -51,11 +51,30 @@
             return this.articles.SelectAsync();
         }
 
-        public async Task<Article> SaveAsync(Article article)
+        public Task<Article> SaveAsync(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
 
+            return this.SaveAsyncImpl(article);
+        }
+
+        public Task RemoveAsync(int id)
+        {
+            return this.articles.DeleteAsync(id);
+        }
+
+        private async Task InsertArticleWordsAsync(Article article)
+        {
+            var words = await Task.Run(() => this.nounExtractor(article.Subject).ToArray())
+                .ConfigureAwait(false);
+
+            await Task.WhenAll(
+                words.Select(x => this.ArticleWords.InsertAsync(new ArticleWord(article.Id, x))));
+        }
+
+        private async Task<Article> SaveAsyncImpl(Article article)
+        {
             var oldArticle = await this.articles.SelectAsync(article.Id);
             if (oldArticle == null)
             {
@@ -72,20 +91,6 @@
             }
 
             return article;
-        }
-
-        public Task RemoveAsync(int id)
-        {
-            return this.articles.DeleteAsync(id);
-        }
-
-        private async Task InsertArticleWordsAsync(Article article)
-        {
-            var words = await Task.Run(() => this.nounExtractor(article.Subject).ToArray())
-                .ConfigureAwait(false);
-
-            await Task.WhenAll(
-                words.Select(x => this.ArticleWords.InsertAsync(new ArticleWord(article.Id, x))));
         }
     }
 }
