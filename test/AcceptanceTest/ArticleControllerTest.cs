@@ -28,9 +28,9 @@
             {
                 var response = await client.GetAsync("api/articles");
 
-                Assert.True(
-                    response.IsSuccessStatusCode,
-                    "Actual status code: " + response.StatusCode);
+                string message = "Actual status code: " + response.StatusCode
+                    + Environment.NewLine + await response.Content.ReadAsStringAsync();
+                Assert.True(response.IsSuccessStatusCode, message);
                 Assert.Equal(
                     "application/json",
                     response.Content.Headers.ContentType.MediaType);
