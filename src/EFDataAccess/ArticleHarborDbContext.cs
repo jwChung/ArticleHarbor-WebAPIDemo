@@ -30,10 +30,5 @@
         {
             get { return this.userRoleManager; }
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-        }
     }
 }

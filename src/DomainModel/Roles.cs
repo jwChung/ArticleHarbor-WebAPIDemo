@@ -18,11 +18,11 @@
         /// <summary>
         /// The author
         /// </summary>
-        Author = User + 2,
+        Author = 2,
 
         /// <summary>
         /// The administrator
         /// </summary>
-        Administrator = Author + 4
+        Administrator = 4
     }
 }

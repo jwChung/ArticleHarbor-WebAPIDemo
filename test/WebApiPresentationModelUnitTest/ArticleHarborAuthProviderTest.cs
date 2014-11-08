@@ -53,7 +53,7 @@
             IFixture fixture,
             Roles roles)
         {
-            fixture.Inject(Roles.Administrator);
+            fixture.Inject(Roles.Administrator | Roles.Author | Roles.User);
             var expected = new[] { "User", "Author", "Administrator" };
             var user = fixture.Create<User>();
             sut.AuthServiceFactory().Of(
