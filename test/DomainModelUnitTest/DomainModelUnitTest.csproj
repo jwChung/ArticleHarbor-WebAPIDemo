@@ -103,6 +103,7 @@
     <Compile Include="RunOn.cs" />
     <Compile Include="TestAttribute.cs" />
     <Compile Include="IdiomaticTest.cs" />
+    <Compile Include="UserRolesTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

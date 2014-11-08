@@ -8,6 +8,7 @@ using System.Web.Http.Controllers;
 using Jwc.Experiment;
 using Jwc.Experiment.AutoFixture;
 using Jwc.Experiment.Xunit;
+using Microsoft.Owin;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
 using Ploeh.AutoFixture.Kernel;
@@ -54,18 +55,17 @@ public class TestAttribute : TestBaseAttribute
 
     protected override ITestFixture Create(ITestMethodContext context)
     {
-        var fixture = new Fixture().Customize(
-            new CompositeCustomization(
-                new AutoMoqCustomization(),
-                new TestParametersCustomization(
-                    context.ActualMethod.GetParameters())));
+        var fixture = new Fixture().Customize(new AutoMoqCustomization());
 
         fixture.Customizations.Add(
             new OmitAutoPropertiesBuilder(
                 typeof(X509Certificate2)));
         fixture.Register<Stream>(() => new MemoryStream());
         fixture.Register<CultureInfo>(() => CultureInfo.CurrentCulture);
+        fixture.Register<PathString>(() => new PathString("/" + fixture.Create<string>()));
 
+        fixture.Customize(new TestParametersCustomization(
+           context.ActualMethod.GetParameters()));
         return new TestFixture(fixture);
     }
 

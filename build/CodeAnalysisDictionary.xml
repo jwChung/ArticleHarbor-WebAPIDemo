@@ -8,11 +8,11 @@
       <Word>ctor</Word>
       <Word>moq</Word>
       <Word>api</Word>
-      <!-- Test Specific Sub-class -->
-      <Word>tss</Word>
+      <Word>tss</Word><!-- Test Specific Sub-class -->
       <Word>deserializer</Word>
       <Word>deserialize</Word>
       <Word>deserializes</Word>
+      <Word>auth</Word>
     </Recognized>
     <Unrecognized>
       <Word></Word>
