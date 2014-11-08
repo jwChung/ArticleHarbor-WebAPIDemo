@@ -10,7 +10,7 @@
         private readonly string body;
         private readonly DateTime date;
         private readonly string url;
-        private int id;
+        private readonly int id;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "5#", Justification = "데이터베이스에 저장하기 위해 문자열로 취급.")]
         public Article(
@@ -116,10 +116,28 @@
         public Article WithId(int newId)
         {
             return new Article(
-                this.provider, this.no, this.subject, this.body, this.date, this.url)
-            {
-                id = newId
-            };
+                newId,
+                this.provider,
+                this.no,
+                this.subject,
+                this.body,
+                this.date,
+                this.url);
+        }
+
+        public Article WithSubject(string newSubject)
+        {
+            if (newSubject == null)
+                throw new ArgumentNullException("newSubject");
+
+            return new Article(
+                this.id,
+                this.provider,
+                this.no,
+                newSubject,
+                this.body,
+                this.date,
+                this.url);
         }
     }
 }
