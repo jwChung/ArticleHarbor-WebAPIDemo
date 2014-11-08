@@ -74,12 +74,23 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            throw new NotImplementedException();
+            var persistence = this.context.Articles.Find(article.Id);
+            if (persistence != null)
+            {
+                ((IObjectContextAdapter)this.context).ObjectContext.Detach(persistence);
+                this.context.Entry(article.ToPersistence()).State = EntityState.Modified;
+            }
+
+            return Task.FromResult<object>(null);
         }
 
         public Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var article = this.context.Articles.Find(id);
+            if (article != null)
+                this.context.Articles.Remove(article);
+
+            return Task.FromResult<object>(null);
         }
 
         private async Task<Article> InsertAsyncImpl(Article article)

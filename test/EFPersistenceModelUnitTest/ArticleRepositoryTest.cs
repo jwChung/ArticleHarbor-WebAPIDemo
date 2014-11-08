@@ -169,5 +169,82 @@
         {
             Assert.DoesNotThrow(() => sut.Delete(article.Id));
         }
+
+        [Test]
+        public async Task UpdateAsyncCorrectlyUpdatesArticle(
+            DbContextTransaction transaction,
+            ArticleRepository sut,
+            Article article1,
+            Article article2)
+        {
+            try
+            {
+                var insertedArticle = await sut.InsertAsync(article1);
+                var modifiedArticle = article2.WithId(insertedArticle.Id);
+
+                await sut.UpdateAsync(modifiedArticle);
+
+                sut.Context.SaveChanges();
+                var actual = sut.Select(insertedArticle.Id);
+                actual.AsSource().OfLikeness<Article>().ShouldEqual(modifiedArticle);
+            }
+            finally
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+            }
+        }
+
+        [Test]
+        public void UpdateAsyncDoesNotThrowWhenThereIsNoArticleWithGivenId(
+            DbContextTransaction transaction,
+            ArticleRepository sut,
+            Article article)
+        {
+            try
+            {
+                Assert.DoesNotThrow(() =>
+                {
+                    sut.UpdateAsync(article).Wait();
+                    sut.Context.SaveChanges();
+                });
+            }
+            finally
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+            }
+        }
+
+        [Test]
+        public async Task DeleteAsyncCorrectlyDeletesWhenThereIsArticleWithGivenId(
+            DbContextTransaction transaction,
+            ArticleRepository sut,
+            Article article)
+        {
+            try
+            {
+                article = await sut.InsertAsync(article);
+                Assert.NotNull(sut.Select(article.Id));
+
+                await sut.DeleteAsync(article.Id);
+
+                await sut.Context.SaveChangesAsync();
+                Assert.Null(sut.Select(article.Id));
+            }
+            finally
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+            }
+        }
+
+        [Test]
+        public void DeleteAsyncDoesNotThrowWhenThereIsNoArticleWithGivenId(
+            ArticleRepository sut,
+            Article article)
+        {
+            Assert.DoesNotThrow(() => sut.DeleteAsync(article.Id).Wait());
+        }
     }
 }
