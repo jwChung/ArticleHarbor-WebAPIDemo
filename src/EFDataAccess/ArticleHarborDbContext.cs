@@ -1,8 +1,9 @@
 ﻿namespace EFDataAccess
 {
     using System.Data.Entity;
+    using Microsoft.AspNet.Identity.EntityFramework;
 
-    public class ArticleHarborDbContext : DbContext
+    public class ArticleHarborDbContext : IdentityDbContext<User>
     {
         public ArticleHarborDbContext(
             IDatabaseInitializer<ArticleHarborDbContext> initializer)
