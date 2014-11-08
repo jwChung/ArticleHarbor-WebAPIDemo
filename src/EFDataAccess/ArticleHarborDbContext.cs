@@ -12,6 +12,7 @@
 
         public ArticleHarborDbContext(
             IDatabaseInitializer<ArticleHarborDbContext> initializer)
+            : base("ArticleHarborDbContext")
         {
             Database.SetInitializer(initializer);
 
