@@ -1,8 +1,10 @@
 ﻿namespace WebApiPresentationModelUnitTest
 {
+    using System.Threading.Tasks;
     using Microsoft.Owin.Security.OAuth;
-    using WebApiPresentationModel;
-    using Xunit;
+using Moq;
+using WebApiPresentationModel;
+using Xunit;
 
     public class ArticleHarborAuthProviderTest : IdiomaticTest<ArticleHarborAuthProvider>
     {
@@ -11,6 +13,16 @@
             ArticleHarborAuthProvider sut)
         {
             Assert.IsAssignableFrom<OAuthAuthorizationServerProvider>(sut);
+        }
+
+        [Test]
+        public async Task ValidateClientAuthenticationAlwaysValidates(
+            ArticleHarborAuthProvider sut,
+            Mock<OAuthValidateClientAuthenticationContext> context)
+        {
+            context.CallBase = false;
+            await sut.ValidateClientAuthentication(context.Object);
+            context.Verify(x => x.Validated());
         }
     }
 }

@@ -52,6 +52,7 @@
     <Compile Include="IArticleService.cs" />
     <Compile Include="IArticleWordRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="IUserService.cs" />
     <Compile Include="KoreanNounExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
