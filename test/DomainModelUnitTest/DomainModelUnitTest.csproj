@@ -105,7 +105,6 @@
     <Compile Include="TestAttribute.cs" />
     <Compile Include="IdiomaticTest.cs" />
     <Compile Include="UserRolesTest.cs" />
-    <Compile Include="UserRoleTest.cs" />
     <Compile Include="UserTest.cs" />
   </ItemGroup>
   <ItemGroup>
