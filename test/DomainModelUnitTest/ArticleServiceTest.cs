@@ -164,11 +164,11 @@
         }
 
         [Test]
-        public void RemoveCorrectlyRemoves(
+        public async Task RemoveAsyncCorrectlyRemoves(
             ArticleService sut,
             int id)
         {
-            sut.Remove(id);
+            await sut.RemoveAsync(id);
             sut.Articles.ToMock().Verify(x => x.Delete(id));
         }
 

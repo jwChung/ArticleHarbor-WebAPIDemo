@@ -10,6 +10,6 @@
 
         Task<Article> SaveAsync(Article article);
 
-        void Remove(int id);
+        Task RemoveAsync(int id);
     }
 }
