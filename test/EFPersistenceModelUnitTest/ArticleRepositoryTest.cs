@@ -29,7 +29,7 @@
             try
             {
                 var newArticle = await sut.InsertAsync(article1);
-                var expected = sut.Select(newArticle.Id);
+                var expected = await sut.SelectAsync(newArticle.Id);
                 newArticle.AsSource().OfLikeness<Article>().ShouldEqual(expected);
             }
             finally
@@ -108,7 +108,7 @@
                 await sut.UpdateAsync(modifiedArticle);
 
                 sut.Context.SaveChanges();
-                var actual = sut.Select(insertedArticle.Id);
+                var actual = await sut.SelectAsync(insertedArticle.Id);
                 actual.AsSource().OfLikeness<Article>().ShouldEqual(modifiedArticle);
             }
             finally
@@ -148,12 +148,12 @@
             try
             {
                 article = await sut.InsertAsync(article);
-                Assert.NotNull(sut.Select(article.Id));
+                Assert.NotNull(await sut.SelectAsync(article.Id));
 
                 await sut.DeleteAsync(article.Id);
 
                 await sut.Context.SaveChangesAsync();
-                Assert.Null(sut.Select(article.Id));
+                Assert.Null(await sut.SelectAsync(article.Id));
             }
             finally
             {
@@ -168,6 +168,15 @@
             Article article)
         {
             Assert.DoesNotThrow(() => sut.DeleteAsync(article.Id).Wait());
+        }
+
+        [Test]
+        public async Task SelectAsyncWithIdReturnsNullWhenThereIsNoArticleWithGivenId(
+            ArticleRepository sut,
+            int id)
+        {
+            var actual = await sut.SelectAsync(id);
+            Assert.Null(actual);
         }
     }
 }

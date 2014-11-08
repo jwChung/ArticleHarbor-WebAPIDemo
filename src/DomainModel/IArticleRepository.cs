@@ -10,6 +10,8 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Select", Justification = "The 'Select' word is appropriate to represent repository operation.")]
         Article Select(int id);
 
+        Task<Article> SelectAsync(int id);
+
         Task<Article> InsertAsync(Article article);
 
         Task UpdateAsync(Article article);

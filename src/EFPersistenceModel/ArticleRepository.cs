@@ -39,6 +39,13 @@
             return article == null ? null : article.ToDomain();
         }
 
+        public Task<Article> SelectAsync(int id)
+        {
+            var article = this.context.Articles.Find(id);
+            return Task.FromResult<Article>(
+                article == null ? null : article.ToDomain());
+        }
+
         public Task<Article> InsertAsync(Article article)
         {
             if (article == null)
