@@ -94,52 +94,6 @@
         }
 
         [Test]
-        public async Task UpdateCorrectlyUpdatesArticle(
-            DbContextTransaction transaction,
-            ArticleRepository sut,
-            Article article1,
-            Article article2)
-        {
-            try
-            {
-                var insertedArticle = await sut.InsertAsync(article1);
-                var modifiedArticle = article2.WithId(insertedArticle.Id);
-
-                sut.Update(modifiedArticle);
-
-                sut.Context.SaveChanges();
-                var actual = sut.Select(insertedArticle.Id);
-                actual.AsSource().OfLikeness<Article>().ShouldEqual(modifiedArticle);
-            }
-            finally
-            {
-                transaction.Rollback();
-                transaction.Dispose();
-            }
-        }
-
-        [Test]
-        public void UpdateDoesNotThrowWhenThereIsNoArticleWithGivenId(
-            DbContextTransaction transaction,
-            ArticleRepository sut,
-            Article article)
-        {
-            try
-            {
-                Assert.DoesNotThrow(() =>
-                {
-                    sut.Update(article);
-                    sut.Context.SaveChanges();
-                });
-            }
-            finally
-            {
-                transaction.Rollback();
-                transaction.Dispose();
-            }
-        }
-
-        [Test]
         public async Task DeleteCorrectlyDeletesWhenThereIsArticleWithGivenId(
             DbContextTransaction transaction,
             ArticleRepository sut,

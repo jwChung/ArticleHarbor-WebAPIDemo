@@ -47,19 +47,6 @@
             return this.InsertAsyncImpl(article);
         }
 
-        public void Update(Article article)
-        {
-            if (article == null)
-                throw new ArgumentNullException("article");
-
-            var persistence = this.context.Articles.Find(article.Id);
-            if (persistence != null)
-            {
-                ((IObjectContextAdapter)this.context).ObjectContext.Detach(persistence);
-                this.context.Entry(article.ToPersistence()).State = EntityState.Modified;
-            }
-        }
-
         public void Delete(int id)
         {
             var article = this.context.Articles.Find(id);

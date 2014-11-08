@@ -55,7 +55,7 @@
             var actual = await sut.SaveAsync(newArticle);
 
             Assert.Equal(newArticle, actual);
-            sut.Articles.ToMock().Verify(x => x.Update(newArticle));
+            sut.Articles.ToMock().Verify(x => x.UpdateAsync(newArticle));
         }
 
         [Test]

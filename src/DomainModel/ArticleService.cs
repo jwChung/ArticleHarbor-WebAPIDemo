@@ -64,7 +64,7 @@
                 return newArticle;
             }
 
-            this.articles.Update(article);
+            await this.articles.UpdateAsync(article);
             if (article.Subject != oldArticle.Subject)
             {
                 this.ArticleWords.Delete(article.Id);
