@@ -25,17 +25,6 @@
             get { return this.context; }
         }
 
-        public void Insert(DomainModel.ArticleWord articleWord)
-        {
-            if (articleWord == null)
-                throw new ArgumentNullException("articleWord");
-
-            if (this.Select(articleWord.ArticleId, articleWord.Word) != null)
-                return;
-
-            this.context.ArticleWords.Add(articleWord.ToPersistence());
-        }
-
         public DomainModel.ArticleWord Select(int articleId, string word)
         {
             if (word == null)

@@ -97,7 +97,7 @@
                     var likeness = new ArticleWord(modifiedArticle.Id, word)
                         .AsSource().OfLikeness<ArticleWord>();
                     sut.ArticleWords.ToMock().Verify(
-                        x => x.Insert(It.Is<ArticleWord>(p => likeness.Equals(p))));
+                        x => x.InsertAsync(It.Is<ArticleWord>(p => likeness.Equals(p))));
                 }
             });
         }
@@ -121,7 +121,7 @@
             await sut.SaveAsync(modifiedArticle);
 
             sut.ArticleWords.ToMock().Verify(x => x.Delete(modifiedArticle.Id), Times.Never());
-            sut.ArticleWords.ToMock().Verify(x => x.Insert(It.IsAny<ArticleWord>()), Times.Never());
+            sut.ArticleWords.ToMock().Verify(x => x.InsertAsync(It.IsAny<ArticleWord>()), Times.Never());
         }
 
         [Test]
@@ -151,7 +151,7 @@
                 var likeness = new ArticleWord(newArticle.Id, word)
                     .AsSource().OfLikeness<ArticleWord>();
                 sut.ArticleWords.ToMock().Verify(
-                    x => x.Insert(It.Is<ArticleWord>(p => likeness.Equals(p))));
+                    x => x.InsertAsync(It.Is<ArticleWord>(p => likeness.Equals(p))));
             }
         }
 

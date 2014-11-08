@@ -83,11 +83,9 @@
         {
             var words = await Task.Run(() => this.nounExtractor(article.Subject).ToArray())
                 .ConfigureAwait(false);
-            foreach (var word in words)
-            {
-                var articleWord = new ArticleWord(article.Id, word);
-                this.ArticleWords.Insert(articleWord);
-            }
+
+            await Task.WhenAll(
+                words.Select(x => this.ArticleWords.InsertAsync(new ArticleWord(article.Id, x))));
         }
     }
 }

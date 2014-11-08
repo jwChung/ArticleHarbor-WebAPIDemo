@@ -21,53 +21,6 @@
         }
 
         [Test]
-        public void InsertCorrectlyInsertsArticleWord(
-            DbContextTransaction transaction,
-            ArticleWordRepository sut,
-            string word)
-        {
-            try
-            {
-                var article = sut.Context.Articles.First();
-                var articleWord = new DomainModel.ArticleWord(article.Id, word);
-                
-                sut.Insert(articleWord);
-
-                var expected = sut.Select(articleWord.ArticleId, articleWord.Word);
-                articleWord.AsSource()
-                    .OfLikeness<DomainModel.ArticleWord>()
-                    .ShouldEqual(expected);
-            }
-            finally
-            {
-                transaction.Rollback();
-                transaction.Dispose();
-            }
-        }
-
-        [Test]
-        public void InsertDuplicateEntityDoesNotThrow(
-            DbContextTransaction transaction,
-            ArticleWordRepository sut,
-            string word)
-        {
-            try
-            {
-                var article = sut.Context.Articles.First();
-                sut.Insert(new DomainModel.ArticleWord(article.Id, word));
-
-                sut.Insert(new DomainModel.ArticleWord(article.Id, word));
-
-                Assert.DoesNotThrow(() => sut.Context.SaveChanges());
-            }
-            finally
-            {
-                transaction.Rollback();
-                transaction.Dispose();
-            }
-        }
-
-        [Test]
         public void SelectReturnsNullWhenThereIsNoArticleWordWithGivenIdentity(
             ArticleWordRepository sut,
             string word,
