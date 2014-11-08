@@ -45,6 +45,13 @@
             return this.GrantResourceOwnerCredentialsImpl(context);
         }
 
+        private static IEnumerable<string> GetRoleNames(User user)
+        {
+            return Enum.GetValues(typeof(Roles)).Cast<Enum>()
+                .Where(x => x.GetHashCode() != 0 && user.Roles.HasFlag(x))
+                .Select(x => x.ToString());
+        }
+
         private async Task GrantResourceOwnerCredentialsImpl(
             OAuthGrantResourceOwnerCredentialsContext context)
         {
@@ -68,13 +75,6 @@
                 identity.AddClaim(new Claim(ClaimTypes.Role, roleName));
 
             context.Validated(identity);
-        }
-
-        private static IEnumerable<string> GetRoleNames(User user)
-        {
-            return Enum.GetValues(typeof(Roles)).Cast<Enum>()
-                .Where(x => x.GetHashCode() != 0 && user.Roles.HasFlag(x))
-                .Select(x => x.ToString());
         }
     }
 }
