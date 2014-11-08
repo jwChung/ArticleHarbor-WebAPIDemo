@@ -1,6 +1,6 @@
 ﻿namespace DomainModel
 {
-    public interface IUserService
+    public interface IAuthService
     {
     }
 }

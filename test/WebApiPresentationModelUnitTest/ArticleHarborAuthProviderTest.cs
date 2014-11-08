@@ -2,9 +2,9 @@
 {
     using System.Threading.Tasks;
     using Microsoft.Owin.Security.OAuth;
-using Moq;
-using WebApiPresentationModel;
-using Xunit;
+    using Moq;
+    using WebApiPresentationModel;
+    using Xunit;
 
     public class ArticleHarborAuthProviderTest : IdiomaticTest<ArticleHarborAuthProvider>
     {
