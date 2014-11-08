@@ -1,6 +1,8 @@
 ﻿namespace WebApiPresentationModel
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using DomainModel;
@@ -9,7 +11,7 @@
     public class ArticleHarborAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly Func<IAuthService> authServiceFactory;
-        
+
         public ArticleHarborAuthProvider(Func<IAuthService> authServiceFactory)
         {
             if (authServiceFactory == null)
@@ -46,25 +48,33 @@
         private async Task GrantResourceOwnerCredentialsImpl(
             OAuthGrantResourceOwnerCredentialsContext context)
         {
-            UserRoles userRoles = null;
+            User user = null;
             using (var serviceFactory = this.authServiceFactory())
             {
-                userRoles = await serviceFactory.FindUserRolesAsync(
+                user = await serviceFactory.FindUserAsync(
                 context.UserName, context.Password);
             }
 
-            if (userRoles == null)
+            if (user == null)
             {
                 context.SetError("invalid_grant", "The username or password is incorrect.");
                 return;
             }
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-            identity.AddClaim(new Claim(ClaimTypes.Name, userRoles.Id));
-            foreach (var role in userRoles.Roles)
-                identity.AddClaim(new Claim(ClaimTypes.Role, role));
+            identity.AddClaim(new Claim(ClaimTypes.Name, user.Id));
+
+            foreach (string roleName in GetRoleNames(user))
+                identity.AddClaim(new Claim(ClaimTypes.Role, roleName));
 
             context.Validated(identity);
+        }
+
+        private static IEnumerable<string> GetRoleNames(User user)
+        {
+            return Enum.GetValues(typeof(RoleTypes)).Cast<Enum>()
+                .Where(x => x.GetHashCode() != 0 && user.Roles.HasFlag(x))
+                .Select(x => x.ToString());
         }
     }
 }
