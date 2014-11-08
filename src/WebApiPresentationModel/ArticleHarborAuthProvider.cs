@@ -72,7 +72,7 @@
 
         private static IEnumerable<string> GetRoleNames(User user)
         {
-            return Enum.GetValues(typeof(RoleTypes)).Cast<Enum>()
+            return Enum.GetValues(typeof(Roles)).Cast<Enum>()
                 .Where(x => x.GetHashCode() != 0 && user.Roles.HasFlag(x))
                 .Select(x => x.ToString());
         }

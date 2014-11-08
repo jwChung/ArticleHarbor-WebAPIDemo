@@ -3,7 +3,7 @@
     using System;
 
     [Flags]
-    public enum RoleTypes
+    public enum Roles
     {
         /// <summary>
         /// The none

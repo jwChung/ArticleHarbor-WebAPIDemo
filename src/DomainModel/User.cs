@@ -6,9 +6,9 @@
     {
         private readonly string id;
         private readonly string password;
-        private readonly RoleTypes roles;
+        private readonly Roles roles;
 
-        public User(string id, string password, RoleTypes roles)
+        public User(string id, string password, Roles roles)
         {
             if (id == null)
                 throw new ArgumentNullException("id");
@@ -31,7 +31,7 @@
             get { return this.password; }
         }
 
-        public RoleTypes Roles
+        public Roles Roles
         {
             get { return this.roles; }
         }

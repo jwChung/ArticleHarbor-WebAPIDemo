@@ -51,9 +51,9 @@
             ArticleHarborAuthProvider sut,
             OAuthGrantResourceOwnerCredentialsContext context,
             IFixture fixture,
-            RoleTypes roleTypes)
+            Roles roles)
         {
-            fixture.Inject(RoleTypes.Administrator);
+            fixture.Inject(Roles.Administrator);
             var expected = new[] { "User", "Author", "Administrator" };
             var user = fixture.Create<User>();
             sut.AuthServiceFactory().Of(
@@ -64,10 +64,10 @@
 
             Assert.True(context.IsValidated);
             Assert.Contains(user.Id, context.Ticket.Identity.Name);
-            var roles = context.Ticket.Identity.FindAll(ClaimTypes.Role)
+            var actualRoles = context.Ticket.Identity.FindAll(ClaimTypes.Role)
                 .Select(r => r.Value).ToArray();
-            Assert.Equal(expected.Length, roles.Length);
-            Assert.Empty(expected.Except(roles));
+            Assert.Equal(expected.Length, actualRoles.Length);
+            Assert.Empty(expected.Except(actualRoles));
         }
 
         [Test]
