@@ -5,6 +5,21 @@
 
     public class AuthService : IAuthService
     {
+        private readonly IUserRepository users;
+
+        public AuthService(IUserRepository users)
+        {
+            if (users == null)
+                throw new ArgumentNullException("users");
+
+            this.users = users;
+        }
+
+        public IUserRepository Users
+        {
+            get { return this.users; }
+        }
+
         public Task<User> FindUserAsync(string id, string password)
         {
             if (id == null)
