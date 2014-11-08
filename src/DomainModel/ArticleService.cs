@@ -76,8 +76,7 @@
 
         public Task RemoveAsync(int id)
         {
-            this.articles.Delete(id);
-            return Task.FromResult<object>(null);
+            return this.articles.DeleteAsync(id);
         }
 
         private async Task InsertArticleWordsAsync(Article article)

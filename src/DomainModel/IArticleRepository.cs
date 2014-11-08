@@ -12,8 +12,6 @@
 
         Task<Article> InsertAsync(Article article);
 
-        void Delete(int id);
-
         Task UpdateAsync(Article article);
 
         Task DeleteAsync(int id);

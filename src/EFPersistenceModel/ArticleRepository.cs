@@ -47,15 +47,6 @@
             return this.InsertAsyncImpl(article);
         }
 
-        public void Delete(int id)
-        {
-            var article = this.context.Articles.Find(id);
-            if (article == null)
-                return;
-
-            this.context.Articles.Remove(article);
-        }
-
         public Task UpdateAsync(Article article)
         {
             if (article == null)

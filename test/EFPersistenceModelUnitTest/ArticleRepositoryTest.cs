@@ -94,37 +94,6 @@
         }
 
         [Test]
-        public async Task DeleteCorrectlyDeletesWhenThereIsArticleWithGivenId(
-            DbContextTransaction transaction,
-            ArticleRepository sut,
-            Article article)
-        {
-            try
-            {
-                article = await sut.InsertAsync(article);
-                Assert.NotNull(sut.Select(article.Id));
-
-                sut.Delete(article.Id);
-
-                await sut.Context.SaveChangesAsync();
-                Assert.Null(sut.Select(article.Id));
-            }
-            finally
-            {
-                transaction.Rollback();
-                transaction.Dispose();
-            }
-        }
-
-        [Test]
-        public void DeleteDoesNotThrowWhenThereIsNoArticleWithGivenId(
-            ArticleRepository sut,
-            Article article)
-        {
-            Assert.DoesNotThrow(() => sut.Delete(article.Id));
-        }
-
-        [Test]
         public async Task UpdateAsyncCorrectlyUpdatesArticle(
             DbContextTransaction transaction,
             ArticleRepository sut,

@@ -169,7 +169,7 @@
             int id)
         {
             await sut.RemoveAsync(id);
-            sut.Articles.ToMock().Verify(x => x.Delete(id));
+            sut.Articles.ToMock().Verify(x => x.DeleteAsync(id));
         }
 
         protected override IEnumerable<System.Reflection.MemberInfo> ExceptToVerifyGuardClause()
