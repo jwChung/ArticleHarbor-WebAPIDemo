@@ -13,6 +13,7 @@ namespace Website
 
     public class IdentityConfig
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "The instance of ArticleHarborDbContext is owend by AuthService, which will dispose it.")]
         public void Configuration(IAppBuilder app)
         {
             Func<IAuthService> authServiceFactory = () =>
