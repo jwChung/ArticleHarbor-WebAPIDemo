@@ -13,6 +13,7 @@
         private readonly string userId;
         private readonly int id;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "5#", Justification = "To match database entity.")]
         public Article(
             string provider,
             string no,
@@ -25,6 +26,7 @@
         {
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "6#", Justification = "To match database entity.")]
         public Article(
            int id,
            string provider,
