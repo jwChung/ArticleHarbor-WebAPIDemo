@@ -15,9 +15,7 @@
             using (var client = HttpClientFactory.Create())
             {
                 var response = await client.GetAsync("api/articles");
-                Assert.True(
-                    response.IsSuccessStatusCode,
-                    "Actual status code: " + response.StatusCode);
+                Assert.True(response.IsSuccessStatusCode, await GetMessageAsync(response));
             }
         }
 
@@ -28,12 +26,8 @@
             {
                 var response = await client.GetAsync("api/articles");
 
-                string message = "Actual status code: " + response.StatusCode
-                    + Environment.NewLine + await response.Content.ReadAsStringAsync();
-                Assert.True(response.IsSuccessStatusCode, message);
-                Assert.Equal(
-                    "application/json",
-                    response.Content.Headers.ContentType.MediaType);
+                Assert.True(response.IsSuccessStatusCode, await GetMessageAsync(response));
+                Assert.Equal("application/json", response.Content.Headers.ContentType.MediaType);
                 var json = await response.Content.ReadAsStringAsync()
                     .ContinueWith(t => JsonConvert.DeserializeObject(t.Result));
                 Assert.NotNull(json);
@@ -49,12 +43,8 @@
                 client.DefaultRequestHeaders.Accept.ParseAdd("application/json;q=0.8");
                 var response = await client.GetAsync("api/articles");
 
-                Assert.True(
-                   response.IsSuccessStatusCode,
-                   "Actual status code: " + response.StatusCode);
-                Assert.Equal(
-                    "application/json",
-                    response.Content.Headers.ContentType.MediaType);
+                Assert.True(response.IsSuccessStatusCode, await GetMessageAsync(response));
+                Assert.Equal("application/json", response.Content.Headers.ContentType.MediaType);
             }
         }
 
@@ -71,15 +61,12 @@
 
                 var response = await client.PostAsync("api/articles", content);
 
-                Assert.True(
-                   response.IsSuccessStatusCode,
-                   "Actual status code: " + response.StatusCode);
+                Assert.True(response.IsSuccessStatusCode, await GetMessageAsync(response));
             }
         }
 
         [Test]
-        public async Task PostAsyncCorrectlyModifiesArticleAndRenewsArticleWords(
-            Article article)
+        public async Task PostAsyncCorrectlyModifiesArticleAndRenewsArticleWords(Article article)
         {
             article = article.WithSubject("기존 단어들이 삭제되고, 새로운 단어들이 추가되었는지 DB에서 확인필요.");
 
@@ -91,10 +78,14 @@
 
                 var response = await client.PostAsync("api/articles", content);
 
-                Assert.True(
-                   response.IsSuccessStatusCode,
-                   "Actual status code: " + response.StatusCode);
+                Assert.True(response.IsSuccessStatusCode, await GetMessageAsync(response));
             }
+        }
+
+        private static async Task<string> GetMessageAsync(HttpResponseMessage response)
+        {
+            return "Actual status code: " + response.StatusCode
+                + Environment.NewLine + await response.Content.ReadAsStringAsync();
         }
     }
 }
