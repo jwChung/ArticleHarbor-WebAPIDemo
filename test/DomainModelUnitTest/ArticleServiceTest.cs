@@ -1,10 +1,9 @@
-﻿namespace DomainModelUnitTest
+﻿namespace ArticleHarbor.DomainModel
 {
     using System;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using DomainModel;
     using Jwc.Experiment.Xunit;
     using Moq;
     using Ploeh.AutoFixture;

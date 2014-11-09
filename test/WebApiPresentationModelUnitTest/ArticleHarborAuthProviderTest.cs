@@ -1,14 +1,13 @@
-﻿namespace WebApiPresentationModelUnitTest
+﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-    using DomainModel;
+    using ArticleHarbor.DomainModel;
     using Microsoft.Owin.Security.OAuth;
     using Moq;
     using Ploeh.AutoFixture;
-    using WebApiPresentationModel;
     using Xunit;
 
     public class ArticleHarborAuthProviderTest : IdiomaticTest<ArticleHarborAuthProvider>

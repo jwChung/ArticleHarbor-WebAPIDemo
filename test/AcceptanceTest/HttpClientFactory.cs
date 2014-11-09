@@ -1,9 +1,9 @@
-﻿namespace AcceptanceTest
+﻿namespace ArticleHarbor.AcceptanceTest
 {
     using System;
     using System.Net.Http;
     using System.Web.Http.SelfHost;
-    using Website;
+    using ArticleHarbor.Website;
 
     public class HttpClientFactory
     {

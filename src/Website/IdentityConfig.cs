@@ -1,15 +1,17 @@
-﻿[assembly: Microsoft.Owin.OwinStartup(typeof(Website.IdentityConfig))]
+﻿using ArticleHarbor.Website;
 
-namespace Website
+[assembly: Microsoft.Owin.OwinStartup(typeof(IdentityConfig))]
+
+namespace ArticleHarbor.Website
 {
     using System;
-    using DomainModel;
-    using EFDataAccess;
-    using EFPersistenceModel;
+    using ArticleHarbor.DomainModel;
+    using ArticleHarbor.EFDataAccess;
+    using ArticleHarbor.EFPersistenceModel;
+    using ArticleHarbor.WebApiPresentationModel;
     using Microsoft.Owin;
     using Microsoft.Owin.Security.OAuth;
     using Owin;
-    using WebApiPresentationModel;
 
     public class IdentityConfig
     {

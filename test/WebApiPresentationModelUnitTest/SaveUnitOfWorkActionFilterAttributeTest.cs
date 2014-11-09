@@ -1,4 +1,4 @@
-﻿namespace WebApiPresentationModelUnitTest
+﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System;
     using System.Collections.Generic;
@@ -12,7 +12,6 @@
     using Moq;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit;
-    using WebApiPresentationModel;
     using Xunit;
 
     public class SaveUnitOfWorkActionFilterAttributeTest

@@ -1,4 +1,4 @@
-﻿namespace DomainModel
+﻿namespace ArticleHarbor.DomainModel
 {
     using System.Threading.Tasks;
 

@@ -1,9 +1,9 @@
-﻿namespace Website
+﻿namespace ArticleHarbor.Website
 {
     using System.Collections.Generic;
     using System.Reflection;
     using System.Web.Http.Dispatcher;
-    using WebApiPresentationModel;
+    using ArticleHarbor.WebApiPresentationModel;
 
     public class ArticleHarborAssembliesResolver : DefaultAssembliesResolver
     {

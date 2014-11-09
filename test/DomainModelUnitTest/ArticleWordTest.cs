@@ -1,7 +1,5 @@
-﻿namespace DomainModelUnitTest
+﻿namespace ArticleHarbor.DomainModel
 {
-    using DomainModel;
-
     public class ArticleWordTest : IdiomaticTest<ArticleWord>
     {
     }

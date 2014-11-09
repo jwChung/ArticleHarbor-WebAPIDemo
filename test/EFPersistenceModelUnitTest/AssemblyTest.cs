@@ -1,4 +1,4 @@
-﻿namespace EFPersistenceModelUnitTest
+﻿namespace ArticleHarbor.EFPersistenceModel
 {
     using System.Reflection;
     using Jwc.Experiment.Idioms;
@@ -15,11 +15,11 @@
                 Assembly.Load("EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"),
                 Assembly.Load("Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"),
                 Assembly.Load("Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"),
-                Assembly.Load("EFDataAccess"),
-                Assembly.Load("DomainModel"),
+                Assembly.Load("ArticleHarbor.EFDataAccess"),
+                Assembly.Load("ArticleHarbor.DomainModel"),
             };
             new RestrictiveReferenceAssertion(restrictiveReferences)
-                .Verify(Assembly.Load("EFPersistenceModel"));
+                .Verify(Assembly.Load("ArticleHarbor.EFPersistenceModel"));
         }
 
         [Test]
@@ -29,7 +29,7 @@
             {
             };
             new IndirectReferenceAssertion(indirectReferences)
-                .Verify(Assembly.Load("EFPersistenceModel"));
+                .Verify(Assembly.Load("ArticleHarbor.EFPersistenceModel"));
         }
     }
 }

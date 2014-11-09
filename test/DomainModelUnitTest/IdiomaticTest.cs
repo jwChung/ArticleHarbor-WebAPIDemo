@@ -1,53 +1,56 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Jwc.Experiment;
-using Jwc.Experiment.Idioms;
-using Jwc.Experiment.Xunit;
-using Ploeh.Albedo;
-
-public abstract class IdiomaticTest<T>
+namespace ArticleHarbor
 {
-    private readonly Properties<T> properties = new Properties<T>();
-    private readonly Methods<T> methods = new Methods<T>();
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using Jwc.Experiment;
+    using Jwc.Experiment.Idioms;
+    using Jwc.Experiment.Xunit;
+    using Ploeh.Albedo;
 
-    public Properties<T> Properties
+    public abstract class IdiomaticTest<T>
     {
-        get { return this.properties; }
-    }
+        private readonly Properties<T> properties = new Properties<T>();
+        private readonly Methods<T> methods = new Methods<T>();
 
-    public Methods<T> Methods
-    {
-        get { return this.methods; }
-    }
+        public Properties<T> Properties
+        {
+            get { return this.properties; }
+        }
 
-    [Test]
-    public IEnumerable<ITestCase> SutHasAppropriateGuards()
-    {
-        var members = typeof(T).GetIdiomaticMembers()
-            .Except(this.ExceptToVerifyGuardClause());
+        public Methods<T> Methods
+        {
+            get { return this.methods; }
+        }
 
-        return TestCases.WithArgs(members).WithAuto<GuardClauseAssertion>()
-            .Create((m, a) => a.Verify(m));
-    }
+        [Test]
+        public IEnumerable<ITestCase> SutHasAppropriateGuards()
+        {
+            var members = typeof(T).GetIdiomaticMembers()
+                .Except(this.ExceptToVerifyGuardClause());
 
-    [Test]
-    public IEnumerable<ITestCase> SutCorrectlyInitializesMembers()
-    {
-        var members = typeof(T).GetIdiomaticMembers()
-            .Except(this.ExceptToVerifyInitialization());
+            return TestCases.WithArgs(members).WithAuto<GuardClauseAssertion>()
+                .Create((m, a) => a.Verify(m));
+        }
 
-        return TestCases.WithArgs(members).WithAuto<MemberInitializationAssertion>()
-            .Create((m, a) => a.Verify(m));
-    }
+        [Test]
+        public IEnumerable<ITestCase> SutCorrectlyInitializesMembers()
+        {
+            var members = typeof(T).GetIdiomaticMembers()
+                .Except(this.ExceptToVerifyInitialization());
 
-    protected virtual IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
-    {
-        yield break;
-    }
+            return TestCases.WithArgs(members).WithAuto<MemberInitializationAssertion>()
+                .Create((m, a) => a.Verify(m));
+        }
 
-    protected virtual IEnumerable<MemberInfo> ExceptToVerifyInitialization()
-    {
-        yield break;
+        protected virtual IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
+        {
+            yield break;
+        }
+
+        protected virtual IEnumerable<MemberInfo> ExceptToVerifyInitialization()
+        {
+            yield break;
+        }
     }
 }

@@ -1,16 +1,14 @@
-namespace EFPersistenceModel
+namespace ArticleHarbor.EFPersistenceModel
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using DomainModel;
-    using EFDataAccess;
+    using ArticleHarbor.DomainModel;
 
     internal static class EntityConversionExtensions
     {
-        public static DomainModel.Article ToDomain(this EFDataAccess.Article article)
+        public static Article ToDomain(this ArticleHarbor.EFDataAccess.Article article)
         {
-            return new DomainModel.Article(
+            return new Article(
                 article.Id,
                 article.Provider,
                 article.No,
@@ -20,9 +18,9 @@ namespace EFPersistenceModel
                 article.Url);
         }
 
-        public static EFDataAccess.Article ToPersistence(this DomainModel.Article article)
+        public static ArticleHarbor.EFDataAccess.Article ToPersistence(this Article article)
         {
-            return new EFDataAccess.Article
+            return new ArticleHarbor.EFDataAccess.Article
             {
                 Id = article.Id,
                 Provider = article.Provider,
@@ -34,28 +32,28 @@ namespace EFPersistenceModel
             };
         }
 
-        public static DomainModel.ArticleWord ToDomain(this EFDataAccess.ArticleWord articleWord)
+        public static ArticleWord ToDomain(this ArticleHarbor.EFDataAccess.ArticleWord articleWord)
         {
-            return new DomainModel.ArticleWord(articleWord.ArticleId, articleWord.Word);
+            return new ArticleWord(articleWord.ArticleId, articleWord.Word);
         }
 
-        public static EFDataAccess.ArticleWord ToPersistence(
-            this DomainModel.ArticleWord articleWord)
+        public static ArticleHarbor.EFDataAccess.ArticleWord ToPersistence(
+            this ArticleWord articleWord)
         {
-            return new EFDataAccess.ArticleWord
+            return new ArticleHarbor.EFDataAccess.ArticleWord
             {
                 ArticleId = articleWord.ArticleId,
                 Word = articleWord.Word
             };
         }
 
-        public static DomainModel.User ToDomain(this EFDataAccess.User user, IEnumerable<string> roleNames)
+        public static User ToDomain(this ArticleHarbor.EFDataAccess.User user, IEnumerable<string> roleNames)
         {
             Roles roles = Roles.None;
             foreach (var roleName in roleNames)
                 roles |= (Roles)Enum.Parse(typeof(Roles), roleName);
 
-            return new DomainModel.User(user.UserName, roles);
+            return new User(user.UserName, roles);
         }
     }
 }

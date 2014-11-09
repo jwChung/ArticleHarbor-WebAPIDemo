@@ -1,11 +1,10 @@
-﻿namespace EFPersistenceModelUnitTest
+﻿namespace ArticleHarbor.EFPersistenceModel
 {
     using System.Collections.Generic;
     using System.Reflection;
     using System.Threading.Tasks;
-    using DomainModel;
-    using EFDataAccess;
-    using EFPersistenceModel;
+    using ArticleHarbor.DomainModel;
+    using ArticleHarbor.EFDataAccess;
     using Moq;
     using Ploeh.AutoFixture;
     using Xunit;

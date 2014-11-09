@@ -1,4 +1,4 @@
-﻿namespace WebApiPresentationModelUnitTest
+﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +10,6 @@
     using System.Threading.Tasks;
     using Jwc.Experiment.Xunit;
     using Ploeh.AutoFixture;
-    using WebApiPresentationModel;
     using Xunit;
 
     public class JsonCustomMediaTypeFormatterTest : IdiomaticTest<JsonCustomMediaTypeFormatter>

@@ -7,8 +7,8 @@
     <ProjectGuid>{6BE72200-8525-4453-960E-FCA034773137}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EFDataAccess</RootNamespace>
-    <AssemblyName>EFDataAccess</AssemblyName>
+    <RootNamespace>ArticleHarbor.EFDataAccess</RootNamespace>
+    <AssemblyName>ArticleHarbor.EFDataAccess</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>66bedcaf</NuGetPackageImportStamp>

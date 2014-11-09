@@ -7,8 +7,8 @@
     <ProjectGuid>{860494BF-26A2-4D57-B091-A8825E5D8200}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DomainModel</RootNamespace>
-    <AssemblyName>DomainModel</AssemblyName>
+    <RootNamespace>ArticleHarbor.DomainModel</RootNamespace>
+    <AssemblyName>ArticleHarbor.DomainModel</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>bc255da2</NuGetPackageImportStamp>

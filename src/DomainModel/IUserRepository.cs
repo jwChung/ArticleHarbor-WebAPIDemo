@@ -1,6 +1,5 @@
-namespace DomainModel
+namespace ArticleHarbor.DomainModel
 {
-    using System;
     using System.Threading.Tasks;
 
     public interface IUserRepository

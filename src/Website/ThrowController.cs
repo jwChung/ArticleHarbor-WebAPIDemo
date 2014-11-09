@@ -1,5 +1,5 @@
 ﻿#if !CI
-namespace Website
+namespace ArticleHarbor.Website
 {
     using System;
     using System.Web.Http;

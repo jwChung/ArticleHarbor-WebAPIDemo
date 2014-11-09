@@ -1,14 +1,9 @@
-﻿namespace EFPersistenceModelUnitTest
+﻿namespace ArticleHarbor.EFPersistenceModel
 {
-    using System;
-    using System.Data.Common;
     using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Threading.Tasks;
-    using DomainModel;
-    using EFDataAccess;
-    using EFPersistenceModel;
+    using ArticleHarbor.DomainModel;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 
@@ -39,13 +34,13 @@
             try
             {
                 var article = sut.Context.Articles.First();
-                var articleWord = new DomainModel.ArticleWord(article.Id, word);
+                var articleWord = new ArticleWord(article.Id, word);
 
                 await sut.InsertAsync(articleWord);
 
                 var expected = sut.Select(articleWord.ArticleId, articleWord.Word);
                 articleWord.AsSource()
-                    .OfLikeness<DomainModel.ArticleWord>()
+                    .OfLikeness<ArticleWord>()
                     .ShouldEqual(expected);
             }
             finally
@@ -64,9 +59,9 @@
             try
             {
                 var article = sut.Context.Articles.First();
-                await sut.InsertAsync(new DomainModel.ArticleWord(article.Id, word));
+                await sut.InsertAsync(new ArticleWord(article.Id, word));
 
-                await sut.InsertAsync(new DomainModel.ArticleWord(article.Id, word));
+                await sut.InsertAsync(new ArticleWord(article.Id, word));
 
                 Assert.DoesNotThrow(() => sut.Context.SaveChanges());
             }

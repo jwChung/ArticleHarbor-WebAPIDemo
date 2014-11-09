@@ -1,10 +1,9 @@
-﻿namespace WebApiPresentationModelUnitTest
+﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System;
     using System.Collections.Generic;
     using System.Reflection;
     using System.Threading;
-    using WebApiPresentationModel;
     using Xunit;
 
     public class LogContextTest : IdiomaticTest<LogContext>

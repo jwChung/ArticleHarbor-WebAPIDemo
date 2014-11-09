@@ -1,4 +1,4 @@
-﻿namespace WebApiPresentationModelUnitTest
+﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System.Reflection;
     using Jwc.Experiment.Idioms;
@@ -19,10 +19,10 @@
                 Assembly.Load("Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed"),
                 Assembly.Load("Microsoft.Owin.Security, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"),
                 Assembly.Load("Microsoft.Owin.Security.OAuth, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"),
-                Assembly.Load("DomainModel"),
+                Assembly.Load("ArticleHarbor.DomainModel"),
             };
             new RestrictiveReferenceAssertion(restrictiveReferences)
-                .Verify(Assembly.Load("WebApiPresentationModel"));
+                .Verify(Assembly.Load("ArticleHarbor.WebApiPresentationModel"));
         }
 
         [Test]
@@ -32,7 +32,7 @@
             {
             };
             new IndirectReferenceAssertion(indirectReferences)
-                .Verify(Assembly.Load("WebApiPresentationModel"));
+                .Verify(Assembly.Load("ArticleHarbor.WebApiPresentationModel"));
         }
     }
 }

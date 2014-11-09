@@ -1,4 +1,4 @@
-﻿namespace Website
+﻿namespace ArticleHarbor.Website
 {
     using System.Web;
     using System.Web.Http;

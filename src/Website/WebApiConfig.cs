@@ -1,12 +1,12 @@
-﻿namespace Website
+﻿namespace ArticleHarbor.Website
 {
     using System;
     using System.Web.Hosting;
     using System.Web.Http;
     using System.Web.Http.Dispatcher;
     using System.Web.Http.ExceptionHandling;
+    using ArticleHarbor.WebApiPresentationModel;
     using Jwc.Funz;
-    using WebApiPresentationModel;
 
     public static class WebApiConfig
     {

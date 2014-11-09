@@ -7,8 +7,8 @@
     <ProjectGuid>{422BDEFA-EB99-41F9-97CC-3931D47FB482}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WebApiPresentationModelUnitTest</RootNamespace>
-    <AssemblyName>WebApiPresentationModelUnitTest</AssemblyName>
+    <RootNamespace>ArticleHarbor.WebApiPresentationModel</RootNamespace>
+    <AssemblyName>ArticleHarbor.WebApiPresentationModelUnitTest</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>e0dd8bae</NuGetPackageImportStamp>

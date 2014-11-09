@@ -1,11 +1,10 @@
-﻿namespace WebApiPresentationModelUnitTest
+﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Web.Http;
-    using DomainModel;
+    using ArticleHarbor.DomainModel;
     using Ploeh.AutoFixture.Xunit;
-    using WebApiPresentationModel;
     using Xunit;
 
     public class ArticlesControllerTest : IdiomaticTest<ArticlesController>

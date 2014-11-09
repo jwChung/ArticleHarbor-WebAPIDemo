@@ -1,11 +1,10 @@
-﻿namespace WebApiPresentationModelUnitTest
+﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using Ploeh.AutoFixture;
-    using WebApiPresentationModel;
     using Xunit;
 
     public class FileLoggerTest : IdiomaticTest<FileLogger>

@@ -1,9 +1,9 @@
-﻿namespace AcceptanceTest
+﻿namespace ArticleHarbor.AcceptanceTest
 {
     using System;
     using System.Net.Http;
     using System.Threading.Tasks;
-    using DomainModel;
+    using ArticleHarbor.DomainModel;
     using Newtonsoft.Json;
     using Xunit;
 

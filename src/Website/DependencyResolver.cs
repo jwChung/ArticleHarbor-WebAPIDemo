@@ -1,4 +1,4 @@
-﻿namespace Website
+﻿namespace ArticleHarbor.Website
 {
     using System;
     using System.Collections.Generic;
