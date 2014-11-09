@@ -12,4 +12,4 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Microsoft.Design", "CA2210:AssembliesShouldHaveValidStrongNames", Justification = "Signing assembly is processed on CI build.")]
 [assembly: SuppressMessage("Microsoft.Usage", "CA2243:AttributeStringLiteralsShouldParseCorrectly", Justification = "This is suppressed to be able to represent pre-release version according to semantic versioning.")]
-[assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "Website", Justification = "타입 수가 적더라도, Website 네임스페이스를 유지하는 것이 좋음.")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "ArticleHarbor", Justification = "This namespace is the root namespace of thie assembly and there is no namespace being able to represent it.")]
