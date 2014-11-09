@@ -3,18 +3,23 @@
     public enum Role
     {
         /// <summary>
+        /// The none
+        /// </summary>
+        None = 0,
+
+        /// <summary>
         /// The user
         /// </summary>
-        User = Permissions.Authentication,
+        User = UserPermissions.Authentication,
 
         /// <summary>
         /// The author
         /// </summary>
-        Author = User | Permissions.WriteArticle | Permissions.DeleteOwnArticle,
+        Author = User | UserPermissions.WriteArticle | UserPermissions.DeleteOwnArticle,
 
         /// <summary>
         /// The administrator
         /// </summary>
-        Administrator = Author | Permissions.DeleteAnyArticle
+        Administrator = Author | UserPermissions.DeleteAnyArticle
     }
 }

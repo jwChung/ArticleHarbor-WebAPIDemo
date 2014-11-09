@@ -3,7 +3,7 @@
     using System;
 
     [Flags]
-    public enum Permissions
+    public enum UserPermissions
     {
         /// <summary>
         /// The none
