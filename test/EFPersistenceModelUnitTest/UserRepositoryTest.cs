@@ -39,9 +39,8 @@
         public async Task SelectAsyncWithApiKeyReturnsCorrectUser(
             UserRepository sut)
         {
-            var user = await sut.SelectAsync("user2", "password2");
-            var actual = await sut.SelectAsync(user.ApiKey);
-            actual.AsSource().OfLikeness<User>().ShouldEqual(user);
+            var actual = await sut.SelectAsync(Guid.Parse("232494f5670943dfac807226449fe795"));
+            Assert.Equal("user2", actual.Id);
         }
 
         [Test]
