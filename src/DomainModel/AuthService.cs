@@ -42,6 +42,11 @@
             return this.users.SelectAsync(id, password);
         }
 
+        public Task<User> FindUserAsync(string apiKey)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Dispose()
         {
             this.Dispose(true);

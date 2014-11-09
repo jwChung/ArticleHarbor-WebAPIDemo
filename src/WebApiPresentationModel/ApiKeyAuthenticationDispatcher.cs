@@ -2,6 +2,8 @@
 {
     using System;
     using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
     using DomainModel;
 
     public class ApiKeyAuthenticationDispatcher : DelegatingHandler
@@ -19,6 +21,33 @@
         public Func<IAuthService> AuthServiceFactory
         {
             get { return this.authServiceFactory; }
+        }
+
+        public Task<HttpResponseMessage> ExecuteAsync(
+            HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            if (request == null)
+                throw new ArgumentNullException("request");
+
+            return this.SendAsync(request, cancellationToken);
+        }
+
+        protected override async Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            var authentication = request.Headers.Authorization;
+
+            if (authentication == null || authentication.Scheme != "apikey")
+                return await base.SendAsync(request, cancellationToken);
+
+            User user = null;
+            using (var serviceFactory = this.authServiceFactory())
+                user = await serviceFactory.FindUserAsync(authentication.Parameter);
+
+            if (user != null)
+                request.GetRequestContext().Principal = new Principal(user.Id, user.Role);
+
+            return await base.SendAsync(request, cancellationToken);
         }
     }
 }
