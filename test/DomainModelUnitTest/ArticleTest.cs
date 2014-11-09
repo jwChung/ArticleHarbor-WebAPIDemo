@@ -15,30 +15,26 @@
         public IEnumerable<ITestCase> InitializeWithAnyEmptyStringThrows(int id, string value, DateTime date)
         {
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(string.Empty, value, value, value, date, value, value)));
+                () => new Article(string.Empty, value, value, value, date, value)));
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(value, string.Empty, value, value, date, value, value)));
+                () => new Article(value, string.Empty, value, value, date, value)));
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(value, value, string.Empty, value, date, value, value)));
+                () => new Article(value, value, string.Empty, value, date, value)));
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(value, value, value, string.Empty, date, value, value)));
+                () => new Article(value, value, value, string.Empty, date, value)));
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(value, value, value, value, date, string.Empty, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(value, value, value, value, date, value, string.Empty)));
+                () => new Article(value, value, value, value, date, string.Empty)));
 
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, string.Empty, value, value, value, date, value, value)));
+                () => new Article(id, string.Empty, value, value, value, date, value)));
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, value, string.Empty, value, value, date, value, value)));
+                () => new Article(id, value, string.Empty, value, value, date, value)));
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, value, value, string.Empty, value, date, value, value)));
+                () => new Article(id, value, value, string.Empty, value, date, value)));
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, value, value, value, string.Empty, date, value, value)));
+                () => new Article(id, value, value, value, string.Empty, date, value)));
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, value, value, value, value, date, string.Empty, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, value, value, value, value, date, value, string.Empty)));
+                () => new Article(id, value, value, value, value, date, string.Empty)));
         }
 
         [Test]
@@ -60,30 +56,6 @@
         }
 
         [Test]
-        public void WithIdReturnsCorrectArticle(Article sut, int id)
-        {
-            var likeness = sut.AsSource().OfLikeness<Article>().Without(x => x.Id);
-
-            var actual = sut.WithId(id);
-
-            Assert.NotSame(sut, actual);
-            likeness.ShouldEqual(actual);
-            Assert.Equal(id, actual.Id);
-        }
-
-        [Test]
-        public void WithSubjectReturnsCorrectArticle(Article sut, string newSubject)
-        {
-            var likeness = sut.AsSource().OfLikeness<Article>().Without(x => x.Subject);
-
-            var actual = sut.WithSubject(newSubject);
-
-            Assert.NotSame(sut, actual);
-            likeness.ShouldEqual(actual);
-            Assert.Equal(newSubject, actual.Subject);
-        }
-
-        [Test]
         public void WithUserIdReturnsCorrectArticle(Article sut, string userId)
         {
             var likeness = sut.AsSource().OfLikeness<Article>().Without(x => x.UserId);
@@ -95,9 +67,35 @@
             Assert.Equal(userId, actual.UserId);
         }
 
+        [Test]
+        public void WithIdReturnsCorrectArticle(Article sut, int id, string userId)
+        {
+            sut = sut.WithUserId(userId);
+            var likeness = sut.AsSource().OfLikeness<Article>().Without(x => x.Id);
+
+            var actual = sut.WithId(id);
+
+            Assert.NotSame(sut, actual);
+            likeness.ShouldEqual(actual);
+            Assert.Equal(id, actual.Id);
+        }
+
+        [Test]
+        public void WithSubjectReturnsCorrectArticle(Article sut, string newSubject, string userId)
+        {
+            sut = sut.WithUserId(userId);
+            var likeness = sut.AsSource().OfLikeness<Article>().Without(x => x.Subject);
+
+            var actual = sut.WithSubject(newSubject);
+
+            Assert.NotSame(sut, actual);
+            likeness.ShouldEqual(actual);
+            Assert.Equal(newSubject, actual.Subject);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
-            yield return this.Properties.Select(x => x.Id);
+            yield return this.Properties.Select(x => x.UserId);
         }
     }
 }

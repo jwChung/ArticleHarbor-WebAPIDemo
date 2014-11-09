@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System.Collections.Generic;
+    using System.Reflection;
     using System.Threading.Tasks;
     using System.Web.Http;
     using ArticleHarbor.DomainModel;
@@ -23,6 +24,17 @@
             sut.ArticleService.Of(x => x.GetAsync() == Task.FromResult(articles));
             var actual = await sut.GetAsync();
             Assert.Equal(articles, actual);
+        }
+
+        [Test]
+        public void PostAsyncHasCorrectPermissionAttribute()
+        {
+            var attribute = this.Methods.Select(x => x.PostAsync(null))
+                .GetCustomAttribute<PermissionAuthorizationFilterAttribute>();
+
+            Assert.Equal(
+                UserPermissions.CreateArticle | UserPermissions.ModifyOwnArticle,
+                attribute.Permissions);
         }
 
         [Test]

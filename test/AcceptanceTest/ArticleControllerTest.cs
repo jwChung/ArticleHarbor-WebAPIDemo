@@ -48,7 +48,7 @@
             }
         }
 
-        [Test]
+        [Test(Skip = "Need Authentication")]
         public async Task PostAsyncCorrectlyAddsArticleAndArticleWords(Article article)
         {
             article = article.WithUserId("user2")
@@ -66,7 +66,7 @@
             }
         }
 
-        [Test]
+        [Test(Skip = "Need Authentication")]
         public async Task PostAsyncCorrectlyModifiesArticleAndRenewsArticleWords(Article article)
         {
             article = article.WithUserId("user2")

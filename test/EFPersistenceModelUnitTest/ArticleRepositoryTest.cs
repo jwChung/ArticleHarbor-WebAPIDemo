@@ -62,9 +62,10 @@
         [Test]
         public void InsertAsyncArticleWithInvalidUserIdThrows(
             ArticleRepository sut,
-            Article article)
+            Article article,
+            string userId)
         {
-            var e = Assert.Throws<AggregateException>(() => sut.InsertAsync(article).Wait());
+            var e = Assert.Throws<AggregateException>(() => sut.InsertAsync(article.WithUserId(userId)).Wait());
             Assert.IsType<ArgumentException>(e.InnerException);
         }
 

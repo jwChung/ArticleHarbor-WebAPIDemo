@@ -10,8 +10,8 @@
         private readonly string body;
         private readonly DateTime date;
         private readonly string url;
-        private readonly string userId;
         private readonly int id;
+        private string userId;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "5#", Justification = "To match database entity.")]
         public Article(
@@ -20,9 +20,8 @@
             string subject,
             string body,
             DateTime date,
-            string url,
-            string userId)
-            : this(-1, provider, no, subject, body, date, url, userId)
+            string url)
+            : this(-1, provider, no, subject, body, date, url)
         {
         }
 
@@ -34,8 +33,7 @@
            string subject,
            string body,
            DateTime date,
-           string url,
-           string userId)
+           string url)
         {
             if (provider == null)
                 throw new ArgumentNullException("provider");
@@ -51,10 +49,7 @@
 
             if (url == null)
                 throw new ArgumentNullException("url");
-
-            if (userId == null)
-                throw new ArgumentNullException("userId");
-
+            
             if (provider.Length == 0)
                 throw new ArgumentException(
                     "The 'provider' value should not be empty string.", "provider");
@@ -74,11 +69,7 @@
             if (url.Length == 0)
                 throw new ArgumentException(
                     "The 'url' value should not be empty string.", "url");
-
-            if (userId.Length == 0)
-                throw new ArgumentException(
-                    "The 'userId' value should not be empty string.", "userId");
-
+            
             this.id = id;
             this.provider = provider;
             this.no = no;
@@ -86,7 +77,6 @@
             this.body = body;
             this.date = date;
             this.url = url;
-            this.userId = userId;
         }
 
         public int Id
@@ -139,8 +129,10 @@
                 this.subject,
                 this.body,
                 this.date,
-                this.url,
-                this.userId);
+                this.url)
+            {
+                userId = this.userId
+            };
         }
 
         public Article WithSubject(string newSubject)
@@ -155,8 +147,10 @@
                 newSubject,
                 this.body,
                 this.date,
-                this.url,
-                this.userId);
+                this.url)
+            {
+                userId = this.userId
+            };
         }
 
         public Article WithUserId(string newUserId)
@@ -171,8 +165,10 @@
                 this.subject,
                 this.body,
                 this.date,
-                this.url,
-                newUserId);
+                this.url)
+            {
+                userId = newUserId
+            };
         }
     }
 }
