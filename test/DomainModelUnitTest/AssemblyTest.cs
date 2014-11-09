@@ -1,4 +1,4 @@
-﻿namespace DomainModelUnitTest
+﻿namespace ArticleHarbor.DomainModel
 {
     using System.Reflection;
     using Jwc.Experiment.Idioms;
@@ -15,7 +15,7 @@
                 Assembly.Load("NHanNanum")
             };
             new RestrictiveReferenceAssertion(restrictiveReferences)
-                .Verify(Assembly.Load("DomainModel"));
+                .Verify(Assembly.Load("ArticleHarbor.DomainModel"));
         }
 
         [Test]
@@ -26,7 +26,7 @@
                 Assembly.Load("NHanNanum")
             };
             new IndirectReferenceAssertion(indirectReferences)
-                .Verify(Assembly.Load("DomainModel"));
+                .Verify(Assembly.Load("ArticleHarbor.DomainModel"));
         }
     }
 }

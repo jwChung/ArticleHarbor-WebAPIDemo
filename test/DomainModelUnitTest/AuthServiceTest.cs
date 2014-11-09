@@ -1,7 +1,6 @@
-﻿namespace DomainModelUnitTest
+﻿namespace ArticleHarbor.DomainModel
 {
     using System.Threading.Tasks;
-    using DomainModel;
     using Moq;
     using Xunit;
 

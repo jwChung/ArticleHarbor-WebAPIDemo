@@ -1,15 +1,12 @@
-namespace Website
+namespace ArticleHarbor.Website
 {
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
-    using System.Web.Http.Dispatcher;
-    using System.Web.Http.ExceptionHandling;
-    using DomainModel;
-    using EFDataAccess;
-    using EFPersistenceModel;
+    using ArticleHarbor.DomainModel;
+    using ArticleHarbor.EFDataAccess;
+    using ArticleHarbor.EFPersistenceModel;
+    using ArticleHarbor.WebApiPresentationModel;
     using Jwc.Funz;
-    using WebApiPresentationModel;
 
     public class DependencyRegistrations : IContainerVisitor<object>
     {

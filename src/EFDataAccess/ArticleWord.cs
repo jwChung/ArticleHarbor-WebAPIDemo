@@ -1,4 +1,4 @@
-﻿namespace EFDataAccess
+﻿namespace ArticleHarbor.EFDataAccess
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;

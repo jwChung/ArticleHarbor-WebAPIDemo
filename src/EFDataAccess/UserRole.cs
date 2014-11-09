@@ -1,4 +1,4 @@
-﻿namespace EFDataAccess
+﻿namespace ArticleHarbor.EFDataAccess
 {
     using Microsoft.AspNet.Identity.EntityFramework;
 

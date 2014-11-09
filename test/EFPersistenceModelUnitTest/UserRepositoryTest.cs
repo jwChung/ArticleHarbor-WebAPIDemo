@@ -1,8 +1,7 @@
-﻿namespace EFPersistenceModelUnitTest
+﻿namespace ArticleHarbor.EFPersistenceModel
 {
     using System.Threading.Tasks;
-    using DomainModel;
-    using EFPersistenceModel;
+    using ArticleHarbor.DomainModel;
     using Xunit;
 
     public class UserRepositoryTest : IdiomaticTest<UserRepository>

@@ -1,4 +1,4 @@
-﻿namespace WebApiPresentationModelUnitTest
+﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +8,6 @@
     using Jwc.Experiment.Xunit;
     using Newtonsoft.Json;
     using Ploeh.AutoFixture.Xunit;
-    using WebApiPresentationModel;
     using Xunit;
 
     public class JsonConstructorDeserializerTest

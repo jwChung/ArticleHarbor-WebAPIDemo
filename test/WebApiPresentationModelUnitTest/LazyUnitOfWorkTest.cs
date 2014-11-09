@@ -1,11 +1,10 @@
-﻿namespace EFPersistenceModelUnitTest
+﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-    using DomainModel;
+    using ArticleHarbor.DomainModel;
     using Ploeh.AutoFixture;
-    using WebApiPresentationModel;
     using Xunit;
 
     public class LazyUnitOfWorkTest : IdiomaticTest<LazyUnitOfWork>

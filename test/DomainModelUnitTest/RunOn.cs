@@ -1,17 +1,20 @@
-public enum RunOn
+namespace ArticleHarbor
 {
-    /// <summary>
-    /// Run tests only on CI.
-    /// </summary>
-    CI,
+    public enum RunOn
+    {
+        /// <summary>
+        /// Run tests only on CI.
+        /// </summary>
+        CI,
 
-    /// <summary>
-    /// Run tests on wherever.
-    /// </summary>
-    Any,
+        /// <summary>
+        /// Run tests on wherever.
+        /// </summary>
+        Any,
 
-    /// <summary>
-    /// Run tests only on local.
-    /// </summary>
-    Local
+        /// <summary>
+        /// Run tests only on local.
+        /// </summary>
+        Local
+    }
 }

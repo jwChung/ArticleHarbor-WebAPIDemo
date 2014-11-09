@@ -1,9 +1,9 @@
-﻿namespace EFPersistenceModel
+﻿namespace ArticleHarbor.EFPersistenceModel
 {
     using System;
     using System.Threading.Tasks;
-    using DomainModel;
-    using EFDataAccess;
+    using ArticleHarbor.DomainModel;
+    using ArticleHarbor.EFDataAccess;
 
     public class UnitOfWork : IUnitOfWork
     {

@@ -1,4 +1,4 @@
-﻿namespace WebApiPresentationModelUnitTest
+﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,6 @@
     using Ploeh.AutoFixture.Xunit;
     using Ploeh.SemanticComparison;
     using Ploeh.SemanticComparison.Fluent;
-    using WebApiPresentationModel;
     using Xunit;
 
     public class UnhandledExceptionLoggerTest : IdiomaticTest<UnhandledExceptionLogger>

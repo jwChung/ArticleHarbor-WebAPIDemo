@@ -1,11 +1,11 @@
-﻿namespace WebApiPresentationModel
+﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-    using DomainModel;
+    using ArticleHarbor.DomainModel;
     using Microsoft.Owin.Security.OAuth;
 
     public class ArticleHarborAuthProvider : OAuthAuthorizationServerProvider

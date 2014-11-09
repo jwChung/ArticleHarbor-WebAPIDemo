@@ -1,4 +1,4 @@
-﻿namespace DomainModelUnitTest
+﻿namespace ArticleHarbor.DomainModel
 {
     using System;
     using System.Reflection;

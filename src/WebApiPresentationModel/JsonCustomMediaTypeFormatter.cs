@@ -1,4 +1,4 @@
-﻿namespace WebApiPresentationModel
+﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System;
     using System.ComponentModel;

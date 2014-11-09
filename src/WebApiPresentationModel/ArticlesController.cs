@@ -1,10 +1,10 @@
-﻿namespace WebApiPresentationModel
+﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Web.Http;
-    using DomainModel;
+    using ArticleHarbor.DomainModel;
 
     public class ArticlesController : ApiController
     {

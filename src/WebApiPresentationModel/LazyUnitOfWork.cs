@@ -1,7 +1,7 @@
-﻿namespace WebApiPresentationModel
+﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System;
-    using DomainModel;
+    using ArticleHarbor.DomainModel;
 
     public class LazyUnitOfWork
     {

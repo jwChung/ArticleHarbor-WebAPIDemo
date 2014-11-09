@@ -1,12 +1,11 @@
 ﻿#if !CI
-namespace AcceptanceTest
+namespace ArticleHarbor.AcceptanceTest
 {
     using System;
     using System.IO;
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
-    using System.Web.Http.Results;
     using Xunit;
 
     public class ThrowControllerTest

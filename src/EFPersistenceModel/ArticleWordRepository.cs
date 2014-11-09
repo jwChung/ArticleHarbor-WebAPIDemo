@@ -1,11 +1,10 @@
-﻿namespace EFPersistenceModel
+﻿namespace ArticleHarbor.EFPersistenceModel
 {
     using System;
-    using System.Data.Entity;
     using System.Linq;
     using System.Threading.Tasks;
-    using DomainModel;
-    using EFDataAccess;
+    using ArticleHarbor.DomainModel;
+    using ArticleHarbor.EFDataAccess;
     using ArticleWord = DomainModel.ArticleWord;
 
     public class ArticleWordRepository : IArticleWordRepository
@@ -25,7 +24,7 @@
             get { return this.context; }
         }
 
-        public DomainModel.ArticleWord Select(int articleId, string word)
+        public ArticleWord Select(int articleId, string word)
         {
             if (word == null)
                 throw new ArgumentNullException("word");
