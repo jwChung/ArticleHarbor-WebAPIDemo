@@ -7,8 +7,8 @@
     <ProjectGuid>{1BAEC422-3D13-49BE-82AA-18986A62E24D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WebApiPresentationModel</RootNamespace>
-    <AssemblyName>WebApiPresentationModel</AssemblyName>
+    <RootNamespace>ArticleHarbor.WebApiPresentationModel</RootNamespace>
+    <AssemblyName>ArticleHarbor.WebApiPresentationModel</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>1695b714</NuGetPackageImportStamp>

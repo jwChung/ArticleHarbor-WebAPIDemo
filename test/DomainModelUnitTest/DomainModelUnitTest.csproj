@@ -7,8 +7,8 @@
     <ProjectGuid>{2EED7A98-54D5-4B96-826E-7866F70C95BA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DomainModelUnitTest</RootNamespace>
-    <AssemblyName>DomainModelUnitTest</AssemblyName>
+    <RootNamespace>ArticleHarbor.DomainModel</RootNamespace>
+    <AssemblyName>ArticleHarbor.DomainModelUnitTest</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>e2abf0f3</NuGetPackageImportStamp>

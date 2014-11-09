@@ -7,8 +7,8 @@
     <ProjectGuid>{FDC0EF52-1C4F-4465-B744-216B65EA8850}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EFPersistenceModel</RootNamespace>
-    <AssemblyName>EFPersistenceModel</AssemblyName>
+    <RootNamespace>ArticleHarbor.EFPersistenceModel</RootNamespace>
+    <AssemblyName>ArticleHarbor.EFPersistenceModel</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>64a98b9e</NuGetPackageImportStamp>
