@@ -35,7 +35,7 @@
 
             await sut.ExecuteAsync(request, CancellationToken.None);
 
-            var principal = Assert.IsType<Principal>(requestContext.Principal);
+            var principal = Assert.IsType<SimplePrincipal>(requestContext.Principal);
             Assert.Equal(user.Id, principal.UserId);
             Assert.Equal(user.Role, principal.Role);
         }

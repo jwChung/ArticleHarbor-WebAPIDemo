@@ -82,7 +82,7 @@
     <Compile Include="LazyUnitOfWork.cs" />
     <Compile Include="LogContext.cs" />
     <Compile Include="PermissionAuthorizationFilterAttribute.cs" />
-    <Compile Include="Principal.cs" />
+    <Compile Include="SimplePrincipal.cs" />
     <Compile Include="PrincipleValueProvider.cs" />
     <Compile Include="PrincipleValueProviderFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

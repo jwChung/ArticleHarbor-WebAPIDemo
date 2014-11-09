@@ -4,12 +4,12 @@
     using System.Security.Principal;
     using DomainModel;
 
-    public class Principal : IPrincipal, IIdentity
+    public class SimplePrincipal : IPrincipal, IIdentity
     {
         private readonly string userId;
         private readonly Role role;
 
-        public Principal(string userId, Role role)
+        public SimplePrincipal(string userId, Role role)
         {
             if (userId == null)
                 throw new ArgumentNullException("userId");

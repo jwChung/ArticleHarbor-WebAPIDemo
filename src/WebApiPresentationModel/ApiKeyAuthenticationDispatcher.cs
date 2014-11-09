@@ -45,7 +45,7 @@
                 user = await serviceFactory.FindUserAsync(authentication.Parameter);
 
             if (user != null)
-                request.GetRequestContext().Principal = new Principal(user.Id, user.Role);
+                request.GetRequestContext().Principal = new SimplePrincipal(user.Id, user.Role);
 
             return await base.SendAsync(request, cancellationToken);
         }

@@ -7,35 +7,35 @@
     using Ploeh.AutoFixture.Xunit;
     using Xunit;
 
-    public class PrincipalTest : IdiomaticTest<Principal>
+    public class SimplePrincipalTest : IdiomaticTest<SimplePrincipal>
     {
         [Test]
-        public void SutIsPrincipal(Principal sut)
+        public void SutIsPrincipal(SimplePrincipal sut)
         {
             Assert.IsAssignableFrom<IPrincipal>(sut);
         }
 
         [Test]
-        public void SutIsIdentity(Principal sut)
+        public void SutIsIdentity(SimplePrincipal sut)
         {
             Assert.IsAssignableFrom<IIdentity>(sut);
         }
 
         [Test]
-        public void IndentityIsCorrect(Principal sut)
+        public void IndentityIsCorrect(SimplePrincipal sut)
         {
             var actual = sut.Identity;
             Assert.Equal(actual, sut);
         }
 
         [Test]
-        public void IsAuthenticatedIsCorrect(Principal sut)
+        public void IsAuthenticatedIsCorrect(SimplePrincipal sut)
         {
             Assert.True(sut.IsAuthenticated);
         }
 
         [Test]
-        public void AuthenticationTypeIsCorrect(Principal sut)
+        public void AuthenticationTypeIsCorrect(SimplePrincipal sut)
         {
             var actual = sut.AuthenticationType;
             Assert.Equal("ApiKey", actual);
@@ -44,7 +44,7 @@
         [Test]
         public void IsInRoleWithMatchedRoleNameReturnsTrue(
             [Frozen] Role role,
-            Principal sut)
+            SimplePrincipal sut)
         {
             var actual = sut.IsInRole(role.ToString());
             Assert.True(actual);
@@ -52,7 +52,7 @@
 
         [Test]
         public void IsInRoleWithNotMatchedRoleNameReturnsFalse(
-            Principal sut,
+            SimplePrincipal sut,
             string roleName)
         {
             var actual = sut.IsInRole(roleName);
@@ -62,7 +62,7 @@
         [Test]
         public void IsInRoleIsCaseInsenstive(
             [Frozen] Role role,
-            Principal sut)
+            SimplePrincipal sut)
         {
             var actual = sut.IsInRole(role.ToString().ToLower());
             Assert.True(actual);
