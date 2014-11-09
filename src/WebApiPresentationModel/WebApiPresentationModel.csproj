@@ -80,6 +80,7 @@
     <Compile Include="JsonCustomMediaTypeFormatter.cs" />
     <Compile Include="LazyUnitOfWork.cs" />
     <Compile Include="LogContext.cs" />
+    <Compile Include="PermissionAuthorizationFilterAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveUnitOfWorkActionFilterAttribute.cs" />
     <Compile Include="UnhandledExceptionLogger.cs" />
