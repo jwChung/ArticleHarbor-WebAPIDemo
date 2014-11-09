@@ -33,7 +33,7 @@
 
             IPrincipal principal = actionContext.RequestContext.Principal;
 
-            if (principal == null || !this.HasPermissions(principal))
+            if (principal == null || !principal.Identity.IsAuthenticated || !this.HasPermissions(principal))
                 actionContext.Response = actionContext.Request
                     .CreateResponse(HttpStatusCode.Unauthorized);
 

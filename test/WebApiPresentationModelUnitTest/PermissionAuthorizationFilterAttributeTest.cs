@@ -36,6 +36,16 @@
         }
 
         [Test]
+        public async Task OnAuthorizationAsyncWithUnauthenticatedRepliesWithUnauthorized(
+            PermissionAuthorizationFilterAttribute sut,
+            HttpActionContext context)
+        {
+            context.RequestContext.Principal.Identity.Of(x => x.IsAuthenticated == false);
+            await sut.OnAuthorizationAsync(context, CancellationToken.None);
+            Assert.Equal(HttpStatusCode.Unauthorized, context.Response.StatusCode);
+        }
+
+        [Test]
         public IEnumerable<ITestCase> OnAuthorizationAsyncRepliesWithUnauthorizedWhenUserDoesNotHaveCorrectPermissions()
         {
             var testData = new[]
@@ -62,6 +72,7 @@
                     fixture.Inject(d.Permissions);
                     context.RequestContext.Principal.Of(x => x.IsInRole(d.RoleName));
                     context.Response = null;
+                    context.RequestContext.Principal.Identity.Of(x => x.IsAuthenticated == true);
                     var sut = fixture.Create<PermissionAuthorizationFilterAttribute>();
 
                     sut.OnAuthorizationAsync(context, CancellationToken.None).Wait();
@@ -117,6 +128,7 @@
                     fixture.Inject(d.Permissions);
                     context.RequestContext.Principal.Of(x => x.IsInRole(d.RoleName));
                     context.Response = null;
+                    context.RequestContext.Principal.Identity.Of(x => x.IsAuthenticated == true);
                     var sut = fixture.Create<PermissionAuthorizationFilterAttribute>();
 
                     sut.OnAuthorizationAsync(context, CancellationToken.None).Wait();
@@ -132,6 +144,7 @@
             string roleName)
         {
             context.RequestContext.Principal.Of(x => x.IsInRole(roleName));
+            context.RequestContext.Principal.Identity.Of(x => x.IsAuthenticated == true);
             Assert.Throws<ArgumentOutOfRangeException>(
                 () => sut.OnAuthorizationAsync(context, CancellationToken.None).Wait());
         }
