@@ -56,13 +56,13 @@
         }
 
         [Test]
-        public async Task ExecuteAsyncWithInvalidSchemDoesNotSetPrincipal(
+        public async Task ExecuteAsyncWithInvalidSchemeDoesNotSetPrincipal(
             ApiKeyAuthenticationDispatcher sut,
             HttpRequestMessage request,
             HttpRequestContext requestContext,
-            string schem)
+            string scheme)
         {
-            request.Headers.Authorization = new AuthenticationHeaderValue(schem);
+            request.Headers.Authorization = new AuthenticationHeaderValue(scheme);
             request.Properties[HttpPropertyKeys.RequestContextKey] = requestContext;
             var expected = requestContext.Principal;
 

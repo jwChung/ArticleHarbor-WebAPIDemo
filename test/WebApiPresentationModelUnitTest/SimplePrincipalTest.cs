@@ -22,7 +22,7 @@
         }
 
         [Test]
-        public void IndentityIsCorrect(SimplePrincipal sut)
+        public void IdentityIsCorrect(SimplePrincipal sut)
         {
             var actual = sut.Identity;
             Assert.Equal(actual, sut);
@@ -60,7 +60,7 @@
         }
 
         [Test]
-        public void IsInRoleIsCaseInsenstive(
+        public void IsInRoleIsCaseInsensitive(
             [Frozen] Role role,
             SimplePrincipal sut)
         {

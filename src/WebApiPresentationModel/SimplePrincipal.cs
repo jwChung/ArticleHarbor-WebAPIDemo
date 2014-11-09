@@ -48,13 +48,14 @@
             get { return this.userId; }
         }
 
-        public bool IsInRole(string role)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration", MessageId = "0#", Justification = "This rule is suppressed to prevent same name with a field.")]
+        public bool IsInRole(string roleName)
         {
-            if (role == null)
-                throw new ArgumentNullException("role");
+            if (roleName == null)
+                throw new ArgumentNullException("roleName");
 
             return this.role.ToString().Equals(
-                role, StringComparison.CurrentCultureIgnoreCase);
+                roleName, StringComparison.CurrentCultureIgnoreCase);
         }
     }
 }
