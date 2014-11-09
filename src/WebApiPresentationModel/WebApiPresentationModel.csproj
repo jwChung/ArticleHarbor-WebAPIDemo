@@ -82,6 +82,7 @@
     <Compile Include="LogContext.cs" />
     <Compile Include="PermissionAuthorizationFilterAttribute.cs" />
     <Compile Include="PrincipleValueProvider.cs" />
+    <Compile Include="PrincipleValueProviderFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveUnitOfWorkActionFilterAttribute.cs" />
     <Compile Include="UnhandledExceptionLogger.cs" />
