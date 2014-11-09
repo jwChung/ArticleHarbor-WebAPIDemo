@@ -42,11 +42,8 @@
             return this.users.SelectAsync(id, password);
         }
 
-        public Task<User> FindUserAsync(string apiKey)
+        public Task<User> FindUserAsync(Guid apiKey)
         {
-            if (apiKey == null)
-                throw new ArgumentNullException("apiKey");
-
             throw new NotImplementedException();
         }
 

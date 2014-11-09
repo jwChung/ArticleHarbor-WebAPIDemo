@@ -26,10 +26,11 @@
             ApiKeyAuthenticationDispatcher sut,
             HttpRequestMessage request,
             HttpRequestContext requestContext,
-            string apiKey,
+            Guid apiKey,
             User user)
         {
-            request.Headers.Authorization = new AuthenticationHeaderValue("apikey", apiKey);
+            request.Headers.Authorization = new AuthenticationHeaderValue(
+                "apikey", apiKey.ToString("N"));
             request.Properties[HttpPropertyKeys.RequestContextKey] = requestContext;
             sut.AuthServiceFactory().Of(x => x.FindUserAsync(apiKey) == Task.FromResult(user));
 
@@ -72,15 +73,17 @@
         }
 
         [Test]
-        public async Task ExecuteAsyncWithInvalidApiKeyDoesNotSetPrincipal(
+        public async Task ExecuteAsyncWithNullUserDoesNotSetPrincipal(
             ApiKeyAuthenticationDispatcher sut,
             HttpRequestMessage request,
+            Guid apiKey,
             HttpRequestContext requestContext)
         {
-            request.Headers.Authorization = new AuthenticationHeaderValue("apikey");
+            request.Headers.Authorization = new AuthenticationHeaderValue(
+                "apikey", apiKey.ToString("N"));
             request.Properties[HttpPropertyKeys.RequestContextKey] = requestContext;
             sut.AuthServiceFactory().Of(
-                x => x.FindUserAsync(It.IsAny<string>()) == Task.FromResult<User>(null));
+                x => x.FindUserAsync(It.IsAny<Guid>()) == Task.FromResult<User>(null));
             var expected = requestContext.Principal;
 
             await sut.ExecuteAsync(request, CancellationToken.None);
@@ -93,12 +96,14 @@
             ApiKeyAuthenticationDispatcher sut,
             HttpRequestMessage request,
             HttpRequestContext requestContext,
+             Guid apiKey,
              User user)
         {
-            request.Headers.Authorization = new AuthenticationHeaderValue("apikey");
+            request.Headers.Authorization = new AuthenticationHeaderValue(
+                "apikey", apiKey.ToString("N"));
             request.Properties[HttpPropertyKeys.RequestContextKey] = requestContext;
             sut.AuthServiceFactory().Of(
-                x => x.FindUserAsync(It.IsAny<string>()) == Task.FromResult(user));
+                x => x.FindUserAsync(It.IsAny<Guid>()) == Task.FromResult(user));
 
             await sut.ExecuteAsync(request, CancellationToken.None);
 
@@ -109,11 +114,11 @@
         public async Task ExecuteAsyncDisposesAuthServiceEvenIfExceptionThrows(
             ApiKeyAuthenticationDispatcher sut,
             HttpRequestMessage request,
-            HttpRequestContext requestContext)
+            Guid apiKey)
         {
-            request.Headers.Authorization = new AuthenticationHeaderValue("apikey");
-            request.Properties[HttpPropertyKeys.RequestContextKey] = requestContext;
-            sut.AuthServiceFactory().ToMock().Setup(x => x.FindUserAsync(null))
+            request.Headers.Authorization = new AuthenticationHeaderValue(
+                "apikey", apiKey.ToString("N"));
+            sut.AuthServiceFactory().ToMock().Setup(x => x.FindUserAsync(Guid.Empty))
                 .Throws<Exception>();
             try
             {
@@ -124,6 +129,23 @@
             }
 
             sut.AuthServiceFactory().ToMock().Verify(x => x.Dispose());
+        }
+
+        [Test]
+        public void ExecuteAsyncWithIncorrectFormattedApiKeyThrows(
+            ApiKeyAuthenticationDispatcher sut,
+            HttpRequestMessage request,
+             string apiKey,
+             User user)
+        {
+            request.Headers.Authorization = new AuthenticationHeaderValue(
+                "apikey", apiKey);
+            sut.AuthServiceFactory().Of(
+                x => x.FindUserAsync(It.IsAny<Guid>()) == Task.FromResult(user));
+
+            var e = Assert.Throws<AggregateException>(
+                () => sut.ExecuteAsync(request, CancellationToken.None).Wait());
+            Assert.IsType<FormatException>(e.InnerException);
         }
     }
 }

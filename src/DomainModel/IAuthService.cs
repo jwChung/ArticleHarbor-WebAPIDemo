@@ -7,6 +7,6 @@
     {
         Task<User> FindUserAsync(string id, string password);
 
-        Task<User> FindUserAsync(string apiKey);
+        Task<User> FindUserAsync(Guid apiKey);
     }
 }

@@ -1,5 +1,8 @@
 ﻿namespace ArticleHarbor.DomainModel
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
     using System.Threading.Tasks;
     using Moq;
     using Xunit;
@@ -33,6 +36,11 @@
             sut.Dispose();
 
             sut.Owned.ToMock().Verify(x => x.Dispose(), Times.Once());
+        }
+
+        protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
+        {
+            yield return this.Methods.Select(x => x.FindUserAsync(Guid.Empty));
         }
     }
 }

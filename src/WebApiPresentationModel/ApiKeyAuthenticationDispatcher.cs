@@ -42,7 +42,7 @@
 
             User user = null;
             using (var serviceFactory = this.authServiceFactory())
-                user = await serviceFactory.FindUserAsync(authentication.Parameter);
+                user = await serviceFactory.FindUserAsync(Guid.Parse(authentication.Parameter));
 
             if (user != null)
                 request.GetRequestContext().Principal = new SimplePrincipal(user.Id, user.Role);
