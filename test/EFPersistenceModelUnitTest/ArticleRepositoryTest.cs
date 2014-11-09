@@ -1,5 +1,6 @@
 ﻿namespace ArticleHarbor.EFPersistenceModel
 {
+    using System;
     using System.Data.Entity;
     using System.Linq;
     using System.Threading.Tasks;
@@ -57,6 +58,15 @@
                 transaction.Dispose();
             }
         }
+        
+        [Test]
+        public void InsertAsyncArticleWithInvalidUserIdThrows(
+            ArticleRepository sut,
+            Article article)
+        {
+            var e = Assert.Throws<AggregateException>(() => sut.InsertAsync(article).Wait());
+            Assert.IsType<ArgumentException>(e.InnerException);
+        }
 
         [Test]
         public async Task SelectAsyncReturnsCorrectResult(
@@ -80,7 +90,7 @@
             }
         }
 
-        [Test] // TODO: improve
+        [Test]
         public async Task UpdateAsyncCorrectlyUpdatesArticle(
             DbContextTransaction transaction,
             ArticleRepository sut,

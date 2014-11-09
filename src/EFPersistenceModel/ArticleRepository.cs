@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
@@ -79,6 +80,12 @@
                 return article;
 
             var user = await this.context.UserManager.FindByNameAsync(article.UserId);
+            if (user == null)
+                throw new ArgumentException(string.Format(
+                    CultureInfo.CurrentCulture,
+                    "The user id '{0}' is invalid.",
+                    article.UserId));
+
             var persistence = this.context.Articles.Add(article.ToPersistence(user.Id));
             await this.context.SaveChangesAsync();
             return persistence.ToDomain();

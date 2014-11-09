@@ -35,7 +35,7 @@
         {
             private readonly HttpMessageHandler handler;
             private readonly IDisposable[] disposables;
-            private bool disposed = false;
+            private bool disposed;
 
             public HttpClientOwner(HttpMessageHandler handler, params IDisposable[] disposables)
                 : base(handler)
@@ -46,18 +46,18 @@
 
             protected override void Dispose(bool disposing)
             {
-                if (disposed)
+                if (this.disposed)
                     return;
 
                 if (disposing)
                 {
-                    handler.Dispose();
-                    foreach (var disposable in disposables)
+                    this.handler.Dispose();
+                    foreach (var disposable in this.disposables)
                         disposable.Dispose();
                 }
 
                 base.Dispose(disposing);
-                disposed = true;
+                this.disposed = true;
             }
         }
     }
