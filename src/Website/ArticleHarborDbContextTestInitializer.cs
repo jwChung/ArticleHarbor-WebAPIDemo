@@ -46,9 +46,9 @@
                 this.context.UserManager.Create(new User { UserName = "user3" }, "password3");
 
                 this.context.UserManager.AddToRoles(
-                    this.context.UserManager.FindByName("user1").Id, "Administrator", "Author", "User");
+                    this.context.UserManager.FindByName("user1").Id, "Administrator");
                 this.context.UserManager.AddToRoles(
-                    this.context.UserManager.FindByName("user2").Id, "Author", "User");
+                    this.context.UserManager.FindByName("user2").Id, "Author");
                 this.context.UserManager.AddToRoles(
                     this.context.UserManager.FindByName("user3").Id, "User");
             }

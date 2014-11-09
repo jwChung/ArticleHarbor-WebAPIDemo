@@ -49,11 +49,9 @@
         public async Task GrantCorrectResourceOwnerCredentialsValidates(
             ArticleHarborAuthProvider sut,
             OAuthGrantResourceOwnerCredentialsContext context,
-            IFixture fixture,
-            Roles roles)
+            IFixture fixture)
         {
-            fixture.Inject(Roles.Administrator | Roles.Author | Roles.User);
-            var expected = new[] { "User", "Author", "Administrator" };
+            fixture.Inject(Role.Author);
             var user = fixture.Create<User>();
             sut.AuthServiceFactory().Of(
                 x => x.FindUserAsync(context.UserName, context.Password)
@@ -64,9 +62,8 @@
             Assert.True(context.IsValidated);
             Assert.Contains(user.Id, context.Ticket.Identity.Name);
             var actualRoles = context.Ticket.Identity.FindAll(ClaimTypes.Role)
-                .Select(r => r.Value).ToArray();
-            Assert.Equal(expected.Length, actualRoles.Length);
-            Assert.Empty(expected.Except(actualRoles));
+                .Select(r => r.Value);
+            Assert.Equal("Author", actualRoles.Single());
         }
 
         [Test]

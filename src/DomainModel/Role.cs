@@ -1,28 +1,20 @@
 ﻿namespace ArticleHarbor.DomainModel
 {
-    using System;
-
-    [Flags]
-    public enum Roles
+    public enum Role
     {
-        /// <summary>
-        /// The none
-        /// </summary>
-        None = 0,
-
         /// <summary>
         /// The user
         /// </summary>
-        User = 1,
+        User = Permissions.Authentication,
 
         /// <summary>
         /// The author
         /// </summary>
-        Author = 2,
+        Author = User | Permissions.WriteArticle | Permissions.DeleteOwnArticle,
 
         /// <summary>
         /// The administrator
         /// </summary>
-        Administrator = 4
+        Administrator = Author | Permissions.DeleteAnyArticle
     }
 }

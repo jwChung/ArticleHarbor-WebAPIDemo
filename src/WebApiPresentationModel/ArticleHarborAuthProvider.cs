@@ -1,8 +1,6 @@
 ﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
@@ -45,13 +43,6 @@
             return this.GrantResourceOwnerCredentialsImpl(context);
         }
 
-        private static IEnumerable<string> GetRoleNames(User user)
-        {
-            return Enum.GetValues(typeof(Roles)).Cast<Enum>()
-                .Where(x => x.GetHashCode() != 0 && user.Roles.HasFlag(x))
-                .Select(x => x.ToString());
-        }
-
         private async Task GrantResourceOwnerCredentialsImpl(
             OAuthGrantResourceOwnerCredentialsContext context)
         {
@@ -70,9 +61,7 @@
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, user.Id));
-
-            foreach (string roleName in GetRoleNames(user))
-                identity.AddClaim(new Claim(ClaimTypes.Role, roleName));
+            identity.AddClaim(new Claim(ClaimTypes.Role, user.Role.ToString()));
 
             context.Validated(identity);
         }
