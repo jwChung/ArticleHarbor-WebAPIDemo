@@ -47,7 +47,7 @@
                 },
                 new
                 {
-                    Permissions = UserPermissions.WriteArticle,
+                    Permissions = UserPermissions.CreateArticle,
                     RoleName = "User"
                 },
                 new
@@ -97,12 +97,12 @@
                 },
                 new
                 {
-                    Permissions = UserPermissions.DeleteOwnArticle | UserPermissions.WriteArticle,
+                    Permissions = UserPermissions.DeleteOwnArticle | UserPermissions.CreateArticle,
                     RoleName = "Author"
                 },
                 new
                 {
-                    Permissions = UserPermissions.DeleteOwnArticle | UserPermissions.WriteArticle,
+                    Permissions = UserPermissions.DeleteOwnArticle | UserPermissions.CreateArticle,
                     RoleName = "Administrator"
                 },
                 new

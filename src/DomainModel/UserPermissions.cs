@@ -16,9 +16,9 @@
         Authentication = 1,
 
         /// <summary>
-        /// The write article permission
+        /// The create article permission
         /// </summary>
-        WriteArticle = 2,
+        CreateArticle = 2,
 
         /// <summary>
         /// The delete own article permission
@@ -29,5 +29,15 @@
         /// The delete any article permission
         /// </summary>
         DeleteAnyArticle = 8,
+
+        /// <summary>
+        /// The modify own article permission
+        /// </summary>
+        ModifyOwnArticle = 0x10,
+
+        /// <summary>
+        /// The modify any article permission
+        /// </summary>
+        ModifyAnyArticle = 0x20
     }
 }

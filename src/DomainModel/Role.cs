@@ -15,7 +15,7 @@
         /// <summary>
         /// The author
         /// </summary>
-        Author = User | UserPermissions.WriteArticle | UserPermissions.DeleteOwnArticle,
+        Author = User | UserPermissions.CreateArticle | UserPermissions.DeleteOwnArticle,
 
         /// <summary>
         /// The administrator
