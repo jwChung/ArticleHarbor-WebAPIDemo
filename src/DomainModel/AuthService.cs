@@ -44,7 +44,7 @@
 
         public Task<User> FindUserAsync(Guid apiKey)
         {
-            throw new NotImplementedException();
+            return this.users.SelectAsync(apiKey);
         }
 
         public void Dispose()

@@ -35,6 +35,11 @@
             return this.SelectAsyncImpl(id, password);
         }
 
+        public Task<User> SelectAsync(Guid apiKey)
+        {
+            throw new NotImplementedException();
+        }
+
         private async Task<User> SelectAsyncImpl(string id, string password)
         {
             var user = await this.context.UserManager.FindAsync(id, password);

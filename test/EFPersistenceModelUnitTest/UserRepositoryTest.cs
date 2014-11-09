@@ -1,7 +1,10 @@
 ﻿namespace ArticleHarbor.EFPersistenceModel
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
     using System.Threading.Tasks;
-    using ArticleHarbor.DomainModel;
+    using DomainModel;
     using Xunit;
 
     public class UserRepositoryTest : IdiomaticTest<UserRepository>
@@ -21,6 +24,11 @@
 
             Assert.Equal(actual.Id, "user2");
             Assert.Equal(Role.Author, actual.Role);
+        }
+
+        protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
+        {
+            yield return this.Methods.Select(x => x.SelectAsync(Guid.Empty));
         }
     }
 }
