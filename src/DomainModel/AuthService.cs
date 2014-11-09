@@ -44,6 +44,9 @@
 
         public Task<User> FindUserAsync(string apiKey)
         {
+            if (apiKey == null)
+                throw new ArgumentNullException("apiKey");
+
             throw new NotImplementedException();
         }
 
