@@ -6,12 +6,12 @@
 
     public class PrincipleValueProviderFactory : ValueProviderFactory, IUriValueProviderFactory
     {
-        public override IValueProvider GetValueProvider(HttpActionContext context)
+        public override IValueProvider GetValueProvider(HttpActionContext actionContext)
         {
-            if (context == null)
-                throw new ArgumentNullException("context");
+            if (actionContext == null)
+                throw new ArgumentNullException("actionContext");
 
-            return new PrincipleValueProvider(context.RequestContext.Principal);
+            return new PrincipleValueProvider(actionContext.RequestContext.Principal);
         }
     }
 }

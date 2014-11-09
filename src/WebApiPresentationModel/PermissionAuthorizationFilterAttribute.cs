@@ -10,7 +10,8 @@
     using System.Web.Http.Filters;
     using DomainModel;
 
-    public class PermissionAuthorizationFilterAttribute : AuthorizationFilterAttribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public sealed class PermissionAuthorizationFilterAttribute : AuthorizationFilterAttribute
     {
         private readonly UserPermissions permissions;
 
@@ -25,17 +26,18 @@
         }
 
         public override Task OnAuthorizationAsync(
-            HttpActionContext context, CancellationToken cancellationToken)
+            HttpActionContext actionContext, CancellationToken cancellationToken)
         {
-            if (context == null)
-                throw new ArgumentNullException("context");
+            if (actionContext == null)
+                throw new ArgumentNullException("actionContext");
 
-            IPrincipal principal = context.RequestContext.Principal;
+            IPrincipal principal = actionContext.RequestContext.Principal;
 
             if (principal == null || !this.HasPermissions(principal))
-                context.Response = context.Request.CreateResponse(HttpStatusCode.Unauthorized);
+                actionContext.Response = actionContext.Request
+                    .CreateResponse(HttpStatusCode.Unauthorized);
 
-            return base.OnAuthorizationAsync(context, cancellationToken);
+            return base.OnAuthorizationAsync(actionContext, cancellationToken);
         }
 
         private static Role GetRole(IPrincipal principal)
@@ -51,9 +53,9 @@
 
         private bool HasPermissions(IPrincipal principal)
         {
-            var permissions = (Role)(int)this.Permissions;
+            var permissionValue = (Role)(int)this.Permissions;
             Role role = GetRole(principal);
-            return role.HasFlag(permissions);
+            return role.HasFlag(permissionValue);
         }
     }
 }
