@@ -11,7 +11,7 @@
             if (context == null)
                 throw new ArgumentNullException("context");
 
-            throw new NotImplementedException();
+            return new PrincipleValueProvider(context.RequestContext.Principal);
         }
     }
 }
