@@ -14,83 +14,101 @@
             if (context == null)
                 throw new ArgumentNullException("context");
 
-            this.InitializeArticles(context.Articles);
-            this.InitializeArticles(context.ArticleWords);
-            this.InitializeUserRols(context.UserRoleManager);
-            this.InitializeUsers(context.UserManager);
+            var initializer = new DbContextTestInitializer(context);
+            initializer.InitializeUserRols();
+            initializer.InitializeUsers();
+            initializer.InitializeArticles();
+            initializer.InitializeArticleWords();
+
             base.Seed(context);
         }
 
-        private void InitializeArticles(IDbSet<Article> articles)
+        private class DbContextTestInitializer
         {
-            articles.Add(new Article
+            private readonly ArticleHarborDbContext context;
+
+            public DbContextTestInitializer(ArticleHarborDbContext context)
             {
-                Provider = "A",
-                No = "1",
-                Subject = "WordA1 WordA2 WordA3",
-                Body = "Body 1",
-                Date = DateTime.Now,
-                Url = "http://abc1.com"
-            });
+                this.context = context;
+            }
 
-            articles.Add(new Article
+            public void InitializeUserRols()
             {
-                Provider = "B",
-                No = "2",
-                Subject = "WordB1 WordB2 WordB3",
-                Body = "Body 2",
-                Date = DateTime.Now,
-                Url = "http://abc2.com"
-            });
+                this.context.UserRoleManager.Create(new UserRole { Name = "Administrator" });
+                this.context.UserRoleManager.Create(new UserRole { Name = "Author" });
+                this.context.UserRoleManager.Create(new UserRole { Name = "User" });
+            }
 
-            articles.Add(new Article
+            public void InitializeUsers()
             {
-                Provider = "C",
-                No = "3",
-                Subject = "WordC1 WordC2 WordC3",
-                Body = "Body 3",
-                Date = DateTime.Now,
-                Url = "http://abc3.com"
-            });
-        }
+                this.context.UserManager.Create(new User { UserName = "user1" }, "password1");
+                this.context.UserManager.Create(new User { UserName = "user2" }, "password2");
+                this.context.UserManager.Create(new User { UserName = "user3" }, "password3");
 
-        private void InitializeArticles(IDbSet<ArticleWord> articleWords)
-        {
-            articleWords.Add(new ArticleWord
+                this.context.UserManager.AddToRoles(
+                    this.context.UserManager.FindByName("user1").Id, "Administrator", "Author", "User");
+                this.context.UserManager.AddToRoles(
+                    this.context.UserManager.FindByName("user2").Id, "Author", "User");
+                this.context.UserManager.AddToRoles(
+                    this.context.UserManager.FindByName("user3").Id, "User");
+            }
+
+            public void InitializeArticles()
             {
-                ArticleId = 1,
-                Word = "WordA1"
-            });
+                this.context.Articles.Add(new Article
+                {
+                    Provider = "A",
+                    No = "1",
+                    Subject = "WordA1 WordA2 WordA3",
+                    Body = "Body 1",
+                    Date = DateTime.Now,
+                    Url = "http://abc1.com",
+                    UserId = this.context.Users.Local[0].Id
+                });
 
-            articleWords.Add(new ArticleWord
+                this.context.Articles.Add(new Article
+                {
+                    Provider = "B",
+                    No = "2",
+                    Subject = "WordB1 WordB2 WordB3",
+                    Body = "Body 2",
+                    Date = DateTime.Now,
+                    Url = "http://abc2.com",
+                    UserId = this.context.Users.Local[1].Id
+                });
+
+                this.context.Articles.Add(new Article
+                {
+                    Provider = "C",
+                    No = "3",
+                    Subject = "WordC1 WordC2 WordC3",
+                    Body = "Body 3",
+                    Date = DateTime.Now,
+                    Url = "http://abc3.com",
+                    UserId = this.context.Users.Local[1].Id
+                });
+            }
+
+            public void InitializeArticleWords()
             {
-                ArticleId = 2,
-                Word = "WordB1"
-            });
+                this.context.ArticleWords.Add(new ArticleWord
+                {
+                    ArticleId = 1,
+                    Word = "WordA1"
+                });
 
-            articleWords.Add(new ArticleWord
-            {
-                ArticleId = 3,
-                Word = "WordC1"
-            });
-        }
+                this.context.ArticleWords.Add(new ArticleWord
+                {
+                    ArticleId = 2,
+                    Word = "WordB1"
+                });
 
-        private void InitializeUserRols(UserRoleManager userRoleManager)
-        {
-            userRoleManager.Create(new UserRole { Name = "Administrator" });
-            userRoleManager.Create(new UserRole { Name = "Author" });
-            userRoleManager.Create(new UserRole { Name = "User" });
-        }
-
-        private void InitializeUsers(UserManager userManager)
-        {
-            userManager.Create(new User { UserName = "user1" }, "password1");
-            userManager.Create(new User { UserName = "user2" }, "password2");
-            userManager.Create(new User { UserName = "user3" }, "password3");
-
-            userManager.AddToRoles(userManager.FindByName("user1").Id, "Administrator", "Author", "User");
-            userManager.AddToRoles(userManager.FindByName("user2").Id, "Author", "User");
-            userManager.AddToRoles(userManager.FindByName("user3").Id, "User");
+                this.context.ArticleWords.Add(new ArticleWord
+                {
+                    ArticleId = 3,
+                    Word = "WordC1"
+                });
+            }
         }
     }
 }
