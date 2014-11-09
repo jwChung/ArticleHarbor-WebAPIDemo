@@ -7,10 +7,7 @@
     {
         public bool ContainsPrefix(string prefix)
         {
-            if (prefix == null)
-                throw new ArgumentNullException("prefix");
-
-            throw new System.NotImplementedException();
+            return false;
         }
 
         public ValueProviderResult GetValue(string key)
