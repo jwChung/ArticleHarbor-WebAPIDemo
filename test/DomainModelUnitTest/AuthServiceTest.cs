@@ -17,7 +17,7 @@
         }
 
         [Test]
-        public async Task FindUserAsync(
+        public async Task FindUserAsyncReturnsCorrectUser(
             AuthService sut,
             string id,
             string password,
@@ -25,6 +25,17 @@
         {
             sut.Users.Of(x => x.SelectAsync(id, password) == Task.FromResult(user));
             var actual = await sut.FindUserAsync(id, password);
+            Assert.Equal(user, actual);
+        }
+
+        [Test]
+        public async Task FindUserAsyncWithApiKeyReturnsCorrectUser(
+            AuthService sut,
+            Guid apiKey,
+            User user)
+        {
+            sut.Users.Of(x => x.SelectAsync(apiKey) == Task.FromResult(user));
+            var actual = await sut.FindUserAsync(apiKey);
             Assert.Equal(user, actual);
         }
 

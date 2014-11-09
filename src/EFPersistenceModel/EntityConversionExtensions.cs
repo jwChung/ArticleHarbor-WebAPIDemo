@@ -50,7 +50,7 @@ namespace ArticleHarbor.EFPersistenceModel
         
         public static User ToDomain(this ArticleHarbor.EFDataAccess.User user, string roleName)
         {
-            return new User(user.UserName, (Role)Enum.Parse(typeof(Role), roleName));
+            return new User(user.UserName, (Role)Enum.Parse(typeof(Role), roleName), user.ApiKey);
         }
     }
 }

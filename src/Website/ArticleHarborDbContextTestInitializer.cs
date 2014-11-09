@@ -41,9 +41,27 @@
 
             public void InitializeUsers()
             {
-                this.context.UserManager.Create(new User { UserName = "user1" }, "password1");
-                this.context.UserManager.Create(new User { UserName = "user2" }, "password2");
-                this.context.UserManager.Create(new User { UserName = "user3" }, "password3");
+                this.context.UserManager.Create(
+                    new User
+                    {
+                        UserName = "user1",
+                        ApiKey = Guid.Parse("692c7798206844b88ba9a660e3374eef")
+                    },
+                    "password1");
+                this.context.UserManager.Create(
+                    new User
+                    {
+                        UserName = "user2",
+                        ApiKey = Guid.Parse("232494f5670943dfac807226449fe795")
+                    },
+                    "password2");
+                this.context.UserManager.Create(
+                    new User
+                    {
+                        UserName = "user3",
+                        ApiKey = Guid.Parse("930eaf281412423592f35104836f2771")
+                    },
+                    "password3");
 
                 this.context.UserManager.AddToRoles(
                     this.context.UserManager.FindByName("user1").Id, "Administrator");
