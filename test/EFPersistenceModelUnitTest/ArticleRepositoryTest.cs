@@ -20,11 +20,11 @@
         public async Task InsertAsyncCorrectlyInsertsArticle(
             DbContextTransaction transaction,
             ArticleRepository sut,
-            Article article1)
+            Article article)
         {
             try
             {
-                var newArticle = await sut.InsertAsync(article1);
+                var newArticle = await sut.InsertAsync(article.WithUserId("user1"));
                 var expected = await sut.SelectAsync(newArticle.Id);
                 newArticle.AsSource().OfLikeness<Article>().ShouldEqual(expected);
             }
@@ -67,7 +67,7 @@
             try
             {
                 foreach (var article in articles.Take(60))
-                    await sut.InsertAsync(article);
+                    await sut.InsertAsync(article.WithUserId("user2"));
 
                 var actual = await sut.SelectAsync();
 
@@ -80,7 +80,7 @@
             }
         }
 
-        [Test]
+        [Test] // TODO: improve
         public async Task UpdateAsyncCorrectlyUpdatesArticle(
             DbContextTransaction transaction,
             ArticleRepository sut,
@@ -89,8 +89,8 @@
         {
             try
             {
-                var insertedArticle = await sut.InsertAsync(article1);
-                var modifiedArticle = article2.WithId(insertedArticle.Id);
+                var insertedArticle = await sut.InsertAsync(article1.WithUserId("user2"));
+                var modifiedArticle = article2.WithId(insertedArticle.Id).WithUserId("user2");
 
                 await sut.UpdateAsync(modifiedArticle);
 
@@ -134,7 +134,7 @@
         {
             try
             {
-                article = await sut.InsertAsync(article);
+                article = await sut.InsertAsync(article.WithUserId("user1"));
                 Assert.NotNull(await sut.SelectAsync(article.Id));
 
                 await sut.DeleteAsync(article.Id);

@@ -10,28 +10,30 @@
         private readonly string body;
         private readonly DateTime date;
         private readonly string url;
+        private readonly string userId;
         private readonly int id;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "5#", Justification = "데이터베이스에 저장하기 위해 문자열로 취급.")]
         public Article(
             string provider,
             string no,
             string subject,
             string body,
             DateTime date,
-            string url) : this(-1, provider, no, subject, body, date, url)
+            string url,
+            string userId)
+            : this(-1, provider, no, subject, body, date, url, userId)
         {
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "6#", Justification = "데이터베이스에 저장하기 위해 문자열로 취급.")]
         public Article(
-            int id,
-            string provider,
-            string no,
-            string subject,
-            string body,
-            DateTime date,
-            string url)
+           int id,
+           string provider,
+           string no,
+           string subject,
+           string body,
+           DateTime date,
+           string url,
+           string userId)
         {
             if (provider == null)
                 throw new ArgumentNullException("provider");
@@ -47,6 +49,9 @@
 
             if (url == null)
                 throw new ArgumentNullException("url");
+
+            if (userId == null)
+                throw new ArgumentNullException("userId");
 
             if (provider.Length == 0)
                 throw new ArgumentException(
@@ -68,6 +73,10 @@
                 throw new ArgumentException(
                     "The 'url' value should not be empty string.", "url");
 
+            if (userId.Length == 0)
+                throw new ArgumentException(
+                    "The 'userId' value should not be empty string.", "userId");
+
             this.id = id;
             this.provider = provider;
             this.no = no;
@@ -75,6 +84,7 @@
             this.body = body;
             this.date = date;
             this.url = url;
+            this.userId = userId;
         }
 
         public int Id
@@ -113,6 +123,11 @@
             get { return this.url; }
         }
 
+        public string UserId
+        {
+            get { return this.userId; }
+        }
+
         public Article WithId(int newId)
         {
             return new Article(
@@ -122,7 +137,8 @@
                 this.subject,
                 this.body,
                 this.date,
-                this.url);
+                this.url,
+                this.userId);
         }
 
         public Article WithSubject(string newSubject)
@@ -137,7 +153,24 @@
                 newSubject,
                 this.body,
                 this.date,
-                this.url);
+                this.url,
+                this.userId);
+        }
+
+        public Article WithUserId(string newUserId)
+        {
+            if (newUserId == null)
+                throw new ArgumentNullException("newUserId");
+
+            return new Article(
+                this.id,
+                this.provider,
+                this.no,
+                this.subject,
+                this.body,
+                this.date,
+                this.url,
+                newUserId);
         }
     }
 }

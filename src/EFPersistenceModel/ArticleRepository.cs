@@ -29,8 +29,8 @@
 
         public async Task<IEnumerable<Article>> SelectAsync()
         {
-            var result = await this.context.Articles.Take(50).ToArrayAsync();
-            return result.Select(x => x.ToDomain());
+            var articles = await this.context.Articles.Take(50).ToArrayAsync();
+            return articles.Select(x => x.ToDomain());
         }
 
         public Task<Article> SelectAsync(int id)
@@ -57,7 +57,8 @@
             if (persistence != null)
             {
                 ((IObjectContextAdapter)this.context).ObjectContext.Detach(persistence);
-                this.context.Entry(article.ToPersistence()).State = EntityState.Modified;
+                this.context.Entry(article.ToPersistence(persistence.UserId)).State
+                    = EntityState.Modified;
             }
 
             return Task.FromResult<object>(null);
@@ -77,7 +78,8 @@
             if ((await this.SelectAsync(article.Id)) != null)
                 return article;
 
-            var persistence = this.context.Articles.Add(article.ToPersistence());
+            var user = await this.context.UserManager.FindByNameAsync(article.UserId);
+            var persistence = this.context.Articles.Add(article.ToPersistence(user.Id));
             await this.context.SaveChangesAsync();
             return persistence.ToDomain();
         }
