@@ -49,8 +49,7 @@
             User user = null;
             using (var serviceFactory = this.authServiceFactory())
             {
-                user = await serviceFactory.FindUserAsync(
-                context.UserName, context.Password);
+                user = await serviceFactory.FindUserAsync(context.UserName, context.Password);
             }
 
             if (user == null)
