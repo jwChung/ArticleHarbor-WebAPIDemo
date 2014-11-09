@@ -71,6 +71,7 @@
     <Compile Include="..\..\build\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="ApiKeyAuthenticationDispatcher.cs" />
     <Compile Include="ArticleHarborAuthProvider.cs" />
     <Compile Include="ArticlesController.cs" />
     <Compile Include="FileLogger.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="LazyUnitOfWork.cs" />
     <Compile Include="LogContext.cs" />
     <Compile Include="PermissionAuthorizationFilterAttribute.cs" />
+    <Compile Include="SimplePrincipal.cs" />
     <Compile Include="PrincipleValueProvider.cs" />
     <Compile Include="PrincipleValueProviderFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

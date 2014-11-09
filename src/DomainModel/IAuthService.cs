@@ -6,5 +6,7 @@
     public interface IAuthService : IDisposable
     {
         Task<User> FindUserAsync(string id, string password);
+
+        Task<User> FindUserAsync(Guid apiKey);
     }
 }

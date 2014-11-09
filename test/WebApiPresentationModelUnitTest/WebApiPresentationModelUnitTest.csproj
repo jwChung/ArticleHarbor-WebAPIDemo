@@ -127,6 +127,7 @@
     <Compile Include="..\DomainModelUnitTest\RunOn.cs">
       <Link>RunOn.cs</Link>
     </Compile>
+    <Compile Include="ApiKeyAuthenticationDispatcherTest.cs" />
     <Compile Include="ArticleHarborAuthProviderTest.cs" />
     <Compile Include="ArticlesControllerTest.cs" />
     <Compile Include="AssemblyTest.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="LazyUnitOfWorkTest.cs" />
     <Compile Include="LogContextTest.cs" />
     <Compile Include="PermissionAuthorizationFilterAttributeTest.cs" />
+    <Compile Include="SimplePrincipalTest.cs" />
     <Compile Include="PrincipleValueProviderFactoryTest.cs" />
     <Compile Include="PrincipleValueProviderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
