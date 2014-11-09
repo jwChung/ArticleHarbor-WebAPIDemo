@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.EFPersistenceModel
 {
     using System;
+    using System.Data.Entity;
     using System.Linq;
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
@@ -35,16 +36,29 @@
             return this.SelectAsyncImpl(id, password);
         }
 
-        public Task<User> SelectAsync(Guid apiKey)
+        public async Task<User> SelectAsync(Guid apiKey)
         {
-            throw new NotImplementedException();
+            var user = this.context.Users.Local.Where(u => u.ApiKey == apiKey).SingleOrDefault();
+            if (user == null)
+            {
+                await this.context.Users.Where(u => u.ApiKey == apiKey).LoadAsync();
+                user = this.context.Users.Local.Where(u => u.ApiKey == apiKey).SingleOrDefault();
+            }
+
+            if (user == null)
+                return null;
+
+            var roleNames = await this.context.UserManager.GetRolesAsync(user.Id);
+            return user.ToDomain(roleNames.Single());
         }
 
         private async Task<User> SelectAsyncImpl(string id, string password)
         {
             var user = await this.context.UserManager.FindAsync(id, password);
-            var roleNames = await this.context.UserManager.GetRolesAsync(user.Id);
+            if (user == null)
+                return null;
 
+            var roleNames = await this.context.UserManager.GetRolesAsync(user.Id);
             return user.ToDomain(roleNames.Single());
         }
     }

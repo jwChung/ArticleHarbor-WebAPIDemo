@@ -5,6 +5,7 @@
     using System.Reflection;
     using System.Threading.Tasks;
     using DomainModel;
+    using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 
     public class UserRepositoryTest : IdiomaticTest<UserRepository>
@@ -17,13 +18,39 @@
         }
 
         [Test]
-        public async Task SelectAsyncReturnsCorrectUserWhenUserExits(
+        public async Task SelectAsyncReturnsCorrectUser(
             UserRepository sut)
         {
             var actual = await sut.SelectAsync("user2", "password2");
 
-            Assert.Equal(actual.Id, "user2");
+            Assert.Equal("user2", actual.Id);
             Assert.Equal(Role.Author, actual.Role);
+        }
+
+        [Test]
+        public async Task SelectAsyncWithIncorrectIdOrPasswordReturnsNullUser(
+            UserRepository sut)
+        {
+            var actual = await sut.SelectAsync("user2", "password");
+            Assert.Null(actual);
+        }
+
+        [Test]
+        public async Task SelectAsyncWithApiKeyReturnsCorrectUser(
+            UserRepository sut)
+        {
+            var user = await sut.SelectAsync("user2", "password2");
+            var actual = await sut.SelectAsync(user.ApiKey);
+            actual.AsSource().OfLikeness<User>().ShouldEqual(user);
+        }
+
+        [Test]
+        public async Task SelectAsyncWithIncorrectApiKeyReturnsNullUser(
+            UserRepository sut,
+            Guid apiKey)
+        {
+            var actual = await sut.SelectAsync(apiKey);
+            Assert.Null(actual);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
