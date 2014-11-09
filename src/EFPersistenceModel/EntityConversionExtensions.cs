@@ -1,7 +1,6 @@
 namespace ArticleHarbor.EFPersistenceModel
 {
     using System;
-    using System.Collections.Generic;
     using ArticleHarbor.DomainModel;
 
     internal static class EntityConversionExtensions
@@ -48,14 +47,10 @@ namespace ArticleHarbor.EFPersistenceModel
                 Word = articleWord.Word
             };
         }
-
-        public static User ToDomain(this ArticleHarbor.EFDataAccess.User user, IEnumerable<string> roleNames)
+        
+        public static User ToDomain(this ArticleHarbor.EFDataAccess.User user, string roleName)
         {
-            Roles roles = Roles.None;
-            foreach (var roleName in roleNames)
-                roles |= (Roles)Enum.Parse(typeof(Roles), roleName);
-
-            return new User(user.UserName, roles);
+            return new User(user.UserName, (Role)Enum.Parse(typeof(Role), roleName));
         }
     }
 }

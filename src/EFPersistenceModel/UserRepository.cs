@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.EFPersistenceModel
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.EFDataAccess;
@@ -37,9 +38,9 @@
         private async Task<User> SelectAsyncImpl(string id, string password)
         {
             var user = await this.context.UserManager.FindAsync(id, password);
-            var roles = await this.context.UserManager.GetRolesAsync(user.Id);
+            var roleNames = await this.context.UserManager.GetRolesAsync(user.Id);
 
-            return user.ToDomain(roles);
+            return user.ToDomain(roleNames.Single());
         }
     }
 }

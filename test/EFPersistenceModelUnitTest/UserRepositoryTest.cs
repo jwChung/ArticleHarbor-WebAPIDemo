@@ -20,7 +20,7 @@
             var actual = await sut.SelectAsync("user2", "password2");
 
             Assert.Equal(actual.Id, "user2");
-            Assert.Equal(Roles.Author | Roles.User, actual.Roles);
+            Assert.Equal(Role.Author, actual.Role);
         }
     }
 }
