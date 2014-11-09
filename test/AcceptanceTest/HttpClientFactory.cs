@@ -2,6 +2,7 @@
 {
     using System;
     using System.Net.Http;
+    using System.Web.Http;
     using System.Web.Http.SelfHost;
     using ArticleHarbor.Website;
 
@@ -10,10 +11,13 @@
         public static HttpClient Create()
         {
             var baseAddress = new Uri("http://localhost:30316/");
-            var config = new HttpSelfHostConfiguration(baseAddress);
+            var config = new HttpSelfHostConfiguration(baseAddress)
+            {
+                IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always
+            };
             WebApiConfig.Register(config);
             var server = new HttpSelfHostServer(config);
-            var client = new HttpClient(server);
+            var client = new HttpClientOwner(server, config);
             
             try
             {
@@ -24,6 +28,36 @@
             {
                 client.Dispose();
                 throw;
+            }
+        }
+
+        private class HttpClientOwner : HttpClient
+        {
+            private readonly HttpMessageHandler handler;
+            private readonly IDisposable[] disposables;
+            private bool disposed = false;
+
+            public HttpClientOwner(HttpMessageHandler handler, params IDisposable[] disposables)
+                : base(handler)
+            {
+                this.handler = handler;
+                this.disposables = disposables;
+            }
+
+            protected override void Dispose(bool disposing)
+            {
+                if (disposed)
+                    return;
+
+                if (disposing)
+                {
+                    handler.Dispose();
+                    foreach (var disposable in disposables)
+                        disposable.Dispose();
+                }
+
+                base.Dispose(disposing);
+                disposed = true;
             }
         }
     }
