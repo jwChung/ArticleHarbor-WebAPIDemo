@@ -1,5 +1,6 @@
 ﻿namespace ArticleHarbor.EFPersistenceModel
 {
+    using System;
     using System.Data.Entity;
     using System.Linq;
     using System.Threading.Tasks;
@@ -20,11 +21,11 @@
         public async Task InsertAsyncCorrectlyInsertsArticle(
             DbContextTransaction transaction,
             ArticleRepository sut,
-            Article article1)
+            Article article)
         {
             try
             {
-                var newArticle = await sut.InsertAsync(article1);
+                var newArticle = await sut.InsertAsync(article.WithUserId("user1"));
                 var expected = await sut.SelectAsync(newArticle.Id);
                 newArticle.AsSource().OfLikeness<Article>().ShouldEqual(expected);
             }
@@ -57,6 +58,15 @@
                 transaction.Dispose();
             }
         }
+        
+        [Test]
+        public void InsertAsyncArticleWithInvalidUserIdThrows(
+            ArticleRepository sut,
+            Article article)
+        {
+            var e = Assert.Throws<AggregateException>(() => sut.InsertAsync(article).Wait());
+            Assert.IsType<ArgumentException>(e.InnerException);
+        }
 
         [Test]
         public async Task SelectAsyncReturnsCorrectResult(
@@ -67,7 +77,7 @@
             try
             {
                 foreach (var article in articles.Take(60))
-                    await sut.InsertAsync(article);
+                    await sut.InsertAsync(article.WithUserId("user2"));
 
                 var actual = await sut.SelectAsync();
 
@@ -89,8 +99,8 @@
         {
             try
             {
-                var insertedArticle = await sut.InsertAsync(article1);
-                var modifiedArticle = article2.WithId(insertedArticle.Id);
+                var insertedArticle = await sut.InsertAsync(article1.WithUserId("user2"));
+                var modifiedArticle = article2.WithId(insertedArticle.Id).WithUserId("user2");
 
                 await sut.UpdateAsync(modifiedArticle);
 
@@ -134,7 +144,7 @@
         {
             try
             {
-                article = await sut.InsertAsync(article);
+                article = await sut.InsertAsync(article.WithUserId("user1"));
                 Assert.NotNull(await sut.SelectAsync(article.Id));
 
                 await sut.DeleteAsync(article.Id);

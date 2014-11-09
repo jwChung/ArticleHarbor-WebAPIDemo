@@ -15,10 +15,11 @@ namespace ArticleHarbor.EFPersistenceModel
                 article.Subject,
                 article.Body,
                 article.Date,
-                article.Url);
+                article.Url,
+                article.User.UserName);
         }
 
-        public static ArticleHarbor.EFDataAccess.Article ToPersistence(this Article article)
+        public static ArticleHarbor.EFDataAccess.Article ToPersistence(this Article article, string userId)
         {
             return new ArticleHarbor.EFDataAccess.Article
             {
@@ -28,7 +29,8 @@ namespace ArticleHarbor.EFPersistenceModel
                 Subject = article.Subject,
                 Body = article.Body,
                 Date = article.Date,
-                Url = article.Url
+                Url = article.Url,
+                UserId = userId
             };
         }
 

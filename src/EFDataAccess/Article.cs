@@ -22,7 +22,11 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Justification = "Uri는 데이터베이스 지원하는 형식이 아님.")]
         public string Url { get; set; }
 
+        public string UserId { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "EntityFramework의 Lazy Loading을 위한 Property.")]
         public virtual ICollection<ArticleWord> ArticleWords { get; set; }
+
+        public virtual User User { get; set; }
     }
 }

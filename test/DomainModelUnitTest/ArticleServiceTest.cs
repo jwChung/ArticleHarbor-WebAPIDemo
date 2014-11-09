@@ -65,14 +65,7 @@
             IFixture fixture)
         {
             // Fixture setup
-            var modifiedArticle = new Article(
-                article.Id,
-                article.Provider,
-                article.No,
-                subject,
-                article.Body,
-                article.Date,
-                article.Url);
+            var modifiedArticle = article.WithSubject(subject);
             fixture.Inject<Func<string, IEnumerable<string>>>(
                x =>
                {
@@ -107,14 +100,7 @@
             Article article,
             Article modifiedArticle)
         {
-            modifiedArticle = new Article(
-                modifiedArticle.Id,
-                modifiedArticle.Provider,
-                modifiedArticle.No,
-                article.Subject,
-                modifiedArticle.Body,
-                modifiedArticle.Date,
-                modifiedArticle.Url);
+            modifiedArticle = modifiedArticle.WithSubject(article.Subject);
             sut.Articles.Of(x => x.SelectAsync(article.Id) == Task.FromResult(article));
 
             await sut.SaveAsync(modifiedArticle);
