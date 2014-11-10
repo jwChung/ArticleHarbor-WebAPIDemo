@@ -13,6 +13,7 @@ namespace ArticleHarbor.AcceptanceTest
         [Test]
         public async Task ThrowArgumentExceptionDoesNotLog()
         {
+            DeleteAllLogFiles();
             using (var client = HttpClientFactory.Create())
             {
                 var response = await client.GetAsync("api/throw/ArgumentException");
