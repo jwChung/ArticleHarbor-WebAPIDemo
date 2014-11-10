@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.EFDataAccess;
+    using Article = DomainModel.Article;
 
     public class UnitOfWork : IUnitOfWork
     {
@@ -28,7 +29,7 @@
             get { return this.context; }
         }
 
-        public IArticleRepository Articles
+        public IRepository<Article> Articles
         {
             get
             {

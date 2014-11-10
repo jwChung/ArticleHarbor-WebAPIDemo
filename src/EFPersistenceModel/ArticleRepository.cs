@@ -14,7 +14,7 @@
     using PersistenceArticle = EFDataAccess.Article;
     using PersistenceUser = EFDataAccess.User;
 
-    public class ArticleRepository : IArticleRepository
+    public class ArticleRepository : IRepository<DomainArticle>
     {
         private readonly ArticleHarborDbContext context;
 
@@ -40,6 +40,16 @@
         public Task<DomainArticle> FineAsync(int id)
         {
             var article = this.context.Articles.Find(id);
+            return Task.FromResult(
+                article == null ? null : article.ToDomain());
+        }
+
+        public Task<DomainArticle> FineAsync(params object[] identity)
+        {
+            if (identity == null)
+                throw new ArgumentNullException("identity");
+
+            var article = this.context.Articles.Find((int)identity[0]);
             return Task.FromResult(
                 article == null ? null : article.ToDomain());
         }
@@ -79,7 +89,7 @@
 
         private async Task<DomainArticle> InsertAsyncImpl(DomainArticle article)
         {
-            if ((await this.FineAsync(article.Id)) != null)
+            if ((await this.FineAsync(new object[] { article.Id })) != null)
                 return article;
 
             var persistenceArticle = article.ToPersistence(await this.GetUserId(article));
@@ -98,6 +108,14 @@
                     article.UserId));
 
             return persistenceUser.Id;
+        }
+
+        public Task DeleteAsync(params object[] identity)
+        {
+            if (identity == null)
+                throw new ArgumentNullException("identity");
+
+            throw new NotImplementedException();
         }
     }
 }

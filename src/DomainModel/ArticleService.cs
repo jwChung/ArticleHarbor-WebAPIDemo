@@ -8,12 +8,12 @@
 
     public class ArticleService : IArticleService
     {
-        private readonly IArticleRepository articles;
+        private readonly IRepository<Article> articles;
         private readonly IArticleWordRepository articleWords;
         private readonly Func<string, IEnumerable<string>> nounExtractor;
 
         public ArticleService(
-            IArticleRepository articles,
+            IRepository<Article> articles,
             IArticleWordRepository articleWords,
             Func<string, IEnumerable<string>> nounExtractor)
         {
@@ -31,7 +31,7 @@
             this.nounExtractor = nounExtractor;
         }
 
-        public IArticleRepository Articles
+        public IRepository<Article> Articles
         {
             get { return this.articles; }
         }

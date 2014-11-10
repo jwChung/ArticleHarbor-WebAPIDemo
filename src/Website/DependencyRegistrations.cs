@@ -7,6 +7,7 @@ namespace ArticleHarbor.Website
     using ArticleHarbor.EFPersistenceModel;
     using ArticleHarbor.WebApiPresentationModel;
     using Jwc.Funz;
+    using Article = DomainModel.Article;
 
     public class DependencyRegistrations : IContainerVisitor<object>
     {
@@ -51,7 +52,7 @@ namespace ArticleHarbor.Website
             // Domain services
             container.Register<IArticleService>(
                 c => new ArticleService(
-                    c.Resolve<IArticleRepository>(),
+                    c.Resolve<IRepository<Article>>(),
                     c.Resolve<IArticleWordRepository>(),
                     KoreanNounExtractor.Execute))
                 .ReusedWithinContainer();
