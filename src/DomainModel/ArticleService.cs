@@ -86,7 +86,7 @@
             if (oldArticle.UserId != article.UserId)
                 throw new InvalidOperationException(string.Format(
                     CultureInfo.CurrentCulture,
-                    "The user '{0}' do not have authorization to modify the article 'id:{1}'.",
+                    "The user '{0}' do not have authorization to modify the article '{1}'.",
                     article.UserId,
                     article.Id));
 
