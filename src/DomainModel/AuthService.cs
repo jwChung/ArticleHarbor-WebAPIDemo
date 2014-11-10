@@ -39,12 +39,12 @@
             if (password == null)
                 throw new ArgumentNullException("password");
 
-            return this.users.SelectAsync(id, password);
+            return this.users.FindAsync(id, password);
         }
 
         public Task<User> FindUserAsync(Guid apiKey)
         {
-            return this.users.SelectAsync(apiKey);
+            return this.users.FindAsync(apiKey);
         }
 
         public void Dispose()

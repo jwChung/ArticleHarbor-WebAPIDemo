@@ -5,8 +5,8 @@ namespace ArticleHarbor.DomainModel
 
     public interface IUserRepository
     {
-        Task<User> SelectAsync(string id, string password);
+        Task<User> FindAsync(string id, string password);
 
-        Task<User> SelectAsync(Guid apiKey);
+        Task<User> FindAsync(Guid apiKey);
     }
 }

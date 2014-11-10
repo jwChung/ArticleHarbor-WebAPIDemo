@@ -34,7 +34,7 @@
             return articles.Select(x => x.ToDomain());
         }
 
-        public Task<Article> SelectAsync(int id)
+        public Task<Article> FineAsync(int id)
         {
             var article = this.context.Articles.Find(id);
             return Task.FromResult<Article>(
@@ -76,7 +76,7 @@
 
         private async Task<Article> InsertAsyncImpl(Article article)
         {
-            if ((await this.SelectAsync(article.Id)) != null)
+            if ((await this.FineAsync(article.Id)) != null)
                 return article;
 
             var user = await this.context.UserManager.FindByNameAsync(article.UserId);

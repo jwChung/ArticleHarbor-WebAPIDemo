@@ -34,7 +34,7 @@
             Article article,
             Article newArticle)
         {
-            sut.Articles.ToMock().Setup(x => x.SelectAsync(article.Id)).Returns(Task.FromResult<Article>(null));
+            sut.Articles.ToMock().Setup(x => x.FineAsync(article.Id)).Returns(Task.FromResult<Article>(null));
             sut.Articles.Of(x => x.InsertAsync(article) == Task.FromResult(newArticle));
 
             var actual = await sut.SaveAsync(article);
@@ -49,7 +49,7 @@
             Article newArticle)
         {
             newArticle = newArticle.WithId(article.Id);
-            sut.Articles.Of(x => x.SelectAsync(article.Id) == Task.FromResult(article));
+            sut.Articles.Of(x => x.FineAsync(article.Id) == Task.FromResult(article));
 
             var actual = await sut.SaveAsync(newArticle);
 
@@ -73,7 +73,7 @@
                    return words;
                });
             var sut = fixture.Create<ArticleService>();
-            sut.Articles.Of(x => x.SelectAsync(article.Id) == Task.FromResult(article));
+            sut.Articles.Of(x => x.FineAsync(article.Id) == Task.FromResult(article));
 
             // Verify outcome
             sut.SaveAsync(modifiedArticle).Wait();
@@ -101,7 +101,7 @@
             Article modifiedArticle)
         {
             modifiedArticle = modifiedArticle.WithSubject(article.Subject);
-            sut.Articles.Of(x => x.SelectAsync(article.Id) == Task.FromResult(article));
+            sut.Articles.Of(x => x.FineAsync(article.Id) == Task.FromResult(article));
 
             await sut.SaveAsync(modifiedArticle);
 
@@ -124,7 +124,7 @@
                     return words;
                 });
             var sut = fixture.Create<ArticleService>();
-            sut.Articles.ToMock().Setup(x => x.SelectAsync(article.Id))
+            sut.Articles.ToMock().Setup(x => x.FineAsync(article.Id))
                 .Returns(Task.FromResult<Article>(null));
             sut.Articles.Of(x => x.InsertAsync(article) == Task.FromResult(newArticle));
 

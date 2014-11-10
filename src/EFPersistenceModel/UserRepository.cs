@@ -25,7 +25,7 @@
             get { return this.context; }
         }
 
-        public Task<User> SelectAsync(string id, string password)
+        public Task<User> FindAsync(string id, string password)
         {
             if (id == null)
                 throw new ArgumentNullException("id");
@@ -36,7 +36,7 @@
             return this.SelectAsyncImpl(id, password);
         }
 
-        public async Task<User> SelectAsync(Guid apiKey)
+        public async Task<User> FindAsync(Guid apiKey)
         {
             var user = this.context.Users.Local.Where(u => u.ApiKey == apiKey).SingleOrDefault();
             if (user == null)

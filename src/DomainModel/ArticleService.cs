@@ -74,7 +74,7 @@
 
         private async Task<Article> SaveAsyncImpl(Article article)
         {
-            var oldArticle = await this.articles.SelectAsync(article.Id);
+            var oldArticle = await this.articles.FineAsync(article.Id);
             if (oldArticle == null)
             {
                 var newArticle = await this.articles.InsertAsync(article);

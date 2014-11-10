@@ -23,7 +23,7 @@
             string password,
             User user)
         {
-            sut.Users.Of(x => x.SelectAsync(id, password) == Task.FromResult(user));
+            sut.Users.Of(x => x.FindAsync(id, password) == Task.FromResult(user));
             var actual = await sut.FindUserAsync(id, password);
             Assert.Equal(user, actual);
         }
@@ -34,7 +34,7 @@
             Guid apiKey,
             User user)
         {
-            sut.Users.Of(x => x.SelectAsync(apiKey) == Task.FromResult(user));
+            sut.Users.Of(x => x.FindAsync(apiKey) == Task.FromResult(user));
             var actual = await sut.FindUserAsync(apiKey);
             Assert.Equal(user, actual);
         }
