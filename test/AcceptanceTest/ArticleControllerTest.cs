@@ -9,7 +9,7 @@
 
     public class ArticleControllerTest
     {
-        [Test(RunOn.Local)]
+        [Test]
         public async Task GetAsyncReturnsResponseWithCorrectStatusCode()
         {
             using (var client = HttpClientFactory.Create())
@@ -19,7 +19,7 @@
             }
         }
 
-        [Test(RunOn.Local)]
+        [Test]
         public async Task GetAsyncReturnsJsonContent()
         {
             using (var client = HttpClientFactory.Create())
@@ -34,7 +34,7 @@
             }
         }
 
-        [Test(RunOn.Local)]
+        [Test]
         public async Task GetAsyncDoesNotSupportXmlContent()
         {
             using (var client = HttpClientFactory.Create())
