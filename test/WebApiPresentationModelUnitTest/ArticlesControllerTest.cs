@@ -36,7 +36,7 @@
                 .GetCustomAttribute<PermissionAuthorizationFilterAttribute>();
 
             Assert.Equal(
-                Permissions.CreateArticle | Permissions.ModifyOwnArticle,
+                Permissions.CreateArticle | Permissions.ModifyArticle,
                 attribute.Permissions);
         }
 

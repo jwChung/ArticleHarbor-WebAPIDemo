@@ -108,12 +108,12 @@
                 },
                 new
                 {
-                    Permissions = Permissions.DeleteOwnArticle | Permissions.CreateArticle,
+                    Permissions = Permissions.DeleteArticle | Permissions.CreateArticle,
                     RoleName = "Author"
                 },
                 new
                 {
-                    Permissions = Permissions.DeleteOwnArticle | Permissions.CreateArticle,
+                    Permissions = Permissions.DeleteArticle | Permissions.CreateArticle,
                     RoleName = "Administrator"
                 },
                 new

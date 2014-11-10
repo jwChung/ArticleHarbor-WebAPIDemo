@@ -29,7 +29,7 @@
             return this.articleService.GetAsync();
         }
 
-        [PermissionAuthorizationFilter(Permissions.ModifyOwnArticle | Permissions.CreateArticle)]
+        [PermissionAuthorizationFilter(Permissions.ModifyArticle | Permissions.CreateArticle)]
         public Task<Article> PostAsync(Article article)
         {
             if (article == null)
