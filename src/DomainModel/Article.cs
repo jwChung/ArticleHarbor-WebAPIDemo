@@ -158,6 +158,10 @@
             if (newUserId == null)
                 throw new ArgumentNullException("newUserId");
 
+            if (newUserId.Length == 0)
+                throw new ArgumentException(
+                    "The 'newUserId' value should not be empty string.", "newUserId");
+
             return new Article(
                 this.id,
                 this.provider,

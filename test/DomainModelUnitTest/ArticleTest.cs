@@ -68,6 +68,13 @@
         }
 
         [Test]
+        public void WithUserIdWithEmtpyStringThrows(
+            Article sut)
+        {
+            Assert.Throws<ArgumentException>(() => sut.WithUserId(string.Empty));
+        }
+
+        [Test]
         public void WithIdReturnsCorrectArticle(Article sut, int id, string userId)
         {
             sut = sut.WithUserId(userId);
