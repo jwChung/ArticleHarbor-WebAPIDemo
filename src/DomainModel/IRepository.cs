@@ -9,9 +9,9 @@
 
         Task<IEnumerable<T>> SelectAsync();
 
-        Task<T> InsertAsync(T article);
+        Task<T> InsertAsync(T item);
 
-        Task UpdateAsync(T article);
+        Task UpdateAsync(T item);
 
         Task DeleteAsync(params object[] identity);
     }

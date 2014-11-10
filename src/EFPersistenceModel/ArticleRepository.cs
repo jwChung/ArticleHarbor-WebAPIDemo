@@ -47,24 +47,24 @@
                 article == null ? null : article.ToDomain());
         }
 
-        public Task<DomainArticle> InsertAsync(DomainArticle article)
+        public Task<DomainArticle> InsertAsync(DomainArticle item)
         {
-            if (article == null)
-                throw new ArgumentNullException("article");
+            if (item == null)
+                throw new ArgumentNullException("item");
 
-            return this.InsertAsyncImpl(article);
+            return this.InsertAsyncImpl(item);
         }
 
-        public Task UpdateAsync(DomainArticle article)
+        public Task UpdateAsync(DomainArticle item)
         {
-            if (article == null)
-                throw new ArgumentNullException("article");
+            if (item == null)
+                throw new ArgumentNullException("item");
 
-            var persistenceArticle = this.context.Articles.Find(article.Id);
+            var persistenceArticle = this.context.Articles.Find(item.Id);
             if (persistenceArticle != null)
             {
                 ((IObjectContextAdapter)this.context).ObjectContext.Detach(persistenceArticle);
-                this.context.Entry(article.ToPersistence(persistenceArticle.UserId)).State
+                this.context.Entry(item.ToPersistence(persistenceArticle.UserId)).State
                     = EntityState.Modified;
             }
 
@@ -80,12 +80,12 @@
             return Task.FromResult<object>(null);
         }
 
-        private async Task<DomainArticle> InsertAsyncImpl(DomainArticle article)
+        private async Task<DomainArticle> InsertAsyncImpl(DomainArticle item)
         {
-            if ((await this.FineAsync(new object[] { article.Id })) != null)
-                return article;
+            if ((await this.FineAsync(new object[] { item.Id })) != null)
+                return item;
 
-            var persistenceArticle = article.ToPersistence(await this.GetUserId(article));
+            var persistenceArticle = item.ToPersistence(await this.GetUserId(item));
             var newPersistenceArticle = this.context.Articles.Add(persistenceArticle);
             await this.context.SaveChangesAsync();
             return newPersistenceArticle.ToDomain();

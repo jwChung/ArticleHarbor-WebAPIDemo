@@ -34,26 +34,15 @@
             return articleWord == null ? null : articleWord.ToDomain();
         }
 
-        public Task<ArticleWord> InsertAsync(ArticleWord articleWord)
+        public Task<ArticleWord> InsertAsync(ArticleWord item)
         {
-            if (articleWord == null)
-                throw new ArgumentNullException("articleWord");
+            if (item == null)
+                throw new ArgumentNullException("item");
 
-            if (this.Select(articleWord.ArticleId, articleWord.Word) == null)
-                this.context.ArticleWords.Add(articleWord.ToPersistence());
+            if (this.Select(item.ArticleId, item.Word) == null)
+                this.context.ArticleWords.Add(item.ToPersistence());
 
-            return Task.FromResult<ArticleWord>(articleWord);
-        }
-
-        public Task DeleteAsync(int articleId)
-        {
-            var articleWords = this.context.ArticleWords
-                .Where(x => x.ArticleId == articleId).ToArray();
-
-            foreach (var articleWord in articleWords)
-                this.context.ArticleWords.Remove(articleWord);
-
-            return Task.FromResult<object>(null);
+            return Task.FromResult<ArticleWord>(item);
         }
 
         public Task<ArticleWord> FineAsync(params object[] identity)
@@ -69,10 +58,10 @@
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(ArticleWord article)
+        public Task UpdateAsync(ArticleWord item)
         {
-            if (article == null)
-                throw new ArgumentNullException("article");
+            if (item == null)
+                throw new ArgumentNullException("item");
             throw new NotImplementedException();
         }
 
