@@ -6,14 +6,17 @@
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Threading.Tasks;
+    using Ploeh.AutoFixture;
 
     public abstract class FakeRepositoryBase<T> : IRepository<T>
     {
         private readonly IList<T> items;
 
-        public FakeRepositoryBase(IList<T> items)
+        public FakeRepositoryBase(Generator<T> generator)
         {
-            this.items = items;
+            this.items = new List<T>();
+            foreach (var item in generator.Take(3))
+                this.InsertAsync(item).Wait();
         }
 
         public IList<T> Items

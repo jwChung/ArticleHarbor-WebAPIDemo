@@ -51,24 +51,32 @@
 
         protected override ITestFixture Create(ITestMethodContext context)
         {
-            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+            var parameters = context.ActualMethod.GetParameters();
 
-            fixture.Customize<Article>(
-                c => c.FromFactory(new MethodInvoker(new GreedyConstructorQuery())));
+            return new TestFixture(new Fixture().Customize(new CompositeCustomization(
+                new AutoMoqCustomization(),
+                new DomainModelCustomization(),
+                new TestParametersCustomization(parameters))));
+        }
 
-            var articleRepository = new FakeArticleRepository(fixture.Create<IList<Article>>());
-            fixture.Inject<FakeRepositoryBase<Article>>(articleRepository);
-            fixture.Inject<IRepository<Article>>(articleRepository);
-            
-            fixture.Customize(new TestParametersCustomization(
-                context.ActualMethod.GetParameters()));
-            return new TestFixture(fixture);
+        private class DomainModelCustomization : ICustomization
+        {
+            public void Customize(IFixture fixture)
+            {
+                fixture.Customize<Article>(c => c.FromFactory(
+                    new MethodInvoker(new GreedyConstructorQuery())));
+
+                var articleRepository = new FakeArticleRepository(
+                    fixture.Create<Generator<Article>>());
+                fixture.Inject<FakeRepositoryBase<Article>>(articleRepository);
+                fixture.Inject<IRepository<Article>>(articleRepository);
+            }
         }
 
         private class FakeArticleRepository : FakeRepositoryBase<Article>
         {
-            public FakeArticleRepository(IList<Article> items)
-                : base(items)
+            public FakeArticleRepository(Generator<Article> generator)
+                : base(generator)
             {
             }
 
