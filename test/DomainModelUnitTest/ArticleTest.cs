@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
     using Jwc.Experiment.Xunit;
     using Ploeh.AutoFixture;
@@ -35,6 +36,42 @@
                 () => new Article(id, value, value, value, string.Empty, date, value)));
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
                 () => new Article(id, value, value, value, value, date, string.Empty)));
+
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(id, string.Empty, value, value, value, date, value, value)));
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(id, value, string.Empty, value, value, date, value, value)));
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(id, value, value, string.Empty, value, date, value, value)));
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(id, value, value, value, string.Empty, date, value, value)));
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(id, value, value, value, value, date, string.Empty, value)));
+            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
+                () => new Article(id, value, value, value, value, date, value, string.Empty)));
+        }
+
+        [Test]
+        public IEnumerable<ITestCase> UserIdIsCorrect()
+        {
+            yield return TestCase.WithAuto<Generator<Article>>().Create(
+                factory =>
+                {
+                    Assert.NotNull(factory.First().UserId);
+                    var actual = factory.Take(100).Select(x => x.UserId).Distinct().Count();
+                    Assert.Equal(100, actual);
+                });
+
+            yield return TestCase.WithAuto<IFixture>().Create(
+                fixture =>
+                {
+                    var uesrId = fixture.Freeze<string>();
+                    var sut = fixture.Build<Article>()
+                        .FromFactory(
+                            new MethodInvoker(new GreedyConstructorQuery()))
+                        .Create();
+                    Assert.Equal(uesrId, sut.UserId);
+                });
         }
 
         [Test]

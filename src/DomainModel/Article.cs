@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     public class Article
     {
@@ -11,9 +12,9 @@
         private readonly DateTime date;
         private readonly string url;
         private readonly int id;
-        private string userId;
+        private readonly string userId;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "5#", Justification = "To match database entity.")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "5#", Justification = "To match database entity.")]
         public Article(
             string provider,
             string no,
@@ -25,15 +26,29 @@
         {
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "6#", Justification = "To match database entity.")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "6#", Justification = "To match database entity.")]
         public Article(
-           int id,
-           string provider,
-           string no,
-           string subject,
-           string body,
-           DateTime date,
-           string url)
+            int id,
+            string provider,
+            string no,
+            string subject,
+            string body,
+            DateTime date,
+            string url)
+            : this(id, provider, no, subject, body, date, url, Guid.NewGuid().ToString())
+        {
+        }
+
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "6#", Justification = "To match database entity.")]
+        public Article(
+            int id,
+            string provider,
+            string no,
+            string subject,
+            string body,
+            DateTime date,
+            string url,
+            string userId)
         {
             if (provider == null)
                 throw new ArgumentNullException("provider");
@@ -49,7 +64,10 @@
 
             if (url == null)
                 throw new ArgumentNullException("url");
-            
+
+            if (userId == null)
+                throw new ArgumentNullException("userId");
+
             if (provider.Length == 0)
                 throw new ArgumentException(
                     "The 'provider' value should not be empty string.", "provider");
@@ -69,7 +87,11 @@
             if (url.Length == 0)
                 throw new ArgumentException(
                     "The 'url' value should not be empty string.", "url");
-            
+
+            if (userId.Length == 0)
+                throw new ArgumentException(
+                    "The 'userId' value should not be empty string.", "userId");
+
             this.id = id;
             this.provider = provider;
             this.no = no;
@@ -77,6 +99,7 @@
             this.body = body;
             this.date = date;
             this.url = url;
+            this.userId = userId;
         }
 
         public int Id
@@ -109,7 +132,7 @@
             get { return this.date; }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Justification = "데이터베이스에 저장하기 위해 문자열로 취급.")]
+        [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Justification = "데이터베이스에 저장하기 위해 문자열로 취급.")]
         public string Url
         {
             get { return this.url; }
@@ -129,17 +152,12 @@
                 this.subject,
                 this.body,
                 this.date,
-                this.url)
-            {
-                userId = this.userId
-            };
+                this.url,
+                this.userId);
         }
 
         public Article WithSubject(string newSubject)
         {
-            if (newSubject == null)
-                throw new ArgumentNullException("newSubject");
-
             return new Article(
                 this.id,
                 this.provider,
@@ -147,21 +165,12 @@
                 newSubject,
                 this.body,
                 this.date,
-                this.url)
-            {
-                userId = this.userId
-            };
+                this.url,
+                this.userId);
         }
 
         public Article WithUserId(string newUserId)
         {
-            if (newUserId == null)
-                throw new ArgumentNullException("newUserId");
-
-            if (newUserId.Length == 0)
-                throw new ArgumentException(
-                    "The 'newUserId' value should not be empty string.", "newUserId");
-
             return new Article(
                 this.id,
                 this.provider,
@@ -169,10 +178,8 @@
                 this.subject,
                 this.body,
                 this.date,
-                this.url)
-            {
-                userId = newUserId
-            };
+                this.url,
+                newUserId);
         }
     }
 }
