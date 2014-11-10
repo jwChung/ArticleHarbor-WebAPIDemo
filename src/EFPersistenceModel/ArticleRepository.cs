@@ -37,13 +37,6 @@
             return articles.Select(x => x.ToDomain());
         }
 
-        public Task<DomainArticle> FineAsync(int id)
-        {
-            var article = this.context.Articles.Find(id);
-            return Task.FromResult(
-                article == null ? null : article.ToDomain());
-        }
-
         public Task<DomainArticle> FineAsync(params object[] identity)
         {
             if (identity == null)

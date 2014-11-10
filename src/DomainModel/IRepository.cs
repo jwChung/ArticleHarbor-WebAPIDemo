@@ -5,11 +5,11 @@
 
     public interface IRepository<T>
     {
-        Task<Article> FineAsync(params object[] identity);
+        Task<T> FineAsync(params object[] identity);
 
         Task<IEnumerable<T>> SelectAsync();
 
-        Task<Article> InsertAsync(T article);
+        Task<T> InsertAsync(T article);
 
         Task UpdateAsync(T article);
 

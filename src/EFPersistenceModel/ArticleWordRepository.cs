@@ -1,11 +1,11 @@
 ﻿namespace ArticleHarbor.EFPersistenceModel
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.EFDataAccess;
-    using Article = DomainModel.Article;
     using ArticleWord = DomainModel.ArticleWord;
 
     public class ArticleWordRepository : IRepository<ArticleWord>
@@ -56,7 +56,7 @@
             return Task.FromResult<object>(null);
         }
 
-        public Task<DomainModel.Article> FineAsync(params object[] identity)
+        public Task<ArticleWord> FineAsync(params object[] identity)
         {
             if (identity == null)
                 throw new ArgumentNullException("identity");
@@ -64,16 +64,8 @@
             throw new NotImplementedException();
         }
 
-        public Task<System.Collections.Generic.IEnumerable<ArticleWord>> SelectAsync()
+        public Task<IEnumerable<ArticleWord>> SelectAsync()
         {
-            throw new NotImplementedException();
-        }
-
-        Task<Article> IRepository<ArticleWord>.InsertAsync(ArticleWord article)
-        {
-            if (article == null)
-                throw new ArgumentNullException("article");
-
             throw new NotImplementedException();
         }
 
