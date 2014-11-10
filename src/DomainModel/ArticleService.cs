@@ -100,4 +100,22 @@
             return article;
         }
     }
+
+    public class NewArticleService : IArticleService
+    {
+        public Task<IEnumerable<Article>> GetAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Article> SaveAsync(Article article)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

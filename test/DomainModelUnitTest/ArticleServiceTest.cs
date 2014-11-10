@@ -176,4 +176,13 @@
             sut.Articles.ToMock().Verify(x => x.DeleteAsync(id));
         }
     }
+
+    public class NewArticleServiceTest : IdiomaticTest<NewArticleService>
+    {
+        [Test]
+        public void SutIsArticleService(NewArticleService sut)
+        {
+            Assert.IsAssignableFrom<IArticleService>(sut);
+        }
+    }
 }
