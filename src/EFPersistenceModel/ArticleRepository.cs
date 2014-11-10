@@ -80,6 +80,14 @@
             return Task.FromResult<object>(null);
         }
 
+        public Task DeleteAsync(params object[] identity)
+        {
+            if (identity == null)
+                throw new ArgumentNullException("identity");
+
+            throw new NotImplementedException();
+        }
+
         private async Task<DomainArticle> InsertAsyncImpl(DomainArticle item)
         {
             if ((await this.FineAsync(new object[] { item.Id })) != null)
@@ -101,14 +109,6 @@
                     article.UserId));
 
             return persistenceUser.Id;
-        }
-
-        public Task DeleteAsync(params object[] identity)
-        {
-            if (identity == null)
-                throw new ArgumentNullException("identity");
-
-            throw new NotImplementedException();
         }
     }
 }
