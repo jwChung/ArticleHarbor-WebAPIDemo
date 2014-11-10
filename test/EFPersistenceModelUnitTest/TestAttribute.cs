@@ -15,7 +15,7 @@
         private readonly RunOn runOn;
 
         public TestAttribute()
-            : this(RunOn.Any)
+            : this(RunOn.Local)
         {
         }
 
