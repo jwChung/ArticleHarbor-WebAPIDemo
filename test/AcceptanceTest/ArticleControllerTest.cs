@@ -105,6 +105,25 @@
             }
         }
 
+        [Test]
+        public async Task PostAsyncReturnsInternalSeverErrorWhenIncorrectUserModifiesArticle(Article article)
+        {
+            article = article.WithId(1); // owned by user 1
+
+            using (var client = HttpClientFactory.Create())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "apikey", "232494f5670943dfac807226449fe795"); // user2
+                var content = new StringContent(
+                    JsonConvert.SerializeObject(article));
+                content.Headers.ContentType.MediaType = "application/json";
+
+                var response = await client.PostAsync("api/articles", content);
+
+                Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+            }
+        }
+
         private static async Task<string> GetMessageAsync(HttpResponseMessage response)
         {
             return "Actual status code: " + response.StatusCode + Environment.NewLine
