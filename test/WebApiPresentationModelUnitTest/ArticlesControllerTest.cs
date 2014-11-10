@@ -5,7 +5,10 @@
     using System.Threading.Tasks;
     using System.Web.Http;
     using ArticleHarbor.DomainModel;
+    using Moq;
+    using Ploeh.Albedo.Refraction;
     using Ploeh.AutoFixture.Xunit;
+    using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 
     public class ArticlesControllerTest : IdiomaticTest<ArticlesController>
@@ -41,10 +44,18 @@
         public async Task PostAsyncReturnsCorrectResult(
             ArticlesController sut,
             Article article,
-            Article newArticle)
+            Article newArticle,
+            string userId)
         {
-            sut.ArticleService.Of(x => x.SaveAsync(article) == Task.FromResult(newArticle));
+            sut.User.Identity.Of(x => x.Name == userId);
+            var articleWithUserId = article.WithUserId(userId);
+            var likeness = articleWithUserId.AsSource().OfLikeness<Article>();
+            sut.ArticleService.Of(
+                x => x.SaveAsync(It.Is<Article>(p => likeness.Equals(p)))
+                    == Task.FromResult(newArticle));
+
             var actual = await sut.PostAsync(article);
+
             Assert.Equal(newArticle, actual);
         }
     }

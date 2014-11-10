@@ -1,7 +1,9 @@
 ﻿namespace ArticleHarbor.AcceptanceTest
 {
     using System;
+    using System.Net;
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
     using Newtonsoft.Json;
@@ -48,16 +50,33 @@
             }
         }
 
-        [Test(Skip = "Need Authentication")]
-        public async Task PostAsyncCorrectlyAddsArticleAndArticleWords(Article article)
+        [Test]
+        public async Task PostAsyncWithIncorrectAuthReturnsUnauthorizedCode(Article article)
         {
-            article = article.WithUserId("user2")
-                .WithSubject("문장에서 단어만 추출해서 입력되는지 DB에서 확인필요.");
-
             using (var client = HttpClientFactory.Create())
             {
                 var content = new StringContent(
-                    JsonConvert.SerializeObject(article.WithId(1000)));
+                    JsonConvert.SerializeObject(article));
+                content.Headers.ContentType.MediaType = "application/json";
+
+                var response = await client.PostAsync("api/articles", content);
+
+                Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+            }
+        }
+
+        [Test]
+        public async Task PostAsyncCorrectlyAddsArticleAndArticleWords(Article article)
+        {
+            article = article.WithSubject(
+                "문장에서 단어만 추출해서 입력되는지 DB에서 확인필요.");
+
+            using (var client = HttpClientFactory.Create())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "apikey", "232494f5670943dfac807226449fe795");
+                var content = new StringContent(
+                    JsonConvert.SerializeObject(article));
                 content.Headers.ContentType.MediaType = "application/json";
 
                 var response = await client.PostAsync("api/articles", content);
@@ -66,16 +85,18 @@
             }
         }
 
-        [Test(Skip = "Need Authentication")]
+        [Test]
         public async Task PostAsyncCorrectlyModifiesArticleAndRenewsArticleWords(Article article)
         {
-            article = article.WithUserId("user2")
-                .WithSubject("기존 단어들이 삭제되고, 새로운 단어들이 추가되었는지 DB에서 확인필요.");
+            article = article.WithId(2).WithSubject(
+                "기존 단어들이 삭제되고, 새로운 단어들이 추가되었는지 DB에서 확인필요.");
 
             using (var client = HttpClientFactory.Create())
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "apikey", "232494f5670943dfac807226449fe795");
                 var content = new StringContent(
-                    JsonConvert.SerializeObject(article.WithId(1)));
+                    JsonConvert.SerializeObject(article));
                 content.Headers.ContentType.MediaType = "application/json";
 
                 var response = await client.PostAsync("api/articles", content);
@@ -86,8 +107,13 @@
 
         private static async Task<string> GetMessageAsync(HttpResponseMessage response)
         {
-            return "Actual status code: " + response.StatusCode
-                + Environment.NewLine + await response.Content.ReadAsStringAsync();
+            return "Actual status code: " + response.StatusCode + Environment.NewLine
+                + await GetStringMessage(response);
+        }
+
+        private static async Task<string> GetStringMessage(HttpResponseMessage response)
+        {
+            return response.Content != null ? await response.Content.ReadAsStringAsync() : string.Empty;
         }
     }
 }

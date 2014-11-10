@@ -6,6 +6,9 @@
     using System.Web.Http.Dispatcher;
     using System.Web.Http.ExceptionHandling;
     using ArticleHarbor.WebApiPresentationModel;
+    using DomainModel;
+    using EFDataAccess;
+    using EFPersistenceModel;
     using Jwc.Funz;
 
     public static class WebApiConfig
@@ -38,6 +41,14 @@
                 new UnhandledExceptionLogger(new FileLogger(Environment.CurrentDirectory)));
 
             config.Filters.Add(new SaveUnitOfWorkActionFilterAttribute());
+
+            Func<IAuthService> authServiceFactory = () =>
+            {
+                var context = new ArticleHarborDbContext(
+                    new ArticleHarborDbContextTestInitializer());
+                return new AuthService(new UserRepository(context), context);
+            };
+            config.MessageHandlers.Add(new ApiKeyAuthenticationDispatcher(authServiceFactory));
 
             // Web API routes
             config.MapHttpAttributeRoutes();

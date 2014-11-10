@@ -35,7 +35,8 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            return this.articleService.SaveAsync(article);
+            return this.articleService.SaveAsync(
+                article.WithUserId(this.User.Identity.Name));
         }
     }
 }
