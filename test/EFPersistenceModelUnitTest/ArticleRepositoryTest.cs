@@ -12,7 +12,7 @@
     public class ArticleRepositoryTest : IdiomaticTest<ArticleRepository>
     {
         [Test]
-        public void SutIsArticleRepository(ArticleRepository sut)
+        public void SutIsRepository(ArticleRepository sut)
         {
             Assert.IsAssignableFrom<IRepository<Article>>(sut);
         }

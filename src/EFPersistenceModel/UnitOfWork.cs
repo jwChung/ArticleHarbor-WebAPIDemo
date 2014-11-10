@@ -5,6 +5,7 @@
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.EFDataAccess;
     using Article = DomainModel.Article;
+    using ArticleWord = DomainModel.ArticleWord;
 
     public class UnitOfWork : IUnitOfWork
     {
@@ -37,7 +38,7 @@
             }
         }
 
-        public IArticleWordRepository ArticleWords
+        public IRepository<ArticleWord> ArticleWords
         {
             get
             {

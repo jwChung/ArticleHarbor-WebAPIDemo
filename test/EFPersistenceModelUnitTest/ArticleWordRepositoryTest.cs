@@ -10,9 +10,9 @@
     public class ArticleWordRepositoryTest : IdiomaticTest<ArticleWordRepository>
     {
         [Test]
-        public void SutIsArticleWordRepository(ArticleWordRepository sut)
+        public void SutIsRepository(ArticleWordRepository sut)
         {
-            Assert.IsAssignableFrom<IArticleWordRepository>(sut);
+            Assert.IsAssignableFrom<IRepository<ArticleWord>>(sut);
         }
 
         [Test]
@@ -36,12 +36,11 @@
                 var article = sut.Context.Articles.First();
                 var articleWord = new ArticleWord(article.Id, word);
 
-                await sut.InsertAsync(articleWord);
+                ArticleWord actual = await sut.InsertAsync(articleWord);
 
                 var expected = sut.Select(articleWord.ArticleId, articleWord.Word);
-                articleWord.AsSource()
-                    .OfLikeness<ArticleWord>()
-                    .ShouldEqual(expected);
+                articleWord.AsSource().OfLikeness<ArticleWord>().ShouldEqual(expected);
+                articleWord.AsSource().OfLikeness<ArticleWord>().ShouldEqual(actual);
             }
             finally
             {
@@ -81,7 +80,7 @@
             {
                 var article = sut.Context.Articles.First();
 
-                await sut.DeleteAsync(article.Id);
+                await sut.DeleteAsync(new object[] { article.Id });
                 sut.Context.SaveChanges();
 
                 Assert.Empty(
