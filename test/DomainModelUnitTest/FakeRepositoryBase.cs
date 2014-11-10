@@ -15,8 +15,12 @@
         public FakeRepositoryBase(Generator<T> generator)
         {
             this.items = new List<T>();
-            foreach (var item in generator.Take(3))
+            foreach (var item in generator)
+            {
                 this.InsertAsync(item).Wait();
+                if (this.items.Count == 3)
+                    break;
+            }
         }
 
         public IList<T> Items
@@ -27,7 +31,7 @@
         public Task<T> FineAsync(params object[] identity)
         {
             return Task.FromResult<T>(
-                this.Items.SingleOrDefault(x => this.GetIndentity(x).SequenceEqual(identity)));
+                this.Items.LastOrDefault(x => this.GetIndentity(x).SequenceEqual(identity)));
         }
 
         public Task<IEnumerable<T>> SelectAsync()
@@ -43,13 +47,12 @@
 
         public async Task UpdateAsync(T item)
         {
-            var oldItem = await this.FineAsync(GetIndentity(item));
+            var oldItem = await this.FineAsync(this.GetIndentity(item));
             if (oldItem == null)
                 return;
 
             this.Items.Remove(oldItem);
             this.Items.Add(item);
-            
         }
 
         public async Task DeleteAsync(params object[] identity)

@@ -11,6 +11,7 @@
         }
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "To declare generic class")]
     public class AuthArticleRepositoryProviderTest : AuthRepositoryProviderTest<Article>
     {
     }

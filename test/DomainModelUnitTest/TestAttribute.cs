@@ -1,6 +1,8 @@
 ﻿namespace ArticleHarbor
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using DomainModel;
     using Jwc.Experiment;
     using Jwc.Experiment.AutoFixture;
@@ -56,6 +58,7 @@
             return new TestFixture(new Fixture().Customize(new CompositeCustomization(
                 new AutoMoqCustomization(),
                 new DomainModelCustomization(),
+                new PermissionsCustomization(),
                 new TestParametersCustomization(parameters))));
         }
 
@@ -70,6 +73,17 @@
                     fixture.Create<Generator<Article>>());
                 fixture.Inject<FakeRepositoryBase<Article>>(articleRepository);
                 fixture.Inject<IRepository<Article>>(articleRepository);
+            }
+        }
+
+        private class PermissionsCustomization : ICustomization
+        {
+            public void Customize(IFixture fixture)
+            {
+                var max = Enum.GetValues(typeof(Permissions)).Cast<int>().Max();
+                var random = new Random();
+                fixture.Customize<Permissions>(
+                    c => c.FromFactory(() => (Permissions)random.Next(0, max + 1)));
             }
         }
 
