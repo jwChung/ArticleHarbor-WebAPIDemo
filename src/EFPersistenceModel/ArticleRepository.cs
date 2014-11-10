@@ -7,10 +7,12 @@
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
-    using ArticleHarbor.DomainModel;
-    using ArticleHarbor.EFDataAccess;
-    using Article = DomainModel.Article;
-    using User = EFDataAccess.User;
+    using DomainModel;
+    using EFDataAccess;
+    using DomainArticle = DomainModel.Article;
+    using DomainUser = DomainModel.User;
+    using PersistenceArticle = EFDataAccess.Article;
+    using PersistenceUser = EFDataAccess.User;
 
     public class ArticleRepository : IArticleRepository
     {
@@ -29,20 +31,20 @@
             get { return this.context; }
         }
 
-        public async Task<IEnumerable<Article>> SelectAsync()
+        public async Task<IEnumerable<DomainArticle>> SelectAsync()
         {
             var articles = await this.context.Articles.Take(50).ToArrayAsync();
             return articles.Select(x => x.ToDomain());
         }
 
-        public Task<Article> FineAsync(int id)
+        public Task<DomainArticle> FineAsync(int id)
         {
             var article = this.context.Articles.Find(id);
-            return Task.FromResult<Article>(
+            return Task.FromResult(
                 article == null ? null : article.ToDomain());
         }
 
-        public Task<Article> InsertAsync(Article article)
+        public Task<DomainArticle> InsertAsync(DomainArticle article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
@@ -50,16 +52,16 @@
             return this.InsertAsyncImpl(article);
         }
 
-        public Task UpdateAsync(Article article)
+        public Task UpdateAsync(DomainArticle article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            var persistence = this.context.Articles.Find(article.Id);
-            if (persistence != null)
+            var persistenceArticle = this.context.Articles.Find(article.Id);
+            if (persistenceArticle != null)
             {
-                ((IObjectContextAdapter)this.context).ObjectContext.Detach(persistence);
-                this.context.Entry(article.ToPersistence(persistence.UserId)).State
+                ((IObjectContextAdapter)this.context).ObjectContext.Detach(persistenceArticle);
+                this.context.Entry(article.ToPersistence(persistenceArticle.UserId)).State
                     = EntityState.Modified;
             }
 
@@ -75,27 +77,27 @@
             return Task.FromResult<object>(null);
         }
 
-        private async Task<Article> InsertAsyncImpl(Article article)
+        private async Task<DomainArticle> InsertAsyncImpl(DomainArticle article)
         {
             if ((await this.FineAsync(article.Id)) != null)
                 return article;
 
-            var persistence = article.ToPersistence(await this.GetUserId(article));
-            var newPersistence = this.context.Articles.Add(persistence);
+            var persistenceArticle = article.ToPersistence(await this.GetUserId(article));
+            var newPersistenceArticle = this.context.Articles.Add(persistenceArticle);
             await this.context.SaveChangesAsync();
-            return newPersistence.ToDomain();
+            return newPersistenceArticle.ToDomain();
         }
 
-        private async Task<string> GetUserId(Article article)
+        private async Task<string> GetUserId(DomainArticle article)
         {
-            var user = await this.context.UserManager.FindByNameAsync(article.UserId);
-            if (user == null)
+            var persistenceUser = await this.context.UserManager.FindByNameAsync(article.UserId);
+            if (persistenceUser == null)
                 throw new ArgumentException(string.Format(
                     CultureInfo.CurrentCulture,
                     "The user id '{0}' is invalid.",
                     article.UserId));
 
-            return user.Id;
+            return persistenceUser.Id;
         }
     }
 }
