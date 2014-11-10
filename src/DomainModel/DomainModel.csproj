@@ -51,6 +51,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IArticleService.cs" />
     <Compile Include="IArticleWordService.cs" />
+    <Compile Include="IAuthRepositoryProvider.cs" />
     <Compile Include="IAuthService.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
