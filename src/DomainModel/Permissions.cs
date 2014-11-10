@@ -3,6 +3,7 @@
     using System;
 
     [Flags]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces", Justification = "This name is appropriate in this project.")]
     public enum Permissions
     {
         /// <summary>

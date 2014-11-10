@@ -94,7 +94,7 @@
             {
             }
 
-            public override object[] GetIndentity(Article item)
+            public override object[] GetIdentity(Article item)
             {
                 return new object[] { item.Id };
             }

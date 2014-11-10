@@ -31,7 +31,7 @@
         public Task<T> FineAsync(params object[] identity)
         {
             return Task.FromResult<T>(
-                this.Items.LastOrDefault(x => this.GetIndentity(x).SequenceEqual(identity)));
+                this.Items.LastOrDefault(x => this.GetIdentity(x).SequenceEqual(identity)));
         }
 
         public Task<IEnumerable<T>> SelectAsync()
@@ -47,7 +47,7 @@
 
         public async Task UpdateAsync(T item)
         {
-            var oldItem = await this.FineAsync(this.GetIndentity(item));
+            var oldItem = await this.FineAsync(this.GetIdentity(item));
             if (oldItem == null)
                 return;
 
@@ -64,6 +64,6 @@
             this.Items.Remove(item);
         }
 
-        public abstract object[] GetIndentity(T item);
+        public abstract object[] GetIdentity(T item);
     }
 }
