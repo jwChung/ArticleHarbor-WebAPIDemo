@@ -142,6 +142,22 @@
         }
 
         [Test]
+        public void SaveAsyncWithInvalidUserIdThrows(
+             ArticleService sut,
+            Article article,
+            int id,
+            string userId,
+            string newUserId)
+        {
+            article = article.WithId(id).WithUserId(userId);
+            sut.Articles.Of(x =>
+                x.FineAsync(article.Id) == Task.FromResult(article.WithUserId(newUserId)));
+
+            var e = Assert.Throws<AggregateException>(() => sut.SaveAsync(article).Wait());
+            Assert.IsType<InvalidOperationException>(e.InnerException);
+        }
+
+        [Test]
         public async Task RemoveAsyncCorrectlyRemoves(
             ArticleService sut,
             int id)
