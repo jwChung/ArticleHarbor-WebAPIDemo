@@ -47,7 +47,7 @@
             return this.users.FindAsync(apiKey);
         }
 
-        public Task<bool> HasPermissions(string userId, UserPermissions permissions)
+        public Task<bool> HasPermissions(string userId, Permissions permissions)
         {
             if (userId == null)
                 throw new ArgumentNullException("userId");

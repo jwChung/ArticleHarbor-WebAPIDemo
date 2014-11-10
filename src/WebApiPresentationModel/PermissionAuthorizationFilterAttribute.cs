@@ -13,14 +13,14 @@
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public sealed class PermissionAuthorizationFilterAttribute : AuthorizationFilterAttribute
     {
-        private readonly UserPermissions permissions;
+        private readonly Permissions permissions;
 
-        public PermissionAuthorizationFilterAttribute(UserPermissions permissions)
+        public PermissionAuthorizationFilterAttribute(Permissions permissions)
         {
             this.permissions = permissions;
         }
 
-        public UserPermissions Permissions
+        public Permissions Permissions
         {
             get { return this.permissions; }
         }

@@ -10,16 +10,16 @@
         /// <summary>
         /// The user
         /// </summary>
-        User = UserPermissions.Authentication,
+        User = Permissions.Authentication,
 
         /// <summary>
         /// The author
         /// </summary>
-        Author = User | UserPermissions.CreateArticle | UserPermissions.DeleteOwnArticle | UserPermissions.ModifyOwnArticle,
+        Author = User | Permissions.CreateArticle | Permissions.DeleteOwnArticle | Permissions.ModifyOwnArticle,
 
         /// <summary>
         /// The administrator
         /// </summary>
-        Administrator = Author | UserPermissions.DeleteAnyArticle | UserPermissions.ModifyAnyArticle
+        Administrator = Author | Permissions.DeleteAnyArticle | Permissions.ModifyAnyArticle
     }
 }

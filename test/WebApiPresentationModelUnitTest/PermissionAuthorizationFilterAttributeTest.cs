@@ -52,17 +52,17 @@
             {
                 new
                 {
-                    Permissions = UserPermissions.DeleteAnyArticle,
+                    Permissions = Permissions.DeleteAnyArticle,
                     RoleName = "User"
                 },
                 new
                 {
-                    Permissions = UserPermissions.CreateArticle,
+                    Permissions = Permissions.CreateArticle,
                     RoleName = "User"
                 },
                 new
                 {
-                    Permissions = UserPermissions.DeleteAnyArticle,
+                    Permissions = Permissions.DeleteAnyArticle,
                     RoleName = "Author"
                 },
             };
@@ -88,37 +88,37 @@
             {
                 new
                 {
-                    Permissions = UserPermissions.DeleteAnyArticle,
+                    Permissions = Permissions.DeleteAnyArticle,
                     RoleName = "Administrator"
                 },
                 new
                 {
-                    Permissions = UserPermissions.None,
+                    Permissions = Permissions.None,
                     RoleName = "User"
                 },
                 new
                 {
-                    Permissions = UserPermissions.None,
+                    Permissions = Permissions.None,
                     RoleName = "Author"
                 },
                 new
                 {
-                    Permissions = UserPermissions.None,
+                    Permissions = Permissions.None,
                     RoleName = "Administrator"
                 },
                 new
                 {
-                    Permissions = UserPermissions.DeleteOwnArticle | UserPermissions.CreateArticle,
+                    Permissions = Permissions.DeleteOwnArticle | Permissions.CreateArticle,
                     RoleName = "Author"
                 },
                 new
                 {
-                    Permissions = UserPermissions.DeleteOwnArticle | UserPermissions.CreateArticle,
+                    Permissions = Permissions.DeleteOwnArticle | Permissions.CreateArticle,
                     RoleName = "Administrator"
                 },
                 new
                 {
-                    Permissions = UserPermissions.Authentication,
+                    Permissions = Permissions.Authentication,
                     RoleName = "User"
                 }
             };

@@ -9,6 +9,6 @@
 
         Task<User> FindUserAsync(Guid apiKey);
 
-        Task<bool> HasPermissions(string userId, UserPermissions permissions);
+        Task<bool> HasPermissions(string userId, Permissions permissions);
     }
 }
