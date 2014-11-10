@@ -29,6 +29,16 @@
         }
 
         [Test]
+        public void GetAsyncLimitsMaxCountTo50(
+            ArticleService sut,
+            Task<IEnumerable<Article>> articles)
+        {
+            sut.Articles.Of(x => x.SelectAsync() == articles);
+            var actual = sut.GetAsync();
+            Assert.Equal(articles, actual);
+        }
+
+        [Test]
         public async Task SaveAsyncAddsWhenThereIsNoArticleWithGivenId(
             ArticleService sut,
             Article article,
