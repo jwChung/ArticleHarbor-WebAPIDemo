@@ -1,6 +1,8 @@
 namespace ArticleHarbor.EFPersistenceModel
 {
     using System;
+    using System.Globalization;
+    using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
 
     internal static class EntityConversionExtensions

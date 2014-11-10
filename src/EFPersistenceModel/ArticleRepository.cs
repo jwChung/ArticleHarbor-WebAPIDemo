@@ -10,6 +10,7 @@
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.EFDataAccess;
     using Article = DomainModel.Article;
+    using User = EFDataAccess.User;
 
     public class ArticleRepository : IArticleRepository
     {
@@ -79,6 +80,14 @@
             if ((await this.FineAsync(article.Id)) != null)
                 return article;
 
+            var persistence = article.ToPersistence(await this.GetUserId(article));
+            var newPersistence = this.context.Articles.Add(persistence);
+            await this.context.SaveChangesAsync();
+            return newPersistence.ToDomain();
+        }
+
+        private async Task<string> GetUserId(Article article)
+        {
             var user = await this.context.UserManager.FindByNameAsync(article.UserId);
             if (user == null)
                 throw new ArgumentException(string.Format(
@@ -86,9 +95,7 @@
                     "The user id '{0}' is invalid.",
                     article.UserId));
 
-            var persistence = this.context.Articles.Add(article.ToPersistence(user.Id));
-            await this.context.SaveChangesAsync();
-            return persistence.ToDomain();
+            return user.Id;
         }
     }
 }
