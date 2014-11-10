@@ -68,7 +68,7 @@
         }
 
         [Test]
-        public void WithUserIdWithEmtpyStringThrows(
+        public void WithUserIdWithEmptyStringThrows(
             Article sut)
         {
             Assert.Throws<ArgumentException>(() => sut.WithUserId(string.Empty));
