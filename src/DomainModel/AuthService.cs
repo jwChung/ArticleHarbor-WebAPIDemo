@@ -47,6 +47,14 @@
             return this.users.FindAsync(apiKey);
         }
 
+        public Task<bool> HasPermissions(string userId, UserPermissions permissions)
+        {
+            if (userId == null)
+                throw new ArgumentNullException("userId");
+
+            throw new NotImplementedException();
+        }
+
         public void Dispose()
         {
             this.Dispose(true);
