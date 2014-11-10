@@ -24,6 +24,7 @@ namespace ArticleHarbor.AcceptanceTest
         [Test]
         public async Task ThrowNonArgumentExceptionCorrectlyLogs()
         {
+            DeleteAllLogFiles();
             try
             {
                 using (var client = HttpClientFactory.Create())
@@ -36,9 +37,14 @@ namespace ArticleHarbor.AcceptanceTest
             }
             finally
             {
-                foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "*.log"))
-                    File.Delete(file);
+                DeleteAllLogFiles();
             }
+        }
+
+        private static void DeleteAllLogFiles()
+        {
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory, "*.log"))
+                File.Delete(file);
         }
     }
 }
