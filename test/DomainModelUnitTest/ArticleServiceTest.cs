@@ -2,11 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
     using Jwc.Experiment.Xunit;
     using Moq;
     using Ploeh.AutoFixture;
+    using Ploeh.AutoFixture.Xunit;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 
@@ -27,17 +27,7 @@
             var actual = sut.GetAsync();
             Assert.Equal(articles, actual);
         }
-
-        [Test]
-        public void GetAsyncLimitsMaxCountTo50(
-            ArticleService sut,
-            Task<IEnumerable<Article>> articles)
-        {
-            sut.Articles.Of(x => x.SelectAsync() == articles);
-            var actual = sut.GetAsync();
-            Assert.Equal(articles, actual);
-        }
-
+        
         [Test]
         public async Task SaveAsyncAddsWhenThereIsNoArticleWithGivenId(
             ArticleService sut,
@@ -77,11 +67,11 @@
             // Fixture setup
             var modifiedArticle = article.WithSubject(subject);
             fixture.Inject<Func<string, IEnumerable<string>>>(
-               x =>
-               {
-                   Assert.Equal(subject, x);
-                   return words;
-               });
+                x =>
+                {
+                    Assert.Equal(subject, x);
+                    return words;
+                });
             var sut = fixture.Create<ArticleService>();
             sut.Articles.Of(x => x.FineAsync(article.Id) == Task.FromResult(article));
 
@@ -153,7 +143,7 @@
 
         [Test]
         public void SaveAsyncWithInvalidUserIdThrows(
-             ArticleService sut,
+            ArticleService sut,
             Article article,
             int id,
             string userId,
@@ -174,15 +164,6 @@
         {
             await sut.RemoveAsync(id);
             sut.Articles.ToMock().Verify(x => x.DeleteAsync(id));
-        }
-    }
-
-    public class NewArticleServiceTest : IdiomaticTest<NewArticleService>
-    {
-        [Test]
-        public void SutIsArticleService(NewArticleService sut)
-        {
-            Assert.IsAssignableFrom<IArticleService>(sut);
         }
     }
 }

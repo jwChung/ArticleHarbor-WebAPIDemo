@@ -77,8 +77,15 @@
         [Test]
         public IEnumerable<ITestCase> IdIsCorrect()
         {
-            yield return TestCase.WithAuto<Article>().Create(
-                sut => Assert.Equal(-1, sut.Id));
+            yield return TestCase.WithAuto<IFixture>().Create(
+               fixture =>
+               {
+                   var sut = fixture.Build<Article>()
+                       .FromFactory(
+                           new MethodInvoker(new ModestConstructorQuery()))
+                       .Create();
+                   Assert.Equal(-1, sut.Id);
+               });
 
             yield return TestCase.WithAuto<IFixture>().Create(
                 fixture =>
