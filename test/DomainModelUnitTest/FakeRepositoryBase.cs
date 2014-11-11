@@ -39,20 +39,20 @@
             return Task.FromResult<IEnumerable<T>>(this.Items);
         }
 
-        public Task<T> InsertAsync(T item)
+        public Task<T> InsertAsync(T article)
         {
-            this.Items.Add(item);
-            return Task.FromResult<T>(item);
+            this.Items.Add(article);
+            return Task.FromResult<T>(article);
         }
 
-        public async Task UpdateAsync(T item)
+        public async Task UpdateAsync(T article)
         {
-            var oldItem = await this.FindAsync(this.GetIdentity(item));
+            var oldItem = await this.FindAsync(this.GetIdentity(article));
             if (oldItem == null)
                 return;
 
             this.Items.Remove(oldItem);
-            this.Items.Add(item);
+            this.Items.Add(article);
         }
 
         public async Task DeleteAsync(params object[] identity)

@@ -144,6 +144,16 @@ namespace ArticleHarbor.DomainModel
             {
                 return new object[] { item.Id };
             }
+
+            public Task<Article> FindAsync(int id)
+            {
+                return this.FindAsync(new object[] { id });
+            }
+
+            public Task DeleteAsync(int id)
+            {
+                return this.DeleteAsync(new object[] { id });
+            }
         }
     }
 }

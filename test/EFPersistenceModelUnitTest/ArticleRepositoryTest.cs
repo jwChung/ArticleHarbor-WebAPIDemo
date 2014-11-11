@@ -12,9 +12,9 @@
     public class ArticleRepositoryTest : IdiomaticTest<ArticleRepository>
     {
         [Test]
-        public void SutIsRepository(ArticleRepository sut)
+        public void SutIsArticleRepository(ArticleRepository sut)
         {
-            Assert.IsAssignableFrom<IRepository<Article>>(sut);
+            Assert.IsAssignableFrom<IArticleRepository>(sut);
         }
 
         [Test]
@@ -26,7 +26,7 @@
             try
             {
                 var newArticle = await sut.InsertAsync(article.WithUserId("user1"));
-                var expected = await sut.FindAsync(new object[] { newArticle.Id });
+                var expected = await sut.FindAsync(newArticle.Id);
                 newArticle.AsSource().OfLikeness<Article>().ShouldEqual(expected);
             }
             finally
@@ -106,7 +106,7 @@
                 await sut.UpdateAsync(modifiedArticle);
 
                 sut.Context.SaveChanges();
-                var actual = await sut.FindAsync(new object[] { insertedArticle.Id });
+                var actual = await sut.FindAsync(insertedArticle.Id);
                 actual.AsSource().OfLikeness<Article>().ShouldEqual(modifiedArticle);
             }
             finally
@@ -146,12 +146,12 @@
             try
             {
                 article = await sut.InsertAsync(article.WithUserId("user1"));
-                Assert.NotNull(await sut.FindAsync(new object[] { article.Id }));
+                Assert.NotNull(await sut.FindAsync(article.Id));
 
-                await sut.DeleteAsync(new object[] { article.Id });
+                await sut.DeleteAsync(article.Id);
 
                 await sut.Context.SaveChangesAsync();
-                Assert.Null(await sut.FindAsync(new object[] { article.Id }));
+                Assert.Null(await sut.FindAsync(article.Id));
             }
             finally
             {
@@ -165,7 +165,7 @@
             ArticleRepository sut,
             Article article)
         {
-            Assert.DoesNotThrow(() => sut.DeleteAsync(new object[] { article.Id }).Wait());
+            Assert.DoesNotThrow(() => sut.DeleteAsync(article.Id).Wait());
         }
 
         [Test]
@@ -173,7 +173,7 @@
             ArticleRepository sut,
             int id)
         {
-            var actual = await sut.FindAsync(new object[] { id });
+            var actual = await sut.FindAsync(id);
             Assert.Null(actual);
         }
     }

@@ -1,6 +1,18 @@
 ﻿namespace ArticleHarbor.DomainModel
 {
-    public interface IArticleRepository : IRepository<Article>
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    public interface IArticleRepository
     {
+        Task<Article> FindAsync(int id);
+
+        Task<IEnumerable<Article>> SelectAsync();
+
+        Task<Article> InsertAsync(Article article);
+
+        Task UpdateAsync(Article article);
+
+        Task DeleteAsync(int id);
     }
 }

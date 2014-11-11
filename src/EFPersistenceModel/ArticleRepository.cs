@@ -14,7 +14,7 @@
     using PersistenceArticle = EFDataAccess.Article;
     using PersistenceUser = EFDataAccess.User;
 
-    public class ArticleRepository : IRepository<DomainArticle>, IArticleRepository
+    public class ArticleRepository : IArticleRepository
     {
         private readonly ArticleHarborDbContext context;
 
@@ -37,46 +37,32 @@
             return articles.Select(x => x.ToDomain());
         }
 
-        public Task<DomainArticle> FindAsync(params object[] identity)
+        public Task<DomainArticle> InsertAsync(DomainArticle article)
         {
-            if (identity == null)
-                throw new ArgumentNullException("identity");
+            if (article == null)
+                throw new ArgumentNullException("article");
 
-            var article = this.context.Articles.Find((int)identity[0]);
-            return Task.FromResult(
-                article == null ? null : article.ToDomain());
+            return this.InsertAsyncImpl(article);
         }
 
-        public Task<DomainArticle> InsertAsync(DomainArticle item)
+        public Task UpdateAsync(DomainArticle article)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            if (article == null)
+                throw new ArgumentNullException("article");
 
-            return this.InsertAsyncImpl(item);
-        }
-
-        public Task UpdateAsync(DomainArticle item)
-        {
-            if (item == null)
-                throw new ArgumentNullException("item");
-
-            var persistenceArticle = this.context.Articles.Find(item.Id);
+            var persistenceArticle = this.context.Articles.Find(article.Id);
             if (persistenceArticle != null)
             {
                 ((IObjectContextAdapter)this.context).ObjectContext.Detach(persistenceArticle);
-                this.context.Entry(item.ToPersistence(persistenceArticle.UserId)).State
+                this.context.Entry(article.ToPersistence(persistenceArticle.UserId)).State
                     = EntityState.Modified;
             }
 
             return Task.FromResult<object>(null);
         }
 
-        public Task DeleteAsync(params object[] identity)
+        public Task DeleteAsync(int id)
         {
-            if (identity == null)
-                throw new ArgumentNullException("identity");
-
-            var id = (int)identity[0];
             var article = this.context.Articles.Find(id);
             if (article != null)
                 this.context.Articles.Remove(article);
@@ -84,9 +70,16 @@
             return Task.FromResult<object>(null);
         }
 
+        public Task<DomainArticle> FindAsync(int id)
+        {
+            var article = this.context.Articles.Find(id);
+            return Task.FromResult(
+                article == null ? null : article.ToDomain());
+        }
+
         private async Task<DomainArticle> InsertAsyncImpl(DomainArticle item)
         {
-            if ((await this.FindAsync(new object[] { item.Id })) != null)
+            if ((await this.FindAsync(item.Id)) != null)
                 return item;
 
             var persistenceArticle = item.ToPersistence(await this.GetUserId(item));

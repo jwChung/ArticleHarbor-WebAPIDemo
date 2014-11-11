@@ -34,15 +34,15 @@
             return articleWord == null ? null : articleWord.ToDomain();
         }
 
-        public Task<ArticleWord> InsertAsync(ArticleWord item)
+        public Task<ArticleWord> InsertAsync(ArticleWord article)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            if (article == null)
+                throw new ArgumentNullException("article");
 
-            if (this.Select(item.ArticleId, item.Word) == null)
-                this.context.ArticleWords.Add(item.ToPersistence());
+            if (this.Select(article.ArticleId, article.Word) == null)
+                this.context.ArticleWords.Add(article.ToPersistence());
 
-            return Task.FromResult<ArticleWord>(item);
+            return Task.FromResult<ArticleWord>(article);
         }
 
         public Task<ArticleWord> FindAsync(params object[] identity)
@@ -58,10 +58,10 @@
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(ArticleWord item)
+        public Task UpdateAsync(ArticleWord article)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            if (article == null)
+                throw new ArgumentNullException("article");
             throw new NotImplementedException();
         }
 

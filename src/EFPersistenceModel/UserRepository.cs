@@ -66,18 +66,18 @@
             throw new NotImplementedException();
         }
 
-        public Task<User> InsertAsync(User item)
+        public Task<User> InsertAsync(User article)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            if (article == null)
+                throw new ArgumentNullException("article");
 
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(User item)
+        public Task UpdateAsync(User article)
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
+            if (article == null)
+                throw new ArgumentNullException("article");
 
             throw new NotImplementedException();
         }
