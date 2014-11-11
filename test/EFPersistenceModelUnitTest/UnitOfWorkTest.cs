@@ -71,6 +71,22 @@
         }
 
         [Test]
+        public void BookmarksIsCorrect(UnitOfWork sut)
+        {
+            var actual = sut.Bookmarks;
+
+            var repository = Assert.IsAssignableFrom<BookmarkRepository>(actual);
+            Assert.Same(sut.Context, repository.Context);
+        }
+
+        [Test]
+        public void BookmarksAlwaysReturnsSameInstance(UnitOfWork sut)
+        {
+            var actual = sut.Bookmarks;
+            Assert.Same(sut.Bookmarks, actual);
+        }
+
+        [Test]
         public async Task SaveAsyncCorrectlySaves(
             Mock<ArticleHarborDbContext> context,
             IFixture fixture)
@@ -89,6 +105,7 @@
             yield return this.Properties.Select(x => x.Articles);
             yield return this.Properties.Select(x => x.ArticleWords);
             yield return this.Properties.Select(x => x.Users);
+            yield return this.Properties.Select(x => x.Bookmarks);
         }
     }
 }

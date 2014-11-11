@@ -10,10 +10,11 @@
 
     public class UnitOfWork : IUnitOfWork
     {
+        private readonly ArticleHarborDbContext context;
         private readonly ArticleRepository articles;
         private readonly ArticleWordRepository articleWords;
-        private readonly ArticleHarborDbContext context;
-        private readonly UserRepository userRepository;
+        private readonly UserRepository users;
+        private readonly BookmarkRepository bookmarks;
 
         public UnitOfWork(ArticleHarborDbContext context)
         {
@@ -23,7 +24,8 @@
             this.context = context;
             this.articles = new ArticleRepository(this.context);
             this.articleWords = new ArticleWordRepository(this.context);
-            this.userRepository = new UserRepository(this.context);
+            this.users = new UserRepository(this.context);
+            this.bookmarks = new BookmarkRepository(this.context);
         }
 
         public ArticleHarborDbContext Context
@@ -49,7 +51,12 @@
 
         public IUserRepository Users
         {
-            get { return this.userRepository; }
+            get { return this.users; }
+        }
+
+        public IBookmarkRepository Bookmarks
+        {
+            get { return this.bookmarks; }
         }
 
         public Task SaveAsync()
