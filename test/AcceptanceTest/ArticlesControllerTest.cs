@@ -1,6 +1,5 @@
 ﻿namespace ArticleHarbor.AcceptanceTest
 {
-    using System;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -9,7 +8,7 @@
     using Newtonsoft.Json;
     using Xunit;
 
-    public class ArticleControllerTest
+    public class ArticlesControllerTest
     {
         [Test]
         public async Task GetAsyncReturnsResponseWithCorrectStatusCode()
@@ -17,7 +16,7 @@
             using (var client = HttpClientFactory.Create())
             {
                 var response = await client.GetAsync("api/articles");
-                Assert.True(response.IsSuccessStatusCode, await GetMessageAsync(response));
+                Assert.True(response.IsSuccessStatusCode, await response.GetMessageAsync());
             }
         }
 
@@ -28,7 +27,7 @@
             {
                 var response = await client.GetAsync("api/articles");
 
-                Assert.True(response.IsSuccessStatusCode, await GetMessageAsync(response));
+                Assert.True(response.IsSuccessStatusCode, await response.GetMessageAsync());
                 Assert.Equal("application/json", response.Content.Headers.ContentType.MediaType);
                 var json = await response.Content.ReadAsStringAsync()
                     .ContinueWith(t => JsonConvert.DeserializeObject(t.Result));
@@ -45,7 +44,7 @@
                 client.DefaultRequestHeaders.Accept.ParseAdd("application/json;q=0.8");
                 var response = await client.GetAsync("api/articles");
 
-                Assert.True(response.IsSuccessStatusCode, await GetMessageAsync(response));
+                Assert.True(response.IsSuccessStatusCode, await response.GetMessageAsync());
                 Assert.Equal("application/json", response.Content.Headers.ContentType.MediaType);
             }
         }
@@ -61,7 +60,9 @@
 
                 var response = await client.PostAsync("api/articles", content);
 
-                Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+                Assert.True(
+                   HttpStatusCode.Unauthorized == response.StatusCode,
+                   await response.GetMessageAsync());
             }
         }
 
@@ -81,7 +82,7 @@
 
                 var response = await client.PostAsync("api/articles", content);
 
-                Assert.True(response.IsSuccessStatusCode, await GetMessageAsync(response));
+                Assert.True(response.IsSuccessStatusCode, await response.GetMessageAsync());
             }
         }
 
@@ -101,7 +102,7 @@
 
                 var response = await client.PostAsync("api/articles", content);
 
-                Assert.True(response.IsSuccessStatusCode, await GetMessageAsync(response));
+                Assert.True(response.IsSuccessStatusCode, await response.GetMessageAsync());
             }
         }
 
@@ -122,17 +123,6 @@
 
                 Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
             }
-        }
-
-        private static async Task<string> GetMessageAsync(HttpResponseMessage response)
-        {
-            return "Actual status code: " + response.StatusCode + Environment.NewLine
-                + await GetStringMessage(response);
-        }
-
-        private static async Task<string> GetStringMessage(HttpResponseMessage response)
-        {
-            return response.Content != null ? await response.Content.ReadAsStringAsync() : string.Empty;
         }
     }
 }

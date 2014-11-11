@@ -7,6 +7,7 @@ namespace ArticleHarbor.Website
     using ArticleHarbor.EFPersistenceModel;
     using ArticleHarbor.WebApiPresentationModel;
     using Jwc.Funz;
+    using WebApiPresentationModel.Controllers;
     using Article = DomainModel.Article;
     using ArticleWord = DomainModel.ArticleWord;
 
@@ -50,7 +51,17 @@ namespace ArticleHarbor.Website
                 c => c.Resolve<IUnitOfWork>().ArticleWords)
                 .ReusedWithinContainer();
 
+             container.Register(
+                c => c.Resolve<IUnitOfWork>().Users)
+                .ReusedWithinContainer();
+
             // Domain services
+            container.Register<IAuthService>(
+                c => new AuthService(
+                    c.Resolve<IUserRepository>(),
+                    new EmptyDisposable()))
+                .ReusedWithinContainer();
+
             container.Register<IArticleService>(
                 c => new ArticleService(
                     c.Resolve<IRepository<Article>>(),
@@ -58,9 +69,29 @@ namespace ArticleHarbor.Website
                     KoreanNounExtractor.Execute))
                 .ReusedWithinContainer();
 
+            container.Register<IArticleService>(
+                "new",
+                c => new AuthArticleService(
+                    c.Resolve<IAuthService>(),
+                    new NewArticleService(
+                        c.Resolve<IRepository<Article>>(),
+                        c.Resolve<IArticleWordService>())))
+                .ReusedWithinContainer();
+
+            container.Register<IArticleWordService>(
+                c => new ArticleWordService(
+                    c.Resolve<IArticleWordRepository>(),
+                    c.Resolve<IRepository<Article>>(), 
+                    KoreanNounExtractor.Execute))
+                .ReusedWithinContainer();
+
             // Presentation controllers
             container.Register(
                 c => new ArticlesController(c.Resolve<IArticleService>()))
+                .ReusedWithinContainer();
+
+            container.Register(
+                c => new NewArticlesController(c.ResolveKeyed<IArticleService>("new")))
                 .ReusedWithinContainer();
 
             return this;

@@ -7,11 +7,11 @@
     using DomainModel;
     using Models;
 
-    public class NewArticleController : ApiController
+    public class NewArticlesController : ApiController
     {
         private readonly IArticleService articleService;
 
-        public NewArticleController(IArticleService articleService)
+        public NewArticlesController(IArticleService articleService)
         {
             if (articleService == null)
                 throw new ArgumentNullException("articleService");
@@ -30,6 +30,7 @@
             return this.articleService.GetAsync();
         }
 
+        [Authorize] // TODO: return unauthorized code when Unauthorized exceptin is thrown.
         public Task<Article> PostAsync(PostArticleViewModel postArticle)
         {
             if (postArticle == null)
