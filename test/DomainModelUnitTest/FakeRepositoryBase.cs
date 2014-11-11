@@ -1,69 +1,63 @@
-﻿namespace ArticleHarbor.DomainModel
+namespace ArticleHarbor.DomainModel
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Linq;
     using System.Threading.Tasks;
     using Ploeh.AutoFixture;
 
-    public abstract class FakeRepositoryBase<T> : IRepository<T>
+    public abstract class FakeRepositoryBase<TKey, TItem> : KeyedCollection<TKey, TItem>
     {
-        private readonly IList<T> items;
+        private readonly Generator<TItem> generator;
 
-        public FakeRepositoryBase(Generator<T> generator)
+        public FakeRepositoryBase(Generator<TItem> generator)
         {
-            this.items = new List<T>();
-            foreach (var item in generator)
+            this.generator = generator;
+
+            for (int i = 0; i < 3; i++)
+                this.Add(this.New());
+        }
+
+        public TItem New()
+        {
+            foreach (var item in this.generator)
             {
-                this.InsertAsync(item).Wait();
-                if (this.items.Count == 3)
-                    break;
+                if (!this.Contains(this.GetKeyForItem(item)))
+                    return item;
             }
+
+            throw new InvalidOperationException();
         }
 
-        public IList<T> Items
+        public Task<TItem> FindAsync(TKey key)
         {
-            get { return this.items; }
+            if (this.Contains(key))
+                return Task.FromResult(this[key]);
+            return Task.FromResult<TItem>(default(TItem));
         }
 
-        public Task<T> FindAsync(params object[] identity)
+        public Task<IEnumerable<TItem>> SelectAsync()
         {
-            return Task.FromResult<T>(
-                this.Items.LastOrDefault(x => this.GetIdentity(x).SequenceEqual(identity)));
+            return Task.FromResult<IEnumerable<TItem>>(this);
         }
 
-        public Task<IEnumerable<T>> SelectAsync()
+        public Task<TItem> InsertAsync(TItem article)
         {
-            return Task.FromResult<IEnumerable<T>>(this.Items);
+            this.Add(article);
+            return Task.FromResult(article);
         }
 
-        public Task<T> InsertAsync(T article)
+        public Task UpdateAsync(TItem article)
         {
-            this.Items.Add(article);
-            return Task.FromResult<T>(article);
+            this.Remove(this.GetKeyForItem(article));
+            this.Add(article);
+            return Task.FromResult<TItem>(default(TItem));
         }
 
-        public async Task UpdateAsync(T article)
+        public Task DeleteAsync(TKey key)
         {
-            var oldItem = await this.FindAsync(this.GetIdentity(article));
-            if (oldItem == null)
-                return;
-
-            this.Items.Remove(oldItem);
-            this.Items.Add(article);
+            this.Remove(key);
+            return Task.FromResult<TItem>(default(TItem));
         }
-
-        public async Task DeleteAsync(params object[] identity)
-        {
-            var item = await this.FindAsync(identity);
-            if (item == null)
-                return;
-
-            this.Items.Remove(item);
-        }
-
-        public abstract object[] GetIdentity(T item);
     }
 }
