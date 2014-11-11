@@ -46,5 +46,26 @@
 
             return this.articleService.AddAsync(article);
         }
+
+        public Task PutAsync(PutArticleViewModel putArticle)
+        {
+            if (putArticle == null)
+                throw new ArgumentNullException("putArticle");
+
+            var actor = this.User.Identity.Name;
+            var userId = this.articleService.GetUserId(putArticle.Id);
+
+            var article = new Article(
+                putArticle.Id,
+                putArticle.Provider,
+                putArticle.No,
+                putArticle.Subject,
+                putArticle.Body,
+                putArticle.Date,
+                putArticle.Url,
+                userId);
+
+            return this.articleService.ModifyAsync(actor, article);
+        }
     }
 }

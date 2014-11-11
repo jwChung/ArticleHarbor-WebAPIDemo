@@ -33,12 +33,22 @@ namespace ArticleHarbor.DomainModel
             get { return this.articleWordService; }
         }
 
+        public string GetUserId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<Article>> GetAsync()
         {
             return this.articles.SelectAsync();
         }
 
         public Task<Article> AddAsync(Article article)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ModifyAsync(string actor, Article article)
         {
             throw new NotImplementedException();
         }

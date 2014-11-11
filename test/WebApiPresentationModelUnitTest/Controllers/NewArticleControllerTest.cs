@@ -28,7 +28,7 @@
         }
 
         [Test]
-        public async Task PostAsyncReturnsCorrectResult(
+        public async Task PostAsyncCorrectlyAddsArticle(
             NewArticleController sut,
             PostArticleViewModel postArticle,
             string userId,
@@ -50,6 +50,28 @@
 
             // Verify outcome
             Assert.Equal(expected, actual);
+        }
+
+        [Test]
+        public async Task PutAsyncCorrectlyModifiesArticle(
+            NewArticleController sut,
+            PutArticleViewModel putArticle,
+            string actor,
+            string userId)
+        {
+            // Fixture setup
+            sut.User.Identity.Of(x => x.Name == actor);
+            sut.ArticleService.Of(x => x.GetUserId(putArticle.Id) == userId);
+
+            var articleLikeness = putArticle.AsSource().OfLikeness<Article>()
+                .With(x => x.UserId).EqualsWhen((p, a) => a.UserId == userId);
+
+            // Exercise system
+            await sut.PutAsync(putArticle);
+
+            // Verify outcome
+            sut.ArticleService.ToMock().Verify(
+                x => x.ModifyAsync(actor, It.Is<Article>(p => articleLikeness.Equals(p))));
         }
     }
 }
