@@ -51,7 +51,7 @@
         }
 
         [Test]
-        public async Task PostAsyncWithIncorrectAuthReturnsUnauthorizedCode(
+        public async Task PostAsyncWithoutAuthReturnsUnauthorizedCode(
             PostArticleViewModel article)
         {
             using (var client = HttpClientFactory.Create())
@@ -69,7 +69,7 @@
         }
 
         [Test]
-        public async Task PostAsyncCorrectlyAddsArticleAndArticleWords(
+        public async Task PostAsyncWithAuthAddsArticleAndArticleWords(
             PostArticleViewModel article)
         {
             article.Subject = "문장에서 단어만 추출해서 입력되는지 DB에서 확인필요.";
@@ -89,7 +89,7 @@
         }
 
         [Test]
-        public async Task PutAsyncCorrectlyModifiesArticleAndRenewsArticleWords(
+        public async Task PutAsyncWithAuthModifiesArticleAndRenewsArticleWords(
             PutArticleViewModel article)
         {
             article.Id = 2;
@@ -110,7 +110,7 @@
         }
 
         [Test]
-        public async Task PutAsyncReturnsInternalSeverErrorWhenIncorrectUserModifiesArticle(
+        public async Task PutAsyncWithIncorrectUserReturnsInternalSeverError(
             PutArticleViewModel article)
         {
             article.Id = 1; // owned by user 1 (administrator)
