@@ -16,28 +16,6 @@
         public IEnumerable<ITestCase> InitializeWithAnyEmptyStringThrows(int id, string value, DateTime date)
         {
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(string.Empty, value, value, value, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(value, string.Empty, value, value, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(value, value, string.Empty, value, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(value, value, value, string.Empty, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(value, value, value, value, date, string.Empty)));
-
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, string.Empty, value, value, value, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, value, string.Empty, value, value, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, value, value, string.Empty, value, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, value, value, value, string.Empty, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, value, value, value, value, date, string.Empty)));
-
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
                 () => new Article(id, string.Empty, value, value, value, date, value, value)));
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
                 () => new Article(id, value, string.Empty, value, value, date, value, value)));

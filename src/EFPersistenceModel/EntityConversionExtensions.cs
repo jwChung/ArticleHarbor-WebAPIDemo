@@ -16,8 +16,8 @@ namespace ArticleHarbor.EFPersistenceModel
                 article.Subject,
                 article.Body,
                 article.Date,
-                article.Url)
-                .WithUserId(article.User.UserName);
+                article.Url,
+                article.User.UserName);
         }
 
         public static ArticleHarbor.EFDataAccess.Article ToPersistence(this Article article, string userId)
