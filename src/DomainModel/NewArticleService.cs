@@ -58,7 +58,9 @@ namespace ArticleHarbor.DomainModel
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            throw new NotImplementedException();
+            this.articleWordService.AddWordsAsync(article.Id, article.Subject);
+
+            return this.articles.InsertAsync(article);
         }
 
         public Task ModifyAsync(string actor, Article article)

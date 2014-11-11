@@ -4,6 +4,6 @@
 
     public interface IArticleWordService
     {
-        Task RenewAsync(int id, string subject);
+        Task AddWordsAsync(int id, string subject);
     }
 }

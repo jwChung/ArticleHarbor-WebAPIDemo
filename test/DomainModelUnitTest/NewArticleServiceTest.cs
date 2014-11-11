@@ -49,5 +49,26 @@ namespace ArticleHarbor.DomainModel
             var e = Assert.Throws<AggregateException>(() => sut.GetUserIdAsync(id).Wait());
             Assert.IsType<ArgumentException>(e.InnerException);
         }
+
+        [Test]
+        public async Task AddAsyncCorrectlyAddsArticle(
+            FakeRepositoryBase<Article> articles,
+            NewArticleService sut,
+            Article article)
+        {
+            var actual = await sut.AddAsync(article);
+            Assert.Contains(actual, articles.Items);
+            Assert.Equal(4, articles.Items.Count);
+        }
+
+        [Test]
+        public async Task AddAsyncCorrectlyAddsArticleWords(
+            NewArticleService sut,
+            Article article)
+        {
+            await sut.AddAsync(article);
+            sut.ArticleWordService.ToMock().Verify(
+                x => x.AddWordsAsync(article.Id, article.Subject));
+        }
     }
 }
