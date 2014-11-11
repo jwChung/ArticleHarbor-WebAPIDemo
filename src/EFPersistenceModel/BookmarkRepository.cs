@@ -71,7 +71,8 @@
         private async Task DeleteAsyncWith(DomainBookmark bookmark)
         {
             var user = await this.context.UserManager.FindByNameAsync(bookmark.UserId);
-            this.context.Bookmarks.Remove(bookmark.ToPersistence(user.Id));
+            var persistenceBookmark = this.context.Bookmarks.Find(user.Id, bookmark.ArticleId);
+            this.context.Bookmarks.Remove(persistenceBookmark);
         }
     }
 }

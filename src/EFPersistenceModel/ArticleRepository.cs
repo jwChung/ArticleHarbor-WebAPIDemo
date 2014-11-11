@@ -38,13 +38,12 @@
             return articles.Select(x => x.ToDomain());
         }
 
-        public async Task<IEnumerable<DomainArticle>> SelectAsync(params int[] ids)
+        public Task<IEnumerable<DomainArticle>> SelectAsync(params int[] ids)
         {
-            var query = from article in this.context.Articles
-                        where ids.Contains(article.Id)
-                        select article;
-            await query.LoadAsync();
-            return this.context.Articles.Local.Select(x => x.ToDomain());
+            if (ids == null)
+                throw new ArgumentNullException("ids");
+
+            return this.SelectAsyncWith(ids);
         }
 
         public Task<DomainArticle> InsertAsync(DomainArticle article)
@@ -85,6 +84,15 @@
             var article = this.context.Articles.Find(id);
             return Task.FromResult(
                 article == null ? null : article.ToDomain());
+        }
+
+        private async Task<IEnumerable<DomainArticle>> SelectAsyncWith(int[] ids)
+        {
+            var query = from article in this.context.Articles
+                        where ids.Contains(article.Id)
+                        select article;
+            await query.LoadAsync();
+            return this.context.Articles.Local.Select(x => x.ToDomain());
         }
 
         private async Task<DomainArticle> InsertAsyncImpl(DomainArticle item)
