@@ -5,6 +5,21 @@
 
     public class ArticleWordService : IArticleWordService
     {
+        private readonly IArticleWordRepository articleWords;
+
+        public ArticleWordService(IArticleWordRepository articleWords)
+        {
+            if (articleWords == null)
+                throw new ArgumentNullException("articleWords");
+
+            this.articleWords = articleWords;
+        }
+
+        public IArticleWordRepository ArticleWords
+        {
+            get { return this.articleWords; }
+        }
+
         public Task AddWordsAsync(int id, string subject)
         {
             if (subject == null)
