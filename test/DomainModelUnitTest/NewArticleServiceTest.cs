@@ -3,6 +3,7 @@ namespace ArticleHarbor.DomainModel
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
     using Ploeh.AutoFixture;
     using Xunit;
@@ -69,6 +70,42 @@ namespace ArticleHarbor.DomainModel
             await sut.AddAsync(article);
             sut.ArticleWordService.ToMock().Verify(
                 x => x.AddWordsAsync(article.Id, article.Subject));
+        }
+
+        [Test]
+        public async Task ModifyAsyncCorrectlyModifiesArticle(
+            FakeRepositoryBase<Article> articles,
+            Article article,
+            NewArticleService sut)
+        {
+            article = article.WithId(articles.Items[1].Id);
+
+            await sut.ModifyAsync(null, article);
+
+            Assert.Contains(article, articles.Items);
+            Assert.Equal(3, articles.Items.Count);
+        }
+
+        [Test]
+        public async Task ModifyAsyncCorrectlyModifiesArticleWords(
+            FakeRepositoryBase<Article> articles,
+            Article article,
+            NewArticleService sut)
+        {
+            await sut.ModifyAsync(null, article);
+            sut.ArticleWordService.ToMock().Verify(
+                x => x.ModifyWordsAsync(article.Id, article.Subject));
+        }
+
+        [Test]
+        public void ModifyAsyncWithNullArticleThrows(NewArticleService sut)
+        {
+            Assert.Throws<ArgumentNullException>(() => sut.ModifyAsync(null, null));
+        }
+
+        protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
+        {
+            yield return this.Methods.Select(x => x.ModifyAsync(null, null));
         }
     }
 }

@@ -58,20 +58,15 @@ namespace ArticleHarbor.DomainModel
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            this.articleWordService.AddWordsAsync(article.Id, article.Subject);
-
-            return this.articles.InsertAsync(article);
+            return this.AddAsyncImpl(article);
         }
 
         public Task ModifyAsync(string actor, Article article)
         {
-            if (actor == null)
-                throw new ArgumentNullException("actor");
-
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            throw new NotImplementedException();
+            return this.ModifyAsyncImpl(article);
         }
 
         public Task RemoveAsync(string actor, int id)
@@ -93,6 +88,18 @@ namespace ArticleHarbor.DomainModel
         public Task RemoveAsync(int id)
         {
             throw new NotSupportedException();
+        }
+
+        private async Task<Article> AddAsyncImpl(Article article)
+        {
+            await this.articleWordService.AddWordsAsync(article.Id, article.Subject);
+            return await this.articles.InsertAsync(article);
+        }
+
+        private async Task ModifyAsyncImpl(Article article)
+        {
+            await this.articleWordService.ModifyWordsAsync(article.Id, article.Subject);
+            await this.articles.UpdateAsync(article);
         }
     }
 }
