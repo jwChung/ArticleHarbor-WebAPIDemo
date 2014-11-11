@@ -5,7 +5,7 @@
 
     public interface IArticleService
     {
-        string GetUserId(int id);
+        Task<string> GetUserIdAsync(int id);
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "The method form is more appropriate than property form.")]
         Task<IEnumerable<Article>> GetAsync();

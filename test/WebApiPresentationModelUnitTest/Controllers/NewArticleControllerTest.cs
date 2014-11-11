@@ -61,7 +61,7 @@
         {
             // Fixture setup
             sut.User.Identity.Of(x => x.Name == actor);
-            sut.ArticleService.Of(x => x.GetUserId(putArticle.Id) == userId);
+            sut.ArticleService.Of(x => x.GetUserIdAsync(putArticle.Id) == Task.FromResult(userId));
 
             var articleLikeness = putArticle.AsSource().OfLikeness<Article>()
                 .With(x => x.UserId).EqualsWhen((p, a) => a.UserId == userId);

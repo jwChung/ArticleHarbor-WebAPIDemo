@@ -48,13 +48,13 @@
             return this.articleService.AddAsync(article);
         }
 
-        public Task PutAsync(PutArticleViewModel putArticle)
+        public async Task PutAsync(PutArticleViewModel putArticle)
         {
             if (putArticle == null)
                 throw new ArgumentNullException("putArticle");
 
             var actor = this.User.Identity.Name;
-            var userId = this.articleService.GetUserId(putArticle.Id);
+            var userId = await this.articleService.GetUserIdAsync(putArticle.Id);
 
             var article = new Article(
                 putArticle.Id,
@@ -66,7 +66,7 @@
                 putArticle.Url,
                 userId);
 
-            return this.articleService.ModifyAsync(actor, article);
+            await this.articleService.ModifyAsync(actor, article);
         }
 
         public Task DeleteAsync(string actor, int id)

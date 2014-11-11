@@ -33,7 +33,7 @@ namespace ArticleHarbor.DomainModel
             get { return this.articleWordService; }
         }
 
-        public string GetUserId(int id)
+        public Task<string> GetUserIdAsync(int id)
         {
             throw new NotImplementedException();
         }
