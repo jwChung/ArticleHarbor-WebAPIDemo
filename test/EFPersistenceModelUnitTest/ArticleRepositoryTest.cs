@@ -148,7 +148,7 @@
                 article = await sut.InsertAsync(article.WithUserId("user1"));
                 Assert.NotNull(await sut.FineAsync(new object[] { article.Id }));
 
-                await sut.DeleteAsync(article.Id);
+                await sut.DeleteAsync(new object[] { article.Id });
 
                 await sut.Context.SaveChangesAsync();
                 Assert.Null(await sut.FineAsync(new object[] { article.Id }));
@@ -165,7 +165,7 @@
             ArticleRepository sut,
             Article article)
         {
-            Assert.DoesNotThrow(() => sut.DeleteAsync(article.Id).Wait());
+            Assert.DoesNotThrow(() => sut.DeleteAsync(new object[] { article.Id }).Wait());
         }
 
         [Test]

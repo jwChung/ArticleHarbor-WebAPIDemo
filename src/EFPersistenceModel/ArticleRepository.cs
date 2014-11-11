@@ -71,21 +71,17 @@
             return Task.FromResult<object>(null);
         }
 
-        public Task DeleteAsync(int id)
-        {
-            var article = this.context.Articles.Find(id);
-            if (article != null)
-                this.context.Articles.Remove(article);
-
-            return Task.FromResult<object>(null);
-        }
-
         public Task DeleteAsync(params object[] identity)
         {
             if (identity == null)
                 throw new ArgumentNullException("identity");
 
-            throw new NotImplementedException();
+            var id = (int)identity[0];
+            var article = this.context.Articles.Find(id);
+            if (article != null)
+                this.context.Articles.Remove(article);
+
+            return Task.FromResult<object>(null);
         }
 
         private async Task<DomainArticle> InsertAsyncImpl(DomainArticle item)
