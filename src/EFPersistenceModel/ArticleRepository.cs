@@ -14,7 +14,7 @@
     using PersistenceArticle = EFDataAccess.Article;
     using PersistenceUser = EFDataAccess.User;
 
-    public class ArticleRepository : IRepository<DomainArticle>
+    public class ArticleRepository : IRepository<DomainArticle>, IArticleRepository
     {
         private readonly ArticleHarborDbContext context;
 

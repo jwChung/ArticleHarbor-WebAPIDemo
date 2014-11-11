@@ -4,7 +4,7 @@
 
     public interface IUnitOfWork
     {
-        IRepository<Article> Articles { get; }
+        IArticleRepository Articles { get; }
 
         IArticleWordRepository ArticleWords { get; }
 

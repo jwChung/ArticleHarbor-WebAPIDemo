@@ -66,14 +66,14 @@ namespace ArticleHarbor.Website
                 c => new AuthArticleService(
                     c.Resolve<IAuthService>(),
                     new ArticleService(
-                        c.Resolve<IRepository<Article>>(),
+                        c.Resolve<IArticleRepository>(),
                         c.Resolve<IArticleWordService>())))
                 .ReusedWithinContainer();
 
             container.Register<IArticleWordService>(
                 c => new ArticleWordService(
                     c.Resolve<IArticleWordRepository>(),
-                    c.Resolve<IRepository<Article>>(), 
+                    c.Resolve<IArticleRepository>(), 
                     KoreanNounExtractor.Execute))
                 .ReusedWithinContainer();
 

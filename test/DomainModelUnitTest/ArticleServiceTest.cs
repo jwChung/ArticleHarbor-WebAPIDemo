@@ -19,7 +19,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public void GetAsyncReturnsCorrectResult(
-            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
+            [Frozen(As = typeof(IArticleRepository))] FakeArticleRepository articles,
             ArticleService sut)
         {
             IEnumerable<Article> actual = sut.GetAsync().Result;
@@ -28,7 +28,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public async Task GetUserIdAsyncReturnsCorrectUserId(
-            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
+            [Frozen(As = typeof(IArticleRepository))] FakeArticleRepository articles,
             ArticleService sut)
         {
             var article = articles.Items[1];
@@ -41,7 +41,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public void GetIncorrectUserIdAsyncThrows(
-            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
+            [Frozen(As = typeof(IArticleRepository))] FakeArticleRepository articles,
             ArticleService sut,
             Generator<Article> generator)
         {
@@ -54,7 +54,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public async Task AddAsyncCorrectlyAddsArticle(
-            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
+            [Frozen(As = typeof(IArticleRepository))] FakeArticleRepository articles,
             ArticleService sut,
             Article article)
         {
@@ -75,7 +75,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public async Task ModifyAsyncCorrectlyModifiesArticle(
-            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
+            [Frozen(As = typeof(IArticleRepository))] FakeArticleRepository articles,
             Article article,
             ArticleService sut)
         {
@@ -89,7 +89,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public async Task ModifyAsyncCorrectlyModifiesArticleWords(
-            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
+            [Frozen(As = typeof(IArticleRepository))] FakeArticleRepository articles,
             Article article,
             ArticleService sut)
         {
@@ -100,7 +100,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public async Task RemoveAsyncCorrectlyRemovesArticle(
-            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
+            [Frozen(As = typeof(IArticleRepository))] FakeArticleRepository articles,
             ArticleService sut)
         {
             var id = articles.Items[1].Id;
@@ -133,7 +133,7 @@ namespace ArticleHarbor.DomainModel
             yield return this.Methods.Select(x => x.RemoveAsync(null, 0));
         }
 
-        public class FakeArticleRepository : FakeRepositoryBase<Article>
+        public class FakeArticleRepository : FakeRepositoryBase<Article>, IArticleRepository
         {
             public FakeArticleRepository(Generator<Article> generator)
                 : base(generator)
