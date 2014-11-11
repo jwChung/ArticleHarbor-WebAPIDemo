@@ -6,10 +6,12 @@ namespace ArticleHarbor.Website
     using ArticleHarbor.EFDataAccess;
     using ArticleHarbor.EFPersistenceModel;
     using ArticleHarbor.WebApiPresentationModel;
+    using DomainModel.Repositories;
+    using DomainModel.Services;
     using Jwc.Funz;
     using WebApiPresentationModel.Controllers;
-    using Article = DomainModel.Article;
-    using ArticleWord = DomainModel.ArticleWord;
+    using Article = DomainModel.Models.Article;
+    using ArticleWord = DomainModel.Models.ArticleWord;
 
     public class DependencyRegistrations : IContainerVisitor<object>
     {

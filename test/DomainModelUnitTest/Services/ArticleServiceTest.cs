@@ -1,14 +1,14 @@
-namespace ArticleHarbor.DomainModel
+namespace ArticleHarbor.DomainModel.Services
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
+    using Models;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit;
+    using Repositories;
     using Xunit;
 
     public class ArticleServiceTest : IdiomaticTest<ArticleService>

@@ -7,7 +7,8 @@
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.EFDataAccess;
-    using User = DomainModel.User;
+    using DomainModel.Repositories;
+    using User = DomainModel.Models.User;
 
     public class UserRepository : IUserRepository
     {

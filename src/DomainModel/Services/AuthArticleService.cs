@@ -1,8 +1,9 @@
-﻿namespace ArticleHarbor.DomainModel
+﻿namespace ArticleHarbor.DomainModel.Services
 {
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Models;
 
     public class AuthArticleService : IArticleService
     {

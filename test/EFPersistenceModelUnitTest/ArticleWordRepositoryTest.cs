@@ -4,6 +4,8 @@
     using System.Linq;
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
+    using DomainModel.Models;
+    using DomainModel.Repositories;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 

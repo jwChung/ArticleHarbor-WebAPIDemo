@@ -1,6 +1,7 @@
-﻿namespace ArticleHarbor.DomainModel
+﻿namespace ArticleHarbor.DomainModel.Repositories
 {
     using System.Threading.Tasks;
+    using Models;
 
     public interface IArticleWordRepository
     {

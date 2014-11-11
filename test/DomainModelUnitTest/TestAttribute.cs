@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using DomainModel;
+    using DomainModel.Models;
     using Jwc.Experiment;
     using Jwc.Experiment.AutoFixture;
     using Jwc.Experiment.Xunit;

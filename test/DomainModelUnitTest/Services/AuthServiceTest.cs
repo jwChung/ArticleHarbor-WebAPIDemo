@@ -1,10 +1,11 @@
-﻿namespace ArticleHarbor.DomainModel
+﻿namespace ArticleHarbor.DomainModel.Services
 {
     using System;
     using System.Collections.Generic;
     using System.Reflection;
     using System.Threading.Tasks;
     using Jwc.Experiment.Xunit;
+    using Models;
     using Moq;
     using Xunit;
 

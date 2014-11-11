@@ -1,9 +1,11 @@
-namespace ArticleHarbor.DomainModel
+namespace ArticleHarbor.DomainModel.Services
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Threading.Tasks;
+    using Models;
+    using Repositories;
 
     public class ArticleService : IArticleService
     {

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Reflection;
     using ArticleHarbor.DomainModel;
+    using DomainModel.Repositories;
     using Ploeh.AutoFixture;
     using Xunit;
 

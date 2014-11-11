@@ -1,9 +1,9 @@
-﻿namespace ArticleHarbor.DomainModel
+﻿namespace ArticleHarbor.DomainModel.Services
 {
-    using System;
     using System.Collections.Generic;
     using System.Reflection;
     using System.Threading.Tasks;
+    using Models;
     using Moq;
     using Xunit;
 

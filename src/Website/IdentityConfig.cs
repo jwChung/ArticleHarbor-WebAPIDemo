@@ -9,6 +9,7 @@ namespace ArticleHarbor.Website
     using ArticleHarbor.EFDataAccess;
     using ArticleHarbor.EFPersistenceModel;
     using ArticleHarbor.WebApiPresentationModel;
+    using DomainModel.Services;
     using Microsoft.Owin;
     using Microsoft.Owin.Security.OAuth;
     using Owin;

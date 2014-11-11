@@ -8,9 +8,10 @@
     using System.Linq;
     using System.Threading.Tasks;
     using DomainModel;
+    using DomainModel.Repositories;
     using EFDataAccess;
-    using DomainArticle = DomainModel.Article;
-    using DomainUser = DomainModel.User;
+    using DomainArticle = DomainModel.Models.Article;
+    using DomainUser = DomainModel.Models.User;
     using PersistenceArticle = EFDataAccess.Article;
     using PersistenceUser = EFDataAccess.User;
 

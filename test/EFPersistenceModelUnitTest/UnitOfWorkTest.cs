@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.EFDataAccess;
+    using DomainModel.Repositories;
     using Moq;
     using Ploeh.AutoFixture;
     using Xunit;

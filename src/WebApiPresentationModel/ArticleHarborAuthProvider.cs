@@ -4,6 +4,8 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
+    using DomainModel.Models;
+    using DomainModel.Services;
     using Microsoft.Owin.Security.OAuth;
 
     public class ArticleHarborAuthProvider : OAuthAuthorizationServerProvider

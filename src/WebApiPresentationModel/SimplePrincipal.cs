@@ -3,6 +3,7 @@
     using System;
     using System.Security.Principal;
     using DomainModel;
+    using DomainModel.Models;
 
     public class SimplePrincipal : IPrincipal, IIdentity
     {

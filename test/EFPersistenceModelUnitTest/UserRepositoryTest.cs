@@ -5,6 +5,8 @@
     using System.Reflection;
     using System.Threading.Tasks;
     using DomainModel;
+    using DomainModel.Models;
+    using DomainModel.Repositories;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 

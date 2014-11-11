@@ -6,7 +6,8 @@
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.EFDataAccess;
-    using ArticleWord = DomainModel.ArticleWord;
+    using DomainModel.Repositories;
+    using ArticleWord = DomainModel.Models.ArticleWord;
 
     public class ArticleWordRepository : IArticleWordRepository
     {

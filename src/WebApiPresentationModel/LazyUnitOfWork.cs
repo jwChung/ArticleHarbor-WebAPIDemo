@@ -2,6 +2,7 @@
 {
     using System;
     using ArticleHarbor.DomainModel;
+    using DomainModel.Repositories;
 
     public class LazyUnitOfWork
     {

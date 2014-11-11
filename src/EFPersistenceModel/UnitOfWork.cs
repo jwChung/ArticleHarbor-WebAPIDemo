@@ -4,8 +4,9 @@
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.EFDataAccess;
-    using Article = DomainModel.Article;
-    using ArticleWord = DomainModel.ArticleWord;
+    using DomainModel.Repositories;
+    using Article = DomainModel.Models.Article;
+    using ArticleWord = DomainModel.Models.ArticleWord;
 
     public class UnitOfWork : IUnitOfWork
     {
