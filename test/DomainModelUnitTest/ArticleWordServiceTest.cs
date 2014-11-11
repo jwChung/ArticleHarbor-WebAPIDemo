@@ -70,7 +70,7 @@
                 return words;
             });
             var sut = fixture.Create<ArticleWordService>();
-            sut.Articles.Of(x => x.FineAsync(id) == Task.FromResult(article));
+            sut.Articles.Of(x => x.FindAsync(id) == Task.FromResult(article));
 
             // Excercise outcome
             await sut.ModifyWordsAsync(id, subject);
@@ -95,7 +95,7 @@
             string subject)
         {
             article = article.WithSubject(subject);
-            sut.Articles.Of(x => x.FineAsync(id) == Task.FromResult(article));
+            sut.Articles.Of(x => x.FindAsync(id) == Task.FromResult(article));
 
             await sut.ModifyWordsAsync(id, subject);
 

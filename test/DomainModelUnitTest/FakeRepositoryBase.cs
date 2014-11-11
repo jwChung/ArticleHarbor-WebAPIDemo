@@ -28,7 +28,7 @@
             get { return this.items; }
         }
 
-        public Task<T> FineAsync(params object[] identity)
+        public Task<T> FindAsync(params object[] identity)
         {
             return Task.FromResult<T>(
                 this.Items.LastOrDefault(x => this.GetIdentity(x).SequenceEqual(identity)));
@@ -47,7 +47,7 @@
 
         public async Task UpdateAsync(T item)
         {
-            var oldItem = await this.FineAsync(this.GetIdentity(item));
+            var oldItem = await this.FindAsync(this.GetIdentity(item));
             if (oldItem == null)
                 return;
 
@@ -57,7 +57,7 @@
 
         public async Task DeleteAsync(params object[] identity)
         {
-            var item = await this.FineAsync(identity);
+            var item = await this.FindAsync(identity);
             if (item == null)
                 return;
 

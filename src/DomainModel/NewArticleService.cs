@@ -36,7 +36,7 @@ namespace ArticleHarbor.DomainModel
 
         public async Task<string> GetUserIdAsync(int id)
         {
-            var article = await this.articles.FineAsync(id);
+            var article = await this.articles.FindAsync(id);
             if (article != null)
                 return article.UserId;
 

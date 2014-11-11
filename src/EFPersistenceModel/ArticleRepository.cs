@@ -37,7 +37,7 @@
             return articles.Select(x => x.ToDomain());
         }
 
-        public Task<DomainArticle> FineAsync(params object[] identity)
+        public Task<DomainArticle> FindAsync(params object[] identity)
         {
             if (identity == null)
                 throw new ArgumentNullException("identity");
@@ -86,7 +86,7 @@
 
         private async Task<DomainArticle> InsertAsyncImpl(DomainArticle item)
         {
-            if ((await this.FineAsync(new object[] { item.Id })) != null)
+            if ((await this.FindAsync(new object[] { item.Id })) != null)
                 return item;
 
             var persistenceArticle = item.ToPersistence(await this.GetUserId(item));

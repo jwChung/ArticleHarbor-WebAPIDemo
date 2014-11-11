@@ -26,7 +26,7 @@
             try
             {
                 var newArticle = await sut.InsertAsync(article.WithUserId("user1"));
-                var expected = await sut.FineAsync(new object[] { newArticle.Id });
+                var expected = await sut.FindAsync(new object[] { newArticle.Id });
                 newArticle.AsSource().OfLikeness<Article>().ShouldEqual(expected);
             }
             finally
@@ -106,7 +106,7 @@
                 await sut.UpdateAsync(modifiedArticle);
 
                 sut.Context.SaveChanges();
-                var actual = await sut.FineAsync(new object[] { insertedArticle.Id });
+                var actual = await sut.FindAsync(new object[] { insertedArticle.Id });
                 actual.AsSource().OfLikeness<Article>().ShouldEqual(modifiedArticle);
             }
             finally
@@ -146,12 +146,12 @@
             try
             {
                 article = await sut.InsertAsync(article.WithUserId("user1"));
-                Assert.NotNull(await sut.FineAsync(new object[] { article.Id }));
+                Assert.NotNull(await sut.FindAsync(new object[] { article.Id }));
 
                 await sut.DeleteAsync(new object[] { article.Id });
 
                 await sut.Context.SaveChangesAsync();
-                Assert.Null(await sut.FineAsync(new object[] { article.Id }));
+                Assert.Null(await sut.FindAsync(new object[] { article.Id }));
             }
             finally
             {
@@ -173,7 +173,7 @@
             ArticleRepository sut,
             int id)
         {
-            var actual = await sut.FineAsync(new object[] { id });
+            var actual = await sut.FindAsync(new object[] { id });
             Assert.Null(actual);
         }
     }

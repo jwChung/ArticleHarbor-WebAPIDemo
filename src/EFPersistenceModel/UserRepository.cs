@@ -58,7 +58,7 @@
             return user.ToDomain(roleNames.Single());
         }
 
-        public Task<User> FineAsync(params object[] identity)
+        public Task<User> FindAsync(params object[] identity)
         {
             if (identity == null)
                 throw new ArgumentNullException("identity");

@@ -56,7 +56,7 @@
 
         public async Task ModifyWordsAsync(int id, string subject)
         {
-            var article = await this.articles.FineAsync(id);
+            var article = await this.articles.FindAsync(id);
             if (article == null)
                 throw new ArgumentException(
                     string.Format(

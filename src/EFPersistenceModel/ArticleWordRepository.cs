@@ -45,7 +45,7 @@
             return Task.FromResult<ArticleWord>(item);
         }
 
-        public Task<ArticleWord> FineAsync(params object[] identity)
+        public Task<ArticleWord> FindAsync(params object[] identity)
         {
             if (identity == null)
                 throw new ArgumentNullException("identity");

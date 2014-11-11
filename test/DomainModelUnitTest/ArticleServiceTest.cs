@@ -34,7 +34,7 @@
             Article article,
             Article newArticle)
         {
-            sut.Articles.ToMock().Setup(x => x.FineAsync(article.Id)).Returns(Task.FromResult<Article>(null));
+            sut.Articles.ToMock().Setup(x => x.FindAsync(article.Id)).Returns(Task.FromResult<Article>(null));
             sut.Articles.Of(x => x.InsertAsync(article) == Task.FromResult(newArticle));
 
             var actual = await sut.SaveAsync(article);
@@ -49,7 +49,7 @@
             Article newArticle)
         {
             newArticle = newArticle.WithId(article.Id).WithUserId(article.UserId);
-            sut.Articles.Of(x => x.FineAsync(article.Id) == Task.FromResult(article));
+            sut.Articles.Of(x => x.FindAsync(article.Id) == Task.FromResult(article));
 
             var actual = await sut.SaveAsync(newArticle);
 
@@ -73,7 +73,7 @@
                     return words;
                 });
             var sut = fixture.Create<ArticleService>();
-            sut.Articles.Of(x => x.FineAsync(article.Id) == Task.FromResult(article));
+            sut.Articles.Of(x => x.FindAsync(article.Id) == Task.FromResult(article));
 
             // Verify outcome
             sut.SaveAsync(modifiedArticle).Wait();
@@ -103,7 +103,7 @@
             modifiedArticle = modifiedArticle.WithId(article.Id)
                 .WithUserId(article.UserId)
                 .WithSubject(article.Subject);
-            sut.Articles.Of(x => x.FineAsync(article.Id) == Task.FromResult(article));
+            sut.Articles.Of(x => x.FindAsync(article.Id) == Task.FromResult(article));
 
             await sut.SaveAsync(modifiedArticle);
 
@@ -126,7 +126,7 @@
                     return words;
                 });
             var sut = fixture.Create<ArticleService>();
-            sut.Articles.ToMock().Setup(x => x.FineAsync(article.Id))
+            sut.Articles.ToMock().Setup(x => x.FindAsync(article.Id))
                 .Returns(Task.FromResult<Article>(null));
             sut.Articles.Of(x => x.InsertAsync(article) == Task.FromResult(newArticle));
 
@@ -153,7 +153,7 @@
         {
             article = article.WithId(id).WithUserId(userId);
             sut.Articles.Of(x =>
-                x.FineAsync(article.Id) == Task.FromResult(article.WithUserId(newUserId)));
+                x.FindAsync(article.Id) == Task.FromResult(article.WithUserId(newUserId)));
 
             var e = Assert.Throws<AggregateException>(() => sut.SaveAsync(article).Wait());
             Assert.IsType<InvalidOperationException>(e.InnerException);
