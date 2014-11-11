@@ -13,6 +13,8 @@
         Task<Article> AddAsync(Article article);
 
         Task ModifyAsync(string actor, Article article);
+
+        Task RemoveAsync(string actor, int id);
         
         Task<Article> SaveAsync(Article article);
 
