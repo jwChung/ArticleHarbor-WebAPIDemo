@@ -48,11 +48,24 @@
             return this.articleService.AddAsync(article);
         }
 
-        public async Task PutAsync(PutArticleViewModel putArticle)
+        public Task PutAsync(PutArticleViewModel putArticle)
         {
             if (putArticle == null)
                 throw new ArgumentNullException("putArticle");
 
+            return this.PutAsyncImpl(putArticle);
+        }
+
+        public Task DeleteAsync(string actor, int id)
+        {
+            if (actor == null)
+                throw new ArgumentNullException("actor");
+
+            return this.articleService.RemoveAsync(actor, id);
+        }
+
+        private async Task PutAsyncImpl(PutArticleViewModel putArticle)
+        {
             var actor = this.User.Identity.Name;
             var userId = await this.articleService.GetUserIdAsync(putArticle.Id);
 
@@ -67,14 +80,6 @@
                 userId);
 
             await this.articleService.ModifyAsync(actor, article);
-        }
-
-        public Task DeleteAsync(string actor, int id)
-        {
-            if (actor == null)
-                throw new ArgumentNullException("actor");
-
-            return this.articleService.RemoveAsync(actor, id);
         }
     }
 }
