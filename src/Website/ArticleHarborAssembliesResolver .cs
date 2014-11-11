@@ -12,7 +12,7 @@
         {
             var assemblies = base.GetAssemblies();
 
-            var customControllersAssembly = typeof(NewArticlesController).Assembly;
+            var customControllersAssembly = typeof(ArticlesController).Assembly;
             if (!assemblies.Contains(customControllersAssembly))
                 assemblies.Add(customControllersAssembly);
 

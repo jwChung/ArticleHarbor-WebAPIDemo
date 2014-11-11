@@ -9,17 +9,17 @@
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 
-    public class NewArticlesControllerTest : IdiomaticTest<NewArticlesController>
+    public class ArticlesControllerTest : IdiomaticTest<ArticlesController>
     {
         [Test]
-        public void SutIsApiController(NewArticlesController sut)
+        public void SutIsApiController(ArticlesController sut)
         {
             Assert.IsAssignableFrom<ApiController>(sut);
         }
 
         [Test]
         public async Task GetAsyncReturnsCorrectResult(
-            NewArticlesController sut,
+            ArticlesController sut,
             IEnumerable<Article> articles)
         {
             sut.ArticleService.Of(x => x.GetAsync() == Task.FromResult(articles));
@@ -29,7 +29,7 @@
 
         [Test]
         public async Task PostAsyncCorrectlyAddsArticle(
-            NewArticlesController sut,
+            ArticlesController sut,
             PostArticleViewModel postArticle,
             string userId,
             Article expected)
@@ -54,7 +54,7 @@
 
         [Test]
         public async Task PutAsyncCorrectlyModifiesArticle(
-            NewArticlesController sut,
+            ArticlesController sut,
             PutArticleViewModel putArticle,
             string actor,
             string userId)
@@ -76,7 +76,7 @@
 
         [Test]
         public async Task DeleteAsyncCorrectlyRemovesArticle(
-            NewArticlesController sut,
+            ArticlesController sut,
             string actor,
             int id)
         {

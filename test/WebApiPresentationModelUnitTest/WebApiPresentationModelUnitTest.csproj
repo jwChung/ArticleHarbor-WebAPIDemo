@@ -133,7 +133,7 @@
     <Compile Include="ApiKeyAuthenticationDispatcherTest.cs" />
     <Compile Include="ArticleHarborAuthProviderTest.cs" />
     <Compile Include="AssemblyTest.cs" />
-    <Compile Include="Controllers\NewArticlesControllerTest.cs" />
+    <Compile Include="Controllers\ArticlesControllerTest.cs" />
     <Compile Include="FileLoggerTest.cs" />
     <Compile Include="JsonConstructorDeserializerTest.cs" />
     <Compile Include="JsonCustomMediaTypeFormatterTest.cs" />

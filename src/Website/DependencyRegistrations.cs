@@ -79,7 +79,7 @@ namespace ArticleHarbor.Website
 
             // Presentation controllers
             container.Register(
-                c => new NewArticlesController(c.Resolve<IArticleService>()))
+                c => new ArticlesController(c.Resolve<IArticleService>()))
                 .ReusedWithinContainer();
 
             return this;
