@@ -19,6 +19,7 @@
             initializer.InitializeUsers();
             initializer.InitializeArticles();
             initializer.InitializeArticleWords();
+            initializer.InitializeBookmarks();
 
             base.Seed(context);
         }
@@ -125,6 +126,25 @@
                 {
                     ArticleId = 3,
                     Word = "WordC1"
+                });
+            }
+
+            public void InitializeBookmarks()
+            {
+                this.context.Bookmarks.Add(new Bookmark
+                {
+                    UserId = this.context.Users.Local[0].Id,
+                    ArticleId = 1,
+                });
+                this.context.Bookmarks.Add(new Bookmark
+                {
+                    UserId = this.context.Users.Local[0].Id,
+                    ArticleId = 2,
+                });
+                this.context.Bookmarks.Add(new Bookmark
+                {
+                    UserId = this.context.Users.Local[1].Id,
+                    ArticleId = 3,
                 });
             }
         }
