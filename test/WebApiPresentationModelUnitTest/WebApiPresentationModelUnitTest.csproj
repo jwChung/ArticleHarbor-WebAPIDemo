@@ -140,6 +140,7 @@
     <Compile Include="JsonCustomMediaTypeFormatterTest.cs" />
     <Compile Include="LazyUnitOfWorkTest.cs" />
     <Compile Include="LogContextTest.cs" />
+    <Compile Include="Models\PutArticleViewModelTest.cs" />
     <Compile Include="Models\PostArticleViewModelTest.cs" />
     <Compile Include="PermissionAuthorizationFilterAttributeTest.cs" />
     <Compile Include="SimplePrincipalTest.cs" />

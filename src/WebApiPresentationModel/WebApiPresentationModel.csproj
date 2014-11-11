@@ -83,6 +83,7 @@
     <Compile Include="LazyUnitOfWork.cs" />
     <Compile Include="LogContext.cs" />
     <Compile Include="Models\PostArticleViewModel.cs" />
+    <Compile Include="Models\PutArticleViewModel.cs" />
     <Compile Include="PermissionAuthorizationFilterAttribute.cs" />
     <Compile Include="SimplePrincipal.cs" />
     <Compile Include="PrincipalValueProvider.cs" />
