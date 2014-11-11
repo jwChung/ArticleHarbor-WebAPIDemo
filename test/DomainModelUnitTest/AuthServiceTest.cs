@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Reflection;
     using System.Threading.Tasks;
+    using Jwc.Experiment.Xunit;
     using Moq;
     using Xunit;
 
@@ -49,9 +50,68 @@
             sut.Owned.ToMock().Verify(x => x.Dispose(), Times.Once());
         }
 
+        [Test]
+        public async Task HasPermissionsAsyncThrowsWhenThereIsNoUserMatchedWithActor(
+            AuthService sut,
+            string id,
+            Permissions permissions)
+        {
+            sut.Users.Of(x => x.FindAsync(id) == Task.FromResult<User>(null));
+            try
+            {
+                await sut.HasPermissionsAsync(id, permissions);
+                Assert.True(false, "throws exception.");
+            }
+            catch (ArgumentException)
+            {
+            }
+        }
+
+        [Test]
+        public IEnumerable<ITestCase> HasPermissionsAsyncReturnsCorrectResult(
+            string uesrId,
+            Guid guid)
+        {
+            var testData = new[]
+            {
+                new
+                {
+                    Permissions = Permissions.DeleteAny,
+                    User = new User(uesrId, Role.User, guid),
+                    Expected = false
+                },
+                new
+                {
+                    Permissions = Permissions.DeleteAny,
+                    User = new User(uesrId, Role.Administrator, guid),
+                    Expected = true
+                },
+                new
+                {
+                    Permissions = Permissions.Create,
+                    User = new User(uesrId, Role.User, guid),
+                    Expected = false
+                },
+                new
+                {
+                    Permissions = Permissions.Create,
+                    User = new User(uesrId, Role.Author, guid),
+                    Expected = true
+                },
+            };
+            return TestCases.WithArgs(testData).WithAuto<AuthService, string>().Create(
+                (d, sut, id) =>
+                {
+                    sut.Users.Of(x => x.FindAsync(id) == Task.FromResult<User>(d.User));
+                    var actual = sut.HasPermissionsAsync(id, d.Permissions).Result;
+                    Assert.Equal(d.Expected, actual);
+                });
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
             yield return this.Methods.Select(x => x.FindUserAsync(Guid.Empty));
+            yield return this.Methods.Select(x => x.HasPermissionsAsync(null, Permissions.None));
         }
     }
 }

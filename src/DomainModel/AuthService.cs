@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel
 {
     using System;
+    using System.Globalization;
     using System.Threading.Tasks;
 
     public class AuthService : IAuthService
@@ -47,12 +48,18 @@
             return this.users.FindAsync(apiKey);
         }
 
-        public Task<bool> HasPermissionsAsync(string actor, Permissions permissions)
+        public async Task<bool> HasPermissionsAsync(string actor, Permissions permissions)
         {
-            if (actor == null)
-                throw new ArgumentNullException("actor");
+            var user = await this.users.FindAsync(actor);
+            if (user == null)
+                throw new ArgumentException(
+                    string.Format(
+                        CultureInfo.CurrentCulture,
+                        "There is no user '{0}' in user repository.",
+                        actor),
+                    "actor");
 
-            throw new NotImplementedException();
+            return user.Role.HasFlag((Role)(int)permissions);
         }
 
         public void Dispose()
