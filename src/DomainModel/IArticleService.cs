@@ -5,8 +5,6 @@
 
     public interface IArticleService
     {
-        Task<string> GetUserIdAsync(int id);
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "The method form is more appropriate than property form.")]
         Task<IEnumerable<Article>> GetAsync();
 
@@ -15,7 +13,9 @@
         Task ModifyAsync(string actor, Article article);
 
         Task RemoveAsync(string actor, int id);
-        
+
+        Task<string> GetUserIdAsync(int id);
+
         Task<Article> SaveAsync(Article article);
 
         Task RemoveAsync(int id);
