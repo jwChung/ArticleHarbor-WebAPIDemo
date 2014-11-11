@@ -69,12 +69,10 @@ namespace ArticleHarbor.DomainModel
             return this.ModifyAsyncImpl(article);
         }
 
-        public Task RemoveAsync(string actor, int id)
+        public async Task RemoveAsync(string actor, int id)
         {
-            if (actor == null)
-                throw new ArgumentNullException("actor");
-
-            throw new NotImplementedException();
+            await this.articleWordService.RemoveWordsAsync(id);
+            await this.articles.DeleteAsync(id);
         }
 
         public Task<Article> SaveAsync(Article article)

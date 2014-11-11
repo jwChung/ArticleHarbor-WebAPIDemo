@@ -7,5 +7,7 @@
         Task AddWordsAsync(int id, string subject);
 
         Task ModifyWordsAsync(int id, string subject);
+
+        Task RemoveWordsAsync(int id);
     }
 }

@@ -98,6 +98,29 @@ namespace ArticleHarbor.DomainModel
         }
 
         [Test]
+        public async Task RemoveAsyncCorrectlyRemovesArticle(
+            FakeRepositoryBase<Article> articles,
+            NewArticleService sut)
+        {
+            var id = articles.Items[1].Id;
+
+            await sut.RemoveAsync(null, id);
+
+            Assert.DoesNotContain(id, articles.Items.Select(x => x.Id));
+            Assert.Equal(2, articles.Items.Count);
+        }
+
+        [Test]
+        public async Task RemoveAsyncCorrectlyRemovesArticleWords(
+            NewArticleService sut,
+            int id)
+        {
+            await sut.RemoveAsync(null, id);
+            sut.ArticleWordService.ToMock().Verify(
+                x => x.RemoveWordsAsync(id));
+        }
+
+        [Test]
         public void ModifyAsyncWithNullArticleThrows(NewArticleService sut)
         {
             Assert.Throws<ArgumentNullException>(() => sut.ModifyAsync(null, null));
@@ -106,6 +129,7 @@ namespace ArticleHarbor.DomainModel
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
             yield return this.Methods.Select(x => x.ModifyAsync(null, null));
+            yield return this.Methods.Select(x => x.RemoveAsync(null, 0));
         }
     }
 }
