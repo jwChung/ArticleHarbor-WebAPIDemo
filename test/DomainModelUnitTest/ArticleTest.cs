@@ -43,28 +43,18 @@
             yield return TestCase.WithAuto<IFixture>().Create(
                 fixture =>
                 {
-                    var uesrId = fixture.Freeze<string>();
+                    var userId = fixture.Freeze<string>();
                     var sut = fixture.Build<Article>()
                         .FromFactory(
                             new MethodInvoker(new GreedyConstructorQuery()))
                         .Create();
-                    Assert.Equal(uesrId, sut.UserId);
+                    Assert.Equal(userId, sut.UserId);
                 });
         }
 
         [Test]
         public IEnumerable<ITestCase> IdIsCorrect()
         {
-            yield return TestCase.WithAuto<IFixture>().Create(
-               fixture =>
-               {
-                   var sut = fixture.Build<Article>()
-                       .FromFactory(
-                           new MethodInvoker(new ModestConstructorQuery()))
-                       .Create();
-                   Assert.Equal(-1, sut.Id);
-               });
-
             yield return TestCase.WithAuto<IFixture>().Create(
                 fixture =>
                 {

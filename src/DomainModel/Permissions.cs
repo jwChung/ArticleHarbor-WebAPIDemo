@@ -15,56 +15,31 @@
         /// The authentication permission
         /// </summary>
         Authentication = 1,
-
-        /// <summary>
-        /// The create article permission
-        /// </summary>
-        CreateArticle = 2,
-
-        /// <summary>
-        /// The delete own article permission
-        /// </summary>
-        DeleteArticle = 4,
-
-        /// <summary>
-        /// The delete any article permission
-        /// </summary>
-        DeleteAnyArticle = 8,
-
-        /// <summary>
-        /// The modify own article permission
-        /// </summary>
-        ModifyArticle = 0x10,
-
-        /// <summary>
-        /// The modify any article permission
-        /// </summary>
-        ModifyAnyArticle = 0x20,
-
+        
         /// <summary>
         /// The create
         /// </summary>
-        Create = 0x40,
+        Create = 2,
 
         /// <summary>
         /// The delete
         /// </summary>
-        Delete = 0x80,
+        Delete = 4,
 
         /// <summary>
         /// The delete any
         /// </summary>
-        DeleteAny = 0x100,
+        DeleteAny = 8,
 
         /// <summary>
         /// The modify
         /// </summary>
-        Modify = 0x200,
+        Modify = 0x10,
 
         /// <summary>
         /// The modify any
         /// </summary>
-        ModifyAny = 0x400,
+        ModifyAny = 0x20,
 
         /// <summary>
         /// The user permissions
@@ -75,14 +50,12 @@
         /// The author permissions
         /// </summary>
         AuthorPermissions = UserPermissions
-            | Create | Delete | Modify
-            | CreateArticle | DeleteArticle | ModifyArticle,
+            | Create | Delete | Modify,
 
         /// <summary>
         /// The administrator permissions
         /// </summary>
         AdministratorPermissions = AuthorPermissions
             | DeleteAny | ModifyAny
-            | DeleteAnyArticle | ModifyAnyArticle
     }
 }

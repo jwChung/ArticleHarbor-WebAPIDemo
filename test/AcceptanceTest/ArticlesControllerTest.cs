@@ -16,7 +16,7 @@
         {
             using (var client = HttpClientFactory.Create())
             {
-                var response = await client.GetAsync("api/newarticles");
+                var response = await client.GetAsync("api/articles");
                 Assert.True(response.IsSuccessStatusCode, await response.GetMessageAsync());
             }
         }
@@ -26,7 +26,7 @@
         {
             using (var client = HttpClientFactory.Create())
             {
-                var response = await client.GetAsync("api/newarticles");
+                var response = await client.GetAsync("api/articles");
 
                 Assert.True(response.IsSuccessStatusCode, await response.GetMessageAsync());
                 Assert.Equal("application/json", response.Content.Headers.ContentType.MediaType);
@@ -43,7 +43,7 @@
             {
                 client.DefaultRequestHeaders.Accept.ParseAdd("application/xml");
                 client.DefaultRequestHeaders.Accept.ParseAdd("application/json;q=0.8");
-                var response = await client.GetAsync("api/newarticles");
+                var response = await client.GetAsync("api/articles");
 
                 Assert.True(response.IsSuccessStatusCode, await response.GetMessageAsync());
                 Assert.Equal("application/json", response.Content.Headers.ContentType.MediaType);
@@ -59,7 +59,7 @@
                     JsonConvert.SerializeObject(article));
                 content.Headers.ContentType.MediaType = "application/json";
 
-                var response = await client.PostAsync("api/newarticles", content);
+                var response = await client.PostAsync("api/articles", content);
 
                 Assert.True(
                     HttpStatusCode.Unauthorized == response.StatusCode,
@@ -81,7 +81,7 @@
                     JsonConvert.SerializeObject(article));
                 content.Headers.ContentType.MediaType = "application/json";
 
-                var response = await client.PostAsync("api/newarticles", content);
+                var response = await client.PostAsync("api/articles", content);
 
                 Assert.True(response.IsSuccessStatusCode, await response.GetMessageAsync());
             }
@@ -101,7 +101,7 @@
                     JsonConvert.SerializeObject(article));
                 content.Headers.ContentType.MediaType = "application/json";
 
-                var response = await client.PutAsync("api/newarticles", content);
+                var response = await client.PutAsync("api/articles", content);
 
                 Assert.True(response.IsSuccessStatusCode, await response.GetMessageAsync());
             }
@@ -120,7 +120,7 @@
                     JsonConvert.SerializeObject(article));
                 content.Headers.ContentType.MediaType = "application/json";
 
-                var response = await client.PutAsync("api/newarticles", content);
+                var response = await client.PutAsync("api/articles", content);
 
                 Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
             }
@@ -139,7 +139,7 @@
                     JsonConvert.SerializeObject(article));
                 content.Headers.ContentType.MediaType = "application/json";
 
-                var response = await client.PutAsync("api/newarticles", content);
+                var response = await client.PutAsync("api/articles", content);
 
                 Assert.True(response.IsSuccessStatusCode, await response.GetMessageAsync());
             }
