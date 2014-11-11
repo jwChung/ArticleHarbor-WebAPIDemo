@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -55,6 +56,18 @@
 
         public async Task ModifyWordsAsync(int id, string subject)
         {
+            var article = await this.articles.FineAsync(id);
+            if (article == null)
+                throw new ArgumentException(
+                    string.Format(
+                        CultureInfo.CurrentCulture,
+                        "There is no id '{0}' in article repository.",
+                        id),
+                    "id");
+
+            if (subject == article.Subject)
+                return;
+            
             await this.RemoveWordsAsync(id);
             await this.AddWordsAsync(id, subject);
         }

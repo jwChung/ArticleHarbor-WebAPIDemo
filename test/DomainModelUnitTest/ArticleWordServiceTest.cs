@@ -60,7 +60,8 @@
             int id,
             string subject,
             string[] words,
-            IFixture fixture)
+            IFixture fixture,
+            Article article)
         {
             // Fixture setup
             fixture.Inject<Func<string, IEnumerable<string>>>(s =>
@@ -69,6 +70,7 @@
                 return words;
             });
             var sut = fixture.Create<ArticleWordService>();
+            sut.Articles.Of(x => x.FineAsync(id) == Task.FromResult(article));
 
             // Excercise outcome
             await sut.ModifyWordsAsync(id, subject);
@@ -82,6 +84,41 @@
                     .With(x => x.Word).EqualsWhen((a, b) => b.Word == word);
                 sut.ArticleWords.ToMock().Verify(
                     x => x.InsertAsync(It.Is<ArticleWord>(p => likeness.Equals(p))));
+            }
+        }
+
+        [Test]
+        public async Task ModifyWordsAsyncDoesNotModifiesWhenSubjectIsSame(
+            ArticleWordService sut,
+            int id,
+            Article article,
+            string subject)
+        {
+            article = article.WithSubject(subject);
+            sut.Articles.Of(x => x.FineAsync(id) == Task.FromResult(article));
+
+            await sut.ModifyWordsAsync(id, subject);
+
+            sut.ArticleWords.ToMock().Verify(x => x.DeleteAsync(It.IsAny<int>()), Times.Never());
+            sut.ArticleWords.ToMock().Verify(
+                x => x.InsertAsync(It.IsAny<ArticleWord>()), Times.Never());
+        }
+
+        [Test]
+        public async Task ModifyWordsAsyncThrowsWhenThereIsNoArticleWithGivenId(
+            ArticleWordService sut,
+            int id,
+            Article article,
+            string subject)
+        {
+            article = article.WithSubject(subject);
+            try
+            {
+                await sut.ModifyWordsAsync(id, null);
+                throw new Exception("throw exception.");
+            }
+            catch (ArgumentException)
+            {
             }
         }
 
