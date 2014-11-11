@@ -1,10 +1,12 @@
 ﻿namespace ArticleHarbor.AcceptanceTest
 {
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
+    using Jwc.Experiment.Xunit;
     using Newtonsoft.Json;
     using WebApiPresentationModel.Models;
     using Xunit;
@@ -51,23 +53,33 @@
         }
 
         [Test]
-        public async Task PostAsyncWithoutAuthReturnsUnauthorizedCode(
-            PostArticleViewModel article)
+        public IEnumerable<ITestCase> PostAsyncWithoutAuthReturnsUnauthorizedCode()
         {
-            using (var client = HttpClientFactory.Create())
+            var auths = new[]
             {
-                var content = new StringContent(
-                    JsonConvert.SerializeObject(article));
-                content.Headers.ContentType.MediaType = "application/json";
+                null, // user2
+                new AuthenticationHeaderValue("apikey", "930eaf281412423592f35104836f2771"), // user3
+            };
 
-                var response = await client.PostAsync("api/articles", content);
+            return TestCases.WithArgs(auths).WithAuto<PostArticleViewModel>().Create(
+                (auth, article) =>
+                {
+                    using (var client = HttpClientFactory.Create())
+                    {
+                        client.DefaultRequestHeaders.Authorization = auth;
+                        var content = new StringContent(
+                            JsonConvert.SerializeObject(article));
+                        content.Headers.ContentType.MediaType = "application/json";
 
-                Assert.True(
-                    HttpStatusCode.Unauthorized == response.StatusCode,
-                    await response.GetMessageAsync());
-            }
+                        var response = client.PostAsync("api/articles", content).Result;
+
+                        Assert.False(
+                            response.IsSuccessStatusCode,
+                            response.GetMessageAsync().Result);
+                    }
+                });
         }
-
+        
         [Test]
         public async Task PostAsyncWithAuthAddsArticleAndArticleWords(
             PostArticleViewModel article)
@@ -125,7 +137,9 @@
 
                 var response = await client.PutAsync("api/articles", content);
 
-                Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+                Assert.True(
+                   HttpStatusCode.InternalServerError == response.StatusCode,
+                   await response.GetMessageAsync());
             }
         }
 
@@ -147,6 +161,44 @@
 
                 Assert.True(response.IsSuccessStatusCode, await response.GetMessageAsync());
             }
+        }
+
+        [Test(Skip = "Run explicitly as others test can be affected from this test.")]
+        public async Task DeleteAsyncWitAuthRemovesArticle()
+        {
+            using (var client = HttpClientFactory.Create())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "apikey", "232494f5670943dfac807226449fe795"); // user2 (author)
+
+                var response = await client.DeleteAsync("api/articles/2");
+
+                Assert.True(response.IsSuccessStatusCode, await response.GetMessageAsync());
+            }
+        }
+
+        [Test]
+        public IEnumerable<ITestCase> DeleteAsyncWitIncorrectUserReturnsInternalSeverError()
+        {
+            var auths = new[]
+            {
+                new AuthenticationHeaderValue("apikey", "232494f5670943dfac807226449fe795"), // user2
+                new AuthenticationHeaderValue("apikey", "930eaf281412423592f35104836f2771"), // user3
+            };
+
+            return TestCases.WithArgs(auths).Create(auth =>
+            {
+                using (var client = HttpClientFactory.Create())
+                {
+                    client.DefaultRequestHeaders.Authorization = auth;
+
+                    var response = client.DeleteAsync("api/articles/1").Result;
+
+                    Assert.True(
+                        HttpStatusCode.InternalServerError == response.StatusCode,
+                        response.GetMessageAsync().Result);
+                }
+            });
         }
     }
 }
