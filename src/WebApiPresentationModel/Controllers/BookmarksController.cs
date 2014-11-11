@@ -25,6 +25,7 @@
             get { return this.bookmarkService; }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is action method.")]
         public Task<IEnumerable<Article>> GetAsync()
         {
             var actor = this.User.Identity.Name;

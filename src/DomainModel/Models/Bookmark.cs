@@ -13,7 +13,7 @@
                 throw new ArgumentNullException("userId");
 
             if (userId.Length == 0)
-                throw new ArgumentException("The userId should not be empty.", "uesrId");
+                throw new ArgumentException("The userId should not be empty.", "userId");
 
             this.userId = userId;
             this.articleId = articleId;
