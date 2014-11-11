@@ -8,7 +8,7 @@
     using ArticleHarbor.EFDataAccess;
     using ArticleWord = DomainModel.ArticleWord;
 
-    public class ArticleWordRepository : IRepository<ArticleWord>, IArticleWordRepository
+    public class ArticleWordRepository : IArticleWordRepository
     {
         private readonly ArticleHarborDbContext context;
 
@@ -39,38 +39,16 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            if (this.Select(article.ArticleId, article.Word) == null)
-                this.context.ArticleWords.Add(article.ToPersistence());
-
-            return Task.FromResult<ArticleWord>(article);
+            return this.InsertAsyncImpl(article);
         }
 
-        public Task<ArticleWord> FindAsync(params object[] identity)
+        public Task<ArticleWord> FindAsync(int id, string word)
         {
-            if (identity == null)
-                throw new ArgumentNullException("identity");
+            if (word == null)
+                throw new ArgumentNullException("word");
 
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<ArticleWord>> SelectAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(ArticleWord article)
-        {
-            if (article == null)
-                throw new ArgumentNullException("article");
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(params object[] identity)
-        {
-            if (identity == null)
-                throw new ArgumentNullException("identity");
-
-            throw new NotImplementedException();
+            var articleWord = this.context.ArticleWords.Find(new object[] { id, word });
+            return Task.FromResult(articleWord == null ? null : articleWord.ToDomain());
         }
 
         public Task DeleteAsync(int id)
@@ -82,6 +60,14 @@
                 this.context.ArticleWords.Remove(articleWord);
 
             return Task.FromResult<object>(null);
+        }
+
+        private async Task<ArticleWord> InsertAsyncImpl(ArticleWord article)
+        {
+            if (await this.FindAsync(article.ArticleId, article.Word) == null)
+                this.context.ArticleWords.Add(article.ToPersistence());
+
+            return article; // TODO: return null.
         }
     }
 }
