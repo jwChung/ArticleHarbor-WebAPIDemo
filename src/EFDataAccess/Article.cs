@@ -24,9 +24,11 @@
 
         public string UserId { get; set; }
 
+        public virtual User User { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "EntityFramework의 Lazy Loading을 위한 Property.")]
         public virtual ICollection<ArticleWord> ArticleWords { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual ICollection<Bookmark> Bookmarks { get; set; }
     }
 }
