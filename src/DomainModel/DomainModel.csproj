@@ -45,7 +45,6 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Article.cs" />
-    <Compile Include="ArticleService.cs" />
     <Compile Include="ArticleWord.cs" />
     <Compile Include="ArticleWordService.cs" />
     <Compile Include="AuthArticleService.cs" />
