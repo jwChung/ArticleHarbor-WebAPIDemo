@@ -10,5 +10,10 @@
         {
             Assert.IsAssignableFrom<ApiController>(sut);
         }
+
+        ////[Test]
+        ////public void GetAsyncReturnsCorrectResult(BookmarksController sut)
+        ////{
+        ////}
     }
 }
