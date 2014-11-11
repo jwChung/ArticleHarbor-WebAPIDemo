@@ -47,10 +47,10 @@
             return this.users.FindAsync(apiKey);
         }
 
-        public Task<bool> HasPermissionsAsync(string userId, Permissions permissions)
+        public Task<bool> HasPermissionsAsync(string actor, Permissions permissions)
         {
-            if (userId == null)
-                throw new ArgumentNullException("userId");
+            if (actor == null)
+                throw new ArgumentNullException("actor");
 
             throw new NotImplementedException();
         }
