@@ -6,6 +6,7 @@ namespace ArticleHarbor.DomainModel
     using System.Reflection;
     using System.Threading.Tasks;
     using Ploeh.AutoFixture;
+    using Ploeh.AutoFixture.Xunit;
     using Xunit;
 
     public class NewArticleServiceTest : IdiomaticTest<NewArticleService>
@@ -18,7 +19,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public void GetAsyncReturnsCorrectResult(
-            FakeRepositoryBase<Article> articles,
+            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
             NewArticleService sut)
         {
             IEnumerable<Article> actual = sut.GetAsync().Result;
@@ -27,7 +28,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public async Task GetUserIdAsyncReturnsCorrectUserId(
-            FakeRepositoryBase<Article> articles,
+            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
             NewArticleService sut)
         {
             var article = articles.Items[1];
@@ -40,7 +41,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public void GetIncorrectUserIdAsyncThrows(
-            FakeRepositoryBase<Article> articles,
+            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
             NewArticleService sut,
             Generator<Article> generator)
         {
@@ -53,7 +54,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public async Task AddAsyncCorrectlyAddsArticle(
-            FakeRepositoryBase<Article> articles,
+            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
             NewArticleService sut,
             Article article)
         {
@@ -74,7 +75,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public async Task ModifyAsyncCorrectlyModifiesArticle(
-            FakeRepositoryBase<Article> articles,
+            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
             Article article,
             NewArticleService sut)
         {
@@ -88,7 +89,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public async Task ModifyAsyncCorrectlyModifiesArticleWords(
-            FakeRepositoryBase<Article> articles,
+            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
             Article article,
             NewArticleService sut)
         {
@@ -99,7 +100,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public async Task RemoveAsyncCorrectlyRemovesArticle(
-            FakeRepositoryBase<Article> articles,
+            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
             NewArticleService sut)
         {
             var id = articles.Items[1].Id;
@@ -130,6 +131,19 @@ namespace ArticleHarbor.DomainModel
         {
             yield return this.Methods.Select(x => x.ModifyAsync(null, null));
             yield return this.Methods.Select(x => x.RemoveAsync(null, 0));
+        }
+
+        public class FakeArticleRepository : FakeRepositoryBase<Article>
+        {
+            public FakeArticleRepository(Generator<Article> generator)
+                : base(generator)
+            {
+            }
+
+            public override object[] GetIdentity(Article item)
+            {
+                return new object[] { item.Id };
+            }
         }
     }
 }

@@ -68,11 +68,6 @@
             {
                 fixture.Customize<Article>(c => c.FromFactory(
                     new MethodInvoker(new GreedyConstructorQuery())));
-
-                var articleRepository = new FakeArticleRepository(
-                    fixture.Create<Generator<Article>>());
-                fixture.Inject<FakeRepositoryBase<Article>>(articleRepository);
-                fixture.Inject<IRepository<Article>>(articleRepository);
             }
         }
 
@@ -84,19 +79,6 @@
                 var random = new Random();
                 fixture.Customize<Permissions>(
                     c => c.FromFactory(() => (Permissions)random.Next(0, max + 1)));
-            }
-        }
-
-        private class FakeArticleRepository : FakeRepositoryBase<Article>
-        {
-            public FakeArticleRepository(Generator<Article> generator)
-                : base(generator)
-            {
-            }
-
-            public override object[] GetIdentity(Article item)
-            {
-                return new object[] { item.Id };
             }
         }
     }
