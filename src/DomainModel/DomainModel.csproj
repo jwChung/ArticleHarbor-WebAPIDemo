@@ -46,6 +46,7 @@
     </Compile>
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ArticleWord.cs" />
+    <Compile Include="Models\Bookmark.cs" />
     <Compile Include="Services\ArticleWordService.cs" />
     <Compile Include="Services\AuthArticleService.cs" />
     <Compile Include="Services\AuthService.cs" />
