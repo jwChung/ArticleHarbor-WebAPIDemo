@@ -50,6 +50,7 @@
     <Compile Include="ArticleWordService.cs" />
     <Compile Include="AuthArticleService.cs" />
     <Compile Include="AuthService.cs" />
+    <Compile Include="EmptyDisposable.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IArticleService.cs" />
     <Compile Include="IArticleWordRepository.cs" />
