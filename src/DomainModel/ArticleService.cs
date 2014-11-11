@@ -9,12 +9,12 @@
     public class ArticleService : IArticleService
     {
         private readonly IRepository<Article> articles;
-        private readonly IRepository<ArticleWord> articleWords;
+        private readonly IArticleWordRepository articleWords;
         private readonly Func<string, IEnumerable<string>> nounExtractor;
 
         public ArticleService(
             IRepository<Article> articles,
-            IRepository<ArticleWord> articleWords,
+            IArticleWordRepository articleWords,
             Func<string, IEnumerable<string>> nounExtractor)
         {
             if (articles == null)
@@ -36,7 +36,7 @@
             get { return this.articles; }
         }
 
-        public IRepository<ArticleWord> ArticleWords
+        public IArticleWordRepository ArticleWords
         {
             get { return this.articleWords; }
         }
@@ -48,7 +48,7 @@
 
         public Task<string> GetUserIdAsync(int id)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public Task<IEnumerable<Article>> GetAsync()
@@ -61,7 +61,7 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public Task ModifyAsync(string actor, Article article)
@@ -72,7 +72,7 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public Task RemoveAsync(string actor, int id)
@@ -80,7 +80,7 @@
             if (actor == null)
                 throw new ArgumentNullException("actor");
 
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public Task<Article> SaveAsync(Article article)
@@ -107,7 +107,7 @@
 
         private async Task<Article> SaveAsyncImpl(Article article)
         {
-            var oldArticle = await this.articles.FineAsync(article.Id);
+            var oldArticle = await this.articles.FindAsync(article.Id);
             if (oldArticle == null)
             {
                 var newArticle = await this.articles.InsertAsync(article);

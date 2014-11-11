@@ -2,6 +2,7 @@ namespace ArticleHarbor.DomainModel
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Threading.Tasks;
 
     public class NewArticleService : IArticleService
@@ -33,9 +34,18 @@ namespace ArticleHarbor.DomainModel
             get { return this.articleWordService; }
         }
 
-        public Task<string> GetUserIdAsync(int id)
+        public async Task<string> GetUserIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var article = await this.articles.FindAsync(id);
+            if (article != null)
+                return article.UserId;
+
+            throw new ArgumentException(
+                string.Format(
+                    CultureInfo.CurrentCulture,
+                    "There is no id '{0}' in article repository.",
+                    id),
+                "id");
         }
 
         public Task<IEnumerable<Article>> GetAsync()
@@ -48,26 +58,21 @@ namespace ArticleHarbor.DomainModel
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            throw new NotImplementedException();
+            return this.AddAsyncImpl(article);
         }
 
         public Task ModifyAsync(string actor, Article article)
         {
-            if (actor == null)
-                throw new ArgumentNullException("actor");
-
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            throw new NotImplementedException();
+            return this.ModifyAsyncImpl(article);
         }
 
-        public Task RemoveAsync(string actor, int id)
+        public async Task RemoveAsync(string actor, int id)
         {
-            if (actor == null)
-                throw new ArgumentNullException("actor");
-
-            throw new NotImplementedException();
+            await this.articleWordService.RemoveWordsAsync(id);
+            await this.articles.DeleteAsync(id);
         }
 
         public Task<Article> SaveAsync(Article article)
@@ -75,24 +80,24 @@ namespace ArticleHarbor.DomainModel
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            return this.SaveAsyncImpl(article);
+            throw new NotSupportedException();
         }
 
         public Task RemoveAsync(int id)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
-        private async Task<Article> SaveAsyncImpl(Article article)
+        private async Task<Article> AddAsyncImpl(Article article)
         {
-            var oldArticle = await this.articles.FineAsync(article.Id);
-            await this.ArticleWordService.RenewAsync(article.Id, article.Subject);
+            await this.articleWordService.AddWordsAsync(article.Id, article.Subject);
+            return await this.articles.InsertAsync(article);
+        }
 
-            if (oldArticle == null)
-                return await this.Articles.InsertAsync(article);
-
+        private async Task ModifyAsyncImpl(Article article)
+        {
+            await this.articleWordService.ModifyWordsAsync(article.Id, article.Subject);
             await this.articles.UpdateAsync(article);
-            return article;
         }
     }
 }

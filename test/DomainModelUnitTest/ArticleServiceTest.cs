@@ -18,7 +18,7 @@
             Assert.IsAssignableFrom<IArticleService>(sut);
         }
 
-        [Test(Skip = "False positive")]
+        [Test]
         public void GetAsyncReturnsCorrectResult(
             ArticleService sut,
             Task<IEnumerable<Article>> articles)
@@ -28,13 +28,13 @@
             Assert.Equal(articles, actual);
         }
 
-        [Test(Skip = "False positive")]
+        [Test]
         public async Task SaveAsyncAddsWhenThereIsNoArticleWithGivenId(
             ArticleService sut,
             Article article,
             Article newArticle)
         {
-            sut.Articles.ToMock().Setup(x => x.FineAsync(article.Id)).Returns(Task.FromResult<Article>(null));
+            sut.Articles.ToMock().Setup(x => x.FindAsync(article.Id)).Returns(Task.FromResult<Article>(null));
             sut.Articles.Of(x => x.InsertAsync(article) == Task.FromResult(newArticle));
 
             var actual = await sut.SaveAsync(article);
@@ -42,14 +42,14 @@
             Assert.Equal(newArticle, actual);
         }
 
-        [Test(Skip = "False positive")]
+        [Test]
         public async Task SaveAsyncModifiesWhenThereIsArticleWithGivenId(
             ArticleService sut,
             Article article,
             Article newArticle)
         {
-            newArticle = newArticle.WithId(article.Id);
-            sut.Articles.Of(x => x.FineAsync(article.Id) == Task.FromResult(article));
+            newArticle = newArticle.WithId(article.Id).WithUserId(article.UserId);
+            sut.Articles.Of(x => x.FindAsync(article.Id) == Task.FromResult(article));
 
             var actual = await sut.SaveAsync(newArticle);
 
@@ -57,7 +57,7 @@
             sut.Articles.ToMock().Verify(x => x.UpdateAsync(newArticle));
         }
 
-        [Test(Skip = "False positive")]
+        [Test]
         public IEnumerable<ITestCase> SaveAsyncRenewsArticleWordsWhenSubjectIsModifiedWithGivenId(
             Article article,
             string subject,
@@ -73,7 +73,7 @@
                     return words;
                 });
             var sut = fixture.Create<ArticleService>();
-            sut.Articles.Of(x => x.FineAsync(article.Id) == Task.FromResult(article));
+            sut.Articles.Of(x => x.FindAsync(article.Id) == Task.FromResult(article));
 
             // Verify outcome
             sut.SaveAsync(modifiedArticle).Wait();
@@ -94,14 +94,16 @@
             });
         }
 
-        [Test(Skip = "False positive")]
+        [Test]
         public async Task SaveAsyncDoesNotDeleteArticleWordsWhenSubjectIsNotModifiedWithGivenId(
             ArticleService sut,
             Article article,
             Article modifiedArticle)
         {
-            modifiedArticle = modifiedArticle.WithSubject(article.Subject);
-            sut.Articles.Of(x => x.FineAsync(article.Id) == Task.FromResult(article));
+            modifiedArticle = modifiedArticle.WithId(article.Id)
+                .WithUserId(article.UserId)
+                .WithSubject(article.Subject);
+            sut.Articles.Of(x => x.FindAsync(article.Id) == Task.FromResult(article));
 
             await sut.SaveAsync(modifiedArticle);
 
@@ -109,7 +111,7 @@
             sut.ArticleWords.ToMock().Verify(x => x.InsertAsync(It.IsAny<ArticleWord>()), Times.Never());
         }
 
-        [Test(Skip = "False positive")]
+        [Test]
         public async Task SaveAsyncAddsArticleWordsWhenAddingArticle(
             Article article,
             Article newArticle,
@@ -124,7 +126,7 @@
                     return words;
                 });
             var sut = fixture.Create<ArticleService>();
-            sut.Articles.ToMock().Setup(x => x.FineAsync(article.Id))
+            sut.Articles.ToMock().Setup(x => x.FindAsync(article.Id))
                 .Returns(Task.FromResult<Article>(null));
             sut.Articles.Of(x => x.InsertAsync(article) == Task.FromResult(newArticle));
 
@@ -141,7 +143,7 @@
             }
         }
 
-        [Test(Skip = "False positive")]
+        [Test]
         public void SaveAsyncWithInvalidUserIdThrows(
             ArticleService sut,
             Article article,
@@ -151,13 +153,13 @@
         {
             article = article.WithId(id).WithUserId(userId);
             sut.Articles.Of(x =>
-                x.FineAsync(article.Id) == Task.FromResult(article.WithUserId(newUserId)));
+                x.FindAsync(article.Id) == Task.FromResult(article.WithUserId(newUserId)));
 
             var e = Assert.Throws<AggregateException>(() => sut.SaveAsync(article).Wait());
             Assert.IsType<InvalidOperationException>(e.InnerException);
         }
 
-        [Test(Skip = "False positive")]
+        [Test]
         public async Task RemoveAsyncCorrectlyRemoves(
             ArticleService sut,
             int id)

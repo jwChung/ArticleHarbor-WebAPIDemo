@@ -54,7 +54,7 @@ namespace ArticleHarbor.Website
             container.Register<IArticleService>(
                 c => new ArticleService(
                     c.Resolve<IRepository<Article>>(),
-                    c.Resolve<IRepository<ArticleWord>>(),
+                    c.Resolve<IArticleWordRepository>(),
                     KoreanNounExtractor.Execute))
                 .ReusedWithinContainer();
 

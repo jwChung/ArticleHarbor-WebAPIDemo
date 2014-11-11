@@ -52,6 +52,24 @@
             Assert.Null(actual);
         }
 
+        [Test]
+        public async Task FindAsyncWithUserIdReturnsCorrectUser(
+             UserRepository sut)
+        {
+            var id = "user1";
+            var actual = await sut.FindAsync(id);
+            Assert.Equal(id, actual.Id);
+        }
+
+        [Test]
+        public async Task FindAsyncWithIncorrectUserIdReturnsNullUser(
+            UserRepository sut,
+            string id)
+        {
+            var actual = await sut.FindAsync(id);
+            Assert.Null(actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
             yield return this.Methods.Select(x => x.FindAsync(Guid.Empty));

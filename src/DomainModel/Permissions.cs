@@ -44,27 +44,27 @@
         /// <summary>
         /// The create
         /// </summary>
-        CreateGeneral = 0x40,
+        Create = 0x40,
 
         /// <summary>
         /// The delete
         /// </summary>
-        DeleteGeneral = 0x80,
+        Delete = 0x80,
 
         /// <summary>
         /// The delete any
         /// </summary>
-        DeleteAnyGeneral = 0x100,
+        DeleteAny = 0x100,
 
         /// <summary>
         /// The modify
         /// </summary>
-        ModifyGeneral = 0x200,
+        Modify = 0x200,
 
         /// <summary>
         /// The modify any
         /// </summary>
-        ModifyAnyGeneral = 0x400,
+        ModifyAny = 0x400,
 
         /// <summary>
         /// The user permissions
@@ -75,14 +75,14 @@
         /// The author permissions
         /// </summary>
         AuthorPermissions = UserPermissions
-            | CreateGeneral | DeleteGeneral | ModifyGeneral
+            | Create | Delete | Modify
             | CreateArticle | DeleteArticle | ModifyArticle,
 
         /// <summary>
         /// The administrator permissions
         /// </summary>
         AdministratorPermissions = AuthorPermissions
-            | DeleteAnyGeneral | ModifyAnyGeneral
+            | DeleteAny | ModifyAny
             | DeleteAnyArticle | ModifyAnyArticle
     }
 }

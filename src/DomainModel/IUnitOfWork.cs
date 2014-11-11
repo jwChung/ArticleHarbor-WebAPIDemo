@@ -6,7 +6,7 @@
     {
         IRepository<Article> Articles { get; }
 
-        IRepository<ArticleWord> ArticleWords { get; }
+        IArticleWordRepository ArticleWords { get; }
 
         IUserRepository Users { get; }
 

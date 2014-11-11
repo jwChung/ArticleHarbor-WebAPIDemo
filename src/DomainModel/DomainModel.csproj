@@ -47,10 +47,13 @@
     <Compile Include="Article.cs" />
     <Compile Include="ArticleService.cs" />
     <Compile Include="ArticleWord.cs" />
-    <Compile Include="AuthRepositoryProvider.cs" />
+    <Compile Include="ArticleWordService.cs" />
+    <Compile Include="AuthArticleService.cs" />
     <Compile Include="AuthService.cs" />
+    <Compile Include="EmptyDisposable.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IArticleService.cs" />
+    <Compile Include="IArticleWordRepository.cs" />
     <Compile Include="IArticleWordService.cs" />
     <Compile Include="IAuthRepositoryProvider.cs" />
     <Compile Include="IAuthService.cs" />

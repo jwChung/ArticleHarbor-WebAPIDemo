@@ -5,7 +5,7 @@
 
     public interface IRepository<T>
     {
-        Task<T> FineAsync(params object[] identity);
+        Task<T> FindAsync(params object[] identity);
 
         Task<IEnumerable<T>> SelectAsync();
 

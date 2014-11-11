@@ -8,7 +8,7 @@
     using ArticleHarbor.EFDataAccess;
     using ArticleWord = DomainModel.ArticleWord;
 
-    public class ArticleWordRepository : IRepository<ArticleWord>
+    public class ArticleWordRepository : IRepository<ArticleWord>, IArticleWordRepository
     {
         private readonly ArticleHarborDbContext context;
 
@@ -45,7 +45,7 @@
             return Task.FromResult<ArticleWord>(item);
         }
 
-        public Task<ArticleWord> FineAsync(params object[] identity)
+        public Task<ArticleWord> FindAsync(params object[] identity)
         {
             if (identity == null)
                 throw new ArgumentNullException("identity");
@@ -70,7 +70,11 @@
             if (identity == null)
                 throw new ArgumentNullException("identity");
 
-            var id = (int)identity[0];
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(int id)
+        {
             var articleWords = this.context.ArticleWords
                 .Where(x => x.ArticleId == id).ToArray();
 
