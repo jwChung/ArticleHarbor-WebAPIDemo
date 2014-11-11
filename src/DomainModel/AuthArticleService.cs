@@ -52,7 +52,7 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            throw new NotImplementedException();
+            return this.ModifyAsyncImpl(actor, article);
         }
 
         public Task RemoveAsync(string actor, int id)
@@ -87,6 +87,18 @@
                 throw new UnauthorizedException();
 
             return await this.innerService.AddAsync(article);
+        }
+
+        private async Task ModifyAsyncImpl(string actor, Article article)
+        {
+            if (!await this.authService.HasPermissionsAsync(actor, Permissions.Modify))
+                throw new UnauthorizedException();
+
+            if (!await this.authService.HasPermissionsAsync(actor, Permissions.ModifyAny)
+                && actor != article.UserId)
+                throw new UnauthorizedException();
+
+            await this.innerService.ModifyAsync(actor, article);
         }
     }
 }
