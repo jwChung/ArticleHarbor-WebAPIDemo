@@ -37,6 +37,11 @@
             return this.SelectAsyncImpl(id, password);
         }
 
+        public Task<User> FindAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<User> FindAsync(Guid apiKey)
         {
             var user = this.context.Users.Local.Where(u => u.ApiKey == apiKey).SingleOrDefault();
