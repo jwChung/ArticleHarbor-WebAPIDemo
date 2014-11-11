@@ -30,6 +30,7 @@
             return this.articleService.GetAsync();
         }
 
+        [Authorize] // TODO: return unauthorized code when Unauthorized exceptin is thrown.
         public Task<Article> PostAsync(PostArticleViewModel postArticle)
         {
             if (postArticle == null)
