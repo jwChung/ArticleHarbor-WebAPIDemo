@@ -94,7 +94,6 @@
     </Compile>
     <Compile Include="ArticleWordServiceTest.cs" />
     <Compile Include="AuthArticleServiceTest.cs" />
-    <Compile Include="AuthRepositoryProviderTest.cs" />
     <Compile Include="ArticleServiceTest.cs" />
     <Compile Include="ArticleTest.cs" />
     <Compile Include="ArticleWordTest.cs" />
