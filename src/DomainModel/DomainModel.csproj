@@ -56,7 +56,6 @@
     <Compile Include="IArticleWordRepository.cs" />
     <Compile Include="IArticleWordService.cs" />
     <Compile Include="IAuthService.cs" />
-    <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="KoreanNounExtractor.cs" />
