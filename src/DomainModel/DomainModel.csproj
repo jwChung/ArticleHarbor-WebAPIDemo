@@ -47,6 +47,7 @@
     <Compile Include="Article.cs" />
     <Compile Include="ArticleService.cs" />
     <Compile Include="ArticleWord.cs" />
+    <Compile Include="AuthArticleService.cs" />
     <Compile Include="AuthRepositoryProvider.cs" />
     <Compile Include="AuthService.cs" />
     <Compile Include="GlobalSuppressions.cs" />
