@@ -58,7 +58,7 @@
             if (identity == null)
                 throw new ArgumentNullException("identity");
 
-            throw new NotImplementedException();
+            return this.FindAsyncImpl(identity);
         }
 
         public Task<IEnumerable<User>> SelectAsync()
@@ -93,6 +93,16 @@
         private async Task<User> SelectAsyncImpl(string id, string password)
         {
             var user = await this.context.UserManager.FindAsync(id, password);
+            if (user == null)
+                return null;
+
+            var roleNames = await this.context.UserManager.GetRolesAsync(user.Id);
+            return user.ToDomain(roleNames.Single());
+        }
+
+        private async Task<User> FindAsyncImpl(object[] identity)
+        {
+            var user = await this.context.UserManager.FindByNameAsync((string)identity[0]);
             if (user == null)
                 return null;
 
