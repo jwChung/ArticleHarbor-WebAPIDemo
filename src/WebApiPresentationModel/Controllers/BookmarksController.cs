@@ -1,7 +1,10 @@
 ﻿namespace ArticleHarbor.WebApiPresentationModel.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using System.Web.Http;
+    using DomainModel.Models;
     using DomainModel.Services;
 
     public class BookmarksController : ApiController
@@ -19,6 +22,12 @@
         public IBookmarkService BookmarkService
         {
             get { return this.bookmarkService; }
+        }
+
+        public Task<IEnumerable<Article>> GetAsync()
+        {
+            var actor = this.User.Identity.Name;
+            return this.bookmarkService.GetAsync(actor);
         }
     }
 }
