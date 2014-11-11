@@ -75,19 +75,6 @@ namespace ArticleHarbor.DomainModel
             await this.articles.DeleteAsync(id);
         }
 
-        public Task<Article> SaveAsync(Article article)
-        {
-            if (article == null)
-                throw new ArgumentNullException("article");
-
-            throw new NotSupportedException();
-        }
-
-        public Task RemoveAsync(int id)
-        {
-            throw new NotSupportedException();
-        }
-
         private async Task<Article> AddAsyncImpl(Article article)
         {
             await this.articleWordService.AddWordsAsync(article.Id, article.Subject);
