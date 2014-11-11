@@ -8,6 +8,8 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "The method form is more appropriate than property form.")]
         Task<IEnumerable<Article>> GetAsync();
 
+        Task<Article> AddAsync(Article article);
+        
         Task<Article> SaveAsync(Article article);
 
         Task RemoveAsync(int id);

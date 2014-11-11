@@ -38,6 +38,11 @@ namespace ArticleHarbor.DomainModel
             return this.articles.SelectAsync();
         }
 
+        public Task<Article> AddAsync(Article article)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Article> SaveAsync(Article article)
         {
             if (article == null)
