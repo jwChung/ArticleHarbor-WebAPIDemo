@@ -81,7 +81,7 @@
             int id)
         {
             sut.User.Identity.Of(x => x.Name == actor);
-            await sut.DeleteAsync(actor, id);
+            await sut.DeleteAsync(id);
             sut.ArticleService.ToMock().Verify(x => x.RemoveAsync(actor, id));
         }
     }

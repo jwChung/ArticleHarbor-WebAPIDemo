@@ -57,11 +57,9 @@
             return this.PutAsyncImpl(putArticle);
         }
 
-        public Task DeleteAsync(string actor, int id)
+        public Task DeleteAsync(int id)
         {
-            if (actor == null)
-                throw new ArgumentNullException("actor");
-
+            var actor = this.User.Identity.Name;
             return this.articleService.RemoveAsync(actor, id);
         }
 
