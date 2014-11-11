@@ -23,7 +23,7 @@
 
         public Task<IEnumerable<Article>> GetAsync()
         {
-            throw new NotImplementedException();
+            return this.innerService.GetAsync();
         }
 
         public Task<Article> AddAsync(Article article)
