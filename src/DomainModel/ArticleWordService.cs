@@ -41,12 +41,10 @@
             return Task.WhenAll(tasks);
         }
 
-        public Task ModifyWordsAsync(int id, string subject)
+        public async Task ModifyWordsAsync(int id, string subject)
         {
-            if (subject == null)
-                throw new ArgumentNullException("subject");
-
-            throw new NotImplementedException();
+            await this.RemoveWordsAsync(id);
+            await this.AddWordsAsync(id, subject);
         }
 
         public Task RemoveWordsAsync(int id)
