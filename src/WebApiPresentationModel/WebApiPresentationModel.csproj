@@ -82,6 +82,7 @@
     <Compile Include="JsonCustomMediaTypeFormatter.cs" />
     <Compile Include="LazyUnitOfWork.cs" />
     <Compile Include="LogContext.cs" />
+    <Compile Include="Models\PostArticleViewModel.cs" />
     <Compile Include="PermissionAuthorizationFilterAttribute.cs" />
     <Compile Include="SimplePrincipal.cs" />
     <Compile Include="PrincipalValueProvider.cs" />
@@ -105,9 +106,7 @@
       <Name>DomainModel</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
