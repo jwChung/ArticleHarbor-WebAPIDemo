@@ -7,5 +7,7 @@
     public interface IBookmarkService
     {
         Task<IEnumerable<Article>> GetAsync(string actor);
+
+        Task AddAsync(Bookmark bookmark);
     }
 }

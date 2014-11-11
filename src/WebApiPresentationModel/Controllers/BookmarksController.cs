@@ -30,5 +30,12 @@
             var actor = this.User.Identity.Name;
             return this.bookmarkService.GetAsync(actor);
         }
+
+        public Task PostAsync(int articleId)
+        {
+            var actor = this.User.Identity.Name;
+            var bookmark = new Bookmark(actor, articleId);
+            return this.bookmarkService.AddAsync(bookmark);
+        }
     }
 }

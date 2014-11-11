@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using System.Web.Http;
     using DomainModel.Models;
+    using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 
     public class BookmarksControllerTest : IdiomaticTest<BookmarksController>
@@ -34,6 +35,21 @@
             var actual = sut.GetAsync().Result;
 
             Assert.Equal(articles, actual);
+        }
+
+        [Test]
+        public void PostAsyncAddsBookmark(
+            BookmarksController sut,
+            string userId,
+            int articleId)
+        {
+            sut.User.Identity.Of(x => x.Name == userId);
+            var bookmark = new Bookmark(userId, articleId).AsSource()
+                .OfLikeness<Bookmark>().CreateProxy();
+
+            sut.PostAsync(articleId).Wait();
+
+            sut.BookmarkService.ToMock().Verify(x => x.AddAsync(bookmark));
         }
     }
 }
