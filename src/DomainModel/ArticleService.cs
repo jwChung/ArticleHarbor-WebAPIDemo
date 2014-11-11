@@ -48,7 +48,7 @@
 
         public Task<string> GetUserIdAsync(int id)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public Task<IEnumerable<Article>> GetAsync()
@@ -61,7 +61,7 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public Task ModifyAsync(string actor, Article article)
@@ -72,7 +72,7 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public Task RemoveAsync(string actor, int id)
@@ -80,7 +80,7 @@
             if (actor == null)
                 throw new ArgumentNullException("actor");
 
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public Task<Article> SaveAsync(Article article)
