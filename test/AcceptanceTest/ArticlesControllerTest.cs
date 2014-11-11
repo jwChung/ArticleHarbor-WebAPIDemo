@@ -9,7 +9,7 @@
     using Newtonsoft.Json;
     using Xunit;
 
-    public class ArticleControllerTest
+    public class ArticlesControllerTest
     {
         [Test]
         public async Task GetAsyncReturnsResponseWithCorrectStatusCode()

@@ -7,11 +7,11 @@
     using DomainModel;
     using Models;
 
-    public class NewArticleController : ApiController
+    public class NewArticlesController : ApiController
     {
         private readonly IArticleService articleService;
 
-        public NewArticleController(IArticleService articleService)
+        public NewArticlesController(IArticleService articleService)
         {
             if (articleService == null)
                 throw new ArgumentNullException("articleService");

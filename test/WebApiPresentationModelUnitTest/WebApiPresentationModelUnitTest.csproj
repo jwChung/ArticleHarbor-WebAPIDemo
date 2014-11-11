@@ -134,7 +134,7 @@
     <Compile Include="ArticleHarborAuthProviderTest.cs" />
     <Compile Include="ArticlesControllerTest.cs" />
     <Compile Include="AssemblyTest.cs" />
-    <Compile Include="Controllers\NewArticleControllerTest.cs" />
+    <Compile Include="Controllers\NewArticlesControllerTest.cs" />
     <Compile Include="FileLoggerTest.cs" />
     <Compile Include="JsonConstructorDeserializerTest.cs" />
     <Compile Include="JsonCustomMediaTypeFormatterTest.cs" />
