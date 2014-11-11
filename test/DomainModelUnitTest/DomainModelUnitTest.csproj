@@ -94,7 +94,6 @@
     </Compile>
     <Compile Include="ArticleWordServiceTest.cs" />
     <Compile Include="AuthArticleServiceTest.cs" />
-    <Compile Include="ArticleServiceTest.cs" />
     <Compile Include="ArticleTest.cs" />
     <Compile Include="ArticleWordTest.cs" />
     <Compile Include="AssemblyTest.cs" />
@@ -103,7 +102,7 @@
     <Compile Include="FakeRepositoryBase.cs" />
     <Compile Include="KoreanNounExtractorTest.cs" />
     <Compile Include="Mocked.cs" />
-    <Compile Include="NewArticleServiceTest.cs" />
+    <Compile Include="ArticleServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadWritablePropertyAssertion.cs" />
     <Compile Include="RunOn.cs" />

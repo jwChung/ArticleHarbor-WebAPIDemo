@@ -1,13 +1,12 @@
-﻿namespace ArticleHarbor.DomainModel
+namespace ArticleHarbor.DomainModel
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
-    using Jwc.Experiment.Xunit;
-    using Moq;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit;
-    using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 
     public class ArticleServiceTest : IdiomaticTest<ArticleService>
@@ -20,152 +19,131 @@
 
         [Test]
         public void GetAsyncReturnsCorrectResult(
+            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
+            ArticleService sut)
+        {
+            IEnumerable<Article> actual = sut.GetAsync().Result;
+            Assert.Equal(articles.Items, actual);
+        }
+
+        [Test]
+        public async Task GetUserIdAsyncReturnsCorrectUserId(
+            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
+            ArticleService sut)
+        {
+            var article = articles.Items[1];
+            var id = article.Id;
+
+            var actual = await sut.GetUserIdAsync(id);
+
+            Assert.Equal(article.UserId, actual);
+        }
+
+        [Test]
+        public void GetIncorrectUserIdAsyncThrows(
+            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
             ArticleService sut,
-            Task<IEnumerable<Article>> articles)
+            Generator<Article> generator)
         {
-            sut.Articles.Of(x => x.SelectAsync() == articles);
-            var actual = sut.GetAsync();
-            Assert.Equal(articles, actual);
+            var article = generator.First(x => !articles.Items.Select(i => i.Id).Contains(x.Id));
+            var id = article.Id;
+
+            var e = Assert.Throws<AggregateException>(() => sut.GetUserIdAsync(id).Wait());
+            Assert.IsType<ArgumentException>(e.InnerException);
         }
 
         [Test]
-        public async Task SaveAsyncAddsWhenThereIsNoArticleWithGivenId(
+        public async Task AddAsyncCorrectlyAddsArticle(
+            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
             ArticleService sut,
-            Article article,
-            Article newArticle)
+            Article article)
         {
-            sut.Articles.ToMock().Setup(x => x.FindAsync(article.Id)).Returns(Task.FromResult<Article>(null));
-            sut.Articles.Of(x => x.InsertAsync(article) == Task.FromResult(newArticle));
-
-            var actual = await sut.SaveAsync(article);
-
-            Assert.Equal(newArticle, actual);
+            var actual = await sut.AddAsync(article);
+            Assert.Contains(actual, articles.Items);
+            Assert.Equal(4, articles.Items.Count);
         }
 
         [Test]
-        public async Task SaveAsyncModifiesWhenThereIsArticleWithGivenId(
+        public async Task AddAsyncCorrectlyAddsArticleWords(
             ArticleService sut,
-            Article article,
-            Article newArticle)
+            Article article)
         {
-            newArticle = newArticle.WithId(article.Id).WithUserId(article.UserId);
-            sut.Articles.Of(x => x.FindAsync(article.Id) == Task.FromResult(article));
-
-            var actual = await sut.SaveAsync(newArticle);
-
-            Assert.Equal(newArticle, actual);
-            sut.Articles.ToMock().Verify(x => x.UpdateAsync(newArticle));
+            await sut.AddAsync(article);
+            sut.ArticleWordService.ToMock().Verify(
+                x => x.AddWordsAsync(article.Id, article.Subject));
         }
 
         [Test]
-        public IEnumerable<ITestCase> SaveAsyncRenewsArticleWordsWhenSubjectIsModifiedWithGivenId(
+        public async Task ModifyAsyncCorrectlyModifiesArticle(
+            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
             Article article,
-            string subject,
-            string[] words,
-            IFixture fixture)
+            ArticleService sut)
         {
-            // Fixture setup
-            var modifiedArticle = article.WithSubject(subject);
-            fixture.Inject<Func<string, IEnumerable<string>>>(
-                x =>
-                {
-                    Assert.Equal(subject, x);
-                    return words;
-                });
-            var sut = fixture.Create<ArticleService>();
-            sut.Articles.Of(x => x.FindAsync(article.Id) == Task.FromResult(article));
+            article = article.WithId(articles.Items[1].Id);
 
-            // Verify outcome
-            sut.SaveAsync(modifiedArticle).Wait();
+            await sut.ModifyAsync(null, article);
 
-            // Excercise system
-            yield return TestCase.Create(() =>
-                sut.ArticleWords.ToMock().Verify(x => x.DeleteAsync(modifiedArticle.Id)));
-
-            yield return TestCase.Create(() =>
-            {
-                foreach (var word in words)
-                {
-                    var likeness = new ArticleWord(modifiedArticle.Id, word)
-                        .AsSource().OfLikeness<ArticleWord>();
-                    sut.ArticleWords.ToMock().Verify(
-                        x => x.InsertAsync(It.Is<ArticleWord>(p => likeness.Equals(p))));
-                }
-            });
+            Assert.Contains(article, articles.Items);
+            Assert.Equal(3, articles.Items.Count);
         }
 
         [Test]
-        public async Task SaveAsyncDoesNotDeleteArticleWordsWhenSubjectIsNotModifiedWithGivenId(
-            ArticleService sut,
+        public async Task ModifyAsyncCorrectlyModifiesArticleWords(
+            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
             Article article,
-            Article modifiedArticle)
+            ArticleService sut)
         {
-            modifiedArticle = modifiedArticle.WithId(article.Id)
-                .WithUserId(article.UserId)
-                .WithSubject(article.Subject);
-            sut.Articles.Of(x => x.FindAsync(article.Id) == Task.FromResult(article));
-
-            await sut.SaveAsync(modifiedArticle);
-
-            sut.ArticleWords.ToMock().Verify(x => x.DeleteAsync(modifiedArticle.Id), Times.Never());
-            sut.ArticleWords.ToMock().Verify(x => x.InsertAsync(It.IsAny<ArticleWord>()), Times.Never());
+            await sut.ModifyAsync(null, article);
+            sut.ArticleWordService.ToMock().Verify(
+                x => x.ModifyWordsAsync(article.Id, article.Subject));
         }
 
         [Test]
-        public async Task SaveAsyncAddsArticleWordsWhenAddingArticle(
-            Article article,
-            Article newArticle,
-            string[] words,
-            IFixture fixture)
+        public async Task RemoveAsyncCorrectlyRemovesArticle(
+            [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
+            ArticleService sut)
         {
-            // Fixture setup
-            fixture.Inject<Func<string, IEnumerable<string>>>(
-                x =>
-                {
-                    Assert.Equal(newArticle.Subject, x);
-                    return words;
-                });
-            var sut = fixture.Create<ArticleService>();
-            sut.Articles.ToMock().Setup(x => x.FindAsync(article.Id))
-                .Returns(Task.FromResult<Article>(null));
-            sut.Articles.Of(x => x.InsertAsync(article) == Task.FromResult(newArticle));
+            var id = articles.Items[1].Id;
 
-            // Exercise system
-            await sut.SaveAsync(article);
+            await sut.RemoveAsync(null, id);
 
-            // Verify outcome
-            foreach (var word in words)
-            {
-                var likeness = new ArticleWord(newArticle.Id, word)
-                    .AsSource().OfLikeness<ArticleWord>();
-                sut.ArticleWords.ToMock().Verify(
-                    x => x.InsertAsync(It.Is<ArticleWord>(p => likeness.Equals(p))));
-            }
+            Assert.DoesNotContain(id, articles.Items.Select(x => x.Id));
+            Assert.Equal(2, articles.Items.Count);
         }
 
         [Test]
-        public void SaveAsyncWithInvalidUserIdThrows(
-            ArticleService sut,
-            Article article,
-            int id,
-            string userId,
-            string newUserId)
-        {
-            article = article.WithId(id).WithUserId(userId);
-            sut.Articles.Of(x =>
-                x.FindAsync(article.Id) == Task.FromResult(article.WithUserId(newUserId)));
-
-            var e = Assert.Throws<AggregateException>(() => sut.SaveAsync(article).Wait());
-            Assert.IsType<InvalidOperationException>(e.InnerException);
-        }
-
-        [Test]
-        public async Task RemoveAsyncCorrectlyRemoves(
+        public async Task RemoveAsyncCorrectlyRemovesArticleWords(
             ArticleService sut,
             int id)
         {
-            await sut.RemoveAsync(id);
-            sut.Articles.ToMock().Verify(x => x.DeleteAsync(id));
+            await sut.RemoveAsync(null, id);
+            sut.ArticleWordService.ToMock().Verify(
+                x => x.RemoveWordsAsync(id));
+        }
+
+        [Test]
+        public void ModifyAsyncWithNullArticleThrows(ArticleService sut)
+        {
+            Assert.Throws<ArgumentNullException>(() => sut.ModifyAsync(null, null));
+        }
+
+        protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
+        {
+            yield return this.Methods.Select(x => x.ModifyAsync(null, null));
+            yield return this.Methods.Select(x => x.RemoveAsync(null, 0));
+        }
+
+        public class FakeArticleRepository : FakeRepositoryBase<Article>
+        {
+            public FakeArticleRepository(Generator<Article> generator)
+                : base(generator)
+            {
+            }
+
+            public override object[] GetIdentity(Article item)
+            {
+                return new object[] { item.Id };
+            }
         }
     }
 }

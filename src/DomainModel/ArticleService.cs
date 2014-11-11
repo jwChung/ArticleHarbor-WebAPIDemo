@@ -1,34 +1,27 @@
-﻿namespace ArticleHarbor.DomainModel
+namespace ArticleHarbor.DomainModel
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Linq;
     using System.Threading.Tasks;
 
     public class ArticleService : IArticleService
     {
         private readonly IRepository<Article> articles;
-        private readonly IArticleWordRepository articleWords;
-        private readonly Func<string, IEnumerable<string>> nounExtractor;
+        private readonly IArticleWordService articleWordService;
 
         public ArticleService(
             IRepository<Article> articles,
-            IArticleWordRepository articleWords,
-            Func<string, IEnumerable<string>> nounExtractor)
+            IArticleWordService articleWordService)
         {
             if (articles == null)
                 throw new ArgumentNullException("articles");
 
-            if (articleWords == null)
-                throw new ArgumentNullException("articleWords");
-
-            if (nounExtractor == null)
-                throw new ArgumentNullException("nounExtractor");
+            if (articleWordService == null)
+                throw new ArgumentNullException("articleWordService");
 
             this.articles = articles;
-            this.articleWords = articleWords;
-            this.nounExtractor = nounExtractor;
+            this.articleWordService = articleWordService;
         }
 
         public IRepository<Article> Articles
@@ -36,19 +29,23 @@
             get { return this.articles; }
         }
 
-        public IArticleWordRepository ArticleWords
+        public IArticleWordService ArticleWordService
         {
-            get { return this.articleWords; }
+            get { return this.articleWordService; }
         }
 
-        public Func<string, IEnumerable<string>> NounExtractor
+        public async Task<string> GetUserIdAsync(int id)
         {
-            get { return this.nounExtractor; }
-        }
+            var article = await this.articles.FindAsync(id);
+            if (article != null)
+                return article.UserId;
 
-        public Task<string> GetUserIdAsync(int id)
-        {
-            throw new NotSupportedException();
+            throw new ArgumentException(
+                string.Format(
+                    CultureInfo.CurrentCulture,
+                    "There is no id '{0}' in article repository.",
+                    id),
+                "id");
         }
 
         public Task<IEnumerable<Article>> GetAsync()
@@ -61,75 +58,33 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            throw new NotSupportedException();
+            return this.AddAsyncImpl(article);
         }
 
         public Task ModifyAsync(string actor, Article article)
         {
-            if (actor == null)
-                throw new ArgumentNullException("actor");
-
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            throw new NotSupportedException();
+            return this.ModifyAsyncImpl(article);
         }
 
-        public Task RemoveAsync(string actor, int id)
+        public async Task RemoveAsync(string actor, int id)
         {
-            if (actor == null)
-                throw new ArgumentNullException("actor");
-
-            throw new NotSupportedException();
+            await this.articleWordService.RemoveWordsAsync(id);
+            await this.articles.DeleteAsync(id);
         }
 
-        public Task<Article> SaveAsync(Article article)
+        private async Task<Article> AddAsyncImpl(Article article)
         {
-            if (article == null)
-                throw new ArgumentNullException("article");
-
-            return this.SaveAsyncImpl(article);
+            await this.articleWordService.AddWordsAsync(article.Id, article.Subject);
+            return await this.articles.InsertAsync(article);
         }
 
-        public Task RemoveAsync(int id)
+        private async Task ModifyAsyncImpl(Article article)
         {
-            return this.articles.DeleteAsync(id);
-        }
-
-        private async Task InsertArticleWordsAsync(Article article)
-        {
-            var words = await Task.Run(() => this.nounExtractor(article.Subject).ToArray())
-                .ConfigureAwait(false);
-
-            await Task.WhenAll(
-                words.Select(x => this.ArticleWords.InsertAsync(new ArticleWord(article.Id, x))));
-        }
-
-        private async Task<Article> SaveAsyncImpl(Article article)
-        {
-            var oldArticle = await this.articles.FindAsync(article.Id);
-            if (oldArticle == null)
-            {
-                var newArticle = await this.articles.InsertAsync(article);
-                await this.InsertArticleWordsAsync(newArticle);
-                return newArticle;
-            }
-
-            if (oldArticle.UserId != article.UserId)
-                throw new InvalidOperationException(string.Format(
-                    CultureInfo.CurrentCulture,
-                    "The user '{0}' do not have authorization to modify the article '{1}'.",
-                    article.UserId,
-                    article.Id));
-
+            await this.articleWordService.ModifyWordsAsync(article.Id, article.Subject);
             await this.articles.UpdateAsync(article);
-            if (article.Subject != oldArticle.Subject)
-            {
-                await this.ArticleWords.DeleteAsync(article.Id);
-                await this.InsertArticleWordsAsync(article);
-            }
-
-            return article;
         }
     }
 }

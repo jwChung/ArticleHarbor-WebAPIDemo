@@ -15,9 +15,5 @@
         Task RemoveAsync(string actor, int id);
 
         Task<string> GetUserIdAsync(int id);
-
-        Task<Article> SaveAsync(Article article);
-
-        Task RemoveAsync(int id);
     }
 }

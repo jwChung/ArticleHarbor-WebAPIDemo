@@ -1,10 +1,11 @@
 ﻿namespace ArticleHarbor.AcceptanceTest
 {
+    using System;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
-    using ArticleHarbor.DomainModel;
+    using DomainModel;
     using Newtonsoft.Json;
     using Xunit;
 
@@ -61,8 +62,8 @@
                 var response = await client.PostAsync("api/articles", content);
 
                 Assert.True(
-                   HttpStatusCode.Unauthorized == response.StatusCode,
-                   await response.GetMessageAsync());
+                    HttpStatusCode.Unauthorized == response.StatusCode,
+                    await response.GetMessageAsync());
             }
         }
 
@@ -100,28 +101,47 @@
                     JsonConvert.SerializeObject(article));
                 content.Headers.ContentType.MediaType = "application/json";
 
-                var response = await client.PostAsync("api/articles", content);
+                var response = await client.PutAsync("api/articles", content);
 
                 Assert.True(response.IsSuccessStatusCode, await response.GetMessageAsync());
             }
         }
 
         [Test]
-        public async Task PostAsyncReturnsInternalSeverErrorWhenIncorrectUserModifiesArticle(Article article)
+        public async Task PutAsyncReturnsInternalSeverErrorWhenIncorrectUserModifiesArticle(Article article)
         {
-            article = article.WithId(1); // owned by user 1
+            article = article.WithId(1); // owned by user 1 (administrator)
 
             using (var client = HttpClientFactory.Create())
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                    "apikey", "232494f5670943dfac807226449fe795"); // user2
+                    "apikey", "232494f5670943dfac807226449fe795"); // user2 (author)
                 var content = new StringContent(
                     JsonConvert.SerializeObject(article));
                 content.Headers.ContentType.MediaType = "application/json";
 
-                var response = await client.PostAsync("api/articles", content);
+                var response = await client.PutAsync("api/articles", content);
 
                 Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+            }
+        }
+
+        [Test]
+        public async Task PutAsyncWithAdminRoleModifiesAnyArticles(Article article)
+        {
+            article = article.WithId(2); // owned by user 2 (author)
+
+            using (var client = HttpClientFactory.Create())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "apikey", "692c7798206844b88ba9a660e3374eef"); // user1 (administrator)
+                var content = new StringContent(
+                    JsonConvert.SerializeObject(article));
+                content.Headers.ContentType.MediaType = "application/json";
+
+                var response = await client.PutAsync("api/articles", content);
+
+                Assert.True(response.IsSuccessStatusCode, await response.GetMessageAsync());
             }
         }
     }

@@ -52,17 +52,17 @@
             {
                 new
                 {
-                    Permissions = Permissions.DeleteAnyArticle,
+                    Permissions = Permissions.DeleteAny,
                     RoleName = "User"
                 },
                 new
                 {
-                    Permissions = Permissions.CreateArticle,
+                    Permissions = Permissions.Create,
                     RoleName = "User"
                 },
                 new
                 {
-                    Permissions = Permissions.DeleteAnyArticle,
+                    Permissions = Permissions.DeleteAny,
                     RoleName = "Author"
                 },
             };
@@ -88,7 +88,7 @@
             {
                 new
                 {
-                    Permissions = Permissions.DeleteAnyArticle,
+                    Permissions = Permissions.DeleteAny,
                     RoleName = "Administrator"
                 },
                 new
@@ -108,12 +108,12 @@
                 },
                 new
                 {
-                    Permissions = Permissions.DeleteArticle | Permissions.CreateArticle,
+                    Permissions = Permissions.Delete | Permissions.Create,
                     RoleName = "Author"
                 },
                 new
                 {
-                    Permissions = Permissions.DeleteArticle | Permissions.CreateArticle,
+                    Permissions = Permissions.Delete | Permissions.Create,
                     RoleName = "Administrator"
                 },
                 new

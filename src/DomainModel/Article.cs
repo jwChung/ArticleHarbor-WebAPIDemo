@@ -14,31 +14,6 @@
         private readonly int id;
         private readonly string userId;
 
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "5#", Justification = "To match database entity.")]
-        public Article(
-            string provider,
-            string no,
-            string subject,
-            string body,
-            DateTime date,
-            string url)
-            : this(-1, provider, no, subject, body, date, url)
-        {
-        }
-
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "6#", Justification = "To match database entity.")]
-        public Article(
-            int id,
-            string provider,
-            string no,
-            string subject,
-            string body,
-            DateTime date,
-            string url)
-            : this(id, provider, no, subject, body, date, url, Guid.NewGuid().ToString())
-        {
-        }
-
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "6#", Justification = "To match database entity.")]
         public Article(
             int id,

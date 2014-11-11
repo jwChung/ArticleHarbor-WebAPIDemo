@@ -16,28 +16,6 @@
         public IEnumerable<ITestCase> InitializeWithAnyEmptyStringThrows(int id, string value, DateTime date)
         {
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(string.Empty, value, value, value, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(value, string.Empty, value, value, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(value, value, string.Empty, value, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(value, value, value, string.Empty, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(value, value, value, value, date, string.Empty)));
-
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, string.Empty, value, value, value, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, value, string.Empty, value, value, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, value, value, string.Empty, value, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, value, value, value, string.Empty, date, value)));
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
-                () => new Article(id, value, value, value, value, date, string.Empty)));
-
-            yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
                 () => new Article(id, string.Empty, value, value, value, date, value, value)));
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
                 () => new Article(id, value, string.Empty, value, value, date, value, value)));
@@ -65,28 +43,18 @@
             yield return TestCase.WithAuto<IFixture>().Create(
                 fixture =>
                 {
-                    var uesrId = fixture.Freeze<string>();
+                    var userId = fixture.Freeze<string>();
                     var sut = fixture.Build<Article>()
                         .FromFactory(
                             new MethodInvoker(new GreedyConstructorQuery()))
                         .Create();
-                    Assert.Equal(uesrId, sut.UserId);
+                    Assert.Equal(userId, sut.UserId);
                 });
         }
 
         [Test]
         public IEnumerable<ITestCase> IdIsCorrect()
         {
-            yield return TestCase.WithAuto<IFixture>().Create(
-               fixture =>
-               {
-                   var sut = fixture.Build<Article>()
-                       .FromFactory(
-                           new MethodInvoker(new ModestConstructorQuery()))
-                       .Create();
-                   Assert.Equal(-1, sut.Id);
-               });
-
             yield return TestCase.WithAuto<IFixture>().Create(
                 fixture =>
                 {

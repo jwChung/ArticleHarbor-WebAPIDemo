@@ -63,17 +63,9 @@ namespace ArticleHarbor.Website
                 .ReusedWithinContainer();
 
             container.Register<IArticleService>(
-                c => new ArticleService(
-                    c.Resolve<IRepository<Article>>(),
-                    c.Resolve<IArticleWordRepository>(),
-                    KoreanNounExtractor.Execute))
-                .ReusedWithinContainer();
-
-            container.Register<IArticleService>(
-                "new",
                 c => new AuthArticleService(
                     c.Resolve<IAuthService>(),
-                    new NewArticleService(
+                    new ArticleService(
                         c.Resolve<IRepository<Article>>(),
                         c.Resolve<IArticleWordService>())))
                 .ReusedWithinContainer();
@@ -88,10 +80,6 @@ namespace ArticleHarbor.Website
             // Presentation controllers
             container.Register(
                 c => new ArticlesController(c.Resolve<IArticleService>()))
-                .ReusedWithinContainer();
-
-            container.Register(
-                c => new NewArticlesController(c.ResolveKeyed<IArticleService>("new")))
                 .ReusedWithinContainer();
 
             return this;

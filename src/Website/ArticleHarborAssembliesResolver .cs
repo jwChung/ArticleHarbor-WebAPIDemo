@@ -4,6 +4,7 @@
     using System.Reflection;
     using System.Web.Http.Dispatcher;
     using ArticleHarbor.WebApiPresentationModel;
+    using WebApiPresentationModel.Controllers;
 
     public class ArticleHarborAssembliesResolver : DefaultAssembliesResolver
     {

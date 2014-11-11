@@ -73,19 +73,6 @@
             return this.innerService.GetUserIdAsync(id);
         }
 
-        public Task<Article> SaveAsync(Article article)
-        {
-            if (article == null)
-                throw new ArgumentNullException("article");
-
-            throw new NotSupportedException();
-        }
-
-        public Task RemoveAsync(int id)
-        {
-            throw new NotSupportedException();
-        }
-
         private async Task<Article> AddAsyncImpl(Article article)
         {
             if (!await this.authService.HasPermissionsAsync(article.UserId, Permissions.Create))
