@@ -7,11 +7,11 @@ namespace ArticleHarbor.DomainModel
 
     public class ArticleService : IArticleService
     {
-        private readonly IRepository<Article> articles;
+        private readonly IArticleRepository articles;
         private readonly IArticleWordService articleWordService;
 
         public ArticleService(
-            IRepository<Article> articles,
+            IArticleRepository articles,
             IArticleWordService articleWordService)
         {
             if (articles == null)
@@ -24,7 +24,7 @@ namespace ArticleHarbor.DomainModel
             this.articleWordService = articleWordService;
         }
 
-        public IRepository<Article> Articles
+        public IArticleRepository Articles
         {
             get { return this.articles; }
         }

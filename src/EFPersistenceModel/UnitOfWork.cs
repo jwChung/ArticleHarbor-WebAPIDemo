@@ -30,7 +30,7 @@
             get { return this.context; }
         }
 
-        public IRepository<Article> Articles
+        public IArticleRepository Articles
         {
             get
             {

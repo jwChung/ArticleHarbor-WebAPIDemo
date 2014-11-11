@@ -10,24 +10,18 @@
     public class ArticleWordRepositoryTest : IdiomaticTest<ArticleWordRepository>
     {
         [Test]
-        public void SutIsRepository(ArticleWordRepository sut)
-        {
-            Assert.IsAssignableFrom<IRepository<ArticleWord>>(sut);
-        }
-
-        [Test]
         public void SutIsArticleWordRepository(ArticleWordRepository sut)
         {
             Assert.IsAssignableFrom<IArticleWordRepository>(sut);
         }
 
         [Test]
-        public void SelectReturnsNullWhenThereIsNoArticleWordWithGivenIdentity(
+        public async Task FindAsyncReturnsNullWhenThereIsNoArticleWordWithGivenIdentity(
             ArticleWordRepository sut,
             string word,
             int articleId)
         {
-            var actual = sut.Select(articleId, word);
+            var actual = await sut.FindAsync(articleId, word);
             Assert.Null(actual);
         }
 
@@ -44,7 +38,7 @@
 
                 ArticleWord actual = await sut.InsertAsync(articleWord);
 
-                var expected = sut.Select(articleWord.ArticleId, articleWord.Word);
+                var expected = await sut.FindAsync(articleWord.ArticleId, articleWord.Word);
                 articleWord.AsSource().OfLikeness<ArticleWord>().ShouldEqual(expected);
                 articleWord.AsSource().OfLikeness<ArticleWord>().ShouldEqual(actual);
             }

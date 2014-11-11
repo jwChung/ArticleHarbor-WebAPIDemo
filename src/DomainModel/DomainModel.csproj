@@ -51,12 +51,11 @@
     <Compile Include="AuthService.cs" />
     <Compile Include="EmptyDisposable.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="IArticleRepository.cs" />
     <Compile Include="IArticleService.cs" />
     <Compile Include="IArticleWordRepository.cs" />
     <Compile Include="IArticleWordService.cs" />
-    <Compile Include="IAuthRepositoryProvider.cs" />
     <Compile Include="IAuthService.cs" />
-    <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="KoreanNounExtractor.cs" />
