@@ -65,7 +65,7 @@ namespace ArticleHarbor.Website
             container.Register<IArticleService>(
                 c => new AuthArticleService(
                     c.Resolve<IAuthService>(),
-                    new NewArticleService(
+                    new ArticleService(
                         c.Resolve<IRepository<Article>>(),
                         c.Resolve<IArticleWordService>())))
                 .ReusedWithinContainer();

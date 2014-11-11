@@ -9,10 +9,10 @@ namespace ArticleHarbor.DomainModel
     using Ploeh.AutoFixture.Xunit;
     using Xunit;
 
-    public class NewArticleServiceTest : IdiomaticTest<NewArticleService>
+    public class ArticleServiceTest : IdiomaticTest<ArticleService>
     {
         [Test]
-        public void SutIsArticleService(NewArticleService sut)
+        public void SutIsArticleService(ArticleService sut)
         {
             Assert.IsAssignableFrom<IArticleService>(sut);
         }
@@ -20,7 +20,7 @@ namespace ArticleHarbor.DomainModel
         [Test]
         public void GetAsyncReturnsCorrectResult(
             [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
-            NewArticleService sut)
+            ArticleService sut)
         {
             IEnumerable<Article> actual = sut.GetAsync().Result;
             Assert.Equal(articles.Items, actual);
@@ -29,7 +29,7 @@ namespace ArticleHarbor.DomainModel
         [Test]
         public async Task GetUserIdAsyncReturnsCorrectUserId(
             [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
-            NewArticleService sut)
+            ArticleService sut)
         {
             var article = articles.Items[1];
             var id = article.Id;
@@ -42,7 +42,7 @@ namespace ArticleHarbor.DomainModel
         [Test]
         public void GetIncorrectUserIdAsyncThrows(
             [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
-            NewArticleService sut,
+            ArticleService sut,
             Generator<Article> generator)
         {
             var article = generator.First(x => !articles.Items.Select(i => i.Id).Contains(x.Id));
@@ -55,7 +55,7 @@ namespace ArticleHarbor.DomainModel
         [Test]
         public async Task AddAsyncCorrectlyAddsArticle(
             [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
-            NewArticleService sut,
+            ArticleService sut,
             Article article)
         {
             var actual = await sut.AddAsync(article);
@@ -65,7 +65,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public async Task AddAsyncCorrectlyAddsArticleWords(
-            NewArticleService sut,
+            ArticleService sut,
             Article article)
         {
             await sut.AddAsync(article);
@@ -77,7 +77,7 @@ namespace ArticleHarbor.DomainModel
         public async Task ModifyAsyncCorrectlyModifiesArticle(
             [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
             Article article,
-            NewArticleService sut)
+            ArticleService sut)
         {
             article = article.WithId(articles.Items[1].Id);
 
@@ -91,7 +91,7 @@ namespace ArticleHarbor.DomainModel
         public async Task ModifyAsyncCorrectlyModifiesArticleWords(
             [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
             Article article,
-            NewArticleService sut)
+            ArticleService sut)
         {
             await sut.ModifyAsync(null, article);
             sut.ArticleWordService.ToMock().Verify(
@@ -101,7 +101,7 @@ namespace ArticleHarbor.DomainModel
         [Test]
         public async Task RemoveAsyncCorrectlyRemovesArticle(
             [Frozen(As = typeof(IRepository<Article>))] FakeArticleRepository articles,
-            NewArticleService sut)
+            ArticleService sut)
         {
             var id = articles.Items[1].Id;
 
@@ -113,7 +113,7 @@ namespace ArticleHarbor.DomainModel
 
         [Test]
         public async Task RemoveAsyncCorrectlyRemovesArticleWords(
-            NewArticleService sut,
+            ArticleService sut,
             int id)
         {
             await sut.RemoveAsync(null, id);
@@ -122,7 +122,7 @@ namespace ArticleHarbor.DomainModel
         }
 
         [Test]
-        public void ModifyAsyncWithNullArticleThrows(NewArticleService sut)
+        public void ModifyAsyncWithNullArticleThrows(ArticleService sut)
         {
             Assert.Throws<ArgumentNullException>(() => sut.ModifyAsync(null, null));
         }

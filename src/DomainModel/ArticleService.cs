@@ -5,12 +5,12 @@ namespace ArticleHarbor.DomainModel
     using System.Globalization;
     using System.Threading.Tasks;
 
-    public class NewArticleService : IArticleService
+    public class ArticleService : IArticleService
     {
         private readonly IRepository<Article> articles;
         private readonly IArticleWordService articleWordService;
 
-        public NewArticleService(
+        public ArticleService(
             IRepository<Article> articles,
             IArticleWordService articleWordService)
         {
