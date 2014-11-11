@@ -37,5 +37,12 @@
             var bookmark = new Bookmark(actor, articleId);
             return this.bookmarkService.AddAsync(bookmark);
         }
+
+        public Task DeleteAsync(int articleId)
+        {
+            var actor = this.User.Identity.Name;
+            var bookmark = new Bookmark(actor, articleId);
+            return this.bookmarkService.RemoveAsync(bookmark);
+        }
     }
 }

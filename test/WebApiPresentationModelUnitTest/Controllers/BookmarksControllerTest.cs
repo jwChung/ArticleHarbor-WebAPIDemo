@@ -51,5 +51,20 @@
 
             sut.BookmarkService.ToMock().Verify(x => x.AddAsync(bookmark));
         }
+
+        [Test]
+        public void DeleteAsyncRemovesBookmark(
+            BookmarksController sut,
+            string userId,
+            int articleId)
+        {
+            sut.User.Identity.Of(x => x.Name == userId);
+            var bookmark = new Bookmark(userId, articleId).AsSource()
+                .OfLikeness<Bookmark>().CreateProxy();
+
+            sut.DeleteAsync(articleId).Wait();
+
+            sut.BookmarkService.ToMock().Verify(x => x.RemoveAsync(bookmark));
+        }
     }
 }

@@ -9,5 +9,7 @@
         Task<IEnumerable<Article>> GetAsync(string actor);
 
         Task AddAsync(Bookmark bookmark);
+
+        Task RemoveAsync(Bookmark bookmark);
     }
 }
