@@ -2,6 +2,7 @@ namespace ArticleHarbor.DomainModel
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Threading.Tasks;
 
     public class NewArticleService : IArticleService
@@ -33,9 +34,18 @@ namespace ArticleHarbor.DomainModel
             get { return this.articleWordService; }
         }
 
-        public Task<string> GetUserIdAsync(int id)
+        public async Task<string> GetUserIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var article = await this.articles.FineAsync(id);
+            if (article != null)
+                return article.UserId;
+
+            throw new ArgumentException(
+                string.Format(
+                    CultureInfo.CurrentCulture,
+                    "There is no id '{0}' in article repository.",
+                    id),
+                "id");
         }
 
         public Task<IEnumerable<Article>> GetAsync()
