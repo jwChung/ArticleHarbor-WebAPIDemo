@@ -1,4 +1,4 @@
-﻿namespace ArticleHarbor.DomainModel
+﻿namespace ArticleHarbor
 {
     using System;
     using System.Reflection;
