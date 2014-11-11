@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.WebApiPresentationModel.Controllers
 {
     using System.Collections.Generic;
+    using System.Reflection;
     using System.Threading.Tasks;
     using System.Web.Http;
     using DomainModel.Models;
@@ -12,6 +13,13 @@
         public void SutIsApiController(BookmarksController sut)
         {
             Assert.IsAssignableFrom<ApiController>(sut);
+        }
+
+        [Test]
+        public void SutHasAuthorizeAttribute()
+        {
+            var attribute = typeof(BookmarksController).GetCustomAttribute<AuthorizeAttribute>();
+            Assert.NotNull(attribute);
         }
 
         [Test]

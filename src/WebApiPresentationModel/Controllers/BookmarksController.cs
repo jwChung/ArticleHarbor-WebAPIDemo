@@ -7,6 +7,7 @@
     using DomainModel.Models;
     using DomainModel.Services;
 
+    [Authorize]
     public class BookmarksController : ApiController
     {
         private readonly IBookmarkService bookmarkService;
