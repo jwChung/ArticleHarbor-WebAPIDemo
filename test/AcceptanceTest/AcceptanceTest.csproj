@@ -175,9 +175,9 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DomainModel\DomainModel.csproj">
-      <Project>{860494bf-26a2-4d57-b091-a8825e5d8200}</Project>
-      <Name>DomainModel</Name>
+    <ProjectReference Include="..\..\src\WebApiPresentationModel\WebApiPresentationModel.csproj">
+      <Project>{1BAEC422-3D13-49BE-82AA-18986A62E24D}</Project>
+      <Name>WebApiPresentationModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Website\Website.csproj">
       <Project>{b2b50410-34df-4cf5-8f1d-4dda6d24d46b}</Project>

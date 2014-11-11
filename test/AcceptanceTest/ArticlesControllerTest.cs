@@ -5,8 +5,8 @@
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
-    using DomainModel;
     using Newtonsoft.Json;
+    using WebApiPresentationModel.Models;
     using Xunit;
 
     public class ArticlesControllerTest
@@ -51,7 +51,8 @@
         }
 
         [Test]
-        public async Task PostAsyncWithIncorrectAuthReturnsUnauthorizedCode(Article article)
+        public async Task PostAsyncWithIncorrectAuthReturnsUnauthorizedCode(
+            PostArticleViewModel article)
         {
             using (var client = HttpClientFactory.Create())
             {
@@ -68,10 +69,10 @@
         }
 
         [Test]
-        public async Task PostAsyncCorrectlyAddsArticleAndArticleWords(Article article)
+        public async Task PostAsyncCorrectlyAddsArticleAndArticleWords(
+            PostArticleViewModel article)
         {
-            article = article.WithSubject(
-                "문장에서 단어만 추출해서 입력되는지 DB에서 확인필요.");
+            article.Subject = "문장에서 단어만 추출해서 입력되는지 DB에서 확인필요.";
 
             using (var client = HttpClientFactory.Create())
             {
@@ -88,10 +89,11 @@
         }
 
         [Test]
-        public async Task PostAsyncCorrectlyModifiesArticleAndRenewsArticleWords(Article article)
+        public async Task PutAsyncCorrectlyModifiesArticleAndRenewsArticleWords(
+            PutArticleViewModel article)
         {
-            article = article.WithId(2).WithSubject(
-                "기존 단어들이 삭제되고, 새로운 단어들이 추가되었는지 DB에서 확인필요.");
+            article.Id = 2;
+            article.Subject = "기존 단어들이 삭제되고, 새로운 단어들이 추가되었는지 DB에서 확인필요.";
 
             using (var client = HttpClientFactory.Create())
             {
@@ -108,9 +110,10 @@
         }
 
         [Test]
-        public async Task PutAsyncReturnsInternalSeverErrorWhenIncorrectUserModifiesArticle(Article article)
+        public async Task PutAsyncReturnsInternalSeverErrorWhenIncorrectUserModifiesArticle(
+            PutArticleViewModel article)
         {
-            article = article.WithId(1); // owned by user 1 (administrator)
+            article.Id = 1; // owned by user 1 (administrator)
 
             using (var client = HttpClientFactory.Create())
             {
@@ -127,9 +130,10 @@
         }
 
         [Test]
-        public async Task PutAsyncWithAdminRoleModifiesAnyArticles(Article article)
+        public async Task PutAsyncWithAdminRoleModifiesAnyArticles(
+            PutArticleViewModel article)
         {
-            article = article.WithId(2); // owned by user 2 (author)
+            article.Id = 2; // owned by user 2 (author)
 
             using (var client = HttpClientFactory.Create())
             {
