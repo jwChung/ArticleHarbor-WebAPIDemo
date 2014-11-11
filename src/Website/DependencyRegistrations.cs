@@ -57,6 +57,10 @@ namespace ArticleHarbor.Website
                 c => c.Resolve<IUnitOfWork>().Users)
                 .ReusedWithinContainer();
 
+             container.Register(
+                 c => c.Resolve<IUnitOfWork>().Bookmarks)
+                 .ReusedWithinContainer();
+
             // Domain services
             container.Register<IAuthService>(
                 c => new AuthService(
@@ -79,9 +83,19 @@ namespace ArticleHarbor.Website
                     KoreanNounExtractor.Execute))
                 .ReusedWithinContainer();
 
+            container.Register<IBookmarkService>(
+                c => new BookmarkService(
+                    c.Resolve<IBookmarkRepository>(),
+                    c.Resolve<IArticleRepository>()))
+                .ReusedWithinContainer();
+
             // Presentation controllers
             container.Register(
                 c => new ArticlesController(c.Resolve<IArticleService>()))
+                .ReusedWithinContainer();
+
+            container.Register(
+                c => new BookmarksController(c.Resolve<IBookmarkService>()))
                 .ReusedWithinContainer();
 
             return this;

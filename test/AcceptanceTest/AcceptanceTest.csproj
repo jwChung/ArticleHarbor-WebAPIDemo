@@ -119,6 +119,7 @@
     <Compile Include="..\DomainModelUnitTest\RunOn.cs">
       <Link>RunOn.cs</Link>
     </Compile>
+    <Compile Include="BookmarksControllerTest.cs" />
     <Compile Include="HttpClientFactory.cs" />
     <Compile Include="HttpResponseMessageExtensions.cs" />
     <Compile Include="ArticlesControllerTest.cs" />

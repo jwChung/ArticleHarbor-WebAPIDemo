@@ -38,7 +38,7 @@
             return articles.Select(x => x.ToDomain());
         }
 
-        public  async Task<IEnumerable<DomainArticle>> SelectAsync(params int[] ids)
+        public async Task<IEnumerable<DomainArticle>> SelectAsync(params int[] ids)
         {
             var query = from article in this.context.Articles
                         where ids.Contains(article.Id)

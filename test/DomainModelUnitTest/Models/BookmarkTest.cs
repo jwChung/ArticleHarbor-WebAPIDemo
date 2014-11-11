@@ -1,8 +1,8 @@
-﻿using Ploeh.AutoFixture;
-namespace ArticleHarbor.DomainModel.Models
+﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System;
     using System.Reflection;
+    using Ploeh.AutoFixture;
     using Xunit;
 
     public class BookmarkTest : IdiomaticTest<Bookmark>

@@ -1,15 +1,13 @@
 ﻿namespace ArticleHarbor.EFPersistenceModel
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
-    using DomainModel.Models;
     using DomainModel.Repositories;
     using EFDataAccess;
     using DomainBookmark = DomainModel.Models.Bookmark;
-    using PersistenceBookmark = EFDataAccess.Bookmark;
 
     public class BookmarkRepository : IBookmarkRepository
     {
