@@ -34,7 +34,7 @@
             if (password == null)
                 throw new ArgumentNullException("password");
 
-            return this.SelectAsyncImpl(id, password);
+            return this.FindAsyncImpl(id, password);
         }
 
         public async Task<User> FindAsync(Guid apiKey)
@@ -53,44 +53,15 @@
             return user.ToDomain(roleNames.Single());
         }
 
-        public Task<User> FindAsync(params object[] identity)
+        public Task<User> FindAsync(string id)
         {
-            if (identity == null)
-                throw new ArgumentNullException("identity");
+            if (id == null)
+                throw new ArgumentNullException("id");
 
-            return this.FindAsyncImpl(identity);
+            return this.FindAsyncImpl(id);
         }
 
-        public Task<IEnumerable<User>> SelectAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<User> InsertAsync(User article)
-        {
-            if (article == null)
-                throw new ArgumentNullException("article");
-
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(User article)
-        {
-            if (article == null)
-                throw new ArgumentNullException("article");
-
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(params object[] identity)
-        {
-            if (identity == null)
-                throw new ArgumentNullException("identity");
-
-            throw new NotImplementedException();
-        }
-
-        private async Task<User> SelectAsyncImpl(string id, string password)
+        private async Task<User> FindAsyncImpl(string id, string password)
         {
             var user = await this.context.UserManager.FindAsync(id, password);
             if (user == null)
@@ -100,9 +71,9 @@
             return user.ToDomain(roleNames.Single());
         }
 
-        private async Task<User> FindAsyncImpl(object[] identity)
+        private async Task<User> FindAsyncImpl(string id)
         {
-            var user = await this.context.UserManager.FindByNameAsync((string)identity[0]);
+            var user = await this.context.UserManager.FindByNameAsync(id);
             if (user == null)
                 return null;
 
