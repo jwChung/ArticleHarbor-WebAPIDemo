@@ -27,7 +27,7 @@
         }
 
         [Test]
-        public async Task GetAsyncReturnsCorrctResult(
+        public async Task GetAsyncReturnsCorrectResult(
             AuthArticleService sut,
             IEnumerable<Article> articles)
         {
@@ -135,7 +135,7 @@
         }
 
         [Test]
-        public async Task ModifyAsyncWithincorrectActorAndModifyAnyPermissionCorrectlyModifiesArticle(
+        public async Task ModifyAsyncWithIncorrectActorAndModifyAnyPermissionCorrectlyModifiesArticle(
             AuthArticleService sut,
             string actor,
             Article article)
