@@ -48,10 +48,7 @@
 
         public Task RemoveAsync(Bookmark bookmark)
         {
-            if (bookmark == null)
-                throw new ArgumentNullException("bookmark");
-
-            throw new NotImplementedException();
+            return this.bookmarks.DeleteAsync(bookmark);
         }
     }
 }

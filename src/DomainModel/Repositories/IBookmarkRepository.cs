@@ -9,5 +9,7 @@
         Task<IEnumerable<Bookmark>> SelectAsync(string userId);
 
         Task InsertAsync(Bookmark bookmark);
+
+        Task DeleteAsync(Bookmark bookmark);
     }
 }

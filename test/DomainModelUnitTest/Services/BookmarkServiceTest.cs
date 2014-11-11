@@ -41,10 +41,20 @@
             sut.Bookmarks.ToMock().Verify(x => x.InsertAsync(bookmark));
         }
 
+        [Test]
+        public void RemoveAsyncCorrectlyRemovesBookmark(
+            BookmarkService sut,
+            Bookmark bookmark)
+        {
+            sut.RemoveAsync(bookmark).Wait();
+            sut.Bookmarks.ToMock().Verify(x => x.DeleteAsync(bookmark));
+        }
+
         protected override IEnumerable<System.Reflection.MemberInfo> ExceptToVerifyGuardClause()
         {
             yield return this.Methods.Select(x => x.GetAsync(null));
             yield return this.Methods.Select(x => x.AddAsync(null));
+            yield return this.Methods.Select(x => x.RemoveAsync(null));
         }
     }
 }
