@@ -49,7 +49,7 @@
             if (bookmark == null)
                 throw new ArgumentNullException("bookmark");
 
-            throw new NotImplementedException();
+            return this.DeleteAsyncWith(bookmark);
         }
 
         private async Task<IEnumerable<DomainBookmark>> SelectAsyncWith(string userId)
@@ -68,6 +68,12 @@
         {
             var user = await this.context.UserManager.FindByNameAsync(bookmark.UserId);
             this.context.Bookmarks.Add(bookmark.ToPersistence(user.Id));
+        }
+
+        private async Task DeleteAsyncWith(DomainBookmark bookmark)
+        {
+            var user = await this.context.UserManager.FindByNameAsync(bookmark.UserId);
+            this.context.Bookmarks.Remove(bookmark.ToPersistence(user.Id));
         }
     }
 }

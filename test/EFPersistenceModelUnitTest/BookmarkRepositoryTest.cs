@@ -44,5 +44,27 @@
                 transaction.Dispose();
             }
         }
+
+        [Test]
+        public void DeleteAsyncRemovesBookmark(
+            DbContextTransaction transaction,
+            BookmarkRepository sut)
+        {
+            try
+            {
+                var bookmark = new Bookmark("user1", 1);
+
+                sut.DeleteAsync(bookmark).Wait();
+
+                sut.Context.SaveChanges();
+                var count = sut.Context.Bookmarks.Count();
+                Assert.Equal(2, count);
+            }
+            finally
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+            }
+        }
     }
 }
