@@ -38,7 +38,7 @@
 
         public Task RemoveWordsAsync(int id)
         {
-            throw new NotImplementedException();
+            return this.articleWords.DeleteAsync(id);
         }
     }
 }
