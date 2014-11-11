@@ -69,33 +69,33 @@
 
         [Test]
         public IEnumerable<ITestCase> HasPermissionsAsyncReturnsCorrectResult(
-            string uesrId,
-            Guid guid)
+            string userId,
+            Guid value)
         {
             var testData = new[]
             {
                 new
                 {
                     Permissions = Permissions.DeleteAny,
-                    User = new User(uesrId, Role.User, guid),
+                    User = new User(userId, Role.User, value),
                     Expected = false
                 },
                 new
                 {
                     Permissions = Permissions.DeleteAny,
-                    User = new User(uesrId, Role.Administrator, guid),
+                    User = new User(userId, Role.Administrator, value),
                     Expected = true
                 },
                 new
                 {
                     Permissions = Permissions.Create,
-                    User = new User(uesrId, Role.User, guid),
+                    User = new User(userId, Role.User, value),
                     Expected = false
                 },
                 new
                 {
                     Permissions = Permissions.Create,
-                    User = new User(uesrId, Role.Author, guid),
+                    User = new User(userId, Role.Author, value),
                     Expected = true
                 },
             };
