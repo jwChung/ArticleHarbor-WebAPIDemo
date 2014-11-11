@@ -38,6 +38,11 @@
             return articles.Select(x => x.ToDomain());
         }
 
+        public Task<IEnumerable<DomainArticle>> SelectAsync(params int[] ids)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<DomainArticle> InsertAsync(DomainArticle article)
         {
             if (article == null)

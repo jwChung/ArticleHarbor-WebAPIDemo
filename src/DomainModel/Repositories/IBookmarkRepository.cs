@@ -1,10 +1,11 @@
 ﻿namespace ArticleHarbor.DomainModel.Repositories
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Models;
 
     public interface IBookmarkRepository
     {
-        IEnumerable<Bookmark> SelectAsync(string userId);
+        Task<IEnumerable<Bookmark>> SelectAsync(string userId);
     }
 }

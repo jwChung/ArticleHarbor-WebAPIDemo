@@ -143,6 +143,11 @@ namespace ArticleHarbor.DomainModel.Services
             {
                 return item.Id;
             }
+
+            public Task<IEnumerable<Article>> SelectAsync(params int[] ids)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

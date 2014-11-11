@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Models;
     using Repositories;
@@ -38,7 +39,7 @@
             if (userId == null)
                 throw new ArgumentNullException("userId");
 
-            throw new NotImplementedException();
+            return this.GetAsyncWith(userId);
         }
 
         public Task AddAsync(Bookmark bookmark)
@@ -55,6 +56,13 @@
                 throw new ArgumentNullException("bookmark");
 
             throw new NotImplementedException();
+        }
+
+        private async Task<IEnumerable<Article>> GetAsyncWith(string userId)
+        {
+            var bookmarks = await this.bookmarks.SelectAsync(userId);
+            var articleIds = bookmarks.Select(x => x.ArticleId).ToArray();
+            return await this.articles.SelectAsync(articleIds);
         }
     }
 }
