@@ -12,3 +12,5 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Microsoft.Design", "CA2210:AssembliesShouldHaveValidStrongNames", Justification = "Signing assembly is processed on CI build.")]
 [assembly: SuppressMessage("Microsoft.Usage", "CA2243:AttributeStringLiteralsShouldParseCorrectly", Justification = "This is suppressed to be able to represent pre-release version according to semantic versioning.")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "ArticleHarbor.WebApiPresentationModel.Models", Justification = "This rule is suppressed to group classes according to semantic role.")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "ArticleHarbor.WebApiPresentationModel.Controllers", Justification = "This rule is suppressed to group classes according to semantic role.")]
