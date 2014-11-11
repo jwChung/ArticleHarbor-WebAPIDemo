@@ -67,7 +67,7 @@
             if (await this.FindAsync(article.ArticleId, article.Word) == null)
                 this.context.ArticleWords.Add(article.ToPersistence());
 
-            return article; // TODO: return null.
+            return article;
         }
     }
 }
