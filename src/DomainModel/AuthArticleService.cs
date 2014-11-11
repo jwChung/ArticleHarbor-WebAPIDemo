@@ -65,7 +65,7 @@
 
         public Task<string> GetUserIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return this.innerService.GetUserIdAsync(id);
         }
 
         public Task<Article> SaveAsync(Article article)

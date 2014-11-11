@@ -16,6 +16,17 @@
         }
 
         [Test]
+        public async Task GetUserIdAsyncReturnsCorrectUserId(
+            AuthArticleService sut,
+            int id,
+            string userId)
+        {
+            sut.InnerService.Of(x => x.GetUserIdAsync(id) == Task.FromResult(userId));
+            var actual = await sut.GetUserIdAsync(id);
+            Assert.Equal(userId, actual);
+        }
+
+        [Test]
         public async Task GetAsyncReturnsCorrctResult(
             AuthArticleService sut,
             IEnumerable<Article> articles)
