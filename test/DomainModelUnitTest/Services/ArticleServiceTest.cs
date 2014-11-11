@@ -146,7 +146,7 @@ namespace ArticleHarbor.DomainModel.Services
 
             public Task<IEnumerable<Article>> SelectAsync(params int[] ids)
             {
-                throw new NotImplementedException();
+                throw new NotSupportedException();
             }
         }
     }
