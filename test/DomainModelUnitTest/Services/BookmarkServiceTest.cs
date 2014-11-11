@@ -9,5 +9,11 @@
         {
             Assert.IsAssignableFrom<IBookmarkService>(sut);
         }
+
+        [Test]
+        public void GetAsyncReturnsCorrectResult(
+            BookmarkService sut)
+        {
+        }
     }
 }
