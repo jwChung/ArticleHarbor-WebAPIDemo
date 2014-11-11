@@ -149,5 +149,94 @@
 
             sut.InnerService.ToMock().Verify(x => x.ModifyAsync(actor, article), Times.Once());
         }
+
+        [Test]
+        public async Task RemoveAsyncThrowsWhenUnauthorized(
+            AuthArticleService sut,
+            string actor,
+            int id)
+        {
+            // Fixture setup
+            sut.AuthService.Of(x => x.HasPermissionsAsync(actor, Permissions.Delete)
+                == Task.FromResult(false));
+            try
+            {
+                // Excercise system
+                await sut.RemoveAsync(actor, id);
+
+                // Verify outcome
+                Assert.True(false, "throw exception");
+            }
+            catch (UnauthorizedException)
+            {
+                return;
+            }
+        }
+
+        [Test]
+        public async Task RemoveAsyncWithIncorrectActorThrows(
+            AuthArticleService sut,
+            string actor,
+            int id,
+            string userId)
+        {
+            // Fixture setup
+            sut.AuthService.Of(x => x.HasPermissionsAsync(actor, Permissions.Delete)
+                == Task.FromResult(true));
+            sut.AuthService.Of(x => x.HasPermissionsAsync(actor, Permissions.DeleteAny)
+                == Task.FromResult(false));
+            sut.InnerService.Of(x => x.GetUserIdAsync(id) == Task.FromResult(userId));
+
+            try
+            {
+                // Excercise system
+                await sut.RemoveAsync(actor, id);
+
+                // Verify outcome
+                Assert.True(false, "throw exception");
+            }
+            catch (UnauthorizedException)
+            {
+                return;
+            }
+        }
+
+        [Test]
+        public async Task RemoveAsyncWithCorrectActorRemovesArticle(
+            AuthArticleService sut,
+            string actor,
+            int id)
+        {
+            sut.AuthService.Of(x => x.HasPermissionsAsync(actor, Permissions.Delete)
+                == Task.FromResult(true));
+            sut.AuthService.Of(x => x.HasPermissionsAsync(actor, Permissions.DeleteAny)
+                == Task.FromResult(false));
+            sut.InnerService.Of(x => x.GetUserIdAsync(id) == Task.FromResult(actor));
+
+            await sut.RemoveAsync(actor, id);
+
+            sut.InnerService.ToMock().Verify(x => x.RemoveAsync(actor, id), Times.Once());
+        }
+
+        [Test]
+        public async Task RemoveAsyncWithIncorrectActorAndDeleteAnyPermissionRemovesArticle(
+            AuthArticleService sut,
+            string actor,
+            int id)
+        {
+            sut.AuthService.Of(x => x.HasPermissionsAsync(actor, Permissions.Delete)
+                == Task.FromResult(true));
+            sut.AuthService.Of(x => x.HasPermissionsAsync(actor, Permissions.DeleteAny)
+                == Task.FromResult(true));
+
+            await sut.RemoveAsync(actor, id);
+
+            sut.InnerService.ToMock().Verify(x => x.RemoveAsync(actor, id), Times.Once());
+        }
+
+        protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
+        {
+            yield return this.Methods.Select(x => x.RemoveAsync(null, 0));
+        }
     }
 }

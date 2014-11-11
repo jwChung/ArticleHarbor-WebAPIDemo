@@ -55,12 +55,17 @@
             return this.ModifyAsyncImpl(actor, article);
         }
 
-        public Task RemoveAsync(string actor, int id)
+        public async Task RemoveAsync(string actor, int id)
         {
-            if (actor == null)
-                throw new ArgumentNullException("actor");
+            if (!await this.authService.HasPermissionsAsync(actor, Permissions.Delete))
+                throw new UnauthorizedException();
 
-            throw new NotImplementedException();
+            var userId = await this.GetUserIdAsync(id);
+            if (!await this.authService.HasPermissionsAsync(actor, Permissions.DeleteAny)
+               && actor != userId)
+                throw new UnauthorizedException();
+
+            await this.innerService.RemoveAsync(actor, id);
         }
 
         public Task<string> GetUserIdAsync(int id)
