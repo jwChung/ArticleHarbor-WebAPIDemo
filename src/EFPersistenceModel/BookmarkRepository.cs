@@ -41,7 +41,7 @@
             if (bookmark == null)
                 throw new ArgumentNullException("bookmark");
 
-            throw new NotImplementedException();
+            return this.InsertAsyncWith(bookmark);
         }
 
         public Task DeleteAsync(DomainBookmark bookmark)
@@ -62,6 +62,12 @@
             await query.LoadAsync();
 
             return this.context.Bookmarks.Local.Select(x => x.ToDomain());
+        }
+
+        private async Task InsertAsyncWith(DomainBookmark bookmark)
+        {
+            var user = await this.context.UserManager.FindByNameAsync(bookmark.UserId);
+            this.context.Bookmarks.Add(bookmark.ToPersistence(user.Id));
         }
     }
 }

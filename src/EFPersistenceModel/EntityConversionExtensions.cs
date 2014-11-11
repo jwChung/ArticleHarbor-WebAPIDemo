@@ -57,5 +57,14 @@ namespace ArticleHarbor.EFPersistenceModel
         {
             return new Bookmark(bookmark.User.UserName, bookmark.ArticleId);
         }
+
+        public static EFDataAccess.Bookmark ToPersistence(this Bookmark bookmark, string userId)
+        {
+            return new EFDataAccess.Bookmark
+            {
+                ArticleId = bookmark.ArticleId,
+                UserId = userId
+            };
+        }
     }
 }
