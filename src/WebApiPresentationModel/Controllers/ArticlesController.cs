@@ -49,6 +49,7 @@
             return this.articleService.AddAsync(article);
         }
 
+        [Authorize]
         public Task PutAsync(PutArticleViewModel putArticle)
         {
             if (putArticle == null)
@@ -57,6 +58,7 @@
             return this.PutAsyncImpl(putArticle);
         }
 
+        [Authorize]
         public Task DeleteAsync(int id)
         {
             var actor = this.User.Identity.Name;

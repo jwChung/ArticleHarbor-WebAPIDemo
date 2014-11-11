@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.WebApiPresentationModel.Controllers
 {
     using System.Collections.Generic;
+    using System.Reflection;
     using System.Threading.Tasks;
     using System.Web.Http;
     using DomainModel;
@@ -53,6 +54,13 @@
         }
 
         [Test]
+        public void PostAsyncHasAuthorizeAttribute()
+        {
+            var method = this.Methods.Select(x => x.PostAsync(null));
+            Assert.NotNull(method.GetCustomAttribute<AuthorizeAttribute>());
+        }
+
+        [Test]
         public async Task PutAsyncCorrectlyModifiesArticle(
             ArticlesController sut,
             PutArticleViewModel putArticle,
@@ -75,6 +83,13 @@
         }
 
         [Test]
+        public void PutAsyncHasAuthorizeAttribute()
+        {
+            var method = this.Methods.Select(x => x.PutAsync(null));
+            Assert.NotNull(method.GetCustomAttribute<AuthorizeAttribute>());
+        }
+
+        [Test]
         public async Task DeleteAsyncCorrectlyRemovesArticle(
             ArticlesController sut,
             string actor,
@@ -83,6 +98,13 @@
             sut.User.Identity.Of(x => x.Name == actor);
             await sut.DeleteAsync(id);
             sut.ArticleService.ToMock().Verify(x => x.RemoveAsync(actor, id));
+        }
+
+        [Test]
+        public void DeleteAsyncHasAuthorizeAttribute()
+        {
+            var method = this.Methods.Select(x => x.DeleteAsync(0));
+            Assert.NotNull(method.GetCustomAttribute<AuthorizeAttribute>());
         }
     }
 }
