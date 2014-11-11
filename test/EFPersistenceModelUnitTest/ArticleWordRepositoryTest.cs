@@ -16,6 +16,12 @@
         }
 
         [Test]
+        public void SutIsArticleWordRepository(ArticleWordRepository sut)
+        {
+            Assert.IsAssignableFrom<IArticleWordRepository>(sut);
+        }
+
+        [Test]
         public void SelectReturnsNullWhenThereIsNoArticleWordWithGivenIdentity(
             ArticleWordRepository sut,
             string word,
@@ -80,7 +86,7 @@
             {
                 var article = sut.Context.Articles.First();
 
-                await sut.DeleteAsync(new object[] { article.Id });
+                await sut.DeleteAsync(article.Id);
                 sut.Context.SaveChanges();
 
                 Assert.Empty(

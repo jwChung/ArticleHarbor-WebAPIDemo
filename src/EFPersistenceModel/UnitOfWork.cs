@@ -38,7 +38,7 @@
             }
         }
 
-        public IRepository<ArticleWord> ArticleWords
+        public IArticleWordRepository ArticleWords
         {
             get
             {
