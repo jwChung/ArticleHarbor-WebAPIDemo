@@ -7,5 +7,7 @@
     public interface IBookmarkRepository
     {
         Task<IEnumerable<Bookmark>> SelectAsync(string userId);
+
+        Task InsertAsync(Bookmark bookmark);
     }
 }

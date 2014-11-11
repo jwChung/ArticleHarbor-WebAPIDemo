@@ -31,5 +31,20 @@
 
             Assert.Equal(articles, actual);
         }
+
+        [Test]
+        public void AddAsyncCorrectlyAddsBookmark(
+            BookmarkService sut,
+            Bookmark bookmark)
+        {
+            sut.AddAsync(bookmark).Wait();
+            sut.Bookmarks.ToMock().Verify(x => x.InsertAsync(bookmark));
+        }
+
+        protected override IEnumerable<System.Reflection.MemberInfo> ExceptToVerifyGuardClause()
+        {
+            yield return this.Methods.Select(x => x.GetAsync(null));
+            yield return this.Methods.Select(x => x.AddAsync(null));
+        }
     }
 }

@@ -34,20 +34,16 @@
             get { return this.articles; }
         }
 
-        public Task<IEnumerable<Article>> GetAsync(string userId)
+        public async Task<IEnumerable<Article>> GetAsync(string userId)
         {
-            if (userId == null)
-                throw new ArgumentNullException("userId");
-
-            return this.GetAsyncWith(userId);
+            var bookmarks = await this.bookmarks.SelectAsync(userId);
+            var articleIds = bookmarks.Select(x => x.ArticleId).ToArray();
+            return await this.articles.SelectAsync(articleIds);
         }
 
         public Task AddAsync(Bookmark bookmark)
         {
-            if (bookmark == null)
-                throw new ArgumentNullException("bookmark");
-
-            throw new NotImplementedException();
+            return this.bookmarks.InsertAsync(bookmark);
         }
 
         public Task RemoveAsync(Bookmark bookmark)
@@ -56,13 +52,6 @@
                 throw new ArgumentNullException("bookmark");
 
             throw new NotImplementedException();
-        }
-
-        private async Task<IEnumerable<Article>> GetAsyncWith(string userId)
-        {
-            var bookmarks = await this.bookmarks.SelectAsync(userId);
-            var articleIds = bookmarks.Select(x => x.ArticleId).ToArray();
-            return await this.articles.SelectAsync(articleIds);
         }
     }
 }
