@@ -68,5 +68,13 @@
 
             return this.articleService.ModifyAsync(actor, article);
         }
+
+        public Task DeleteAsync(string actor, int id)
+        {
+            if (actor == null)
+                throw new ArgumentNullException("actor");
+
+            return this.articleService.RemoveAsync(actor, id);
+        }
     }
 }

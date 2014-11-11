@@ -73,5 +73,16 @@
             sut.ArticleService.ToMock().Verify(
                 x => x.ModifyAsync(actor, It.Is<Article>(p => articleLikeness.Equals(p))));
         }
+
+        [Test]
+        public async Task DeleteAsyncCorrectlyRemovesArticle(
+            NewArticleController sut,
+            string actor,
+            int id)
+        {
+            sut.User.Identity.Of(x => x.Name == actor);
+            await sut.DeleteAsync(actor, id);
+            sut.ArticleService.ToMock().Verify(x => x.RemoveAsync(actor, id));
+        }
     }
 }
