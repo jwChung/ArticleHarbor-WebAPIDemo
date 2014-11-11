@@ -121,7 +121,7 @@
     </Compile>
     <Compile Include="HttpClientFactory.cs" />
     <Compile Include="HttpResponseMessageExtensions.cs" />
-    <Compile Include="NewArticlesControllerTest.cs" />
+    <Compile Include="ArticlesControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestAttribute.cs" />
     <Compile Include="ThrowControllerTest.cs" />
