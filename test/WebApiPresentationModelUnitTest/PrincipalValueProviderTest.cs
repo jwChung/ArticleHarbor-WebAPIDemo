@@ -7,16 +7,16 @@
     using Jwc.Experiment.Xunit;
     using Xunit;
 
-    public class PrincipleValueProviderTest : IdiomaticTest<PrincipleValueProvider>
+    public class PrincipalValueProviderTest : IdiomaticTest<PrincipalValueProvider>
     {
         [Test]
-        public void SutIsValueProvider(PrincipleValueProvider sut)
+        public void SutIsValueProvider(PrincipalValueProvider sut)
         {
             Assert.IsAssignableFrom<IValueProvider>(sut);
         }
 
         [Test]
-        public void ContainsPrefixReturnsFalse(PrincipleValueProvider sut)
+        public void ContainsPrefixReturnsFalse(PrincipalValueProvider sut)
         {
             bool actual = sut.ContainsPrefix(null);
             Assert.False(actual);
@@ -24,7 +24,7 @@
 
         [Test]
         public void GetValueReturnsNullWhenKeyIsNotUserId(
-            PrincipleValueProvider sut,
+            PrincipalValueProvider sut,
             string key)
         {
             var actual = sut.GetValue(key);
@@ -40,7 +40,7 @@
                 "USERID",
                 "UserId",
             };
-            return TestCases.WithArgs(testData).WithAuto<PrincipleValueProvider, string>().Create(
+            return TestCases.WithArgs(testData).WithAuto<PrincipalValueProvider, string>().Create(
                 (d, sut, value) =>
                 {
                     sut.Principal.Of(x => x.Identity.Name == value);

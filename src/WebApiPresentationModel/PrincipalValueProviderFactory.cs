@@ -4,14 +4,14 @@
     using System.Web.Http.Controllers;
     using System.Web.Http.ValueProviders;
 
-    public class PrincipleValueProviderFactory : ValueProviderFactory, IUriValueProviderFactory
+    public class PrincipalValueProviderFactory : ValueProviderFactory, IUriValueProviderFactory
     {
         public override IValueProvider GetValueProvider(HttpActionContext actionContext)
         {
             if (actionContext == null)
                 throw new ArgumentNullException("actionContext");
 
-            return new PrincipleValueProvider(actionContext.RequestContext.Principal);
+            return new PrincipalValueProvider(actionContext.RequestContext.Principal);
         }
     }
 }

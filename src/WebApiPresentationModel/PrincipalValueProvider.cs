@@ -5,11 +5,11 @@
     using System.Security.Principal;
     using System.Web.Http.ValueProviders;
 
-    public class PrincipleValueProvider : IValueProvider
+    public class PrincipalValueProvider : IValueProvider
     {
         private readonly IPrincipal principal;
 
-        public PrincipleValueProvider(IPrincipal principal)
+        public PrincipalValueProvider(IPrincipal principal)
         {
             if (principal == null)
                 throw new ArgumentNullException("principal");
