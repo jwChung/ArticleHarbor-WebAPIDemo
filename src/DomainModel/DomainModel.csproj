@@ -53,6 +53,7 @@
     <Compile Include="EmptyDisposable.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Repositories\IArticleRepository.cs" />
+    <Compile Include="Services\BookmarkService.cs" />
     <Compile Include="Services\IArticleService.cs" />
     <Compile Include="Repositories\IArticleWordRepository.cs" />
     <Compile Include="Services\IArticleWordService.cs" />
