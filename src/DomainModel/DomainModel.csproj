@@ -48,6 +48,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Collectors\HaniRssCollector.cs" />
+    <Compile Include="Collectors\IArticleCollector.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ArticleWord.cs" />
     <Compile Include="Models\Bookmark.cs" />
