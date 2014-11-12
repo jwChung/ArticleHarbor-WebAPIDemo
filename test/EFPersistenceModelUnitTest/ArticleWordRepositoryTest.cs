@@ -29,11 +29,20 @@
 
         [Test]
         public async Task FindAsyncIsCaseInsensitive(
+            DbContextTransaction transaction,
             ArticleWordRepository sut)
         {
-            await sut.InsertAsync(new ArticleWord(1, "ABC"));
-            var actual = await sut.FindAsync(1, "abc");
-            Assert.NotNull(actual);
+            try
+            {
+                await sut.InsertAsync(new ArticleWord(1, "ABC"));
+                var actual = await sut.FindAsync(1, "abc");
+                Assert.NotNull(actual);
+            }
+            finally
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+            }
         }
 
         [Test]

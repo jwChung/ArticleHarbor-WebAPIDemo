@@ -17,6 +17,7 @@
             {
                 var executor = CreateExecutor(context);
                 executor.ExecuteAsync().Wait();
+                context.SaveChanges();
             }
         }
 
