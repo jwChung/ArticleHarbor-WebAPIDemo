@@ -29,7 +29,7 @@
                     new IArticleCollector[]
                     {
                         new HaniRssCollector("user1"),
-                        new ArticleCollectorTransformation(
+                        new ArticleTransformationCollector(
                             new CompositeArticleCollector(
                                 new IArticleCollector[]
                                 {

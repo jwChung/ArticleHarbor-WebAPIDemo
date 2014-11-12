@@ -6,17 +6,17 @@
     using Moq;
     using Xunit;
 
-    public class ArticleCollectorTransformationTest : IdiomaticTest<ArticleCollectorTransformation>
+    public class ArticleTransformationCollectorTest : IdiomaticTest<ArticleTransformationCollector>
     {
         [Test]
-        public void SutIsArticleCollector(ArticleCollectorTransformation sut)
+        public void SutIsArticleCollector(ArticleTransformationCollector sut)
         {
             Assert.IsAssignableFrom<IArticleCollector>(sut);
         }
 
         [Test]
         public void CollectAsyncReturnsTransformedArticles(
-            ArticleCollectorTransformation sut,
+            ArticleTransformationCollector sut,
             IEnumerable<Article> articles,
             Article[] expected)
         {

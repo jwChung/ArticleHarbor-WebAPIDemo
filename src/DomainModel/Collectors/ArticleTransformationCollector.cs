@@ -6,12 +6,12 @@
     using System.Threading.Tasks;
     using Models;
 
-    public class ArticleCollectorTransformation : IArticleCollector
+    public class ArticleTransformationCollector : IArticleCollector
     {
         private readonly IArticleCollector collector;
         private readonly IArticleTransformation transformation;
 
-        public ArticleCollectorTransformation(
+        public ArticleTransformationCollector(
             IArticleCollector collector,
             IArticleTransformation transformation)
         {
