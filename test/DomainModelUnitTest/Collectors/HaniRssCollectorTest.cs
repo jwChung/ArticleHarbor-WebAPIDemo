@@ -10,6 +10,12 @@
     public class HaniRssCollectorTest : IdiomaticTest<HaniRssCollector>
     {
         [Test]
+        public void SutIsArticleCollector(HaniRssCollector sut)
+        {
+            Assert.IsAssignableFrom<IArticleCollector>(sut);
+        }
+
+        [Test]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "string", Justification = "To represent dummy value of string.")]
         public void CollectAsyncCollectsArticles(
             HaniRssCollector sut,

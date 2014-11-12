@@ -15,7 +15,7 @@
     /// <summary>
     /// 한겨레 신문 뉴스 피드 수집기
     /// </summary>
-    public class HaniRssCollector
+    public class HaniRssCollector : IArticleCollector
     {
         private readonly string actor;
         
