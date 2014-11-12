@@ -50,6 +50,7 @@
     <Compile Include="Collectors\FacebookRssCollector.cs" />
     <Compile Include="Collectors\HaniRssCollector.cs" />
     <Compile Include="Collectors\IArticleCollector.cs" />
+    <Compile Include="Collectors\IArticleConvertor.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ArticleWord.cs" />
     <Compile Include="Models\Bookmark.cs" />
