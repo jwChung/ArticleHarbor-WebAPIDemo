@@ -7,7 +7,7 @@
     using DomainModel.Models;
     using DomainModel.Services;
 
-    [Authorize]
+    ////[Authorize]
     public class BookmarksController : ApiController
     {
         private readonly IBookmarkService bookmarkService;
@@ -32,17 +32,17 @@
             return this.bookmarkService.GetAsync(actor);
         }
 
-        public Task PostAsync(int articleId)
+        public Task PostAsync(int id)
         {
             var actor = this.User.Identity.Name;
-            var bookmark = new Bookmark(actor, articleId);
+            var bookmark = new Bookmark(actor, id);
             return this.bookmarkService.AddAsync(bookmark);
         }
 
-        public Task DeleteAsync(int articleId)
+        public Task DeleteAsync(int id)
         {
             var actor = this.User.Identity.Name;
-            var bookmark = new Bookmark(actor, articleId);
+            var bookmark = new Bookmark(actor, id);
             return this.bookmarkService.RemoveAsync(bookmark);
         }
     }
