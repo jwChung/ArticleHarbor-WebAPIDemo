@@ -10,43 +10,49 @@
     using System.Threading.Tasks;
     using System.Xml.Linq;
     using Models;
-    using Services;
 
-    /// <summary>
-    /// 한겨레 신문 뉴스 피드 수집기
-    /// </summary>
-    public class HaniRssCollector : IArticleCollector
+    public class FacebookRssCollector : IArticleCollector
     {
         private readonly string actor;
-        
-        public HaniRssCollector(string actor)
+        private readonly string facebookId;
+
+        public FacebookRssCollector(string actor, string facebookId)
         {
             if (actor == null)
                 throw new ArgumentNullException("actor");
 
+            if (facebookId == null)
+                throw new ArgumentNullException("facebookId");
+
             this.actor = actor;
-            }
+            this.facebookId = facebookId;
+        }
 
         public string Actor
         {
             get { return this.actor; }
         }
 
+        public string FacebookId
+        {
+            get { return this.facebookId; }
+        }
+
         public async Task<IEnumerable<Article>> CollectAsync()
         {
-            using (var reader = new StreamReader(await GetStreamAsync(), Encoding.UTF8))
+            using (var reader = new StreamReader(await this.GetStreamAsync(), Encoding.UTF8))
             {
                 return from item in XDocument.Load(reader).Descendants("item")
                        select this.ConvertToArticle(item);
             }
         }
 
-        private static async Task<Stream> GetStreamAsync()
+        private async Task<Stream> GetStreamAsync()
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://www.hani.co.kr/");
-                var response = await client.GetAsync("rss");
+                client.BaseAddress = new Uri("http://www.wallflux.com/feed/");
+                var response = await client.GetAsync(this.facebookId);
                 return await response.Content.ReadAsStreamAsync();
             }
         }
@@ -55,7 +61,7 @@
         {
             return new Article(
                 id: -1,
-                provider: "한겨레",
+                provider: "페이스북",
                 no: item.Element("guid").Value,
                 subject: item.Element("title").Value,
                 body: item.Element("description").Value,
