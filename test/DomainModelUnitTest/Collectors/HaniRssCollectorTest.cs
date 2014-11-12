@@ -26,7 +26,7 @@
             var article = new Article(
                 id: -1,
                 provider: "한겨레",
-                no: dummyString,
+                guid: dummyString,
                 subject: dummyString,
                 body: dummyString,
                 date: dummyDate,
@@ -34,7 +34,7 @@
                 userId: sut.Actor);
 
             var likeness = article.AsSource().OfLikeness<Article>()
-                .Without(x => x.No)
+                .Without(x => x.Guid)
                 .Without(x => x.Subject)
                 .Without(x => x.Body)
                 .Without(x => x.Date)

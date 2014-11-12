@@ -41,7 +41,7 @@
             var article = new Article(
                 -1,
                 postArticle.Provider,
-                postArticle.No,
+                postArticle.Guid,
                 postArticle.Subject,
                 postArticle.Body,
                 postArticle.Date,
@@ -75,7 +75,7 @@
             var article = new Article(
                 putArticle.Id,
                 putArticle.Provider,
-                putArticle.No,
+                putArticle.Guid,
                 putArticle.Subject,
                 putArticle.Body,
                 putArticle.Date,

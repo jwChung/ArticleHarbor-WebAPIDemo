@@ -6,7 +6,7 @@
     public class Article
     {
         private readonly string provider;
-        private readonly string no;
+        private readonly string guid;
         private readonly string subject;
         private readonly string body;
         private readonly DateTime date;
@@ -18,7 +18,7 @@
         public Article(
             int id,
             string provider,
-            string no,
+            string guid,
             string subject,
             string body,
             DateTime date,
@@ -28,8 +28,8 @@
             if (provider == null)
                 throw new ArgumentNullException("provider");
 
-            if (no == null)
-                throw new ArgumentNullException("no");
+            if (guid == null)
+                throw new ArgumentNullException("guid");
 
             if (subject == null)
                 throw new ArgumentNullException("subject");
@@ -47,9 +47,9 @@
                 throw new ArgumentException(
                     "The 'provider' value should not be empty string.", "provider");
 
-            if (no.Length == 0)
+            if (guid.Length == 0)
                 throw new ArgumentException(
-                    "The 'no' value should not be empty string.", "no");
+                    "The 'guid' value should not be empty string.", "guid");
 
             if (subject.Length == 0)
                 throw new ArgumentException(
@@ -69,7 +69,7 @@
 
             this.id = id;
             this.provider = provider;
-            this.no = no;
+            this.guid = guid;
             this.subject = subject;
             this.body = body;
             this.date = date;
@@ -87,9 +87,9 @@
             get { return this.provider; }
         }
 
-        public string No
+        public string Guid
         {
-            get { return this.no; }
+            get { return this.guid; }
         }
 
         public string Subject
@@ -123,7 +123,7 @@
             return new Article(
                 newId,
                 this.provider,
-                this.no,
+                this.guid,
                 this.subject,
                 this.body,
                 this.date,
@@ -136,7 +136,7 @@
             return new Article(
                 this.id,
                 this.provider,
-                this.no,
+                this.guid,
                 newSubject,
                 this.body,
                 this.date,
@@ -149,7 +149,7 @@
             return new Article(
                 this.id,
                 this.provider,
-                this.no,
+                this.guid,
                 this.subject,
                 this.body,
                 this.date,
@@ -162,7 +162,7 @@
             return new Article(
                 this.id,
                 this.provider,
-                this.no,
+                this.guid,
                 this.subject,
                 newBody,
                 this.date,

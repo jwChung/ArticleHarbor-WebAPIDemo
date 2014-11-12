@@ -14,7 +14,7 @@
             {
                 properties.Select(x => x.Id),
                 properties.Select(x => x.Provider),
-                properties.Select(x => x.No),
+                properties.Select(x => x.Guid),
                 properties.Select(x => x.Subject),
                 properties.Select(x => x.Body),
                 properties.Select(x => x.Date),

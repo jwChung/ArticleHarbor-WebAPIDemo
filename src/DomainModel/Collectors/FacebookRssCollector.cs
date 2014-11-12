@@ -62,7 +62,7 @@
             return new Article(
                 id: -1,
                 provider: "페이스북",
-                no: item.Element("guid").Value,
+                guid: item.Element("guid").Value,
                 subject: item.Element("title").Value,
                 body: item.Element("description").Value,
                 date: DateTime.Parse(item.Element("pubDate").Value, CultureInfo.CurrentCulture),

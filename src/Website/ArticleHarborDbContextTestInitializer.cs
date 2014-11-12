@@ -77,7 +77,7 @@
                 this.context.Articles.Add(new Article
                 {
                     Provider = "A",
-                    No = "1",
+                    Guid = "1",
                     Subject = "WordA1 WordA2 WordA3",
                     Body = "Body 1",
                     Date = DateTime.Now,
@@ -88,7 +88,7 @@
                 this.context.Articles.Add(new Article
                 {
                     Provider = "B",
-                    No = "2",
+                    Guid = "2",
                     Subject = "WordB1 WordB2 WordB3",
                     Body = "Body 2",
                     Date = DateTime.Now,
@@ -99,7 +99,7 @@
                 this.context.Articles.Add(new Article
                 {
                     Provider = "C",
-                    No = "3",
+                    Guid = "3",
                     Subject = "WordC1 WordC2 WordC3",
                     Body = "Body 3",
                     Date = DateTime.Now,

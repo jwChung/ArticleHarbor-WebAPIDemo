@@ -10,7 +10,7 @@ namespace ArticleHarbor.EFPersistenceModel
             return new Article(
                 article.Id,
                 article.Provider,
-                article.No,
+                article.Guid,
                 article.Subject,
                 article.Body,
                 article.Date,
@@ -24,7 +24,7 @@ namespace ArticleHarbor.EFPersistenceModel
             {
                 Id = article.Id,
                 Provider = article.Provider,
-                No = article.No,
+                Guid = article.Guid,
                 Subject = article.Subject,
                 Body = article.Body,
                 Date = article.Date,

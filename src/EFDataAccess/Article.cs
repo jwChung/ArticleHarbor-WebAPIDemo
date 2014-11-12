@@ -11,7 +11,7 @@
 
         public string Provider { get; set; }
 
-        public string No { get; set; }
+        public string Guid { get; set; }
 
         public string Subject { get; set; }
 

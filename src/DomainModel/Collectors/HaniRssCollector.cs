@@ -56,7 +56,7 @@
             return new Article(
                 id: -1,
                 provider: "한겨레",
-                no: item.Element("guid").Value,
+                guid: item.Element("guid").Value,
                 subject: item.Element("title").Value,
                 body: item.Element("description").Value,
                 date: DateTime.Parse(item.Element("pubDate").Value, CultureInfo.CurrentCulture),
