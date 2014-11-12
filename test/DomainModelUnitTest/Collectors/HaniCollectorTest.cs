@@ -8,6 +8,7 @@
     public class HaniCollectorTest : IdiomaticTest<HaniCollector>
     {
         [Test]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "string", Justification = "To represent dummy value of string.")]
         public void CollectAsyncCollectsArticles(
             HaniCollector sut,
             string dummyString,
