@@ -16,9 +16,9 @@
             var executor = CreateExecutor(context);
         }
 
-        private static ArticleCollectionExecutor CreateExecutor(ArticleHarborDbContext context)
+        private static ArticleCollectingExecutor CreateExecutor(ArticleHarborDbContext context)
         {
-            return new ArticleCollectionExecutor(
+            return new ArticleCollectingExecutor(
                 collector: new CompositeArticleCollector(
                     new IArticleCollector[]
                     {

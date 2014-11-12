@@ -6,7 +6,7 @@
     using Models;
     using Services;
 
-    public class ArticleCollectionExecutor
+    public class ArticleCollectingExecutor
     {
         private readonly IArticleCollector collector;
         private readonly IArticleService service;
@@ -14,7 +14,7 @@
         private readonly Action<Article> callback;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArticleCollectionExecutor"/> class.
+        /// Initializes a new instance of the <see cref="ArticleCollectingExecutor"/> class.
         /// </summary>
         /// <param name="collector">
         /// The collector.
@@ -28,7 +28,7 @@
         /// <param name="callback">
         /// The callback called when article is added.
         /// </param>
-        public ArticleCollectionExecutor(
+        public ArticleCollectingExecutor(
             IArticleCollector collector,
             IArticleService service,
             int delay,

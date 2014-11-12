@@ -8,7 +8,7 @@
     using Ploeh.AutoFixture;
     using Xunit;
 
-    public class ArticleCollectionExecutorTest : IdiomaticTest<ArticleCollectionExecutor>
+    public class ArticleCollectingExecutorTest : IdiomaticTest<ArticleCollectingExecutor>
     {
         [Test]
         public void ExecuteAsyncAddsArticles(
@@ -16,7 +16,7 @@
             IFixture fixture)
         {
             fixture.Inject(0);
-            var sut = fixture.Create<ArticleCollectionExecutor>();
+            var sut = fixture.Create<ArticleCollectingExecutor>();
             sut.Collector.Of(x => x.CollectAsync() == Task.FromResult(articles));
 
             var actual = sut.ExecuteAsync().Result;
@@ -34,7 +34,7 @@
             var collected = new List<Article>();
             fixture.Inject(0);
             fixture.Inject<Action<Article>>(collected.Add);
-            var sut = fixture.Create<ArticleCollectionExecutor>();
+            var sut = fixture.Create<ArticleCollectingExecutor>();
             sut.Collector.Of(x => x.CollectAsync() == Task.FromResult(articles));
             
             var dummy = sut.ExecuteAsync().Result;
