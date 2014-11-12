@@ -1,5 +1,6 @@
 ﻿namespace ArticleHarbor.DomainModel.Collectors
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -23,6 +24,22 @@
             Assert.Equal(articles.Count(), actual);
             foreach (var article in articles)
                 sut.Service.ToMock().Verify(x => x.AddAsync(article));
+        }
+
+        [Test]
+        public void ExecuteAsyncCallsCallbackWhenAddingArticle(
+            IEnumerable<Article> articles,
+            IFixture fixture)
+        {
+            var collected = new List<Article>();
+            fixture.Inject(0);
+            fixture.Inject<Action<Article>>(collected.Add);
+            var sut = fixture.Create<ArticleCollectionExecutor>();
+            sut.Collector.Of(x => x.CollectAsync() == Task.FromResult(articles));
+            
+            var dummy = sut.ExecuteAsync().Result;
+
+            Assert.Equal(collected, articles);
         }
     }
 }
