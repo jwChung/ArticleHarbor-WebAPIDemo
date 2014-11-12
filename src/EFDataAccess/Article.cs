@@ -27,7 +27,7 @@
         public virtual User User { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "This property is specially treated by EF to support lazy loading.")]
-        public virtual ICollection<ArticleWord> ArticleWords { get; set; }
+        public virtual ICollection<Keyword> Keywords { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "This property is specially treated by EF to support lazy loading.")]
         public virtual ICollection<Bookmark> Bookmarks { get; set; }

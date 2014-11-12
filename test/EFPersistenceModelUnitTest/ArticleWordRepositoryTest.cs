@@ -9,17 +9,17 @@
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 
-    public class ArticleWordRepositoryTest : IdiomaticTest<ArticleWordRepository>
+    public class KeywordRepositoryTest : IdiomaticTest<KeywordRepository>
     {
         [Test]
-        public void SutIsArticleWordRepository(ArticleWordRepository sut)
+        public void SutIsKeywordRepository(KeywordRepository sut)
         {
-            Assert.IsAssignableFrom<IArticleWordRepository>(sut);
+            Assert.IsAssignableFrom<IKeywordRepository>(sut);
         }
 
         [Test]
-        public async Task FindAsyncReturnsNullWhenThereIsNoArticleWordWithGivenIdentity(
-            ArticleWordRepository sut,
+        public async Task FindAsyncReturnsNullWhenThereIsNoKeywordWithGivenIdentity(
+            KeywordRepository sut,
             string word,
             int articleId)
         {
@@ -30,11 +30,11 @@
         [Test]
         public async Task FindAsyncIsCaseInsensitive(
             DbContextTransaction transaction,
-            ArticleWordRepository sut)
+            KeywordRepository sut)
         {
             try
             {
-                await sut.InsertAsync(new ArticleWord(1, "ABC"));
+                await sut.InsertAsync(new Keyword(1, "ABC"));
                 var actual = await sut.FindAsync(1, "abc");
                 Assert.NotNull(actual);
             }
@@ -46,21 +46,21 @@
         }
 
         [Test]
-        public async Task InsertAsyncCorrectlyInsertsArticleWord(
+        public async Task InsertAsyncCorrectlyInsertsKeyword(
             DbContextTransaction transaction,
-            ArticleWordRepository sut,
+            KeywordRepository sut,
             string word)
         {
             try
             {
                 var article = sut.Context.Articles.First();
-                var articleWord = new ArticleWord(article.Id, word);
+                var keyword = new Keyword(article.Id, word);
 
-                ArticleWord actual = await sut.InsertAsync(articleWord);
+                Keyword actual = await sut.InsertAsync(keyword);
 
-                var expected = await sut.FindAsync(articleWord.ArticleId, articleWord.Word);
-                articleWord.AsSource().OfLikeness<ArticleWord>().ShouldEqual(expected);
-                articleWord.AsSource().OfLikeness<ArticleWord>().ShouldEqual(actual);
+                var expected = await sut.FindAsync(keyword.ArticleId, keyword.Word);
+                keyword.AsSource().OfLikeness<Keyword>().ShouldEqual(expected);
+                keyword.AsSource().OfLikeness<Keyword>().ShouldEqual(actual);
             }
             finally
             {
@@ -72,15 +72,15 @@
         [Test]
         public async Task InsertAsyncDuplicateEntityDoesNotThrow(
             DbContextTransaction transaction,
-            ArticleWordRepository sut,
+            KeywordRepository sut,
             string word)
         {
             try
             {
                 var article = sut.Context.Articles.First();
-                await sut.InsertAsync(new ArticleWord(article.Id, word));
+                await sut.InsertAsync(new Keyword(article.Id, word));
 
-                await sut.InsertAsync(new ArticleWord(article.Id, word));
+                await sut.InsertAsync(new Keyword(article.Id, word));
 
                 Assert.DoesNotThrow(() => sut.Context.SaveChanges());
             }
@@ -92,9 +92,9 @@
         }
 
         [Test]
-        public async Task DeleteAsyncWithIdDeletesAllArticleWordsByArticleId(
+        public async Task DeleteAsyncWithIdDeletesAllKeywordsByArticleId(
             DbContextTransaction transaction,
-            ArticleWordRepository sut)
+            KeywordRepository sut)
         {
             try
             {
@@ -104,9 +104,9 @@
                 sut.Context.SaveChanges();
 
                 Assert.Empty(
-                    sut.Context.ArticleWords.Where(
+                    sut.Context.Keywords.Where(
                         x => x.ArticleId == article.Id).ToArray());
-                Assert.Equal(2, sut.Context.ArticleWords.Count());
+                Assert.Equal(2, sut.Context.Keywords.Count());
             }
             finally
             {

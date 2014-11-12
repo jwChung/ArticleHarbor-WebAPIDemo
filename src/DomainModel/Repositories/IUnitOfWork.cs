@@ -6,7 +6,7 @@
     {
         IArticleRepository Articles { get; }
 
-        IArticleWordRepository ArticleWords { get; }
+        IKeywordRepository Keywords { get; }
 
         IUserRepository Users { get; }
 

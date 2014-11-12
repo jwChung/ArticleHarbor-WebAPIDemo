@@ -6,13 +6,13 @@
     using ArticleHarbor.EFDataAccess;
     using DomainModel.Repositories;
     using Article = DomainModel.Models.Article;
-    using ArticleWord = DomainModel.Models.ArticleWord;
+    using Keyword = DomainModel.Models.Keyword;
 
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ArticleHarborDbContext context;
         private readonly ArticleRepository articles;
-        private readonly ArticleWordRepository articleWords;
+        private readonly KeywordRepository keywords;
         private readonly UserRepository users;
         private readonly BookmarkRepository bookmarks;
 
@@ -23,7 +23,7 @@
 
             this.context = context;
             this.articles = new ArticleRepository(this.context);
-            this.articleWords = new ArticleWordRepository(this.context);
+            this.keywords = new KeywordRepository(this.context);
             this.users = new UserRepository(this.context);
             this.bookmarks = new BookmarkRepository(this.context);
         }
@@ -41,11 +41,11 @@
             }
         }
 
-        public IArticleWordRepository ArticleWords
+        public IKeywordRepository Keywords
         {
             get
             {
-                return this.articleWords;
+                return this.keywords;
             }
         }
 

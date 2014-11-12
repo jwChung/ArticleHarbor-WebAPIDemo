@@ -8,13 +8,13 @@
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.EFDataAccess;
     using DomainModel.Repositories;
-    using ArticleWord = DomainModel.Models.ArticleWord;
+    using Keyword = DomainModel.Models.Keyword;
 
-    public class ArticleWordRepository : IArticleWordRepository
+    public class KeywordRepository : IKeywordRepository
     {
         private readonly ArticleHarborDbContext context;
 
-        public ArticleWordRepository(ArticleHarborDbContext context)
+        public KeywordRepository(ArticleHarborDbContext context)
         {
             if (context == null)
                 throw new ArgumentNullException("context");
@@ -27,16 +27,16 @@
             get { return this.context; }
         }
 
-        public ArticleWord Select(int articleId, string word)
+        public Keyword Select(int articleId, string word)
         {
             if (word == null)
                 throw new ArgumentNullException("word");
 
-            var articleWord = this.context.ArticleWords.Find(articleId, word);
-            return articleWord == null ? null : articleWord.ToDomain();
+            var keyword = this.context.Keywords.Find(articleId, word);
+            return keyword == null ? null : keyword.ToDomain();
         }
 
-        public Task<ArticleWord> InsertAsync(ArticleWord article)
+        public Task<Keyword> InsertAsync(Keyword article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
@@ -44,38 +44,38 @@
             return this.InsertAsyncImpl(article);
         }
 
-        public Task<ArticleWord> FindAsync(int id, string word)
+        public Task<Keyword> FindAsync(int id, string word)
         {
             if (word == null)
                 throw new ArgumentNullException("word");
 
-            Func<EFDataAccess.ArticleWord, bool> expression =
+            Func<EFDataAccess.Keyword, bool> expression =
                 x => x.ArticleId == id
                 && x.Word.Equals(word, StringComparison.CurrentCultureIgnoreCase);
 
-            var articleWord = this.context.ArticleWords.Local.SingleOrDefault(expression);
-            if (articleWord == null)
-                articleWord = this.context.ArticleWords.SingleOrDefault(expression);
+            var keyword = this.context.Keywords.Local.SingleOrDefault(expression);
+            if (keyword == null)
+                keyword = this.context.Keywords.SingleOrDefault(expression);
 
-            return Task.FromResult(articleWord == null ? null : articleWord.ToDomain());
+            return Task.FromResult(keyword == null ? null : keyword.ToDomain());
         }
 
         public Task DeleteAsync(int id)
         {
             // TODO: Improve performance.
-            var articleWords = this.context.ArticleWords
+            var keywords = this.context.Keywords
                 .Where(x => x.ArticleId == id).ToArray();
 
-            foreach (var articleWord in articleWords)
-                this.context.ArticleWords.Remove(articleWord);
+            foreach (var keyword in keywords)
+                this.context.Keywords.Remove(keyword);
 
             return Task.FromResult<object>(null);
         }
 
-        private async Task<ArticleWord> InsertAsyncImpl(ArticleWord article)
+        private async Task<Keyword> InsertAsyncImpl(Keyword article)
         {
             if (await this.FindAsync(article.ArticleId, article.Word) == null)
-                this.context.ArticleWords.Add(article.ToPersistence());
+                this.context.Keywords.Add(article.ToPersistence());
 
             return article;
         }

@@ -2,12 +2,12 @@
 {
     using System;
 
-    public class ArticleWord
+    public class Keyword
     {
         private readonly string word;
         private readonly int articleId;
 
-        public ArticleWord(int articleId, string word)
+        public Keyword(int articleId, string word)
         {
             if (word == null)
                 throw new ArgumentNullException("word");

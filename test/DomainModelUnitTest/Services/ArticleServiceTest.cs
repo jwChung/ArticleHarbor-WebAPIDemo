@@ -64,7 +64,7 @@ namespace ArticleHarbor.DomainModel.Services
         }
 
         [Test]
-        public async Task AddAsyncCorrectlyAddsArticleWords(
+        public async Task AddAsyncCorrectlyAddsKeywords(
             ArticleService sut,
             Article article,
             Article addedArticle)
@@ -74,7 +74,7 @@ namespace ArticleHarbor.DomainModel.Services
             var actual = await sut.AddAsync(article);
 
             Assert.Equal(addedArticle, actual);
-            sut.ArticleWordService.ToMock().Verify(
+            sut.KeywordService.ToMock().Verify(
                 x => x.AddWordsAsync(addedArticle.Id, addedArticle.Subject));
         }
 
@@ -93,13 +93,13 @@ namespace ArticleHarbor.DomainModel.Services
         }
 
         [Test]
-        public async Task ModifyAsyncCorrectlyModifiesArticleWords(
+        public async Task ModifyAsyncCorrectlyModifiesKeywords(
             [Frozen(As = typeof(IArticleRepository))] FakeRepository articles,
             Article article,
             ArticleService sut)
         {
             await sut.ModifyAsync(null, article);
-            sut.ArticleWordService.ToMock().Verify(
+            sut.KeywordService.ToMock().Verify(
                 x => x.ModifyWordsAsync(article.Id, article.Subject));
         }
 
@@ -117,12 +117,12 @@ namespace ArticleHarbor.DomainModel.Services
         }
 
         [Test]
-        public async Task RemoveAsyncCorrectlyRemovesArticleWords(
+        public async Task RemoveAsyncCorrectlyRemovesKeywords(
             ArticleService sut,
             int id)
         {
             await sut.RemoveAsync(null, id);
-            sut.ArticleWordService.ToMock().Verify(
+            sut.KeywordService.ToMock().Verify(
                 x => x.RemoveWordsAsync(id));
         }
 

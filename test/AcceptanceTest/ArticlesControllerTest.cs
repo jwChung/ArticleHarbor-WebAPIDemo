@@ -81,7 +81,7 @@
         }
         
         [Test]
-        public async Task PostAsyncWithAuthAddsArticleAndArticleWords(
+        public async Task PostAsyncWithAuthAddsArticleAndKeywords(
             PostArticleViewModel article)
         {
             article.Subject = "문장에서 단어만 추출해서 입력되는지 DB에서 확인필요.";
@@ -101,7 +101,7 @@
         }
 
         [Test]
-        public async Task PutAsyncWithAuthModifiesArticleAndRenewsArticleWords(
+        public async Task PutAsyncWithAuthModifiesArticleAndRenewsKeywords(
             PutArticleViewModel article)
         {
             article.Id = 2;

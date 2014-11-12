@@ -24,7 +24,7 @@
 
         public IDbSet<Article> Articles { get; set; }
 
-        public IDbSet<ArticleWord> ArticleWords { get; set; }
+        public IDbSet<Keyword> Keywords { get; set; }
 
         public IDbSet<Bookmark> Bookmarks { get; set; }
 

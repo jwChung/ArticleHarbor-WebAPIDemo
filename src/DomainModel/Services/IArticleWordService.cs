@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    public interface IArticleWordService
+    public interface IKeywordService
     {
         Task AddWordsAsync(int id, string subject);
 

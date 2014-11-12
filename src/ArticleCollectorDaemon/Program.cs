@@ -37,8 +37,8 @@
                             new SubjectFromBodyTransformation(50))),
                 service: new ArticleService(
                     new ArticleRepository(context),
-                    new ArticleWordService(
-                        new ArticleWordRepository(context),
+                    new KeywordService(
+                        new KeywordRepository(context),
                         new ArticleRepository(context),
                         KoreanNounExtractor.Execute)),
                 delay: 200,

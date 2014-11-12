@@ -10,20 +10,20 @@ namespace ArticleHarbor.DomainModel.Services
     public class ArticleService : IArticleService
     {
         private readonly IArticleRepository articles;
-        private readonly IArticleWordService articleWordService;
+        private readonly IKeywordService keywordService;
 
         public ArticleService(
             IArticleRepository articles,
-            IArticleWordService articleWordService)
+            IKeywordService keywordService)
         {
             if (articles == null)
                 throw new ArgumentNullException("articles");
 
-            if (articleWordService == null)
-                throw new ArgumentNullException("articleWordService");
+            if (keywordService == null)
+                throw new ArgumentNullException("keywordService");
 
             this.articles = articles;
-            this.articleWordService = articleWordService;
+            this.keywordService = keywordService;
         }
 
         public IArticleRepository Articles
@@ -31,9 +31,9 @@ namespace ArticleHarbor.DomainModel.Services
             get { return this.articles; }
         }
 
-        public IArticleWordService ArticleWordService
+        public IKeywordService KeywordService
         {
-            get { return this.articleWordService; }
+            get { return this.keywordService; }
         }
 
         public async Task<string> GetUserIdAsync(int id)
@@ -73,20 +73,20 @@ namespace ArticleHarbor.DomainModel.Services
 
         public async Task RemoveAsync(string actor, int id)
         {
-            await this.articleWordService.RemoveWordsAsync(id);
+            await this.keywordService.RemoveWordsAsync(id);
             await this.articles.DeleteAsync(id);
         }
 
         private async Task<Article> AddAsyncImpl(Article article)
         {
             var addedArticle = await this.articles.InsertAsync(article);
-            await this.articleWordService.AddWordsAsync(addedArticle.Id, addedArticle.Subject);
+            await this.keywordService.AddWordsAsync(addedArticle.Id, addedArticle.Subject);
             return addedArticle;
         }
 
         private async Task ModifyAsyncImpl(Article article)
         {
-            await this.articleWordService.ModifyWordsAsync(article.Id, article.Subject);
+            await this.keywordService.ModifyWordsAsync(article.Id, article.Subject);
             await this.articles.UpdateAsync(article);
         }
     }

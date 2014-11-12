@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class ArticleWord
+    public class Keyword
     {
         [Key]
         [Column(Order = 0)]

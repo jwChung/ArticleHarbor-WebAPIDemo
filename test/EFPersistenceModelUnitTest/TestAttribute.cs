@@ -54,8 +54,8 @@
         {
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
 
-            fixture.Customize<Article>(c => c.Without(x => x.ArticleWords));
-            fixture.Customize<ArticleWord>(c => c.Without(x => x.Article));
+            fixture.Customize<Article>(c => c.Without(x => x.Keywords));
+            fixture.Customize<Keyword>(c => c.Without(x => x.Article));
 
             var dbContext = new ArticleHarborDbContext(new ArticleHarborDbContextTestInitializer());
             fixture.Inject(dbContext);

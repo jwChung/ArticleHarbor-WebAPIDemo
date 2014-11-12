@@ -3,11 +3,11 @@
     using System.Threading.Tasks;
     using Models;
 
-    public interface IArticleWordRepository
+    public interface IKeywordRepository
     {
-        Task<ArticleWord> InsertAsync(ArticleWord article);
+        Task<Keyword> InsertAsync(Keyword article);
 
-        Task<ArticleWord> FindAsync(int id, string word);
+        Task<Keyword> FindAsync(int id, string word);
 
         Task DeleteAsync(int id);
     }

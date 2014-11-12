@@ -8,19 +8,19 @@
     using Models;
     using Repositories;
 
-    public class ArticleWordService : IArticleWordService
+    public class KeywordService : IKeywordService
     {
-        private readonly IArticleWordRepository articleWords;
+        private readonly IKeywordRepository keywords;
         private readonly IArticleRepository articles;
         private readonly Func<string, IEnumerable<string>> nounExtractor;
 
-        public ArticleWordService(
-            IArticleWordRepository articleWords,
+        public KeywordService(
+            IKeywordRepository keywords,
             IArticleRepository articles,
             Func<string, IEnumerable<string>> nounExtractor)
         {
-            if (articleWords == null)
-                throw new ArgumentNullException("articleWords");
+            if (keywords == null)
+                throw new ArgumentNullException("keywords");
 
             if (articles == null)
                 throw new ArgumentNullException("articles");
@@ -28,14 +28,14 @@
             if (nounExtractor == null)
                 throw new ArgumentNullException("nounExtractor");
 
-            this.articleWords = articleWords;
+            this.keywords = keywords;
             this.articles = articles;
             this.nounExtractor = nounExtractor;
         }
 
-        public IArticleWordRepository ArticleWords
+        public IKeywordRepository Keywords
         {
-            get { return this.articleWords; }
+            get { return this.keywords; }
         }
 
         public Func<string, IEnumerable<string>> NounExtractor
@@ -51,7 +51,7 @@
         public Task AddWordsAsync(int id, string subject)
         {
             var tasks = this.nounExtractor(subject)
-                .Select(w => this.articleWords.InsertAsync(new ArticleWord(id, w))).ToArray();
+                .Select(w => this.keywords.InsertAsync(new Keyword(id, w))).ToArray();
 
             return Task.WhenAll(tasks);
         }
@@ -76,7 +76,7 @@
 
         public Task RemoveWordsAsync(int id)
         {
-            return this.articleWords.DeleteAsync(id);
+            return this.keywords.DeleteAsync(id);
         }
     }
 }

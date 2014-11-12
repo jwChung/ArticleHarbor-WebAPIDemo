@@ -18,7 +18,7 @@
             initializer.InitializeUserRols();
             initializer.InitializeUsers();
             initializer.InitializeArticles();
-            initializer.InitializeArticleWords();
+            initializer.InitializeKeywords();
             initializer.InitializeBookmarks();
 
             base.Seed(context);
@@ -108,21 +108,21 @@
                 });
             }
 
-            public void InitializeArticleWords()
+            public void InitializeKeywords()
             {
-                this.context.ArticleWords.Add(new ArticleWord
+                this.context.Keywords.Add(new Keyword
                 {
                     ArticleId = 1,
                     Word = "WordA1"
                 });
 
-                this.context.ArticleWords.Add(new ArticleWord
+                this.context.Keywords.Add(new Keyword
                 {
                     ArticleId = 2,
                     Word = "WordB1"
                 });
 
-                this.context.ArticleWords.Add(new ArticleWord
+                this.context.Keywords.Add(new Keyword
                 {
                     ArticleId = 3,
                     Word = "WordC1"

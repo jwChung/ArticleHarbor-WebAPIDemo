@@ -1,6 +1,6 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
-    public class ArticleWordTest : IdiomaticTest<ArticleWord>
+    public class KeywordTest : IdiomaticTest<Keyword>
     {
     }
 }

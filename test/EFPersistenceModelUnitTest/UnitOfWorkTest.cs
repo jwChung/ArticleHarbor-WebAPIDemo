@@ -37,21 +37,21 @@
         }
 
         [Test]
-        public void ArticleWordsIsCorrect(UnitOfWork sut)
+        public void KeywordsIsCorrect(UnitOfWork sut)
         {
-            Assert.NotNull(sut.Context.ArticleWords);
+            Assert.NotNull(sut.Context.Keywords);
 
-            var actual = sut.ArticleWords;
+            var actual = sut.Keywords;
 
-            var repository = Assert.IsAssignableFrom<ArticleWordRepository>(actual);
+            var repository = Assert.IsAssignableFrom<KeywordRepository>(actual);
             Assert.Same(sut.Context, repository.Context);
         }
 
         [Test]
-        public void ArticleWordsAlwaysReturnsSameInstance(UnitOfWork sut)
+        public void KeywordsAlwaysReturnsSameInstance(UnitOfWork sut)
         {
-            var actual = sut.ArticleWords;
-            Assert.Same(sut.ArticleWords, actual);
+            var actual = sut.Keywords;
+            Assert.Same(sut.Keywords, actual);
         }
 
         [Test]
@@ -103,7 +103,7 @@
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.Articles);
-            yield return this.Properties.Select(x => x.ArticleWords);
+            yield return this.Properties.Select(x => x.Keywords);
             yield return this.Properties.Select(x => x.Users);
             yield return this.Properties.Select(x => x.Bookmarks);
         }

@@ -33,18 +33,18 @@ namespace ArticleHarbor.EFPersistenceModel
             };
         }
 
-        public static ArticleWord ToDomain(this EFDataAccess.ArticleWord articleWord)
+        public static Keyword ToDomain(this EFDataAccess.Keyword keyword)
         {
-            return new ArticleWord(articleWord.ArticleId, articleWord.Word);
+            return new Keyword(keyword.ArticleId, keyword.Word);
         }
 
-        public static EFDataAccess.ArticleWord ToPersistence(
-            this ArticleWord articleWord)
+        public static EFDataAccess.Keyword ToPersistence(
+            this Keyword keyword)
         {
-            return new EFDataAccess.ArticleWord
+            return new EFDataAccess.Keyword
             {
-                ArticleId = articleWord.ArticleId,
-                Word = articleWord.Word
+                ArticleId = keyword.ArticleId,
+                Word = keyword.Word
             };
         }
 
