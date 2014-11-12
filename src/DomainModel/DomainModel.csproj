@@ -54,6 +54,7 @@
     <Compile Include="Collectors\IArticleCollector.cs" />
     <Compile Include="Collectors\IArticleTransformation.cs" />
     <Compile Include="Collectors\SubjectFromBodyTransformation.cs" />
+    <Compile Include="Collectors\ArticleCollectorTransformation.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ArticleWord.cs" />
     <Compile Include="Models\Bookmark.cs" />
