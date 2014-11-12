@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Models;
 
@@ -22,9 +23,10 @@
             get { return this.collectors; }
         }
 
-        public Task<IEnumerable<Article>> CollectAsync()
+        public async Task<IEnumerable<Article>> CollectAsync()
         {
-            throw new NotImplementedException();
+            var articles = await Task.WhenAll(this.collectors.Select(c => c.CollectAsync()));
+            return articles.SelectMany(x => x);
         }
     }
 }
