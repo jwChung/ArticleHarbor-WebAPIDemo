@@ -53,5 +53,21 @@
                     response.GetMessageAsync().Result);
             }
         }
+
+        [Test(Skip = "Run explicitly as others test can be affected from this test.")]
+        public async Task DeleteAsyncWithAuthAddsBookmark()
+        {
+            using (var client = HttpClientFactory.Create())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "apikey", "232494f5670943dfac807226449fe795"); // user2
+
+                var response = await client.DeleteAsync("api/bookmarks/3");
+
+                Assert.True(
+                    response.IsSuccessStatusCode,
+                    response.GetMessageAsync().Result);
+            }
+        }
     }
 }
