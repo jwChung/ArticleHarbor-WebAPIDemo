@@ -17,10 +17,10 @@
         [Test]
         public void CollectAsyncReturnsTransformedArticles(
             ArticleCollectorTransformation sut,
-            IEnumerable<Article> artices,
+            IEnumerable<Article> articles,
             Article[] expected)
         {
-            sut.Collector.Of(x => x.CollectAsync() == Task.FromResult(artices));
+            sut.Collector.Of(x => x.CollectAsync() == Task.FromResult(articles));
             int index = 0;
             sut.Transformation.ToMock().Setup(x => x.Transform(It.IsAny<Article>()))
                 .Returns(() => expected[index++]);

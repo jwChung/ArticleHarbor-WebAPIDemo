@@ -10,7 +10,7 @@
 
     internal class Programss
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             using (var context = new ArticleHarborDbContext(
                 new ArticleHarborDbContextTestInitializer()))
@@ -21,6 +21,7 @@
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String)", Justification = "It is appropriate to represent as literal because of simplity.")]
         private static ArticleCollectingExecutor CreateExecutor(ArticleHarborDbContext context)
         {
             return new ArticleCollectingExecutor(

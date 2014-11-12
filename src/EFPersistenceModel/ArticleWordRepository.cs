@@ -54,7 +54,7 @@
                 && x.Word.Equals(word, StringComparison.CurrentCultureIgnoreCase);
 
             var articleWord = this.context.ArticleWords.Local.SingleOrDefault(expression);
-            if(articleWord == null)
+            if (articleWord == null)
                 articleWord = this.context.ArticleWords.SingleOrDefault(expression);
 
             return Task.FromResult(articleWord == null ? null : articleWord.ToDomain());
