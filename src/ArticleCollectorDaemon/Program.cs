@@ -12,8 +12,12 @@
     {
         private static void Main(string[] args)
         {
-            var context = new ArticleHarborDbContext(new CreateDatabaseIfNotExists<ArticleHarborDbContext>());
-            var executor = CreateExecutor(context);
+            using (var context = new ArticleHarborDbContext(
+                new ArticleHarborDbContextTestInitializer()))
+            {
+                var executor = CreateExecutor(context);
+                executor.ExecuteAsync().Wait();
+            }
         }
 
         private static ArticleCollectingExecutor CreateExecutor(ArticleHarborDbContext context)
@@ -30,7 +34,7 @@
                                     new FacebookRssCollector("user2", "177323639028540"), // ASP.NET Korea group
                                     new FacebookRssCollector("user2", "200708093411111") // C# study group
                                 }),
-                            new SubjectFromBodyTransformation(20))
+                            new SubjectFromBodyTransformation(50))
                     }),
                 service: new ArticleService(
                     new ArticleRepository(context),
@@ -38,7 +42,7 @@
                         new ArticleWordRepository(context),
                         new ArticleRepository(context),
                         KoreanNounExtractor.Execute)),
-                delay: 300,
+                delay: 10,
                 callback: a => Console.WriteLine("Added: " + a.Subject));
         }
     }
