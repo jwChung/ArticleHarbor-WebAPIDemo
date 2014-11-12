@@ -94,6 +94,7 @@
     </Compile>
     <Compile Include="Collectors\FacebookRssCollectorTest.cs" />
     <Compile Include="Collectors\HaniRssCollectorTest.cs" />
+    <Compile Include="Collectors\SubjectFromBodyConvertorTest.cs" />
     <Compile Include="Models\BookmarkTest.cs" />
     <Compile Include="Services\ArticleWordServiceTest.cs" />
     <Compile Include="Services\AuthArticleServiceTest.cs" />
