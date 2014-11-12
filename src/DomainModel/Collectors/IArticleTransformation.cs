@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Models;
 
-    public interface IArticleConvertor
+    public interface IArticleTransformation
     {
         IEnumerable<Article> Convert(IEnumerable<Article> articles);
     }

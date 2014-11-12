@@ -9,12 +9,12 @@
     using Xunit;
     using Xunit.Extensions;
 
-    public class SubjectFromBodyConvertorTest : IdiomaticTest<SubjectFromBodyConvertor>
+    public class SubjectFromBodyTransformationTest : IdiomaticTest<SubjectFromBodyTransformation>
     {
         [Test]
-        public void SutIsArticleConverter(SubjectFromBodyConvertor sut)
+        public void SutIsArticleConverter(SubjectFromBodyTransformation sut)
         {
-            Assert.IsAssignableFrom<IArticleConvertor>(sut);
+            Assert.IsAssignableFrom<IArticleTransformation>(sut);
         }
 
         [Test]
@@ -27,7 +27,7 @@
             IFixture fixture)
         {
             fixture.Inject(subjectLength);
-            var sut = fixture.Create<SubjectFromBodyConvertor>();
+            var sut = fixture.Create<SubjectFromBodyTransformation>();
             
             var actual = sut.Convert(articles);
 

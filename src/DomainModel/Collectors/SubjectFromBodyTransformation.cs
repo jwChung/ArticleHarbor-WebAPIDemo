@@ -5,11 +5,11 @@
     using System.Linq;
     using Models;
 
-    public class SubjectFromBodyConvertor : IArticleConvertor
+    public class SubjectFromBodyTransformation : IArticleTransformation
     {
         private readonly int subjectLength;
 
-        public SubjectFromBodyConvertor(int subjectLength)
+        public SubjectFromBodyTransformation(int subjectLength)
         {
             this.subjectLength = subjectLength;
         }
