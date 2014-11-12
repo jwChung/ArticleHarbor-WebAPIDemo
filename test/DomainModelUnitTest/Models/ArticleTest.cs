@@ -112,6 +112,18 @@
             Assert.Equal(newSubject, actual.Subject);
         }
 
+        [Test]
+        public void WithBodyReturnsCorrectArticle(Article sut, string newBody)
+        {
+            var likeness = sut.AsSource().OfLikeness<Article>().Without(x => x.Body);
+
+            var actual = sut.WithBody(newBody);
+
+            Assert.NotSame(sut, actual);
+            likeness.ShouldEqual(actual);
+            Assert.Equal(newBody, actual.Body);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.UserId);

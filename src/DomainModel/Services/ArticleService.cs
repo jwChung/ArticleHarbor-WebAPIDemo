@@ -79,8 +79,9 @@ namespace ArticleHarbor.DomainModel.Services
 
         private async Task<Article> AddAsyncImpl(Article article)
         {
-            await this.articleWordService.AddWordsAsync(article.Id, article.Subject);
-            return await this.articles.InsertAsync(article);
+            var addedArticle = await this.articles.InsertAsync(article);
+            await this.articleWordService.AddWordsAsync(addedArticle.Id, addedArticle.Subject);
+            return addedArticle;
         }
 
         private async Task ModifyAsyncImpl(Article article)

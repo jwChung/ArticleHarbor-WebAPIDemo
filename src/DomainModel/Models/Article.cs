@@ -156,5 +156,18 @@
                 this.url,
                 newUserId);
         }
+
+        public Article WithBody(string newBody)
+        {
+            return new Article(
+                this.id,
+                this.provider,
+                this.no,
+                this.subject,
+                newBody,
+                this.date,
+                this.url,
+                this.userId);
+        }
     }
 }

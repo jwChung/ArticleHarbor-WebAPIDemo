@@ -47,12 +47,15 @@
     <Compile Include="..\..\build\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Collectors\ArticleCollectingExecutor.cs" />
     <Compile Include="Collectors\CompositeArticleCollector.cs" />
+    <Compile Include="Collectors\DelegateTransformation.cs" />
     <Compile Include="Collectors\FacebookRssCollector.cs" />
     <Compile Include="Collectors\HaniRssCollector.cs" />
     <Compile Include="Collectors\IArticleCollector.cs" />
-    <Compile Include="Collectors\IArticleConvertor.cs" />
-    <Compile Include="Collectors\SubjectFromBodyConvertor.cs" />
+    <Compile Include="Collectors\IArticleTransformation.cs" />
+    <Compile Include="Collectors\SubjectFromBodyTransformation.cs" />
+    <Compile Include="Collectors\ArticleTransformationCollector.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ArticleWord.cs" />
     <Compile Include="Models\Bookmark.cs" />
