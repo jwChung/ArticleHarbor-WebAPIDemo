@@ -94,6 +94,18 @@
         }
 
         [Test]
+        public void SelectAsyncWithIdsReturnsCorrectResult(
+             ArticleRepository sut)
+        {
+            int[] ids = new[] { 1, 3 };
+
+            var actual = sut.SelectAsync(ids).Result;
+
+            int[] result = actual.Select(x => x.Id).ToArray();
+            Assert.Equal(ids, result);
+        }
+
+        [Test]
         public async Task UpdateAsyncCorrectlyUpdatesArticle(
             DbContextTransaction transaction,
             ArticleRepository sut,

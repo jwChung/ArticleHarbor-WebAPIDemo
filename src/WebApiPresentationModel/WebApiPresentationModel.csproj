@@ -74,6 +74,7 @@
     <Compile Include="ApiKeyAuthenticationDispatcher.cs" />
     <Compile Include="ArticleHarborAuthProvider.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
+    <Compile Include="Controllers\BookmarksController.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ILogger.cs" />

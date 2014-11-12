@@ -10,6 +10,8 @@
 
         Task<IEnumerable<Article>> SelectAsync();
 
+        Task<IEnumerable<Article>> SelectAsync(params int[] ids);
+
         Task<Article> InsertAsync(Article article);
 
         Task UpdateAsync(Article article);

@@ -10,6 +10,8 @@
 
         IUserRepository Users { get; }
 
+        IBookmarkRepository Bookmarks { get; }
+
         Task SaveAsync();
     }
 }

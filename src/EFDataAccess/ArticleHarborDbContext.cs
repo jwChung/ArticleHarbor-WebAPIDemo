@@ -26,6 +26,8 @@
 
         public IDbSet<ArticleWord> ArticleWords { get; set; }
 
+        public IDbSet<Bookmark> Bookmarks { get; set; }
+
         public UserManager UserManager
         {
             get { return this.userManager; }

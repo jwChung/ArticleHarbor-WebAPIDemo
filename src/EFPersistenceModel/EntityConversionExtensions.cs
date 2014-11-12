@@ -1,14 +1,11 @@
 namespace ArticleHarbor.EFPersistenceModel
 {
     using System;
-    using System.Globalization;
-    using System.Threading.Tasks;
-    using ArticleHarbor.DomainModel;
     using DomainModel.Models;
 
     internal static class EntityConversionExtensions
     {
-        public static Article ToDomain(this ArticleHarbor.EFDataAccess.Article article)
+        public static Article ToDomain(this EFDataAccess.Article article)
         {
             return new Article(
                 article.Id,
@@ -21,9 +18,9 @@ namespace ArticleHarbor.EFPersistenceModel
                 article.User.UserName);
         }
 
-        public static ArticleHarbor.EFDataAccess.Article ToPersistence(this Article article, string userId)
+        public static EFDataAccess.Article ToPersistence(this Article article, string userId)
         {
-            return new ArticleHarbor.EFDataAccess.Article
+            return new EFDataAccess.Article
             {
                 Id = article.Id,
                 Provider = article.Provider,
@@ -36,24 +33,38 @@ namespace ArticleHarbor.EFPersistenceModel
             };
         }
 
-        public static ArticleWord ToDomain(this ArticleHarbor.EFDataAccess.ArticleWord articleWord)
+        public static ArticleWord ToDomain(this EFDataAccess.ArticleWord articleWord)
         {
             return new ArticleWord(articleWord.ArticleId, articleWord.Word);
         }
 
-        public static ArticleHarbor.EFDataAccess.ArticleWord ToPersistence(
+        public static EFDataAccess.ArticleWord ToPersistence(
             this ArticleWord articleWord)
         {
-            return new ArticleHarbor.EFDataAccess.ArticleWord
+            return new EFDataAccess.ArticleWord
             {
                 ArticleId = articleWord.ArticleId,
                 Word = articleWord.Word
             };
         }
-        
-        public static User ToDomain(this ArticleHarbor.EFDataAccess.User user, string roleName)
+
+        public static User ToDomain(this EFDataAccess.User user, string roleName)
         {
             return new User(user.UserName, (Role)Enum.Parse(typeof(Role), roleName), user.ApiKey);
+        }
+
+        public static Bookmark ToDomain(this EFDataAccess.Bookmark bookmark)
+        {
+            return new Bookmark(bookmark.User.UserName, bookmark.ArticleId);
+        }
+
+        public static EFDataAccess.Bookmark ToPersistence(this Bookmark bookmark, string userId)
+        {
+            return new EFDataAccess.Bookmark
+            {
+                ArticleId = bookmark.ArticleId,
+                UserId = userId
+            };
         }
     }
 }

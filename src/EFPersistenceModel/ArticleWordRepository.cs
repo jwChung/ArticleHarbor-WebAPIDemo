@@ -54,6 +54,7 @@
 
         public Task DeleteAsync(int id)
         {
+            // TODO: Improve performance.
             var articleWords = this.context.ArticleWords
                 .Where(x => x.ArticleId == id).ToArray();
 

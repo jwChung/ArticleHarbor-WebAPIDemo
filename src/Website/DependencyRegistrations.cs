@@ -20,7 +20,9 @@ namespace ArticleHarbor.Website
             get { throw new NotSupportedException(); }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "DependencyResolver가 알아서 Dispose함.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This rule is suppressed to register dependencies in one place.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This rule is suppressed to register dependencies in one place.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "DependencyResolver takes care of it.")]
         public IContainerVisitor<object> Visit(Container container)
         {
             if (container == null)
@@ -57,6 +59,10 @@ namespace ArticleHarbor.Website
                 c => c.Resolve<IUnitOfWork>().Users)
                 .ReusedWithinContainer();
 
+             container.Register(
+                 c => c.Resolve<IUnitOfWork>().Bookmarks)
+                 .ReusedWithinContainer();
+
             // Domain services
             container.Register<IAuthService>(
                 c => new AuthService(
@@ -79,9 +85,19 @@ namespace ArticleHarbor.Website
                     KoreanNounExtractor.Execute))
                 .ReusedWithinContainer();
 
+            container.Register<IBookmarkService>(
+                c => new BookmarkService(
+                    c.Resolve<IBookmarkRepository>(),
+                    c.Resolve<IArticleRepository>()))
+                .ReusedWithinContainer();
+
             // Presentation controllers
             container.Register(
                 c => new ArticlesController(c.Resolve<IArticleService>()))
+                .ReusedWithinContainer();
+
+            container.Register(
+                c => new BookmarksController(c.Resolve<IBookmarkService>()))
                 .ReusedWithinContainer();
 
             return this;

@@ -46,12 +46,15 @@
     </Compile>
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ArticleWord.cs" />
+    <Compile Include="Models\Bookmark.cs" />
+    <Compile Include="Repositories\IBookmarkRepository.cs" />
     <Compile Include="Services\ArticleWordService.cs" />
     <Compile Include="Services\AuthArticleService.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="EmptyDisposable.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Repositories\IArticleRepository.cs" />
+    <Compile Include="Services\BookmarkService.cs" />
     <Compile Include="Services\IArticleService.cs" />
     <Compile Include="Repositories\IArticleWordRepository.cs" />
     <Compile Include="Services\IArticleWordService.cs" />
@@ -63,6 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Permissions.cs" />
+    <Compile Include="Services\IBookmarkService.cs" />
     <Compile Include="UnauthorizedExceptoin.cs" />
     <Compile Include="Models\User.cs" />
   </ItemGroup>

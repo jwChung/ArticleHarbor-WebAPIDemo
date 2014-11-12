@@ -139,6 +139,11 @@ namespace ArticleHarbor.DomainModel.Services
             {
             }
 
+            public Task<IEnumerable<Article>> SelectAsync(params int[] ids)
+            {
+                throw new NotSupportedException();
+            }
+
             protected override int GetKeyForItem(Article item)
             {
                 return item.Id;

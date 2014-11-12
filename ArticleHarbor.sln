@@ -35,6 +35,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{D7D33A81-D
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{91D4E546-7C73-4DB2-B06C-46A603B09FFF}"
+	ProjectSection(SolutionItems) = preProject
+		build\ArticleHarbor.ruleset = build\ArticleHarbor.ruleset
+		build\ArticleHarborTest.ruleset = build\ArticleHarborTest.ruleset
+		build\ArticleHarborWeb.ruleset = build\ArticleHarborWeb.ruleset
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

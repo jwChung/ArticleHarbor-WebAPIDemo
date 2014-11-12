@@ -92,6 +92,7 @@
     <Compile Include="..\..\build\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Models\BookmarkTest.cs" />
     <Compile Include="Services\ArticleWordServiceTest.cs" />
     <Compile Include="Services\AuthArticleServiceTest.cs" />
     <Compile Include="Models\ArticleTest.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadWritablePropertyAssertion.cs" />
     <Compile Include="RunOn.cs" />
+    <Compile Include="Services\BookmarkServiceTest.cs" />
     <Compile Include="TestAttribute.cs" />
     <Compile Include="IdiomaticTest.cs" />
     <Compile Include="Models\UserTest.cs" />

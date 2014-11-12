@@ -7,6 +7,7 @@
     public class UnauthorizedException : Exception
     {
         public UnauthorizedException()
+            : this("Authorization has been denied for this request.")
         {
         }
 
