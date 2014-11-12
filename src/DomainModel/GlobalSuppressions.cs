@@ -14,3 +14,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Microsoft.Usage", "CA2243:AttributeStringLiteralsShouldParseCorrectly", Justification = "This is suppressed to be able to represent pre-release version according to semantic versioning.")]
 [assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "ArticleHarbor.DomainModel.Repositories", Justification = "This rule is suppressed to group classes according to semantic.")]
 [assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "ArticleHarbor.DomainModel", Justification = "This rule is suppressed to group classes according to semantic.")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "ArticleHarbor.DomainModel.Collectors", Justification = "This rule is suppressed to group classes according to semantic.")]
