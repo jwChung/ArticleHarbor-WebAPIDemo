@@ -5,12 +5,12 @@
     using Moq;
     using Ploeh.SemanticComparison.Fluent;
 
-    public class HaniCollectorTest : IdiomaticTest<HaniCollector>
+    public class HaniRssCollectorTest : IdiomaticTest<HaniRssCollector>
     {
         [Test]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "string", Justification = "To represent dummy value of string.")]
         public void CollectAsyncCollectsArticles(
-            HaniCollector sut,
+            HaniRssCollector sut,
             string dummyString,
             DateTime dummyDate)
         {

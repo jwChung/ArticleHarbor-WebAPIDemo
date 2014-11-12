@@ -14,12 +14,12 @@
     /// <summary>
     /// 한겨레 신문 뉴스 피드 수집기
     /// </summary>
-    public class HaniCollector
+    public class HaniRssCollector
     {
         private readonly string actor;
         private readonly IArticleService articleService;
 
-        public HaniCollector(string actor, IArticleService articleService)
+        public HaniRssCollector(string actor, IArticleService articleService)
         {
             if (actor == null)
                 throw new ArgumentNullException("actor");
