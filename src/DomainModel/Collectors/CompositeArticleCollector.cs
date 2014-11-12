@@ -18,6 +18,14 @@
             this.collectors = collectors;
         }
 
+        public CompositeArticleCollector(params IArticleCollector[] collectors)
+        {
+            if (collectors == null)
+                throw new ArgumentNullException("collectors");
+
+            this.collectors = collectors;
+        }
+
         public IEnumerable<IArticleCollector> Collectors
         {
             get { return this.collectors; }

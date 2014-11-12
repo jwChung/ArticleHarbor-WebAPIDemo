@@ -27,20 +27,14 @@
         {
             return new ArticleCollectingExecutor(
                 collector: new CompositeArticleCollector(
-                    new IArticleCollector[]
-                    {
-                        new HaniRssCollector("user1"),
+                    new HaniRssCollector("user1"),
                         new ArticleTransformationCollector(
                             new ArticleTransformationCollector(
                                 new CompositeArticleCollector(
-                                    new IArticleCollector[]
-                                    {
-                                        new FacebookRssCollector("user2", "177323639028540"), // ASP.NET Korea group
-                                        new FacebookRssCollector("user2", "200708093411111") // C# study group
-                                    }),
+                                    new FacebookRssCollector("user2", "177323639028540"), // ASP.NET Korea group
+                                    new FacebookRssCollector("user2", "200708093411111")), // C# study group
                                 new DelegateTransformation(RemoveUnnecessaryContent)),
-                            new SubjectFromBodyTransformation(50))
-                    }),
+                            new SubjectFromBodyTransformation(50))),
                 service: new ArticleService(
                     new ArticleRepository(context),
                     new ArticleWordService(
