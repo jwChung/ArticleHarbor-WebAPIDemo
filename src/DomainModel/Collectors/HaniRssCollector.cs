@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Net.Http;
@@ -58,7 +59,7 @@
                 no: item.Element("guid").Value,
                 subject: item.Element("title").Value,
                 body: item.Element("description").Value,
-                date: DateTime.Parse(item.Element("pubDate").Value),
+                date: DateTime.Parse(item.Element("pubDate").Value, CultureInfo.CurrentCulture),
                 url: item.Element("link").Value,
                 userId: this.actor);
         }
