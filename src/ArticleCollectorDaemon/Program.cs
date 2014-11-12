@@ -7,6 +7,7 @@
     using ArticleHarbor.DomainModel.Services;
     using ArticleHarbor.EFDataAccess;
     using ArticleHarbor.EFPersistenceModel;
+    using Article = DomainModel.Models.Article;
 
     internal class Programss
     {
@@ -30,12 +31,14 @@
                     {
                         new HaniRssCollector("user1"),
                         new ArticleTransformationCollector(
-                            new CompositeArticleCollector(
-                                new IArticleCollector[]
-                                {
-                                    new FacebookRssCollector("user2", "177323639028540"), // ASP.NET Korea group
-                                    new FacebookRssCollector("user2", "200708093411111") // C# study group
-                                }),
+                            new ArticleTransformationCollector(
+                                new CompositeArticleCollector(
+                                    new IArticleCollector[]
+                                    {
+                                        new FacebookRssCollector("user2", "177323639028540"), // ASP.NET Korea group
+                                        new FacebookRssCollector("user2", "200708093411111") // C# study group
+                                    }),
+                                new DelegateTransformation(RemoveUnnecessaryContent)),
                             new SubjectFromBodyTransformation(50))
                     }),
                 service: new ArticleService(
@@ -44,8 +47,15 @@
                         new ArticleWordRepository(context),
                         new ArticleRepository(context),
                         KoreanNounExtractor.Execute)),
-                delay: 10,
+                delay: 200,
                 callback: a => Console.WriteLine("Added: " + a.Subject));
+        }
+
+        private static Article RemoveUnnecessaryContent(Article article)
+        {
+            var index = article.Body.IndexOf(':');
+            var newBody = article.Body.Remove(0, index + 1);
+            return article.WithBody(newBody);
         }
     }
 }
