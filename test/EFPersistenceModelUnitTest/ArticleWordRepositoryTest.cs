@@ -28,6 +28,15 @@
         }
 
         [Test]
+        public async Task FindAsyncIsCaseInsensitive(
+            ArticleWordRepository sut)
+        {
+            await sut.InsertAsync(new ArticleWord(1, "ABC"));
+            var actual = await sut.FindAsync(1, "abc");
+            Assert.NotNull(actual);
+        }
+
+        [Test]
         public async Task InsertAsyncCorrectlyInsertsArticleWord(
             DbContextTransaction transaction,
             ArticleWordRepository sut,

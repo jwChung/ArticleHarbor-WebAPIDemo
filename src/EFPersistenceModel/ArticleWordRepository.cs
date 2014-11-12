@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.EFDataAccess;
@@ -48,7 +49,14 @@
             if (word == null)
                 throw new ArgumentNullException("word");
 
-            var articleWord = this.context.ArticleWords.Find(new object[] { id, word });
+            Func<EFDataAccess.ArticleWord, bool> expression =
+                x => x.ArticleId == id
+                && x.Word.Equals(word, StringComparison.CurrentCultureIgnoreCase);
+
+            var articleWord = this.context.ArticleWords.Local.SingleOrDefault(expression);
+            if(articleWord == null)
+                articleWord = this.context.ArticleWords.SingleOrDefault(expression);
+
             return Task.FromResult(articleWord == null ? null : articleWord.ToDomain());
         }
 
