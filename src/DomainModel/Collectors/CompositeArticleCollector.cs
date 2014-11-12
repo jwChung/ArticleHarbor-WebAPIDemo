@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using Models;
 
-    public class CompositeCollector : IArticleCollector
+    public class CompositeArticleCollector : IArticleCollector
     {
         public Task<IEnumerable<Article>> CollectAsync()
         {

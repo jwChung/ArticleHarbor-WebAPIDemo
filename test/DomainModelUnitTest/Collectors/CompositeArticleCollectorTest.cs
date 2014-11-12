@@ -2,10 +2,10 @@
 {
     using Xunit;
 
-    public class CompositeCollectorTest : IdiomaticTest<CompositeCollector>
+    public class CompositeArticleCollectorTest : IdiomaticTest<CompositeArticleCollector>
     {
         [Test]
-        public void SutIsArticleCollector(CompositeCollector sut)
+        public void SutIsArticleCollector(CompositeArticleCollector sut)
         {
             Assert.IsAssignableFrom<IArticleCollector>(sut);
         }
