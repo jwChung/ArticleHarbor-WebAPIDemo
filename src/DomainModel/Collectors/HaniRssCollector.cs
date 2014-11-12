@@ -17,61 +17,50 @@
     public class HaniRssCollector
     {
         private readonly string actor;
-        private readonly IArticleService articleService;
-
-        public HaniRssCollector(string actor, IArticleService articleService)
+        
+        public HaniRssCollector(string actor)
         {
             if (actor == null)
                 throw new ArgumentNullException("actor");
 
-            if (articleService == null)
-                throw new ArgumentNullException("articleService");
-
             this.actor = actor;
-            this.articleService = articleService;
-        }
+            }
 
         public string Actor
         {
             get { return this.actor; }
         }
 
-        public IArticleService ArticleService
+        public async Task<IEnumerable<Article>> CollectAsync()
         {
-            get { return this.articleService; }
-        }
-
-        public async Task CollectAsync()
-        {
-            var articles = await this.GetArticlesAsync();
-            await Task.WhenAll(articles.Select(this.articleService.AddAsync));
+            using (var reader = new StreamReader(await GetStreamAsync(), Encoding.UTF8))
+            {
+                return from item in XDocument.Load(reader).Descendants("item")
+                       select this.ConvertToArticle(item);
+            }
         }
 
         private static async Task<Stream> GetStreamAsync()
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://www.hani.co.kr");
+                client.BaseAddress = new Uri("http://www.hani.co.kr/");
                 var response = await client.GetAsync("rss");
                 return await response.Content.ReadAsStreamAsync();
             }
         }
 
-        private async Task<IEnumerable<Article>> GetArticlesAsync()
+        private Article ConvertToArticle(XElement item)
         {
-            using (var reader = new StreamReader(await GetStreamAsync(), Encoding.UTF8))
-            {
-                return from item in XDocument.Load(reader).Descendants("item")
-                       select new Article(
-                           -1,
-                           "한겨레",
-                           item.Element("guid").Value,
-                           item.Element("title").Value,
-                           item.Element("description").Value,
-                           DateTime.Parse(item.Element("pubDate").Value),
-                           item.Element("link").Value,
-                           this.actor);
-            }
+            return new Article(
+                id: -1,
+                provider: "한겨레",
+                no: item.Element("guid").Value,
+                subject: item.Element("title").Value,
+                body: item.Element("description").Value,
+                date: DateTime.Parse(item.Element("pubDate").Value),
+                url: item.Element("link").Value,
+                userId: this.actor);
         }
     }
 }

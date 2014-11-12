@@ -1,9 +1,11 @@
 ﻿namespace ArticleHarbor.DomainModel.Collectors
 {
     using System;
+    using System.Linq;
     using Models;
     using Moq;
     using Ploeh.SemanticComparison.Fluent;
+    using Xunit;
 
     public class HaniRssCollectorTest : IdiomaticTest<HaniRssCollector>
     {
@@ -18,10 +20,10 @@
             var article = new Article(
                 id: -1,
                 provider: "한겨레",
-                no: dummyString, 
+                no: dummyString,
                 subject: dummyString,
-                body: dummyString, 
-                date: dummyDate, 
+                body: dummyString,
+                date: dummyDate,
                 url: dummyString,
                 userId: sut.Actor);
 
@@ -33,12 +35,10 @@
                 .Without(x => x.Url);
 
             // Excercise sytem;
-            sut.CollectAsync().Wait();
+            var actual = sut.CollectAsync().Result;
 
             // Verify outcome
-            sut.ArticleService.ToMock().Verify(
-                x => x.AddAsync(It.Is<Article>(a => likeness.Equals(a))),
-                Times.Exactly(25));
+            Assert.True(actual.All(a => likeness.Equals(a)), "likeness");
         }
     }
 }
