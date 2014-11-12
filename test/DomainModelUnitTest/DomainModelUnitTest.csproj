@@ -100,10 +100,10 @@
     <Compile Include="Collectors\SubjectFromBodyTransformationTest.cs" />
     <Compile Include="Collectors\ArticleTransformationCollectorTest.cs" />
     <Compile Include="Models\BookmarkTest.cs" />
-    <Compile Include="Services\ArticleWordServiceTest.cs" />
+    <Compile Include="Services\KeywordServiceTest.cs" />
     <Compile Include="Services\AuthArticleServiceTest.cs" />
     <Compile Include="Models\ArticleTest.cs" />
-    <Compile Include="Models\ArticleWordTest.cs" />
+    <Compile Include="Models\KeywordTest.cs" />
     <Compile Include="AssemblyTest.cs" />
     <Compile Include="Services\AuthServiceTest.cs" />
     <Compile Include="EmptyDisposableTest.cs" />

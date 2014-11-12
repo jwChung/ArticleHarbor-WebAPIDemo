@@ -9,7 +9,7 @@
     using ArticleHarbor.EFPersistenceModel;
     using Article = DomainModel.Models.Article;
 
-    internal class Programss
+    internal class Program
     {
         private static void Main()
         {

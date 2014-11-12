@@ -155,7 +155,7 @@
     <Compile Include="IdentityConfig.cs" />
     <Compile Include="ThrowController.cs" />
     <Compile Include="WebApiConfig.cs" />
-    <Compile Include="ArticleHarborAssembliesResolver .cs" />
+    <Compile Include="ArticleHarborAssembliesResolver.cs" />
     <Compile Include="DependencyResolver.cs" />
     <Compile Include="DependencyRegistrations.cs" />
     <Compile Include="Global.asax.cs">

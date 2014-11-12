@@ -61,7 +61,7 @@
     <Compile Include="BookmarkRepository.cs" />
     <Compile Include="EntityConversionExtensions.cs" />
     <Compile Include="ArticleRepository.cs" />
-    <Compile Include="ArticleWordRepository.cs" />
+    <Compile Include="KeywordRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
