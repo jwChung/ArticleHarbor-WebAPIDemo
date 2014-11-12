@@ -55,9 +55,9 @@ namespace ArticleHarbor.DomainModel.Services
         [Test]
         public async Task AddAsyncCorrectlyAddsArticle(
             [Frozen(As = typeof(IArticleRepository))] FakeRepository articles,
-            ArticleService sut,
-            Article article)
+            ArticleService sut)
         {
+            var article = articles.New();
             var actual = await sut.AddAsync(article);
             Assert.Contains(actual, articles);
             Assert.Equal(4, articles.Count());
@@ -66,11 +66,16 @@ namespace ArticleHarbor.DomainModel.Services
         [Test]
         public async Task AddAsyncCorrectlyAddsArticleWords(
             ArticleService sut,
-            Article article)
+            Article article,
+            Article addedArticle)
         {
-            await sut.AddAsync(article);
+            sut.Articles.Of(x => x.InsertAsync(article) == Task.FromResult(addedArticle));
+
+            var actual = await sut.AddAsync(article);
+
+            Assert.Equal(addedArticle, actual);
             sut.ArticleWordService.ToMock().Verify(
-                x => x.AddWordsAsync(article.Id, article.Subject));
+                x => x.AddWordsAsync(addedArticle.Id, addedArticle.Subject));
         }
 
         [Test]
