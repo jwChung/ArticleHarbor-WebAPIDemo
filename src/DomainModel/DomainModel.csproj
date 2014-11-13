@@ -53,6 +53,7 @@
     <Compile Include="Collectors\FacebookRssCollector.cs" />
     <Compile Include="Collectors\HaniRssCollector.cs" />
     <Compile Include="Collectors\IArticleCollector.cs" />
+    <Compile Include="Collectors\IArticleCommand.cs" />
     <Compile Include="Collectors\IArticleTransformation.cs" />
     <Compile Include="Collectors\SubjectFromBodyTransformation.cs" />
     <Compile Include="Collectors\ArticleTransformationCollector.cs" />
