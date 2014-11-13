@@ -1,6 +1,8 @@
 ﻿namespace ArticleHarbor.DomainModel.Collectors
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Models;
 
     public class DelegateTransformation : IArticleTransformation
@@ -26,6 +28,14 @@
                 throw new ArgumentNullException("article");
 
             return this.transformer(article);
+        }
+
+        public IEnumerable<Article> Transform(IEnumerable<Article> articles)
+        {
+            if (articles == null)
+                throw new ArgumentNullException("articles");
+
+            return articles.Select(this.transformer);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel.Collectors
 {
     using System;
+    using System.Collections.Generic;
     using Models;
 
     public class SubjectFromBodyTransformation : IArticleTransformation
@@ -27,6 +28,26 @@
                 Math.Min(article.Body.Length, this.subjectLength));
 
             return article.WithSubject(newSubject);
+        }
+
+        public IEnumerable<Article> Transform(IEnumerable<Article> articles)
+        {
+            if (articles == null)
+                throw new ArgumentNullException("articles");
+
+            return this.TransfromWith(articles);
+        }
+
+        private IEnumerable<Article> TransfromWith(IEnumerable<Article> articles)
+        {
+            foreach (var article in articles)
+            {
+                var newSubject = article.Body.Substring(
+                    0,
+                    Math.Min(article.Body.Length, this.subjectLength));
+
+                yield return article.WithSubject(newSubject);
+            }
         }
     }
 }
