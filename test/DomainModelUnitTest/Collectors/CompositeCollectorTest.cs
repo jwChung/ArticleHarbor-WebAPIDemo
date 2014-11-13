@@ -6,17 +6,17 @@
     using Models;
     using Xunit;
 
-    public class CompositeArticleCollectorTest : IdiomaticTest<CompositeArticleCollector>
+    public class CompositeCollectorTest : IdiomaticTest<CompositeCollector>
     {
         [Test]
-        public void SutIsArticleCollector(CompositeArticleCollector sut)
+        public void SutIsArticleCollector(CompositeCollector sut)
         {
             Assert.IsAssignableFrom<IArticleCollector>(sut);
         }
 
         [Test]
         public void CollectAsyncReturnsAllArticles(
-            CompositeArticleCollector sut,
+            CompositeCollector sut,
             IEnumerable<Article> articles1,
             IEnumerable<Article> articles2,
             IEnumerable<Article> articles3)

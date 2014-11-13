@@ -26,11 +26,11 @@
         private static ArticleCollectingExecutor CreateExecutor(ArticleHarborDbContext context)
         {
             return new ArticleCollectingExecutor(
-                collector: new CompositeArticleCollector(
+                collector: new CompositeCollector(
                     new HaniRssCollector("user1"),
                         new ArticleTransformationCollector(
                             new ArticleTransformationCollector(
-                                new CompositeArticleCollector(
+                                new CompositeCollector(
                                     new FacebookRssCollector("user2", "177323639028540"), // ASP.NET Korea group
                                     new FacebookRssCollector("user2", "200708093411111")), // C# study group
                                 new DelegateTransformation(RemoveUnnecessaryContent)),

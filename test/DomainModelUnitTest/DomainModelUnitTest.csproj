@@ -93,7 +93,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Collectors\ArticleCollectingExecutorTest.cs" />
-    <Compile Include="Collectors\CompositeArticleCollectorTest.cs" />
+    <Compile Include="Collectors\CompositeCollectorTest.cs" />
     <Compile Include="Collectors\DelegateTransformationTest.cs" />
     <Compile Include="Collectors\FacebookRssCollectorTest.cs" />
     <Compile Include="Collectors\HaniRssCollectorTest.cs" />

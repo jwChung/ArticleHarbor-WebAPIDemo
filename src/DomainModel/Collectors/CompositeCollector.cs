@@ -6,11 +6,11 @@
     using System.Threading.Tasks;
     using Models;
 
-    public class CompositeArticleCollector : IArticleCollector
+    public class CompositeCollector : IArticleCollector
     {
         private readonly IEnumerable<IArticleCollector> collectors;
 
-        public CompositeArticleCollector(IEnumerable<IArticleCollector> collectors)
+        public CompositeCollector(IEnumerable<IArticleCollector> collectors)
         {
             if (collectors == null)
                 throw new ArgumentNullException("collectors");
@@ -18,7 +18,7 @@
             this.collectors = collectors;
         }
 
-        public CompositeArticleCollector(params IArticleCollector[] collectors)
+        public CompositeCollector(params IArticleCollector[] collectors)
         {
             if (collectors == null)
                 throw new ArgumentNullException("collectors");
