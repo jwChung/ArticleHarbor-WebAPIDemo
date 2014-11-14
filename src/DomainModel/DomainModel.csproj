@@ -60,6 +60,7 @@
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\IIndentity.cs" />
     <Compile Include="Models\IModelElementCommand.cs" />
+    <Compile Include="Models\Identity.cs" />
     <Compile Include="Models\IPredicate.cs" />
     <Compile Include="Models\IModelElement.cs" />
     <Compile Include="Models\IModelElementCollection.cs" />

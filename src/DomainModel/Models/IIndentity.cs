@@ -2,6 +2,6 @@
 {
     public interface IIndentity
     {
-        object[] Key { get; } 
+        object[] Keys { get; } 
     }
 }
