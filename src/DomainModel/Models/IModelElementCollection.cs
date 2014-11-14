@@ -10,6 +10,6 @@
 
         IModelElement<TModel> New(TModel model);
 
-        Task<IEnumerable<IModelElement<TModel>>> ExecuteSqlQueryAsync(IPredicate predicate);
+        Task<IEnumerable<IModelElement<TModel>>> ExecuteQueryAsync(IPredicate predicate);
     }
 }

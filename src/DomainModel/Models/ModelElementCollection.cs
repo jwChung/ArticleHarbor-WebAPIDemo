@@ -18,7 +18,7 @@
 
         public abstract IModelElement<TModel> New(TModel model);
 
-        public Task<IEnumerable<IModelElement<TModel>>> ExecuteSqlQueryAsync(IPredicate predicate)
+        public Task<IEnumerable<IModelElement<TModel>>> ExecuteQueryAsync(IPredicate predicate)
         {
             if (predicate == null)
                 throw new ArgumentNullException("predicate");

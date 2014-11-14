@@ -15,6 +15,8 @@
 
         Task UpdateAsync(TModel model);
 
-        Task DeleteAsync(TModel model);
+        Task DeleteAsync(TId id);
+
+        Task<IEnumerable<TModel>> ExecuteQueryAsync(IPredicate predicate);
     }
 }

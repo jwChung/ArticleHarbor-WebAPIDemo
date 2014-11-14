@@ -4,7 +4,7 @@
 
     public interface IPredicate
     {
-        string ConditionText { get; }
+        string Condition { get; }
 
         ////IEnumerable<ISqlParameter> Parameters { get; }
     }
