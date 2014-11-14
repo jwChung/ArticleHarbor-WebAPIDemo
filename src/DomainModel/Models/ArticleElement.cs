@@ -1,20 +1,21 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System;
+    using System.Collections.Generic;
     using Repositories;
 
     public class ArticleElement : IModelElement
     {
         private readonly Article article;
         private readonly IRepository<Id<int>, Article> repository;
-        private readonly IModelElementCollection<Id<string>, User> users;
-        private readonly IModelElementCollection<Id<int, string>, Keyword> keywords;
+        private readonly Lazy<IModelElement> userElement;
+        private readonly Lazy<IEnumerable<IModelElement>> keywordElements;
 
         public ArticleElement(
             Article article,
             IRepository<Id<int>, Article> repository,
-            IModelElementCollection<Id<string>, User> users,
-            IModelElementCollection<Id<int, string>, Keyword> keywords)
+            Lazy<IModelElement> userElement,
+            Lazy<IEnumerable<IModelElement>> keywordElements)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
@@ -22,16 +23,16 @@
             if (repository == null)
                 throw new ArgumentNullException("repository");
 
-            if (users == null)
-                throw new ArgumentNullException("users");
+            if (userElement == null)
+                throw new ArgumentNullException("userElement");
 
-            if (keywords == null)
-                throw new ArgumentNullException("keywords");
+            if (keywordElements == null)
+                throw new ArgumentNullException("keywordElements");
 
             this.article = article;
             this.repository = repository;
-            this.users = users;
-            this.keywords = keywords;
+            this.userElement = userElement;
+            this.keywordElements = keywordElements;
         }
 
         public Article Article
@@ -44,19 +45,14 @@
             get { return this.repository; }
         }
 
-        public IModelElementCollection<Id<string>, User> Users
+        public Lazy<IModelElement> UserElement
         {
-            get { return this.users; }
+            get { return this.userElement; }
         }
 
-        public IModelElementCollection<Id<int, string>, Keyword> Keywords
+        public Lazy<IEnumerable<IModelElement>> KeywordElements
         {
-            get { return this.keywords; }
-        }
-
-        public IModelElement UserElement
-        {
-            get { return this.users[new Id<string>(this.article.UserId)]; }
+            get { return this.keywordElements; }
         }
 
         public IModelElementCommand<TResult> Execute<TResult>(

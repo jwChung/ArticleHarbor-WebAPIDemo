@@ -13,14 +13,6 @@
         }
 
         [Test]
-        public void UserIsCorrect(ArticleElement sut, IModelElement userElement)
-        {
-            var id = sut.Article.UserId;
-            sut.Users.Of(x => x[new Id<string>(id)] == userElement);
-            var actual = sut.UserElement;
-        }
-
-        [Test]
         public void ExecuteCallsCorrectCommandMethod(
             ArticleElement sut,
             IModelElementCommand<object> command,
@@ -29,11 +21,6 @@
             command.Of(x => x.Execute(sut) == expected);
             var actual = sut.Execute(command);
             Assert.Equal(expected, actual);
-        }
-
-        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
-        {
-            yield return this.Properties.Select(x => x.UserElement);
         }
     }
 }
