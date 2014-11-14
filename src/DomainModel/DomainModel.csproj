@@ -59,6 +59,7 @@
     <Compile Include="Collectors\ArticleTransformationCollector.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ArticleElement.cs" />
+    <Compile Include="Models\EqualPredicate.cs" />
     <Compile Include="Models\IId.cs" />
     <Compile Include="Models\IModelElementCommand.cs" />
     <Compile Include="Models\Id.cs" />
