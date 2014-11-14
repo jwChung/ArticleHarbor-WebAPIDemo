@@ -4,9 +4,4 @@
     {
         IModelElementCommand<TResult> Execute<TResult>(IModelElementCommand<TResult> command);
     }
-
-    public interface IModelElement<TModel> : IModelElement
-    {
-        TModel Model { get; }
-    }
 }

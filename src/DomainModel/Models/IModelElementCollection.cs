@@ -3,13 +3,13 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public interface IModelElementCollection<TId, TModel> : IEnumerable<IModelElement<TModel>>
+    public interface IModelElementCollection<TId, TModel> : IEnumerable<IModelElement>
         where TId : IId
     {
-        IModelElement<TModel> this[TId id] { get; }
+        IModelElement this[TId id] { get; }
 
-        IModelElement<TModel> New(TModel model);
+        IModelElement New(TModel model);
 
-        Task<IEnumerable<IModelElement<TModel>>> ExecuteQueryAsync(IPredicate predicate);
+        Task<IEnumerable<IModelElement>> ExecuteQueryAsync(IPredicate predicate);
     }
 }

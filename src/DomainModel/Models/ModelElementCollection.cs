@@ -8,7 +8,7 @@
     public abstract class ModelElementCollection<TId, TModel>
         : IModelElementCollection<TId, TModel> where TId : IId
     {
-        public IModelElement<TModel> this[TId id]
+        public IModelElement this[TId id]
         {
             get
             {
@@ -16,9 +16,9 @@
             }
         }
 
-        public abstract IModelElement<TModel> New(TModel model);
+        public abstract IModelElement New(TModel model);
 
-        public Task<IEnumerable<IModelElement<TModel>>> ExecuteQueryAsync(IPredicate predicate)
+        public Task<IEnumerable<IModelElement>> ExecuteQueryAsync(IPredicate predicate)
         {
             if (predicate == null)
                 throw new ArgumentNullException("predicate");
@@ -26,7 +26,7 @@
             throw new NotImplementedException();
         }
 
-        public IEnumerator<IModelElement<TModel>> GetEnumerator()
+        public IEnumerator<IModelElement> GetEnumerator()
         {
             throw new NotImplementedException();
         }
