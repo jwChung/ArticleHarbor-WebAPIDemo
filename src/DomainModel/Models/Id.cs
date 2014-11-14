@@ -3,12 +3,12 @@
     using System;
     using System.Collections.Generic;
 
-    public class Identity<TKey> : IIdentity
+    public class Id<TKey> : IId
     {
         private readonly TKey key;
         private readonly object[] keys;
 
-        public Identity(TKey key)
+        public Id(TKey key)
         {
             if (key == null)
                 throw new ArgumentNullException("key");
@@ -35,7 +35,7 @@
                 return true;
             if (obj.GetType() != this.GetType())
                 return false;
-            return this.Equals((Identity<TKey>)obj);
+            return this.Equals((Id<TKey>)obj);
         }
 
         public override int GetHashCode()
@@ -43,19 +43,19 @@
             return EqualityComparer<TKey>.Default.GetHashCode(this.key);
         }
 
-        protected bool Equals(Identity<TKey> other)
+        protected bool Equals(Id<TKey> other)
         {
             return EqualityComparer<TKey>.Default.Equals(this.key, other.key);
         }
     }
 
-    public class Identity<TKey1, TKey2> : IIdentity
+    public class Id<TKey1, TKey2> : IId
     {
         private readonly TKey1 key1;
         private readonly TKey2 key2;
         private readonly object[] objects;
 
-        public Identity(TKey1 key1, TKey2 key2)
+        public Id(TKey1 key1, TKey2 key2)
         {
             if (key1 == null)
                 throw new ArgumentNullException("key1");
@@ -91,7 +91,7 @@
                 return true;
             if (obj.GetType() != this.GetType())
                 return false;
-            return this.Equals((Identity<TKey1, TKey2>)obj);
+            return this.Equals((Id<TKey1, TKey2>)obj);
         }
 
         public override int GetHashCode()
@@ -103,7 +103,7 @@
             }
         }
 
-        protected bool Equals(Identity<TKey1, TKey2> other)
+        protected bool Equals(Id<TKey1, TKey2> other)
         {
             return EqualityComparer<TKey1>.Default.Equals(this.key1, other.key1)
                 && EqualityComparer<TKey2>.Default.Equals(this.key2, other.key2);

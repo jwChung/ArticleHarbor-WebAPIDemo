@@ -58,9 +58,9 @@
     <Compile Include="Collectors\SubjectFromBodyTransformation.cs" />
     <Compile Include="Collectors\ArticleTransformationCollector.cs" />
     <Compile Include="Models\Article.cs" />
-    <Compile Include="Models\IIdentity.cs" />
+    <Compile Include="Models\IId.cs" />
     <Compile Include="Models\IModelElementCommand.cs" />
-    <Compile Include="Models\Identity.cs" />
+    <Compile Include="Models\Id.cs" />
     <Compile Include="Models\IPredicate.cs" />
     <Compile Include="Models\IModelElement.cs" />
     <Compile Include="Models\IModelElementCollection.cs" />

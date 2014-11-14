@@ -5,48 +5,48 @@
     using Ploeh.Albedo;
     using Xunit;
 
-    public class IdentityOfTKeyTest : IdiomaticTest<Identity<object>>
+    public class IdOfTKeyTest : IdiomaticTest<Id<object>>
     {
         [Test]
-        public void SutIsIndentity(Identity<object> sut)
+        public void SutIsIndentity(Id<object> sut)
         {
-            Assert.IsAssignableFrom<IIdentity>(sut);
+            Assert.IsAssignableFrom<IId>(sut);
         }
 
         [Test]
-        public void KeysReturnsCorrectValues(Identity<object> sut)
+        public void KeysReturnsCorrectValues(Id<object> sut)
         {
             var expected = new object[] { sut.Key };
             Assert.Equal(expected, sut.Keys);
         }
 
         [Test]
-        public void KeysAlwaysReturnsSameInstance(Identity<object> sut)
+        public void KeysAlwaysReturnsSameInstance(Id<object> sut)
         {
             var actual = sut.Keys;
             Assert.Same(sut.Keys, actual);
         }
 
         [Test]
-        public void EqualsWithSameKeyReturnsTrue(Identity<object> sut)
+        public void EqualsWithSameKeyReturnsTrue(Id<object> sut)
         {
-            var other = new Identity<object>(sut.Key);
+            var other = new Id<object>(sut.Key);
             var actual = sut.Equals(other);
             Assert.True(actual);
         }
 
         [Test]
         public void EqualsWithNotSameKeyReturnsFalse(
-            Identity<object> sut, Identity<object> other)
+            Id<object> sut, Id<object> other)
         {
             var actual = sut.Equals(other);
             Assert.False(actual);
         }
 
         [Test]
-        public void GetHashCodeWithSameKeyReturnsSameValue(Identity<object> sut)
+        public void GetHashCodeWithSameKeyReturnsSameValue(Id<object> sut)
         {
-            var other = new Identity<object>(sut.Key);
+            var other = new Id<object>(sut.Key);
             var expected = other.GetHashCode();
 
             var actual = sut.GetHashCode();
@@ -60,48 +60,48 @@
         }
     }
 
-    public class IdentityOfTKey1AndKey2Test : IdiomaticTest<Identity<object, object>>
+    public class IdentityOfTKey1AndKey2Test : IdiomaticTest<Id<object, object>>
     {
         [Test]
-        public void SutIsIndentity(Identity<object, object> sut)
+        public void SutIsIndentity(Id<object, object> sut)
         {
-            Assert.IsAssignableFrom<IIdentity>(sut);
+            Assert.IsAssignableFrom<IId>(sut);
         }
 
         [Test]
-        public void KeysReturnsCorrectValues(Identity<object, object> sut)
+        public void KeysReturnsCorrectValues(Id<object, object> sut)
         {
             var expected = new object[] { sut.Key1, sut.Key2 };
             Assert.Equal(expected, sut.Keys);
         }
 
         [Test]
-        public void KeysAlwaysReturnsSameInstance(Identity<object, object> sut)
+        public void KeysAlwaysReturnsSameInstance(Id<object, object> sut)
         {
             var actual = sut.Keys;
             Assert.Same(sut.Keys, actual);
         }
 
         [Test]
-        public void EqualsWithSameKeyReturnsTrue(Identity<object, object> sut)
+        public void EqualsWithSameKeyReturnsTrue(Id<object, object> sut)
         {
-            var other = new Identity<object, object>(sut.Key1, sut.Key2);
+            var other = new Id<object, object>(sut.Key1, sut.Key2);
             var actual = sut.Equals(other);
             Assert.True(actual);
         }
 
         [Test]
         public void EqualsWithNotSameKeyReturnsFalse(
-            Identity<object, object> sut, Identity<object, object> other)
+            Id<object, object> sut, Id<object, object> other)
         {
             var actual = sut.Equals(other);
             Assert.False(actual);
         }
 
         [Test]
-        public void GetHashCodeWithSameKeyReturnsSameValue(Identity<object, object> sut)
+        public void GetHashCodeWithSameKeyReturnsSameValue(Id<object, object> sut)
         {
-            var other = new Identity<object, object>(sut.Key1, sut.Key2);
+            var other = new Id<object, object>(sut.Key1, sut.Key2);
             var expected = other.GetHashCode();
 
             var actual = sut.GetHashCode();

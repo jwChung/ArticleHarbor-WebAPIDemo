@@ -5,10 +5,10 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public abstract class ModelElementCollection<TIndentity, TModel>
-        : IModelElementCollection<TIndentity, TModel> where TIndentity : IIdentity
+    public abstract class ModelElementCollection<TId, TModel>
+        : IModelElementCollection<TId, TModel> where TId : IId
     {
-        public IModelElement<TModel> this[TIndentity indentity]
+        public IModelElement<TModel> this[TId id]
         {
             get
             {
