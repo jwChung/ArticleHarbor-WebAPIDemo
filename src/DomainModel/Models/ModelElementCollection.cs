@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
 
     public abstract class ModelElementCollection<TIndentity, TModel>
-        : IModelElementCollection<TIndentity, TModel> where TIndentity : IIndentity
+        : IModelElementCollection<TIndentity, TModel> where TIndentity : IIdentity
     {
         public IModelElement<TModel> this[TIndentity indentity]
         {

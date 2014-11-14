@@ -58,7 +58,7 @@
     <Compile Include="Collectors\SubjectFromBodyTransformation.cs" />
     <Compile Include="Collectors\ArticleTransformationCollector.cs" />
     <Compile Include="Models\Article.cs" />
-    <Compile Include="Models\IIndentity.cs" />
+    <Compile Include="Models\IIdentity.cs" />
     <Compile Include="Models\IModelElementCommand.cs" />
     <Compile Include="Models\Identity.cs" />
     <Compile Include="Models\IPredicate.cs" />
@@ -69,6 +69,7 @@
     <Compile Include="Models\ModelElementCollection.cs" />
     <Compile Include="Repositories\IBookmarkRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\IUnitOfWork2.cs" />
     <Compile Include="Services\KeywordService.cs" />
     <Compile Include="Services\AuthArticleService.cs" />
     <Compile Include="Services\AuthService.cs" />

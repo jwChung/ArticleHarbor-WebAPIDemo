@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
 
     public interface IModelElementCollection<TIndentity, TModel> : IEnumerable<IModelElement<TModel>>
-        where TIndentity : IIndentity
+        where TIndentity : IIdentity
     {
         IModelElement<TModel> this[TIndentity indentity] { get; }
 

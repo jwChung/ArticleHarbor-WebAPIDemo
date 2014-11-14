@@ -10,7 +10,7 @@
         [Test]
         public void SutIsIndentity(Identity<object> sut)
         {
-            Assert.IsAssignableFrom<IIndentity>(sut);
+            Assert.IsAssignableFrom<IIdentity>(sut);
         }
 
         [Test]
@@ -65,7 +65,7 @@
         [Test]
         public void SutIsIndentity(Identity<object, object> sut)
         {
-            Assert.IsAssignableFrom<IIndentity>(sut);
+            Assert.IsAssignableFrom<IIdentity>(sut);
         }
 
         [Test]

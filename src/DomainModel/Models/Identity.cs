@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public class Identity<TKey> : IIndentity
+    public class Identity<TKey> : IIdentity
     {
         private readonly TKey key;
         private readonly object[] keys;
@@ -49,7 +49,7 @@
         }
     }
 
-    public class Identity<TKey1, TKey2> : IIndentity
+    public class Identity<TKey1, TKey2> : IIdentity
     {
         private readonly TKey1 key1;
         private readonly TKey2 key2;

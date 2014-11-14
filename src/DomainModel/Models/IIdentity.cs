@@ -1,6 +1,6 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
-    public interface IIndentity
+    public interface IIdentity
     {
         object[] Keys { get; } 
     }
