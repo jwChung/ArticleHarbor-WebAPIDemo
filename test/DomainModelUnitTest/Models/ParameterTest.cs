@@ -26,6 +26,14 @@
         }
 
         [Test]
+        public void EqualsIsCaseInsensitiveForName(
+            Parameter sut)
+        {
+            Assert.Equal(new Parameter(sut.Name.ToUpper(), sut.Value), sut);
+            Assert.Equal(new Parameter(sut.Name.ToLower(), sut.Value), sut);
+        }
+
+        [Test]
         public void GetHashCodeWithSameParameterReturnsSameValue(Parameter sut)
         {
             var other = new Parameter(sut.Name, sut.Value);

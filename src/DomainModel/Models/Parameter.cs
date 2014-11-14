@@ -50,7 +50,8 @@
 
         protected bool Equals(Parameter other)
         {
-            return string.Equals(this.name, other.name) && this.value.Equals(other.value);
+            return string.Equals(this.name, other.name, StringComparison.CurrentCultureIgnoreCase)
+                && this.value.Equals(other.value);
         }
     }
 }
