@@ -62,6 +62,7 @@
     <Compile Include="Models\IId.cs" />
     <Compile Include="Models\IModelElementCommand.cs" />
     <Compile Include="Models\Id.cs" />
+    <Compile Include="Models\IParameter.cs" />
     <Compile Include="Models\IPredicate.cs" />
     <Compile Include="Models\IModelElement.cs" />
     <Compile Include="Models\IModelElementCollection.cs" />

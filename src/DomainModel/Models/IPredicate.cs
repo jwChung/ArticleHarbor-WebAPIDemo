@@ -6,6 +6,6 @@
     {
         string Condition { get; }
 
-        ////IEnumerable<ISqlParameter> Parameters { get; }
+        IEnumerable<IParameter> Parameters { get; }
     }
 }
