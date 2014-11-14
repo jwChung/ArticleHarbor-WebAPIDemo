@@ -65,6 +65,7 @@
     <Compile Include="Models\IModelElementCollection.cs" />
     <Compile Include="Models\Keyword.cs" />
     <Compile Include="Models\Bookmark.cs" />
+    <Compile Include="Models\ModelElementCollection.cs" />
     <Compile Include="Repositories\IBookmarkRepository.cs" />
     <Compile Include="Services\KeywordService.cs" />
     <Compile Include="Services\AuthArticleService.cs" />

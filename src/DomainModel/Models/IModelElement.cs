@@ -4,6 +4,6 @@
     {
         TModel Model { get; }
 
-        IModelElementCommand<T> Execute<T>(IModelElementCommand<T> command);
+        IModelElementCommand<TResult> Execute<TResult>(IModelElementCommand<TResult> command);
     }
 }
