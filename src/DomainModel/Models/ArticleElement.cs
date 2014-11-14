@@ -25,7 +25,7 @@
             if (command == null)
                 throw new ArgumentNullException("command");
 
-            throw new NotImplementedException();
+            return command.Execute(this);
         }
     }
 }

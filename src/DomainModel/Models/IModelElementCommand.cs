@@ -4,6 +4,6 @@ namespace ArticleHarbor.DomainModel.Models
     {
         TResult Result { get; }
 
-        IModelElementCommand<TResult> Execute(IModelElement<TResult> element);
+        IModelElementCommand<TResult> Execute(IModelElement element);
     }
 }
