@@ -5,26 +5,18 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public abstract class ModelElementCollection<TModel> : IModelElementCollection<TModel>
+    public abstract class ModelElementCollection<TIndentity, TModel>
+        : IModelElementCollection<TIndentity, TModel> where TIndentity : IIndentity
     {
-        public IModelElement<TModel> this[IIndentity indentity]
+        public IModelElement<TModel> this[TIndentity indentity]
         {
             get
             {
-                if (indentity == null)
-                    throw new ArgumentNullException("indentity");
-
                 throw new NotImplementedException();
             }
         }
 
-        public IModelElement<TModel> New(TModel model)
-        {
-            if (model == null)
-                throw new ArgumentNullException("model");
-
-            throw new NotImplementedException();
-        }
+        public abstract IModelElement<TModel> New(TModel model);
 
         public Task<IEnumerable<IModelElement<TModel>>> ExecuteSqlQueryAsync(IPredicate predicate)
         {

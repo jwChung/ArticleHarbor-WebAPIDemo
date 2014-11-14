@@ -3,9 +3,10 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public interface IModelElementCollection<TModel> : IEnumerable<IModelElement<TModel>>
+    public interface IModelElementCollection<TIndentity, TModel> : IEnumerable<IModelElement<TModel>>
+        where TIndentity : IIndentity
     {
-        IModelElement<TModel> this[IIndentity indentity] { get; }
+        IModelElement<TModel> this[TIndentity indentity] { get; }
 
         IModelElement<TModel> New(TModel model);
 
