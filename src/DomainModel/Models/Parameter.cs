@@ -62,6 +62,9 @@
 
         protected bool Equals(Parameter other)
         {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
             return string.Equals(this.name, other.name, StringComparison.CurrentCultureIgnoreCase)
                 && this.value.Equals(other.value);
         }

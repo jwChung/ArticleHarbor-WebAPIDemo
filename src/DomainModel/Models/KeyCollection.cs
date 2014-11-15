@@ -7,7 +7,6 @@
     public class KeyCollection<TKey> : IKeyCollection
     {
         private readonly TKey key;
-        private readonly object[] keys;
 
         public KeyCollection(TKey key)
         {
@@ -15,7 +14,6 @@
                 throw new ArgumentNullException("key");
 
             this.key = key;
-            this.keys = new object[] { this.key };
         }
 
         public TKey Key
@@ -51,6 +49,9 @@
 
         protected bool Equals(KeyCollection<TKey> other)
         {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
             return EqualityComparer<TKey>.Default.Equals(this.key, other.key);
         }
     }
@@ -59,8 +60,7 @@
     {
         private readonly TKey1 key1;
         private readonly TKey2 key2;
-        private readonly object[] objects;
-
+        
         public KeyCollection(TKey1 key1, TKey2 key2)
         {
             if (key1 == null)
@@ -71,7 +71,6 @@
 
             this.key1 = key1;
             this.key2 = key2;
-            this.objects = new object[] { this.key1, this.key2 };
         }
 
         public TKey1 Key1
@@ -117,6 +116,9 @@
 
         protected bool Equals(KeyCollection<TKey1, TKey2> other)
         {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
             return EqualityComparer<TKey1>.Default.Equals(this.key1, other.key1)
                 && EqualityComparer<TKey2>.Default.Equals(this.key2, other.key2);
         }

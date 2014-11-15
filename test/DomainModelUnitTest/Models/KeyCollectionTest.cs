@@ -8,7 +8,7 @@
     public class KeyCollectionOfTKeyTest : IdiomaticTest<KeyCollection<object>>
     {
         [Test]
-        public void SutIsIndentity(KeyCollection<object> sut)
+        public void SutIsKeyCollection(KeyCollection<object> sut)
         {
             Assert.IsAssignableFrom<IKeyCollection>(sut);
         }
@@ -51,7 +51,7 @@
     public class IdCollectionOfTKey1AndKey2Test : IdiomaticTest<KeyCollection<object, object>>
     {
         [Test]
-        public void SutIsIndentity(KeyCollection<object, object> sut)
+        public void SutIsKeyCollection(KeyCollection<object, object> sut)
         {
             Assert.IsAssignableFrom<IKeyCollection>(sut);
         }
