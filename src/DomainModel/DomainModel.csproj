@@ -58,11 +58,6 @@
     <Compile Include="Collectors\SubjectFromBodyTransformation.cs" />
     <Compile Include="Collectors\ArticleTransformationCollector.cs" />
     <Compile Include="Models\Article.cs" />
-    <Compile Include="Models\IIndentity.cs" />
-    <Compile Include="Models\IModelElementCommand.cs" />
-    <Compile Include="Models\IPredicate.cs" />
-    <Compile Include="Models\IModelElement.cs" />
-    <Compile Include="Models\IModelElementCollection.cs" />
     <Compile Include="Models\Keyword.cs" />
     <Compile Include="Models\Bookmark.cs" />
     <Compile Include="Repositories\IBookmarkRepository.cs" />
