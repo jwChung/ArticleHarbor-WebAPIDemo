@@ -58,7 +58,6 @@
     <Compile Include="Collectors\SubjectFromBodyTransformation.cs" />
     <Compile Include="Collectors\ArticleTransformationCollector.cs" />
     <Compile Include="Models\Article.cs" />
-    <Compile Include="Models\ArticleElement.cs" />
     <Compile Include="Models\EqualPredicate.cs" />
     <Compile Include="Models\IKeyCollection.cs" />
     <Compile Include="Models\IModelElementCommand.cs" />
