@@ -72,7 +72,7 @@
                 if (!TypeDescriptor.GetConverter(type).CanConvertFrom(typeof(string)))
                     return null;
 
-                return this.GetType().GetMethod("Key").MakeGenericMethod(type)
+                return this.GetType().GetMethod("Value").MakeGenericMethod(type)
                     .Invoke(this, new object[] { val });
             }
 
