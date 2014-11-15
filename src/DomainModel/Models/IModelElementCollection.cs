@@ -3,10 +3,10 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public interface IModelElementCollection<TId, TModel> : IEnumerable<IModelElement>
-        where TId : IId
+    public interface IModelElementCollection<TKeys, TModel> : IEnumerable<IModelElement>
+        where TKeys : IKeyCollection
     {
-        IModelElement this[TId id] { get; }
+        IModelElement this[TKeys keys] { get; }
 
         IModelElement New(TModel model);
 

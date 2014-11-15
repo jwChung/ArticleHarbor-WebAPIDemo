@@ -7,13 +7,13 @@
     public class ArticleElement : IModelElement
     {
         private readonly Article article;
-        private readonly IRepository<Id<int>, Article> repository;
+        private readonly IRepository<KeyCollection<int>, Article> repository;
         private readonly Lazy<IModelElement> userElement;
         private readonly Lazy<IEnumerable<IModelElement>> keywordElements;
 
         public ArticleElement(
             Article article,
-            IRepository<Id<int>, Article> repository,
+            IRepository<KeyCollection<int>, Article> repository,
             Lazy<IModelElement> userElement,
             Lazy<IEnumerable<IModelElement>> keywordElements)
         {
@@ -40,7 +40,7 @@
             get { return this.article; }
         }
 
-        public IRepository<Id<int>, Article> Repository
+        public IRepository<KeyCollection<int>, Article> Repository
         {
             get { return this.repository; }
         }

@@ -5,13 +5,13 @@
 
     public interface IUnitOfWork2
     {
-        IRepository<Id<int>, Article> Articles { get; }
+        IRepository<KeyCollection<int>, Article> Articles { get; }
 
-        IRepository<Id<int, string>, Article> Keywords { get; }
+        IRepository<KeyCollection<int, string>, Article> Keywords { get; }
 
-        IRepository<Id<string>, Article> Users { get; }
+        IRepository<KeyCollection<string>, Article> Users { get; }
 
-        IRepository<Id<string, int>, Article> Bookmarks { get; }
+        IRepository<KeyCollection<string, int>, Article> Bookmarks { get; }
 
         Task SaveAsync();
     }

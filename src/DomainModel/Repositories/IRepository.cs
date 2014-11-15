@@ -1,13 +1,12 @@
 ﻿namespace ArticleHarbor.DomainModel.Repositories
 {
     using System.Collections.Generic;
-    using System.Security.Principal;
     using System.Threading.Tasks;
     using Models;
 
-    public interface IRepository<TId, TModel> where TId : IId
+    public interface IRepository<TKeys, TModel> where TKeys : IKeyCollection
     {
-        Task<TModel> Find(TId id);
+        Task<TModel> Find(TKeys keys);
 
         Task<IEnumerable<TModel>> SelectAsync();
 
@@ -15,8 +14,10 @@
 
         Task UpdateAsync(TModel model);
 
-        Task DeleteAsync(TId id);
+        Task DeleteAsync(TKeys keys);
 
-        Task<IEnumerable<TModel>> ExecuteQueryAsync(IPredicate predicate);
+        Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(IPredicate predicate);
+
+        Task ExecuteDeleteCommandAsync(IPredicate predicate);
     }
 }

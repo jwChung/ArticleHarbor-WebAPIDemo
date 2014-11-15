@@ -2,12 +2,12 @@
 {
     using Xunit;
 
-    public class ModelElementCollectionTest : IdiomaticTest<ModelElementCollection<IId, object>>
+    public class ModelElementCollectionTest : IdiomaticTest<ModelElementCollection<IKeyCollection, object>>
     {
         [Test]
-        public void SutIsModelElementCollection(ModelElementCollection<IId, object> sut)
+        public void SutIsModelElementCollection(ModelElementCollection<IKeyCollection, object> sut)
         {
-            Assert.IsAssignableFrom<IModelElementCollection<IId, object>>(sut);
+            Assert.IsAssignableFrom<IModelElementCollection<IKeyCollection, object>>(sut);
         }
     }
 }

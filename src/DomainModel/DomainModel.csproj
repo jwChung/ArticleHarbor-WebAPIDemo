@@ -60,9 +60,9 @@
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ArticleElement.cs" />
     <Compile Include="Models\EqualPredicate.cs" />
-    <Compile Include="Models\IId.cs" />
+    <Compile Include="Models\IKeyCollection.cs" />
     <Compile Include="Models\IModelElementCommand.cs" />
-    <Compile Include="Models\Id.cs" />
+    <Compile Include="Models\KeyCollection.cs" />
     <Compile Include="Models\IParameter.cs" />
     <Compile Include="Models\IPredicate.cs" />
     <Compile Include="Models\IModelElement.cs" />

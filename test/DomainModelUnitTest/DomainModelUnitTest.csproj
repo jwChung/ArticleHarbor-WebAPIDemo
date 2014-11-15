@@ -106,7 +106,7 @@
     <Compile Include="Models\ArticleElementTest.cs" />
     <Compile Include="Models\BookmarkTest.cs" />
     <Compile Include="Models\EqualPredicateTest.cs" />
-    <Compile Include="Models\IdTest.cs" />
+    <Compile Include="Models\KeyCollectionTest.cs" />
     <Compile Include="Models\ModelElementCollectionTest.cs" />
     <Compile Include="Models\ParameterTest.cs" />
     <Compile Include="Services\KeywordServiceTest.cs" />

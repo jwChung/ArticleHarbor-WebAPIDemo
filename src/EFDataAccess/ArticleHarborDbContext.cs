@@ -15,7 +15,6 @@
             : base("ArticleHarborDbContext")
         {
             Database.SetInitializer(initializer);
-
             this.userStore = new UserStore<User>(this);
             this.roleStore = new RoleStore<UserRole>(this);
             this.userManager = new UserManager(this.userStore);

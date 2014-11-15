@@ -6,9 +6,9 @@
     using System.Threading.Tasks;
 
     public abstract class ModelElementCollection<TId, TModel>
-        : IModelElementCollection<TId, TModel> where TId : IId
+        : IModelElementCollection<TId, TModel> where TId : IKeyCollection
     {
-        public IModelElement this[TId id]
+        public IModelElement this[TId keys]
         {
             get
             {
