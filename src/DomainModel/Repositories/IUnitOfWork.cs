@@ -4,14 +4,6 @@
 
     public interface IUnitOfWork
     {
-        IArticleRepository Articles { get; }
-
-        IKeywordRepository Keywords { get; }
-
-        IUserRepository Users { get; }
-
-        IBookmarkRepository Bookmarks { get; }
-
         Task SaveAsync();
     }
 }
