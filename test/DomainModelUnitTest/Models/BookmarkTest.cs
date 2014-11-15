@@ -8,12 +8,29 @@
     public class BookmarkTest : IdiomaticTest<Bookmark>
     {
         [Test]
+        public void SutIsModel(Bookmark sut)
+        {
+            Assert.IsAssignableFrom<IModel>(sut);
+        }
+
+        [Test]
         public void InitializeWithEmptyStringValuesThrows(
             IFixture fixture)
         {
             fixture.Inject(string.Empty);
             var e = Assert.Throws<TargetInvocationException>(() => fixture.Create<Bookmark>());
             Assert.IsType<ArgumentException>(e.InnerException);
+        }
+
+        [Test]
+        public void ExecuteCommandReturnsCorrectResult(
+            Bookmark sut,
+            IModelCommand<object> command,
+            IModelCommand<object> expected)
+        {
+            command.Of(x => x.Execute(sut) == expected);
+            var actual = sut.ExecuteCommand(command);
+            Assert.Equal(expected, actual);
         }
     }
 }

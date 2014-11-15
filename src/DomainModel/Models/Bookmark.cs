@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class Bookmark
+    public class Bookmark : IModel
     {
         private readonly string userId;
         private readonly int articleId;
@@ -27,6 +27,14 @@
         public int ArticleId
         {
             get { return this.articleId; }
+        }
+
+        public IModelCommand<TResult> ExecuteCommand<TResult>(IModelCommand<TResult> command)
+        {
+            if (command == null)
+                throw new ArgumentNullException("command");
+
+            return command.Execute(this);
         }
     }
 }
