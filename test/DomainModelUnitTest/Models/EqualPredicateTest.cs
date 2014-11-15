@@ -16,12 +16,9 @@
         }
 
         [Test]
-        public void InitializeWithEmptyNameThrows(IFixture fixture)
+        public void InitializeWithEmptyNameThrows(IFixture fixture, object value)
         {
-            fixture.Inject(string.Empty);
-            var e = Assert.Throws<TargetInvocationException>(
-                () => fixture.Create<EqualPredicate>());
-            Assert.IsType<ArgumentException>(e.InnerException);
+            Assert.Throws<ArgumentException>(() => new EqualPredicate(string.Empty, value));
         }
 
         [Test]

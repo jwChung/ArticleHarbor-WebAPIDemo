@@ -1,5 +1,6 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
+    using System;
     using Xunit;
 
     public class ParameterTest : IdiomaticTest<Parameter>
@@ -8,6 +9,12 @@
         public void SutIsParameter(Parameter sut)
         {
             Assert.IsAssignableFrom<IParameter>(sut);
+        }
+
+        [Test]
+        public void InitializeWithIncorrectNameThrows(string name, object value)
+        {
+            Assert.Throws<ArgumentException>(() => new Parameter(name, value));
         }
 
         [Test]

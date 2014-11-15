@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System;
+    using System.Globalization;
 
     public class Parameter : IParameter
     {
@@ -14,6 +15,14 @@
 
             if (value == null)
                 throw new ArgumentNullException("value");
+
+            if (name[0] != '@')
+                throw new ArgumentException(
+                    string.Format(
+                        CultureInfo.CurrentCulture,
+                        "The name '{0}' should start with '@'.",
+                        name),
+                    "name");
 
             this.name = name;
             this.value = value;
