@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class User
+    public class User : IModel
     {
         private readonly string id;
         private readonly Role role;
@@ -34,6 +34,14 @@
         public Guid ApiKey
         {
             get { return this.apiKey; }
+        }
+
+        public IModelCommand<TResult> ExecuteCommand<TResult>(IModelCommand<TResult> command)
+        {
+            if (command == null)
+                throw new ArgumentNullException("command");
+
+            return command.Execute(this);
         }
     }
 }
