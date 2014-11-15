@@ -2,11 +2,8 @@
 {
     using System;
     using System.Threading.Tasks;
-    using ArticleHarbor.DomainModel;
     using ArticleHarbor.EFDataAccess;
     using DomainModel.Repositories;
-    using Article = DomainModel.Models.Article;
-    using Keyword = DomainModel.Models.Keyword;
 
     public class UnitOfWork : IUnitOfWork
     {
