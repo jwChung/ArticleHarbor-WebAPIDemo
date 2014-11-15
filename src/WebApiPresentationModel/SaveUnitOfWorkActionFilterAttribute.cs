@@ -5,6 +5,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http.Filters;
+    using DomainModel.Repositories;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public sealed class SaveUnitOfWorkActionFilterAttribute : ActionFilterAttribute
@@ -23,11 +24,11 @@
             HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
         {
             var dependencyScope = actionExecutedContext.Request.GetDependencyScope();
-            var lazyUnitOfWork = (LazyUnitOfWork)dependencyScope
-                .GetService(typeof(LazyUnitOfWork));
+            var lazyUnitOfWork = (Lazy<IUnitOfWork>)dependencyScope
+                .GetService(typeof(Lazy<IUnitOfWork>));
 
-            if (lazyUnitOfWork.Optional != null)
-                await lazyUnitOfWork.Optional.SaveAsync();
+            if (lazyUnitOfWork.IsValueCreated)
+                await lazyUnitOfWork.Value.SaveAsync();
 
             await base.OnActionExecutedAsync(actionExecutedContext, cancellationToken);
         }

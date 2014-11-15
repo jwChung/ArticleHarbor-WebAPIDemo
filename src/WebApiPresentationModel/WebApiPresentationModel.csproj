@@ -80,7 +80,6 @@
     <Compile Include="ILogger.cs" />
     <Compile Include="JsonConstructorDeserializer.cs" />
     <Compile Include="JsonCustomMediaTypeFormatter.cs" />
-    <Compile Include="LazyUnitOfWork.cs" />
     <Compile Include="LogContext.cs" />
     <Compile Include="Models\PostArticleViewModel.cs" />
     <Compile Include="Models\PutArticleViewModel.cs" />

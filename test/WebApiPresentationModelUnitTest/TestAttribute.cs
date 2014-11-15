@@ -5,6 +5,7 @@
     using System.IO;
     using System.Linq;
     using System.Security.Cryptography.X509Certificates;
+    using DomainModel.Repositories;
     using Jwc.Experiment;
     using Jwc.Experiment.AutoFixture;
     using Jwc.Experiment.Xunit;
@@ -55,18 +56,27 @@
 
         protected override ITestFixture Create(ITestMethodContext context)
         {
-            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+            return new TestFixture(new Fixture().Customize(new CompositeCustomization(
+                new AutoMoqCustomization(),
+                new WebApiPresentationModelCustomization(),
+                new TestParametersCustomization(context.ActualMethod.GetParameters()))));
+        }
 
-            fixture.Customizations.Add(
-                new OmitAutoPropertiesBuilder(
-                    typeof(X509Certificate2)));
-            fixture.Register<Stream>(() => new MemoryStream());
-            fixture.Register(() => CultureInfo.CurrentCulture);
-            fixture.Register(() => new PathString("/" + fixture.Create<string>()));
+        private class WebApiPresentationModelCustomization : ICustomization
+        {
+            public void Customize(IFixture fixture)
+            {
+                fixture.Customizations.Add(
+                    new OmitAutoPropertiesBuilder(typeof(X509Certificate2)));
 
-            fixture.Customize(new TestParametersCustomization(
-                context.ActualMethod.GetParameters()));
-            return new TestFixture(fixture);
+                fixture.Register<Stream>(() => new MemoryStream());
+
+                fixture.Register(() => CultureInfo.CurrentCulture);
+
+                fixture.Register(() => new PathString("/" + fixture.Create<string>()));
+
+                fixture.Register(() => new Lazy<IUnitOfWork>(() => fixture.Create<IUnitOfWork>()));
+            }
         }
 
         private class OmitAutoPropertiesBuilder : ISpecimenBuilder
