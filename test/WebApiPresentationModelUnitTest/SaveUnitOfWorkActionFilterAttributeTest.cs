@@ -1,17 +1,13 @@
 ﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http.Dependencies;
     using System.Web.Http.Filters;
     using System.Web.Http.Hosting;
+    using DomainModel.Repositories;
     using Moq;
-    using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.Xunit;
     using Xunit;
 
     public class SaveUnitOfWorkActionFilterAttributeTest
@@ -29,10 +25,10 @@
             SaveUnitOfWorkActionFilterAttribute sut,
             HttpActionExecutedContext actionExecutedContext,
             IDependencyScope dependencyScope,
-            LazyUnitOfWork layUnitOfWork)
+            Lazy<IUnitOfWork> lazyUnitOfWork)
         {
-            var unitOfWork = layUnitOfWork.Value;
-            dependencyScope.Of(x => x.GetService(typeof(LazyUnitOfWork)) == layUnitOfWork);
+            var unitOfWork = lazyUnitOfWork.Value;
+            dependencyScope.Of(x => x.GetService(typeof(Lazy<IUnitOfWork>)) == lazyUnitOfWork);
             actionExecutedContext.Request.Properties[HttpPropertyKeys.DependencyScope]
                 = dependencyScope;
 
@@ -46,15 +42,15 @@
             SaveUnitOfWorkActionFilterAttribute sut,
             HttpActionExecutedContext actionExecutedContext,
             IDependencyScope dependencyScope,
-            LazyUnitOfWork layUnitOfWork)
+            Lazy<IUnitOfWork> layUnitOfWork)
         {
-            dependencyScope.Of(x => x.GetService(typeof(LazyUnitOfWork)) == layUnitOfWork);
+            dependencyScope.Of(x => x.GetService(typeof(Lazy<IUnitOfWork>)) == layUnitOfWork);
             actionExecutedContext.Request.Properties[HttpPropertyKeys.DependencyScope]
                 = dependencyScope;
 
             await sut.OnActionExecutedAsync(actionExecutedContext, CancellationToken.None);
 
-            layUnitOfWork.UnitOfWorkFactory().ToMock().Verify(x => x.SaveAsync(), Times.Never());
+            layUnitOfWork.Value.ToMock().Verify(x => x.SaveAsync(), Times.Never());
         }
     }
 }

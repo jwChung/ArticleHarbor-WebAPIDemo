@@ -11,10 +11,6 @@
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ArticleHarborDbContext context;
-        private readonly ArticleRepository articles;
-        private readonly KeywordRepository keywords;
-        private readonly UserRepository users;
-        private readonly BookmarkRepository bookmarks;
 
         public UnitOfWork(ArticleHarborDbContext context)
         {
@@ -22,41 +18,11 @@
                 throw new ArgumentNullException("context");
 
             this.context = context;
-            this.articles = new ArticleRepository(this.context);
-            this.keywords = new KeywordRepository(this.context);
-            this.users = new UserRepository(this.context);
-            this.bookmarks = new BookmarkRepository(this.context);
         }
 
         public ArticleHarborDbContext Context
         {
             get { return this.context; }
-        }
-
-        public IArticleRepository Articles
-        {
-            get
-            {
-                return this.articles;
-            }
-        }
-
-        public IKeywordRepository Keywords
-        {
-            get
-            {
-                return this.keywords;
-            }
-        }
-
-        public IUserRepository Users
-        {
-            get { return this.users; }
-        }
-
-        public IBookmarkRepository Bookmarks
-        {
-            get { return this.bookmarks; }
         }
 
         public Task SaveAsync()

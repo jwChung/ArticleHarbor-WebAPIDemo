@@ -39,29 +39,29 @@ namespace ArticleHarbor.Website
                 .ReusedWithinContainer();
 
             container.Register(
-                c => new LazyUnitOfWork(
+                c => new Lazy<IUnitOfWork>(
                     () => new UnitOfWork(c.Resolve<ArticleHarborDbContext>())))
                 .ReusedWithinContainer();
 
             container.Register<IUnitOfWork>(
-                c => c.Resolve<LazyUnitOfWork>().Value)
+                c => c.Resolve<Lazy<IUnitOfWork>>().Value)
                 .ReusedWithinContainer();
 
-            container.Register(
-                c => c.Resolve<IUnitOfWork>().Articles)
+            container.Register<IArticleRepository>(
+                c => new ArticleRepository(c.Resolve<ArticleHarborDbContext>()))
                 .ReusedWithinContainer();
 
-            container.Register(
-                c => c.Resolve<IUnitOfWork>().Keywords)
+            container.Register<IKeywordRepository>(
+                c => new KeywordRepository(c.Resolve<ArticleHarborDbContext>()))
                 .ReusedWithinContainer();
 
-             container.Register(
-                c => c.Resolve<IUnitOfWork>().Users)
+            container.Register<IUserRepository>(
+                c => new UserRepository(c.Resolve<ArticleHarborDbContext>()))
                 .ReusedWithinContainer();
 
-             container.Register(
-                 c => c.Resolve<IUnitOfWork>().Bookmarks)
-                 .ReusedWithinContainer();
+            container.Register<IBookmarkRepository>(
+                c => new BookmarkRepository(c.Resolve<ArticleHarborDbContext>()))
+                .ReusedWithinContainer();
 
             // Domain services
             container.Register<IAuthService>(
