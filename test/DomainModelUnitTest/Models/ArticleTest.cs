@@ -13,6 +13,12 @@
     public class ArticleTest : IdiomaticTest<Article>
     {
         [Test]
+        public void SutIsModel(Article sut)
+        {
+            Assert.IsAssignableFrom<IModel>(sut);
+        }
+
+        [Test]
         public IEnumerable<ITestCase> InitializeWithAnyEmptyStringThrows(int id, string value, DateTime date)
         {
             yield return TestCase.Create(() => Assert.Throws<ArgumentException>(
@@ -122,6 +128,17 @@
             Assert.NotSame(sut, actual);
             likeness.ShouldEqual(actual);
             Assert.Equal(newBody, actual.Body);
+        }
+
+        [Test]
+        public void ExecuteCommandReturnsCorrectResult(
+            Article sut,
+            IModelCommand<object> command,
+            IModelCommand<object> expected)
+        {
+            command.Of(x => x.Execute(sut) == expected);
+            var actual = sut.ExecuteCommand(command);
+            Assert.Equal(expected, actual);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()

@@ -3,7 +3,7 @@
     using System;
     using System.Diagnostics.CodeAnalysis;
 
-    public class Article
+    public class Article : IModel
     {
         private readonly string provider;
         private readonly string guid;
@@ -168,6 +168,14 @@
                 this.date,
                 this.url,
                 this.userId);
+        }
+
+        public IModelCommand<TResult> ExecuteCommand<TResult>(IModelCommand<TResult> command)
+        {
+            if (command == null)
+                throw new ArgumentNullException("command");
+
+            return command.Execute(this);
         }
     }
 }
