@@ -70,7 +70,6 @@
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Repositories\IBookmarkRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Repositories\IUnitOfWork2.cs" />
     <Compile Include="Services\KeywordService.cs" />
     <Compile Include="Services\AuthArticleService.cs" />
     <Compile Include="Services\AuthService.cs" />
