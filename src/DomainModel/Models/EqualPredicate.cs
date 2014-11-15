@@ -35,7 +35,7 @@
 
         public string Condition
         {
-            get { return this.name + " = @" + this.name; }
+            get { return this.name.Remove(0, 1) + " = " + this.name; }
         }
 
         public IEnumerable<IParameter> Parameters

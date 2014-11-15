@@ -22,16 +22,18 @@
         }
 
         [Test]
-        public void ConditionIsCorrect(EqualPredicate sut)
+        public void ConditionIsCorrect(object value)
         {
-            var expected = sut.Name + " = @" + sut.Name;
+            var sut = new EqualPredicate("@foo", value);
+            var expected = "foo = @foo";
             var actual = sut.Condition;
             Assert.Equal(expected, actual);
         }
 
         [Test]
-        public void ParametersIsCorrect(EqualPredicate sut)
+        public void ParametersIsCorrect(object value)
         {
+            var sut = new EqualPredicate("@foo", value);
             var actual = sut.Parameters.Single();
             Assert.Equal(new Parameter(sut.Name, sut.Value), actual);
         }

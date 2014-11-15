@@ -98,9 +98,7 @@
                 {
                     var parameter = request as ParameterInfo;
                     if (parameter == null
-                        || (parameter.Member.ReflectedType != typeof(Parameter)
-                            && parameter.Member.ReflectedType != typeof(EqualPredicate))
-                        || parameter.Name != "name"
+                        || parameter.Member.ReflectedType != typeof(Parameter)
                         || parameter.ParameterType != typeof(string))
                         return new NoSpecimen(request);
 
