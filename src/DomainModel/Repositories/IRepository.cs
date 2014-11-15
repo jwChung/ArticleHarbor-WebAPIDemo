@@ -4,7 +4,9 @@
     using System.Threading.Tasks;
     using Models;
 
-    public interface IRepository<TKeys, TModel> where TKeys : IKeyCollection
+    public interface IRepository<TKeys, TModel>
+        where TKeys : IKeyCollection
+        where TModel : IModel
     {
         Task<TModel> Find(TKeys keys);
 
