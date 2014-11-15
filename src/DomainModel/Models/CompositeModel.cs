@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class CompositeModel : IModel
     {
@@ -25,7 +26,7 @@
             if (command == null)
                 throw new ArgumentNullException("command");
 
-            throw new NotImplementedException();
+            return this.Models.Aggregate(command, (c, m) => m.ExecuteCommand(c));
         }
     }
 }
