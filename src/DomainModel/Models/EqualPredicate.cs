@@ -7,8 +7,7 @@
     {
         private readonly string name;
         private readonly object value;
-        private readonly IParameter[] parameters;
-
+        
         public EqualPredicate(string name, object value)
         {
             if (name == null)
@@ -22,7 +21,6 @@
 
             this.name = name;
             this.value = value;
-            this.parameters = new IParameter[] { new Parameter(this.name, this.value) };
         }
 
         public string Name
@@ -42,7 +40,13 @@
 
         public IEnumerable<IParameter> Parameters
         {
-            get { return this.parameters; }
+            get
+            {
+                return new IParameter[]
+                {
+                    new Parameter(this.name, this.value)
+                };
+            }
         }
     }
 }

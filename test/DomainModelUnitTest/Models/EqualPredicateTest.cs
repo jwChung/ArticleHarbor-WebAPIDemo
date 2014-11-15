@@ -36,13 +36,6 @@
             Assert.Equal(new Parameter(sut.Name, sut.Value), actual);
         }
 
-        [Test]
-        public void ParametersAlwaysReturnsSameInstance(EqualPredicate sut)
-        {
-            var actual = sut.Parameters;
-            Assert.Same(sut.Parameters, actual);
-        }
-
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.Condition);
