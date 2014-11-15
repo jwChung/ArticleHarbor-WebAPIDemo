@@ -17,7 +17,7 @@
                 throw new ArgumentNullException("value");
 
             if (name.Length == 0)
-                throw new ArgumentException("The name should not be empty string.");
+                throw new ArgumentException("The name should not be empty string.", "name");
 
             this.name = name;
             this.value = value;

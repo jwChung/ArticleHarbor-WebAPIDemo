@@ -16,6 +16,9 @@
             if (value == null)
                 throw new ArgumentNullException("value");
 
+            if (name.Length == 0)
+                throw new ArgumentException("The name should not be empty string.", "name");
+
             if (name[0] != '@')
                 throw new ArgumentException(
                     string.Format(
