@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class Keyword
+    public class Keyword : IModel
     {
         private readonly string word;
         private readonly int articleId;
@@ -24,6 +24,14 @@
         public string Word
         {
             get { return this.word; }
+        }
+
+        public IModelCommand<TResult> ExecuteCommand<TResult>(IModelCommand<TResult> command)
+        {
+            if (command == null)
+                throw new ArgumentNullException("command");
+
+            return command.Execute(this);
         }
     }
 }
