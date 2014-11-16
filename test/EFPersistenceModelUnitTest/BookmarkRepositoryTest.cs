@@ -8,13 +8,13 @@
 
     public class BookmarkRepositoryTest : IdiomaticTest<BookmarkRepository>
     {
-        [Test]
+        [DbContextTest]
         public void SutIsBookmarkRepository(BookmarkRepository sut)
         {
             Assert.IsAssignableFrom<IBookmarkRepository>(sut);
         }
 
-        [Test]
+        [DbContextTest]
         public void SelectWithUserIdAsyncReturnsCorrectResult(
             BookmarkRepository sut)
         {
@@ -23,7 +23,7 @@
             Assert.Equal(expected, actual.Select(x => x.ArticleId));
         }
 
-        [Test]
+        [DbContextTest]
         public void InsertAsyncAddsBookmark(
             DbContextTransaction transaction,
             BookmarkRepository sut)
@@ -45,7 +45,7 @@
             }
         }
 
-        [Test]
+        [DbContextTest]
         public void DeleteAsyncRemovesBookmark(
             DbContextTransaction transaction,
             BookmarkRepository sut)
