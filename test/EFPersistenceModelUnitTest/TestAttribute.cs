@@ -1,14 +1,11 @@
 ﻿namespace ArticleHarbor
 {
-    using System;
-    using System.Linq;
     using EFDataAccess;
     using Jwc.Experiment;
     using Jwc.Experiment.AutoFixture;
     using Jwc.Experiment.Xunit;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.AutoMoq;
-    using Ploeh.AutoFixture.Kernel;
 
     public class TestAttribute : TestBaseAttribute
     {
@@ -52,39 +49,22 @@
 
         protected override ITestFixture Create(ITestMethodContext context)
         {
-            var fixture = new Fixture().Customize(new AutoMoqCustomization());
-
-            fixture.Customize<Article>(c => c.Without(x => x.Keywords));
-            fixture.Customize<Keyword>(c => c.Without(x => x.Article));
-
-            var dbContext = new ArticleHarborDbContext(new ArticleHarborDbContextTestInitializer());
-            fixture.Inject(dbContext);
-            fixture.Inject(dbContext.Database.BeginTransaction());
-
-            fixture.Customize(new TestParametersCustomization(
-                context.ActualMethod.GetParameters()));
-            return new TestFixture(fixture);
+            return new TestFixture(new Fixture().Customize(new CompositeCustomization(
+                new AutoMoqCustomization(),
+                new PersistanceModelCustomization(),
+                new TestParametersCustomization(context.ActualMethod.GetParameters()))));
         }
 
-        private class OmitAutoPropertiesBuilder : ISpecimenBuilder
+        private class PersistanceModelCustomization : ICustomization
         {
-            private readonly Type[] targets;
-
-            public OmitAutoPropertiesBuilder(params Type[] targets)
+            public void Customize(IFixture fixture)
             {
-                this.targets = targets;
-            }
+                fixture.Customize<Article>(c => c.Without(x => x.Keywords));
+                fixture.Customize<Keyword>(c => c.Without(x => x.Article));
 
-            public object Create(object request, ISpecimenContext context)
-            {
-                var type = request as Type;
-                if (type == null
-                    || type.IsAbstract
-                    || this.targets.All(t => !t.IsAssignableFrom(type)))
-                    return new NoSpecimen(request);
-
-                return new MethodInvoker(new ModestConstructorQuery())
-                    .Create(request, context);
+                var dbContext = new ArticleHarborDbContext(new ArticleHarborDbContextTestInitializer());
+                fixture.Inject(dbContext);
+                fixture.Inject(dbContext.Database.BeginTransaction());
             }
         }
     }
