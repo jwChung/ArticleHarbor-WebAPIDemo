@@ -14,7 +14,7 @@
         }
 
         [Test]
-        public IEnumerable<ITestCase> ExecuteModelReturnSut(ModelCommand<object> sut)
+        public IEnumerable<ITestCase> ExecuteModelReturnsSutItself(ModelCommand<object> sut)
         {
             yield return TestCase.WithAuto<User>().Create(
                 x =>
