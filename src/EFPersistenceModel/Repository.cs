@@ -6,7 +6,7 @@
     using DomainModel.Models;
     using DomainModel.Repositories;
 
-    public class Repository<TKeys, TModel, TPersistence>
+    public abstract class Repository<TKeys, TModel, TPersistence>
         : IRepository<TKeys, TModel>
         where TKeys : IKeyCollection
         where TModel : IModel
@@ -63,5 +63,9 @@
 
             throw new NotImplementedException();
         }
+
+        public abstract TModel ToModel(TPersistence persistence);
+
+        public abstract TPersistence ToPersistence(TModel model);
     }
 }
