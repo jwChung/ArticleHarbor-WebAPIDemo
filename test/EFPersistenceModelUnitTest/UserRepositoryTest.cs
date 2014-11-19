@@ -12,14 +12,14 @@
 
     public class UserRepositoryTest : IdiomaticTest<UserRepository>
     {
-        [DbContextTest]
+        [Test]
         public void SutIsUserRepository(
             UserRepository sut)
         {
             Assert.IsAssignableFrom<IUserRepository>(sut);
         }
 
-        [DbContextTest]
+        [Test]
         public async Task FindAsyncReturnsCorrectUser(
             UserRepository sut)
         {
@@ -29,7 +29,7 @@
             Assert.Equal(Role.Author, actual.Role);
         }
 
-        [DbContextTest]
+        [Test]
         public async Task FindAsyncWithIncorrectIdOrPasswordReturnsNullUser(
             UserRepository sut)
         {
@@ -37,7 +37,7 @@
             Assert.Null(actual);
         }
 
-        [DbContextTest]
+        [Test]
         public async Task FindAsyncWithApiKeyReturnsCorrectUser(
             UserRepository sut)
         {
@@ -45,7 +45,7 @@
             Assert.Equal("user2", actual.Id);
         }
 
-        [DbContextTest]
+        [Test]
         public async Task FindAsyncWithIncorrectApiKeyReturnsNullUser(
             UserRepository sut,
             Guid apiKey)
@@ -54,7 +54,7 @@
             Assert.Null(actual);
         }
 
-        [DbContextTest]
+        [Test]
         public async Task FindAsyncWithUserIdReturnsCorrectUser(
              UserRepository sut)
         {
@@ -63,7 +63,7 @@
             Assert.Equal(id, actual.Id);
         }
 
-        [DbContextTest]
+        [Test]
         public async Task FindAsyncWithIncorrectUserIdReturnsNullUser(
             UserRepository sut,
             string id)

@@ -13,13 +13,13 @@
 
     public class ArticleRepositoryTest : IdiomaticTest<ArticleRepository>
     {
-        [DbContextTest]
+        [Test]
         public void SutIsArticleRepository(ArticleRepository sut)
         {
             Assert.IsAssignableFrom<IArticleRepository>(sut);
         }
 
-        [DbContextTest]
+        [Test]
         public async Task InsertAsyncCorrectlyInsertsArticle(
             DbContextTransaction transaction,
             ArticleRepository sut,
@@ -38,7 +38,7 @@
             }
         }
 
-        [DbContextTest]
+        [Test]
         public async Task InsertAsyncDuplicateArticleDoesNotInsert(
             DbContextTransaction transaction,
             ArticleRepository sut,
@@ -61,7 +61,7 @@
             }
         }
         
-        [DbContextTest]
+        [Test]
         public void InsertAsyncArticleWithInvalidUserIdThrows(
             ArticleRepository sut,
             Article article,
@@ -71,7 +71,7 @@
             Assert.IsType<ArgumentException>(e.InnerException);
         }
 
-        [DbContextTest]
+        [Test]
         public async Task SelectAsyncReturnsCorrectResult(
             DbContextTransaction transaction,
             ArticleRepository sut,
@@ -93,7 +93,7 @@
             }
         }
 
-        [DbContextTest]
+        [Test]
         public void SelectAsyncWithIdsReturnsCorrectResult(
              ArticleRepository sut)
         {
@@ -105,7 +105,7 @@
             Assert.Equal(ids, result);
         }
 
-        [DbContextTest]
+        [Test]
         public async Task UpdateAsyncCorrectlyUpdatesArticle(
             DbContextTransaction transaction,
             ArticleRepository sut,
@@ -130,7 +130,7 @@
             }
         }
 
-        [DbContextTest]
+        [Test]
         public void UpdateAsyncDoesNotThrowWhenThereIsNoArticleWithGivenId(
             DbContextTransaction transaction,
             ArticleRepository sut,
@@ -151,7 +151,7 @@
             }
         }
 
-        [DbContextTest]
+        [Test]
         public async Task DeleteAsyncCorrectlyDeletesWhenThereIsArticleWithGivenId(
             DbContextTransaction transaction,
             ArticleRepository sut,
@@ -174,7 +174,7 @@
             }
         }
 
-        [DbContextTest]
+        [Test]
         public void DeleteAsyncDoesNotThrowWhenThereIsNoArticleWithGivenId(
             ArticleRepository sut,
             Article article)
@@ -182,7 +182,7 @@
             Assert.DoesNotThrow(() => sut.DeleteAsync(article.Id).Wait());
         }
 
-        [DbContextTest]
+        [Test]
         public async Task FineAsyncWithIdReturnsNullWhenThereIsNoArticleWithGivenId(
             ArticleRepository sut,
             int id)

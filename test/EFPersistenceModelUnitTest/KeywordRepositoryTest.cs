@@ -11,13 +11,13 @@
 
     public class KeywordRepositoryTest : IdiomaticTest<KeywordRepository>
     {
-        [DbContextTest]
+        [Test]
         public void SutIsKeywordRepository(KeywordRepository sut)
         {
             Assert.IsAssignableFrom<IKeywordRepository>(sut);
         }
 
-        [DbContextTest]
+        [Test]
         public async Task FindAsyncReturnsNullWhenThereIsNoKeywordWithGivenIdentity(
             KeywordRepository sut,
             string word,
@@ -27,7 +27,7 @@
             Assert.Null(actual);
         }
 
-        [DbContextTest]
+        [Test]
         public async Task FindAsyncIsCaseInsensitive(
             DbContextTransaction transaction,
             KeywordRepository sut)
@@ -45,7 +45,7 @@
             }
         }
 
-        [DbContextTest]
+        [Test]
         public async Task InsertAsyncCorrectlyInsertsKeyword(
             DbContextTransaction transaction,
             KeywordRepository sut,
@@ -69,7 +69,7 @@
             }
         }
 
-        [DbContextTest]
+        [Test]
         public async Task InsertAsyncDuplicateEntityDoesNotThrow(
             DbContextTransaction transaction,
             KeywordRepository sut,
@@ -91,7 +91,7 @@
             }
         }
 
-        [DbContextTest]
+        [Test]
         public async Task DeleteAsyncWithIdDeletesAllKeywordsByArticleId(
             DbContextTransaction transaction,
             KeywordRepository sut)

@@ -12,13 +12,13 @@
 
     public class UnitOfWorkTest : IdiomaticTest<UnitOfWork>
     {
-        [DbContextTest]
+        [Test]
         public void SutIsUnitOfWork(UnitOfWork sut)
         {
             Assert.IsAssignableFrom<IUnitOfWork>(sut);
         }
 
-        [DbContextTest]
+        [Test]
         public async Task SaveAsyncCorrectlySaves(
             Mock<ArticleHarborDbContext> context,
             IFixture fixture)

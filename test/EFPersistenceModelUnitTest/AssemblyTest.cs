@@ -5,7 +5,7 @@
 
     public class AssemblyTest
     {
-        [DbContextTest]
+        [Test]
         public void SutReferencesOnlySpecifiedAssemblies()
         {
             var restrictiveReferences = new[]
@@ -23,7 +23,7 @@
                 .Verify(Assembly.Load("ArticleHarbor.EFPersistenceModel"));
         }
 
-        [DbContextTest]
+        [Test]
         public void SutDoesNotExposeAnyTypesOfSpecifiedAssemblies()
         {
             var indirectReferences = new Assembly[]
