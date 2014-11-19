@@ -35,7 +35,7 @@
         }
 
         [Test]
-        public void EqualsParameterWithNotSameValuesReturnsTrue(
+        public void EqualsParameterWithNotSameValuesReturnsFalse(
             Parameter sut,
             Parameter other)
         {
