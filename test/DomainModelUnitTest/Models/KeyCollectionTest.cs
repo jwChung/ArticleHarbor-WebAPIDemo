@@ -5,41 +5,41 @@
     using Ploeh.Albedo;
     using Xunit;
 
-    public class KeyCollectionOfTKeyTest : IdiomaticTest<KeyCollection<object>>
+    public class KeyCollectionOfTKeyTest : IdiomaticTest<Keys<object>>
     {
         [Test]
-        public void SutIsKeyCollection(KeyCollection<object> sut)
+        public void SutIsKeyCollection(Keys<object> sut)
         {
-            Assert.IsAssignableFrom<IKeyCollection>(sut);
+            Assert.IsAssignableFrom<IKeys>(sut);
         }
 
         [Test]
-        public void SutReturnsCorrectKeys(KeyCollection<object> sut)
+        public void SutReturnsCorrectKeys(Keys<object> sut)
         {
             var expected = new object[] { sut.Key };
             Assert.Equal(expected, sut);
         }
 
         [Test]
-        public void EqualsWithSameKeyReturnsTrue(KeyCollection<object> sut)
+        public void EqualsWithSameKeyReturnsTrue(Keys<object> sut)
         {
-            var other = new KeyCollection<object>(sut.Key);
+            var other = new Keys<object>(sut.Key);
             var actual = sut.Equals(other);
             Assert.True(actual);
         }
 
         [Test]
         public void EqualsWithNotSameKeyReturnsFalse(
-            KeyCollection<object> sut, KeyCollection<object> other)
+            Keys<object> sut, Keys<object> other)
         {
             var actual = sut.Equals(other);
             Assert.False(actual);
         }
 
         [Test]
-        public void GetHashCodeWithSameKeyReturnsSameValue(KeyCollection<object> sut)
+        public void GetHashCodeWithSameKeyReturnsSameValue(Keys<object> sut)
         {
-            var other = new KeyCollection<object>(sut.Key);
+            var other = new Keys<object>(sut.Key);
             var expected = other.GetHashCode();
 
             var actual = sut.GetHashCode();
@@ -48,41 +48,41 @@
         }
     }
 
-    public class IdCollectionOfTKey1AndKey2Test : IdiomaticTest<KeyCollection<object, object>>
+    public class IdCollectionOfTKey1AndKey2Test : IdiomaticTest<Keys<object, object>>
     {
         [Test]
-        public void SutIsKeyCollection(KeyCollection<object, object> sut)
+        public void SutIsKeyCollection(Keys<object, object> sut)
         {
-            Assert.IsAssignableFrom<IKeyCollection>(sut);
+            Assert.IsAssignableFrom<IKeys>(sut);
         }
 
         [Test]
-        public void SutReturnsCorrectKeys(KeyCollection<object, object> sut)
+        public void SutReturnsCorrectKeys(Keys<object, object> sut)
         {
             var expected = new object[] { sut.Key1, sut.Key2 };
             Assert.Equal(expected, sut);
         }
 
         [Test]
-        public void EqualsWithSameKeyReturnsTrue(KeyCollection<object, object> sut)
+        public void EqualsWithSameKeyReturnsTrue(Keys<object, object> sut)
         {
-            var other = new KeyCollection<object, object>(sut.Key1, sut.Key2);
+            var other = new Keys<object, object>(sut.Key1, sut.Key2);
             var actual = sut.Equals(other);
             Assert.True(actual);
         }
 
         [Test]
         public void EqualsWithNotSameKeyReturnsFalse(
-            KeyCollection<object, object> sut, KeyCollection<object, object> other)
+            Keys<object, object> sut, Keys<object, object> other)
         {
             var actual = sut.Equals(other);
             Assert.False(actual);
         }
 
         [Test]
-        public void GetHashCodeWithSameKeyReturnsSameValue(KeyCollection<object, object> sut)
+        public void GetHashCodeWithSameKeyReturnsSameValue(Keys<object, object> sut)
         {
-            var other = new KeyCollection<object, object>(sut.Key1, sut.Key2);
+            var other = new Keys<object, object>(sut.Key1, sut.Key2);
             var expected = other.GetHashCode();
 
             var actual = sut.GetHashCode();

@@ -5,7 +5,7 @@
     using Models;
 
     public interface IRepository<TKeys, TModel>
-        where TKeys : IKeyCollection
+        where TKeys : IKeys
         where TModel : IModel
     {
         Task<TModel> FindAsync(TKeys keys);

@@ -4,11 +4,11 @@
     using System.Collections;
     using System.Collections.Generic;
 
-    public class KeyCollection<TKey> : IKeyCollection
+    public class Keys<TKey> : IKeys
     {
         private readonly TKey key;
 
-        public KeyCollection(TKey key)
+        public Keys(TKey key)
         {
             if (key == null)
                 throw new ArgumentNullException("key");
@@ -29,7 +29,7 @@
                 return true;
             if (obj.GetType() != this.GetType())
                 return false;
-            return this.Equals((KeyCollection<TKey>)obj);
+            return this.Equals((Keys<TKey>)obj);
         }
 
         public override int GetHashCode()
@@ -47,7 +47,7 @@
             return this.GetEnumerator();
         }
 
-        protected bool Equals(KeyCollection<TKey> other)
+        protected bool Equals(Keys<TKey> other)
         {
             if (other == null)
                 throw new ArgumentNullException("other");
@@ -56,12 +56,12 @@
         }
     }
 
-    public class KeyCollection<TKey1, TKey2> : IKeyCollection
+    public class Keys<TKey1, TKey2> : IKeys
     {
         private readonly TKey1 key1;
         private readonly TKey2 key2;
         
-        public KeyCollection(TKey1 key1, TKey2 key2)
+        public Keys(TKey1 key1, TKey2 key2)
         {
             if (key1 == null)
                 throw new ArgumentNullException("key1");
@@ -91,7 +91,7 @@
                 return true;
             if (obj.GetType() != this.GetType())
                 return false;
-            return this.Equals((KeyCollection<TKey1, TKey2>)obj);
+            return this.Equals((Keys<TKey1, TKey2>)obj);
         }
 
         public override int GetHashCode()
@@ -114,7 +114,7 @@
             return this.GetEnumerator();
         }
 
-        protected bool Equals(KeyCollection<TKey1, TKey2> other)
+        protected bool Equals(Keys<TKey1, TKey2> other)
         {
             if (other == null)
                 throw new ArgumentNullException("other");

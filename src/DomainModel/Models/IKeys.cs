@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public interface IKeyCollection : IEnumerable<object>
+    public interface IKeys : IEnumerable<object>
     {
     }
 }

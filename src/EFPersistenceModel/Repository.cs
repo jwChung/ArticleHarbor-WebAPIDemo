@@ -10,7 +10,7 @@
 
     public abstract class Repository<TKeys, TModel, TPersistence>
         : IRepository<TKeys, TModel>
-        where TKeys : IKeyCollection
+        where TKeys : IKeys
         where TModel : IModel
         where TPersistence : class
     {

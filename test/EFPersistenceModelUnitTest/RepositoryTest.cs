@@ -18,7 +18,7 @@
 
     public abstract class RepositoryTest<TKeys, TModel, TPersistence>
         : IdiomaticTest<Repository<TKeys, TModel, TPersistence>>
-        where TKeys : IKeyCollection
+        where TKeys : IKeys
         where TModel : IModel
         where TPersistence : class
     {
@@ -71,12 +71,12 @@
         }
     }
 
-    public class RepositoryOfArticleTest : RepositoryTest<KeyCollection<int>, Article, EFDataAccess.Article>
+    public class RepositoryOfArticleTest : RepositoryTest<Keys<int>, Article, EFDataAccess.Article>
     {
         [Test]
         public void FindAsyncReturnsCorrectResult(TssArticleRepository sut)
         {
-            var keys = new KeyCollection<int>(1);
+            var keys = new Keys<int>(1);
             var article = sut.DbSet.Find(keys.ToArray());
 
             Article actual = sut.FindAsync(keys).Result;
@@ -128,7 +128,7 @@
         }
     }
 
-    public class RepositoryOfKeywordTest : RepositoryTest<KeyCollection<int, string>, Keyword, EFDataAccess.Keyword>
+    public class RepositoryOfKeywordTest : RepositoryTest<Keys<int, string>, Keyword, EFDataAccess.Keyword>
     {
         [Test]
         public void InsertAsyncReturnsCorrectResult(
@@ -156,7 +156,7 @@
         }
     }
 
-    public class TssArticleRepository : Repository<KeyCollection<int>, Article, EFDataAccess.Article>
+    public class TssArticleRepository : Repository<Keys<int>, Article, EFDataAccess.Article>
     {
         public TssArticleRepository(DbContext context, DbSet<EFDataAccess.Article> dbSet)
             : base(context, dbSet)
@@ -191,7 +191,7 @@
         }
     }
 
-    public class TssKeywordRepository : Repository<KeyCollection<int, string>, Keyword, EFDataAccess.Keyword>
+    public class TssKeywordRepository : Repository<Keys<int, string>, Keyword, EFDataAccess.Keyword>
     {
         public TssKeywordRepository(DbContext context, DbSet<EFDataAccess.Keyword> dbSet)
             : base(context, dbSet)
