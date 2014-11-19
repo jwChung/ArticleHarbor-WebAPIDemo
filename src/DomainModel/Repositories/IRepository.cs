@@ -8,7 +8,7 @@
         where TKeys : IKeyCollection
         where TModel : IModel
     {
-        Task<TModel> Find(TKeys keys);
+        Task<TModel> FindAsync(TKeys keys);
 
         Task<IEnumerable<TModel>> SelectAsync();
 

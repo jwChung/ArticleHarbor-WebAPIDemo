@@ -65,7 +65,39 @@
         }
     }
 
-    public class RepositoryOfFooAndBarTest : RepositoryTest<KeyCollection<int>, Article, EFDataAccess.Article>
+    public class RepositoryOfArticleTest : RepositoryTest<KeyCollection<int>, Article, EFDataAccess.Article>
     {
+        [Test]
+        public void FindAsyncReturnsCorrectResult(TssArticleRepository sut)
+        {
+            var actual = sut.FindAsync(new KeyCollection<int>(1)).Result;
+            Assert.Equal(1, actual.Id);
+        }
+    }
+
+    public class TssArticleRepository : Repository<KeyCollection<int>, Article, EFDataAccess.Article>
+    {
+        public TssArticleRepository(Database database, DbSet<EFDataAccess.Article> dbSet)
+            : base(database, dbSet)
+        {
+        }
+
+        public override Article ToModel(EFDataAccess.Article persistence)
+        {
+            return new Article(
+                persistence.Id,
+                persistence.Provider,
+                persistence.Guid,
+                persistence.Subject,
+                persistence.Body,
+                persistence.Date,
+                persistence.Url,
+                persistence.User.UserName);
+        }
+
+        public override EFDataAccess.Article ToPersistence(Article model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

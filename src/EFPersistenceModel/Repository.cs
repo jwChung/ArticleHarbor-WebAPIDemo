@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using System.Linq;
     using System.Threading.Tasks;
     using DomainModel.Models;
     using DomainModel.Repositories;
@@ -38,12 +39,13 @@
             get { return this.dbSet; }
         }
 
-        public Task<TModel> Find(TKeys keys)
+        public Task<TModel> FindAsync(TKeys keys)
         {
             if (keys == null)
                 throw new ArgumentNullException("keys");
 
-            throw new NotImplementedException();
+            var persistence = this.dbSet.Find(keys.ToArray());
+            return Task.FromResult(this.ToModel(persistence));
         }
 
         public Task<IEnumerable<TModel>> SelectAsync()
