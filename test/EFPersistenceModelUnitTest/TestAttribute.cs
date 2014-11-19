@@ -9,8 +9,7 @@
     {
         protected override IEnumerable<ICustomization> GetCustomizations(ITestMethodContext context)
         {
-            return base.GetCustomizations(context)
-                .Where(c => c.GetType() != typeof(DbContextCustomization));
+            return base.GetCustomizations(context);
         }
     }
 }

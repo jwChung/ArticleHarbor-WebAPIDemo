@@ -10,6 +10,8 @@ namespace ArticleHarbor
             var context = new ArticleHarborDbContext(
                 new ArticleHarborDbContextTestInitializer());
             fixture.Inject(context);
+            fixture.Inject(context.Database);
+            fixture.Inject(context.Articles);
             fixture.Inject(context.Database.BeginTransaction());
         }
     }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Threading.Tasks;
     using DomainModel.Models;
     using DomainModel.Repositories;
@@ -10,7 +11,33 @@
         : IRepository<TKeys, TModel>
         where TKeys : IKeyCollection
         where TModel : IModel
+        where TPersistence : class
     {
+        private readonly Database database;
+        private readonly DbSet<TPersistence> dbSet;
+
+        protected Repository(Database database, DbSet<TPersistence> dbSet)
+        {
+            if (database == null)
+                throw new ArgumentNullException("database");
+
+            if (dbSet == null)
+                throw new ArgumentNullException("dbSet");
+
+            this.database = database;
+            this.dbSet = dbSet;
+        }
+
+        public Database Database
+        {
+            get { return this.database; }
+        }
+
+        public DbSet<TPersistence> DbSet
+        {
+            get { return this.dbSet; }
+        }
+
         public Task<TModel> Find(TKeys keys)
         {
             if (keys == null)
