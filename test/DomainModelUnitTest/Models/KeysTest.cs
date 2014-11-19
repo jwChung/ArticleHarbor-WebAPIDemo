@@ -5,7 +5,7 @@
     using Ploeh.Albedo;
     using Xunit;
 
-    public class KeyCollectionOfTKeyTest : IdiomaticTest<Keys<object>>
+    public class KeysOfTKeyTest : IdiomaticTest<Keys<object>>
     {
         [Test]
         public void SutIsKeyCollection(Keys<object> sut)
@@ -48,7 +48,7 @@
         }
     }
 
-    public class IdCollectionOfTKey1AndKey2Test : IdiomaticTest<Keys<object, object>>
+    public class KeysOfTKey1AndKey2Test : IdiomaticTest<Keys<object, object>>
     {
         [Test]
         public void SutIsKeyCollection(Keys<object, object> sut)
