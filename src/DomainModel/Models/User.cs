@@ -36,6 +36,11 @@
             get { return this.apiKey; }
         }
 
+        public IKeys GetKeys()
+        {
+            throw new NotImplementedException();
+        }
+
         public IModelCommand<TResult> ExecuteCommand<TResult>(IModelCommand<TResult> command)
         {
             if (command == null)
