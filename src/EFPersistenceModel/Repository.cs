@@ -44,13 +44,13 @@
             if (keys == null)
                 throw new ArgumentNullException("keys");
 
-            var persistence = this.dbSet.Find(keys.ToArray());
-            return Task.FromResult(this.ToModel(persistence));
+            return this.FindAsyncWith(keys);
         }
 
-        public Task<IEnumerable<TModel>> SelectAsync()
+        public async Task<IEnumerable<TModel>> SelectAsync()
         {
-            throw new NotImplementedException();
+            var persistences = await this.dbSet.AsNoTracking().ToListAsync();
+            return persistences.Select(this.ConvertToModel);
         }
 
         public Task<TModel> InsertAsync(TModel model)
@@ -93,8 +93,14 @@
             throw new NotImplementedException();
         }
 
-        public abstract TModel ToModel(TPersistence persistence);
+        public abstract TModel ConvertToModel(TPersistence persistence);
 
-        public abstract TPersistence ToPersistence(TModel model);
+        public abstract TPersistence ConvertToPersistence(TModel model);
+
+        private async Task<TModel> FindAsyncWith(TKeys keys)
+        {
+            var persistence = await this.dbSet.FindAsync(keys.ToArray());
+            return this.ConvertToModel(persistence);
+        }
     }
 }

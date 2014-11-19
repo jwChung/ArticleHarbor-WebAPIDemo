@@ -14,6 +14,8 @@
             IDatabaseInitializer<ArticleHarborDbContext> initializer)
             : base("ArticleHarborDbContext")
         {
+            this.Configuration.AutoDetectChangesEnabled = false;
+            
             Database.SetInitializer(initializer);
             this.userStore = new UserStore<User>(this);
             this.roleStore = new RoleStore<UserRole>(this);

@@ -3,11 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using System.Linq;
     using System.Reflection;
     using DomainModel.Models;
     using DomainModel.Repositories;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit;
+    using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 
     public abstract class RepositoryTest<TKeys, TModel, TPersistence>
@@ -70,8 +72,30 @@
         [Test]
         public void FindAsyncReturnsCorrectResult(TssArticleRepository sut)
         {
-            var actual = sut.FindAsync(new KeyCollection<int>(1)).Result;
-            Assert.Equal(1, actual.Id);
+            var keys = new KeyCollection<int>(1);
+            var article = sut.DbSet.Find(keys.ToArray());
+
+            Article actual = sut.FindAsync(keys).Result;
+            
+            article.AsSource().OfLikeness<Article>()
+                .Without(x => x.UserId)
+                .ShouldEqual(actual);
+        }
+
+        [Test]
+        public void SelectAsyncReturnsCorrectResult(TssArticleRepository sut)
+        {
+            var articles = sut.DbSet.AsNoTracking().ToArray();
+
+            var actual = sut.SelectAsync().Result.ToArray();
+
+            Assert.Equal(3, actual.Length);
+            int index = 0;
+            foreach (var article in articles)
+                article.AsSource().OfLikeness<Article>()
+                    .Without(x => x.UserId)
+                    .ShouldEqual(actual[index++]);
+            Assert.Equal(0, sut.DbSet.Local.Count);
         }
     }
 
@@ -82,7 +106,7 @@
         {
         }
 
-        public override Article ToModel(EFDataAccess.Article persistence)
+        public override Article ConvertToModel(EFDataAccess.Article persistence)
         {
             return new Article(
                 persistence.Id,
@@ -95,7 +119,7 @@
                 persistence.User.UserName);
         }
 
-        public override EFDataAccess.Article ToPersistence(Article model)
+        public override EFDataAccess.Article ConvertToPersistence(Article model)
         {
             throw new NotImplementedException();
         }
