@@ -8,6 +8,7 @@
     using DomainModel.Models;
     using DomainModel.Repositories;
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1005:AvoidExcessiveParametersOnGenericTypes", Justification = "This is suppressed by the design.")]
     public abstract class Repository<TKeys, TModel, TPersistence>
         : IRepository<TKeys, TModel>
         where TKeys : IKeys
