@@ -51,11 +51,11 @@
         }
 
         [Test]
-        public void GetHashCodeWithSameParameterReturnsSameValue(Parameter sut)
+        public void GetHashCodeWithSameValuesReturnsSameCode(Parameter sut)
         {
             var other = new Parameter(sut.Name, sut.Value);
-            var actual = sut.Equals(other);
-            Assert.True(actual);
+            var actual = sut.GetHashCode();
+            Assert.Equal(other.GetHashCode(), actual);
         }
     }
 }
