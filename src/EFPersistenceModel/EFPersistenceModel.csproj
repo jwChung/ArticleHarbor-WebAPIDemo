@@ -62,6 +62,7 @@
     <Compile Include="EntityConversionExtensions.cs" />
     <Compile Include="ArticleRepository.cs" />
     <Compile Include="KeywordRepository.cs" />
+    <Compile Include="Repository.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
