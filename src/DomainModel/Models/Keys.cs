@@ -3,7 +3,62 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "The main responsibility of this class isn't to be a 'collection' (which, by the way, it isn't - it's just an Iterator).")]
+    public class Keys : IKeys
+    {
+        private readonly IEnumerable<object> keyValues;
+
+        public Keys(params object[] keyValues) : this((IEnumerable<object>)keyValues)
+        {
+        }
+
+        public Keys(IEnumerable<object> keyValues)
+        {
+            if (keyValues == null)
+                throw new ArgumentNullException("keyValues");
+
+            this.keyValues = keyValues;
+        }
+
+        public IEnumerable<object> KeyValues
+        {
+            get { return this.keyValues; }
+        }
+
+        public IEnumerator<object> GetEnumerator()
+        {
+            return this.KeyValues.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != this.GetType())
+                return false;
+            return this.Equals((Keys)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.keyValues.Aggregate(0, (a, o) => a ^ o.GetHashCode());
+        }
+
+        protected bool Equals(Keys other)
+        {
+            return this.keyValues.SequenceEqual(other.keyValues);
+        }
+    }
+    
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "The main responsibility of this class isn't to be a 'collection' (which, by the way, it isn't - it's just an Iterator).")]
     public class Keys<TKey> : IKeys
     {

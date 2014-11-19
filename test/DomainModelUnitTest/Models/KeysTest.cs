@@ -1,9 +1,61 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
     using Ploeh.Albedo;
     using Xunit;
+
+    public class KeysTest : IdiomaticTest<Keys>
+    {
+        [Test]
+        public void SutIsKeyCollection(Keys sut)
+        {
+            Assert.IsAssignableFrom<IKeys>(sut);
+        }
+
+        [Test]
+        public void SutReturnsCorrectKeys(Keys sut)
+        {
+            var expected = sut.KeyValues;
+            Assert.Equal(expected, sut);
+        }
+
+        [Test]
+        public void EqualsWithSameKeyValuesReturnsTrue(Keys sut)
+        {
+            var other = new Keys(sut.KeyValues.ToArray());
+            var actual = sut.Equals(other);
+            Assert.True(actual);
+        }
+
+        [Test]
+        public void EqualsWithNotSameValuesReturnsFalse(
+            Keys sut, Keys other)
+        {
+            var actual = sut.Equals(other);
+            Assert.False(actual);
+        }
+
+        [Test]
+        public void GetHashCodeWithSameValuesReturnsSameValue(Keys sut)
+        {
+            var other = new Keys(sut.KeyValues.ToArray());
+            var expected = other.GetHashCode();
+
+            var actual = sut.GetHashCode();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Test]
+        public void GetHashCodeWithNotSameValuesReturnsDifferentValue(Keys sut, Keys other)
+        {
+            var expected = other.GetHashCode();
+            var actual = sut.GetHashCode();
+            Assert.NotEqual(expected, actual);
+        }
+    }
 
     public class KeysOfTKeyTest : IdiomaticTest<Keys<object>>
     {
