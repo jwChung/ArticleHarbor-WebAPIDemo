@@ -28,7 +28,7 @@
 
         public IKeys GetKeys()
         {
-            throw new NotImplementedException();
+            return new Keys<int, string>(this.articleId, this.word);
         }
 
         public IModelCommand<TResult> ExecuteCommand<TResult>(IModelCommand<TResult> command)

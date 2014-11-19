@@ -141,6 +141,14 @@
             Assert.Equal(expected, actual);
         }
 
+        [Test]
+        public void GetKeysReturnsCorrectKeys(Article sut)
+        {
+            var expected = new Keys<int>(sut.Id);
+            var actual = sut.GetKeys();
+            Assert.Equal(expected, actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.UserId);

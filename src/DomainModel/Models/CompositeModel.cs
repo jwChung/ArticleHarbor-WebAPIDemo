@@ -23,7 +23,7 @@
 
         public IKeys GetKeys()
         {
-            throw new NotImplementedException();
+            return new Keys(this.models.SelectMany(m => m.GetKeys()));
         }
 
         public IModelCommand<TResult> ExecuteCommand<TResult>(IModelCommand<TResult> command)

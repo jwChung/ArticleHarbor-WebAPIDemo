@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System.Linq;
+    using Ploeh.AutoFixture;
     using Xunit;
 
     public class CompositeModelTest : IdiomaticTest<CompositeModel>
@@ -25,6 +26,18 @@
             var actual = sut.ExecuteCommand(command);
 
             Assert.Equal(commands[2], actual);
+        }
+
+        [Test]
+        public void GetKeysReturnsCorrectKeys(CompositeModel sut, Generator<Keys> generator)
+        {
+            foreach (var model in sut.Models)
+                model.Of(x => x.GetKeys() == generator.Take(1).Single());
+            var expected = new Keys(sut.Models.SelectMany(x => x.GetKeys()));
+            
+            var actual = sut.GetKeys();
+            
+            Assert.Equal(expected, actual);
         }
     }
 }

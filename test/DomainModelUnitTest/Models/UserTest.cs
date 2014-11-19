@@ -20,5 +20,13 @@
             var actual = sut.ExecuteCommand(command);
             Assert.Equal(expected, actual);
         }
+
+        [Test]
+        public void GetKeysReturnsCorrectKeys(User sut)
+        {
+            var expected = new Keys<string>(sut.Id);
+            var actual = sut.GetKeys();
+            Assert.Equal(expected, actual);
+        }
     }
 }

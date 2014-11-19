@@ -31,7 +31,7 @@
 
         public IKeys GetKeys()
         {
-            throw new NotImplementedException();
+            return new Keys<string, int>(this.userId, this.articleId);
         }
 
         public IModelCommand<TResult> ExecuteCommand<TResult>(IModelCommand<TResult> command)

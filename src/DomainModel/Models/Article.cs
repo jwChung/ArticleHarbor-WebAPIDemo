@@ -172,7 +172,7 @@
 
         public IKeys GetKeys()
         {
-            throw new NotImplementedException();
+            return new Keys<int>(this.id);
         }
 
         public IModelCommand<TResult> ExecuteCommand<TResult>(IModelCommand<TResult> command)
