@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor
 {
     using System.Collections.Generic;
+    using System.Data.Entity;
     using EFDataAccess;
     using Jwc.Experiment;
     using Jwc.Experiment.AutoFixture;
@@ -79,8 +80,9 @@
                 var context = new ArticleHarborDbContext(
                     new ArticleHarborDbContextTestInitializer());
                 fixture.Inject(context);
-                fixture.Inject(context.Database);
+                fixture.Inject<DbContext>(context);
                 fixture.Inject(context.Articles);
+                fixture.Inject(context.Keywords);
                 fixture.Inject(context.Database.BeginTransaction());
             }
         }

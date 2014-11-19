@@ -14,24 +14,24 @@
         where TModel : IModel
         where TPersistence : class
     {
-        private readonly Database database;
+        private readonly DbContext context;
         private readonly DbSet<TPersistence> dbSet;
 
-        protected Repository(Database database, DbSet<TPersistence> dbSet)
+        protected Repository(DbContext context, DbSet<TPersistence> dbSet)
         {
-            if (database == null)
-                throw new ArgumentNullException("database");
+            if (context == null)
+                throw new ArgumentNullException("context");
 
             if (dbSet == null)
                 throw new ArgumentNullException("dbSet");
 
-            this.database = database;
+            this.context = context;
             this.dbSet = dbSet;
         }
 
-        public Database Database
+        public DbContext Context
         {
-            get { return this.database; }
+            get { return this.context; }
         }
 
         public DbSet<TPersistence> DbSet
@@ -58,7 +58,7 @@
             if (model == null)
                 throw new ArgumentNullException("model");
 
-            throw new NotImplementedException();
+            return this.InsertAsyncWith(model);
         }
 
         public Task UpdateAsync(TModel model)
@@ -100,6 +100,13 @@
         private async Task<TModel> FindAsyncWith(TKeys keys)
         {
             var persistence = await this.dbSet.FindAsync(keys.ToArray());
+            return this.ConvertToModel(persistence);
+        }
+
+        private async Task<TModel> InsertAsyncWith(TModel model)
+        {
+            var persistence = this.dbSet.Add(this.ConvertToPersistence(model));
+            await this.context.SaveChangesAsync();
             return this.ConvertToModel(persistence);
         }
     }
