@@ -71,6 +71,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserRepository.cs" />
+    <Compile Include="UserRepository2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
