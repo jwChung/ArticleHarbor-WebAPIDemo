@@ -73,7 +73,13 @@
                 fixture.Customize<EFDataAccess.Article>(c => c.Without(x => x.Bookmarks));
                 fixture.Customize<EFDataAccess.Article>(c => c.Without(x => x.Keywords));
 
+                fixture.Customize<EFDataAccess.Bookmark>(c => c.Without(x => x.User));
+                fixture.Customize<EFDataAccess.Bookmark>(c => c.Without(x => x.Article));
+
                 fixture.Customize<Keyword>(c => c.Without(x => x.Article));
+
+                fixture.Customize<User>(c => c.Without(x => x.Articles));
+                fixture.Customize<User>(c => c.Without(x => x.Bookmarks));
             }
         }
 
@@ -85,8 +91,12 @@
                     new ArticleHarborDbContextTestInitializer());
                 fixture.Inject(context);
                 fixture.Inject<DbContext>(context);
+
                 fixture.Inject(context.Articles);
                 fixture.Inject(context.Keywords);
+                fixture.Inject(context.Bookmarks);
+                fixture.Inject((DbSet<User>)context.Users);
+
                 fixture.Inject(context.Database.BeginTransaction());
             }
         }
