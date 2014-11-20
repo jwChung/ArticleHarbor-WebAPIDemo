@@ -177,8 +177,8 @@
         private string GetTableName()
         {
             string selectSql = this.dbSet.ToString();
-            var start = selectSql.IndexOf("FROM", StringComparison.CurrentCultureIgnoreCase) + 5;
-            var end = selectSql.LastIndexOf("AS", StringComparison.CurrentCultureIgnoreCase);
+            var start = selectSql.IndexOf("FROM", StringComparison.CurrentCulture) + 5;
+            var end = selectSql.LastIndexOf("AS", StringComparison.CurrentCulture);
             return selectSql.Substring(start, end - start - 1);
         }
     }
