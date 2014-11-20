@@ -140,6 +140,7 @@
     <Compile Include="CompositeActionValueBinderTest.cs" />
     <Compile Include="Controllers\ArticlesControllerTest.cs" />
     <Compile Include="Controllers\BookmarksControllerTest.cs" />
+    <Compile Include="DependencyParameterBindingTest.cs" />
     <Compile Include="FileLoggerTest.cs" />
     <Compile Include="FromDependencyResolverAttributeTest.cs" />
     <Compile Include="JsonConstructorDeserializerTest.cs" />
