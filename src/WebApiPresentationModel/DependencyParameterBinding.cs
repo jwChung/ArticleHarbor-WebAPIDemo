@@ -8,8 +8,19 @@
 
     public class DependencyParameterBinding : HttpParameterBinding
     {
-        public DependencyParameterBinding(HttpParameterDescriptor descriptor) : base(descriptor)
+        private readonly Type parameterType;
+
+        public DependencyParameterBinding(Type parameterType, HttpParameterDescriptor descriptor) : base(descriptor)
         {
+            if (parameterType == null)
+                throw new ArgumentNullException("parameterType");
+
+            this.parameterType = parameterType;
+        }
+
+        public Type ParameterType
+        {
+            get { return this.parameterType; }
         }
 
         public override Task ExecuteBindingAsync(
