@@ -69,7 +69,10 @@
         {
             public void Customize(IFixture fixture)
             {
-                fixture.Customize<Article>(c => c.Without(x => x.Keywords));
+                fixture.Customize<EFDataAccess.Article>(c => c.Without(x => x.User));
+                fixture.Customize<EFDataAccess.Article>(c => c.Without(x => x.Bookmarks));
+                fixture.Customize<EFDataAccess.Article>(c => c.Without(x => x.Keywords));
+
                 fixture.Customize<Keyword>(c => c.Without(x => x.Article));
             }
         }
