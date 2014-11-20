@@ -5,7 +5,7 @@
     using System.Web.Http.Controllers;
 
     [AttributeUsage(AttributeTargets.Parameter)]
-    public class FromDependencyResolverAttribute : ParameterBindingAttribute
+    public sealed class FromDependencyResolverAttribute : ParameterBindingAttribute
     {
         public override HttpParameterBinding GetBinding(HttpParameterDescriptor parameter)
         {

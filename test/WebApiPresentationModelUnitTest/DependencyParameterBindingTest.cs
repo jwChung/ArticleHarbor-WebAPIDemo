@@ -37,7 +37,7 @@
         }
 
         [Test]
-        public void ExecuteBindingAsyncThrowsWhenDepedencyResolverCannotResolveParameterType(
+        public void ExecuteBindingAsyncThrowsWhenDependencyResolverCannotResolveParameterType(
             DependencyParameterBinding sut,
             ModelMetadataProvider metadataProvider,
             HttpActionContext actionContext,
