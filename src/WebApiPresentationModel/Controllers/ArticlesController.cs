@@ -6,6 +6,7 @@
     using System.Web.Http;
     using DomainModel;
     using DomainModel.Models;
+    using DomainModel.Repositories;
     using DomainModel.Services;
     using Models;
 
@@ -30,6 +31,15 @@
         public Task<IEnumerable<Article>> GetAsync()
         {
             return this.articleService.GetAsync();
+        }
+
+        public Task<IEnumerable<Article>> GetAsync2(
+            [FromDependencyResolver] IRepository<Article> repository)
+        {
+            if (repository == null)
+                throw new ArgumentNullException("repository");
+
+            return repository.SelectAsync();
         }
 
         [Authorize] // TODO: return unauthorized code when Unauthorized exceptin is thrown.

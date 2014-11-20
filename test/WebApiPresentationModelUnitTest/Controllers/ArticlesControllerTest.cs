@@ -1,11 +1,14 @@
 ﻿namespace ArticleHarbor.WebApiPresentationModel.Controllers
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
     using System.Web.Http;
     using DomainModel;
     using DomainModel.Models;
+    using DomainModel.Repositories;
     using Models;
     using Moq;
     using Ploeh.SemanticComparison.Fluent;
@@ -20,6 +23,7 @@
         }
 
         [Test]
+        [Obsolete]
         public async Task GetAsyncReturnsCorrectResult(
             ArticlesController sut,
             IEnumerable<Article> articles)
@@ -27,6 +31,26 @@
             sut.ArticleService.Of(x => x.GetAsync() == Task.FromResult(articles));
             var actual = await sut.GetAsync();
             Assert.Equal(articles, actual);
+        }
+
+        [Test]
+        public async Task GetAsync2ReturnsCorrectResult(
+            ArticlesController sut,
+            IRepository<Article> repository,
+            IEnumerable<Article> articles)
+        {
+            repository.Of(x => x.SelectAsync() == Task.FromResult(articles));
+            var actual = await sut.GetAsync2(repository);
+            Assert.Equal(articles, actual);
+        }
+
+        [Test]
+        public void GetAsync2HasCorrectAttributeOnRepositoryParameter()
+        {
+            var attribute = this.Methods.Select(x => x.GetAsync2(null))
+                .GetParameters().Single(x => x.Name == "repository")
+                .GetCustomAttribute<FromDependencyResolverAttribute>();
+            Assert.NotNull(attribute);
         }
 
         [Test]
