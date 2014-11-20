@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="ApiKeyAuthenticationDispatcher.cs" />
     <Compile Include="ArticleHarborAuthProvider.cs" />
+    <Compile Include="CompositeActionValueBinder.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\BookmarksController.cs" />
     <Compile Include="FileLogger.cs" />

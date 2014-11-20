@@ -137,6 +137,7 @@
     <Compile Include="ApiKeyAuthenticationDispatcherTest.cs" />
     <Compile Include="ArticleHarborAuthProviderTest.cs" />
     <Compile Include="AssemblyTest.cs" />
+    <Compile Include="CompositeActionValueBinderTest.cs" />
     <Compile Include="Controllers\ArticlesControllerTest.cs" />
     <Compile Include="Controllers\BookmarksControllerTest.cs" />
     <Compile Include="FileLoggerTest.cs" />
