@@ -27,13 +27,7 @@
             get { return this.articleService; }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This method is controller action.")]
-        public Task<IEnumerable<Article>> GetAsync()
-        {
-            return this.articleService.GetAsync();
-        }
-
-        public Task<IEnumerable<Article>> GetAsync2(
+        public Task<IEnumerable<Article>> GetAsync(
             [FromDependencyResolver] IRepository<Article> repository)
         {
             if (repository == null)
