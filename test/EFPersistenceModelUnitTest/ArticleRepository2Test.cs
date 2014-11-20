@@ -29,7 +29,7 @@
         }
 
         [Test]
-        public void ConvertToModelAsyncWithIncorrectIdThrows(
+        public void ConvertToModelAsyncWithIncorrectUserIdThrows(
             ArticleRepository2 sut,
             EFDataAccess.Article article)
         {
@@ -55,7 +55,7 @@
         }
 
         [Test]
-        public void ConvertToPersistenceAsyncWithIncorrectIdThrows(
+        public void ConvertToPersistenceAsyncWithIncorrectUserIdThrows(
             ArticleRepository2 sut,
             Article article)
         {
