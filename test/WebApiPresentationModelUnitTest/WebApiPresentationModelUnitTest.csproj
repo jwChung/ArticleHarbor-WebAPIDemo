@@ -137,9 +137,12 @@
     <Compile Include="ApiKeyAuthenticationDispatcherTest.cs" />
     <Compile Include="ArticleHarborAuthProviderTest.cs" />
     <Compile Include="AssemblyTest.cs" />
+    <Compile Include="CompositeActionValueBinderTest.cs" />
     <Compile Include="Controllers\ArticlesControllerTest.cs" />
     <Compile Include="Controllers\BookmarksControllerTest.cs" />
+    <Compile Include="DependencyParameterBindingTest.cs" />
     <Compile Include="FileLoggerTest.cs" />
+    <Compile Include="FromDependencyResolverAttributeTest.cs" />
     <Compile Include="JsonConstructorDeserializerTest.cs" />
     <Compile Include="JsonCustomMediaTypeFormatterTest.cs" />
     <Compile Include="LogContextTest.cs" />

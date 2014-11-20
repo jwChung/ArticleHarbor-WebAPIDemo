@@ -73,9 +73,12 @@
     </Compile>
     <Compile Include="ApiKeyAuthenticationDispatcher.cs" />
     <Compile Include="ArticleHarborAuthProvider.cs" />
+    <Compile Include="CompositeActionValueBinder.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\BookmarksController.cs" />
+    <Compile Include="DependencyParameterBinding.cs" />
     <Compile Include="FileLogger.cs" />
+    <Compile Include="FromDependencyResolverAttribute.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="JsonConstructorDeserializer.cs" />
