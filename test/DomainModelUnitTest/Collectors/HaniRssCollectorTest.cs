@@ -15,7 +15,7 @@
             Assert.IsAssignableFrom<IArticleCollector>(sut);
         }
 
-        [Test]
+        [Test(RunOn.CI)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "string", Justification = "To represent dummy value of string.")]
         public void CollectAsyncCollectsArticles(
             HaniRssCollector sut,

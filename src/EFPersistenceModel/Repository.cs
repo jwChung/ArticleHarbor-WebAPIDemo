@@ -1,0 +1,185 @@
+﻿namespace ArticleHarbor.EFPersistenceModel
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Data.Entity.Core;
+    using System.Data.Entity.Core.Objects;
+    using System.Data.Entity.Infrastructure;
+    using System.Data.SqlClient;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using DomainModel.Models;
+    using DomainModel.Repositories;
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1005:AvoidExcessiveParametersOnGenericTypes", Justification = "This is suppressed by the design.")]
+    public abstract class Repository<TKeys, TModel, TPersistence>
+        : IRepository<TKeys, TModel>
+        where TKeys : IKeys
+        where TModel : IModel
+        where TPersistence : class
+    {
+        private readonly DbContext context;
+        private readonly DbSet<TPersistence> dbSet;
+
+        protected Repository(DbContext context, DbSet<TPersistence> dbSet)
+        {
+            if (context == null)
+                throw new ArgumentNullException("context");
+
+            if (dbSet == null)
+                throw new ArgumentNullException("dbSet");
+
+            this.context = context;
+            this.dbSet = dbSet;
+        }
+
+        public DbContext Context
+        {
+            get { return this.context; }
+        }
+
+        public DbSet<TPersistence> DbSet
+        {
+            get { return this.dbSet; }
+        }
+
+        public Task<TModel> FindAsync(TKeys keys)
+        {
+            if (keys == null)
+                throw new ArgumentNullException("keys");
+
+            return this.FindAsyncWith(keys);
+        }
+
+        public async Task<IEnumerable<TModel>> SelectAsync()
+        {
+            var persistences = await this.dbSet.AsNoTracking().ToArrayAsync();
+            return persistences.Select(this.ConvertToModel);
+        }
+
+        public Task<TModel> InsertAsync(TModel model)
+        {
+            if (model == null)
+                throw new ArgumentNullException("model");
+
+            return this.InsertAsyncWith(model);
+        }
+
+        public Task UpdateAsync(TModel model)
+        {
+            if (model == null)
+                throw new ArgumentNullException("model");
+
+            return this.UpdateAsyncWith(model);
+        }
+
+        public Task DeleteAsync(TKeys keys)
+        {
+            if (keys == null)
+                throw new ArgumentNullException("keys");
+
+            return this.DeleteAsyncWith(keys);
+        }
+
+        public Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(IPredicate predicate)
+        {
+            if (predicate == null)
+                throw new ArgumentNullException("predicate");
+
+            return this.ExecuteSelectCommandAsyncWith(predicate);
+        }
+
+        public Task ExecuteDeleteCommandAsync(IPredicate predicate)
+        {
+            if (predicate == null)
+                throw new ArgumentNullException("predicate");
+
+            return this.ExecuteDeleteCommandAsyncWith(predicate);
+        }
+
+        public abstract TModel ConvertToModel(TPersistence persistence);
+
+        public abstract TPersistence ConvertToPersistence(TModel model);
+
+        private async Task<TModel> FindAsyncWith(TKeys keys)
+        {
+            var persistence = await this.dbSet.FindAsync(keys.ToArray());
+            return this.ConvertToModel(persistence);
+        }
+
+        private async Task<TModel> InsertAsyncWith(TModel model)
+        {
+            var persistence = this.dbSet.Add(this.ConvertToPersistence(model));
+            await this.context.SaveChangesAsync();
+            return this.ConvertToModel(persistence);
+        }
+
+        private async Task UpdateAsyncWith(TModel model)
+        {
+            await this.DetachFromObjectContext(model);
+            this.context.Entry(this.ConvertToPersistence(model)).State = EntityState.Modified;
+        }
+
+        private async Task DetachFromObjectContext(TModel model)
+        {
+            var entity = await this.GetEntity(model.GetKeys().ToArray());
+            ((IObjectContextAdapter)this.context).ObjectContext.Detach(entity);
+        }
+
+        private async Task DeleteAsyncWith(TKeys keys)
+        {
+            var entity = await this.GetEntity(keys.ToArray());
+            this.dbSet.Remove(entity);
+        }
+
+        private async Task<IEnumerable<TModel>> ExecuteSelectCommandAsyncWith(IPredicate predicate)
+        {
+            string sql = string.Format("{0} WHERE {1};", this.dbSet, predicate.Condition);
+
+            var sqlParameters = predicate.Parameters
+                .Select(x => new SqlParameter(x.Name, x.Value))
+                .ToArray();
+
+            var result = await this.dbSet.SqlQuery(sql, sqlParameters)
+                .AsNoTracking().ToArrayAsync();
+            return result.Select(x => this.ConvertToModel(x));
+        }
+
+        private async Task ExecuteDeleteCommandAsyncWith(IPredicate predicate)
+        {
+            string sql = string.Format(
+                "DELETE FROM {0} WHERE {1};", this.GetTableName(), predicate.Condition);
+
+            var sqlParameters = predicate.Parameters
+                .Select(x => new SqlParameter(x.Name, x.Value))
+                .ToArray();
+
+            await this.context.Database.ExecuteSqlCommandAsync(sql, sqlParameters);
+        }
+
+        private async Task<TPersistence> GetEntity(object[] keys)
+        {
+            var entity = await this.dbSet.FindAsync(keys);
+            if (entity == null)
+                throw new ArgumentException(
+                    string.Format(
+                        CultureInfo.CurrentCulture,
+                        "There is no '{0}' entity matched with identity '{1}'.",
+                        typeof(TPersistence).Name,
+                        string.Join(", ", keys)),
+                    "model");
+
+            return entity;
+        }
+
+        private string GetTableName()
+        {
+            string selectSql = this.dbSet.ToString();
+            var start = selectSql.IndexOf("FROM", StringComparison.CurrentCultureIgnoreCase) + 5;
+            var end = selectSql.LastIndexOf("AS", StringComparison.CurrentCultureIgnoreCase);
+            return selectSql.Substring(start, end - start - 1);
+        }
+    }
+}

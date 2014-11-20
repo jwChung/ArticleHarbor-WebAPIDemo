@@ -1,14 +1,14 @@
 ﻿namespace ArticleHarbor
 {
-    using System;
-    using System.Linq;
+    using System.Collections.Generic;
+    using System.Data.Common;
+    using System.Data.Entity;
     using EFDataAccess;
     using Jwc.Experiment;
     using Jwc.Experiment.AutoFixture;
     using Jwc.Experiment.Xunit;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.AutoMoq;
-    using Ploeh.AutoFixture.Kernel;
 
     public class TestAttribute : TestBaseAttribute
     {
@@ -52,39 +52,39 @@
 
         protected override ITestFixture Create(ITestMethodContext context)
         {
-            var fixture = new Fixture().Customize(new AutoMoqCustomization());
-
-            fixture.Customize<Article>(c => c.Without(x => x.Keywords));
-            fixture.Customize<Keyword>(c => c.Without(x => x.Article));
-
-            var dbContext = new ArticleHarborDbContext(new ArticleHarborDbContextTestInitializer());
-            fixture.Inject(dbContext);
-            fixture.Inject(dbContext.Database.BeginTransaction());
-
-            fixture.Customize(new TestParametersCustomization(
-                context.ActualMethod.GetParameters()));
-            return new TestFixture(fixture);
+            return new TestFixture(new Fixture().Customize(
+                new CompositeCustomization(this.GetCustomizations(context))));
         }
 
-        private class OmitAutoPropertiesBuilder : ISpecimenBuilder
+        protected virtual IEnumerable<ICustomization> GetCustomizations(ITestMethodContext context)
         {
-            private readonly Type[] targets;
+            yield return new AutoMoqCustomization();
+            yield return new PersistanceModelCustomization();
+            yield return new DbContextCustomization();
+            yield return new TestParametersCustomization(
+                context.ActualMethod.GetParameters());
+        }
 
-            public OmitAutoPropertiesBuilder(params Type[] targets)
+        private class PersistanceModelCustomization : ICustomization
+        {
+            public void Customize(IFixture fixture)
             {
-                this.targets = targets;
+                fixture.Customize<Article>(c => c.Without(x => x.Keywords));
+                fixture.Customize<Keyword>(c => c.Without(x => x.Article));
             }
+        }
 
-            public object Create(object request, ISpecimenContext context)
+        private class DbContextCustomization : ICustomization
+        {
+            public void Customize(IFixture fixture)
             {
-                var type = request as Type;
-                if (type == null
-                    || type.IsAbstract
-                    || this.targets.All(t => !t.IsAssignableFrom(type)))
-                    return new NoSpecimen(request);
-
-                return new MethodInvoker(new ModestConstructorQuery())
-                    .Create(request, context);
+                var context = new ArticleHarborDbContext(
+                    new ArticleHarborDbContextTestInitializer());
+                fixture.Inject(context);
+                fixture.Inject<DbContext>(context);
+                fixture.Inject(context.Articles);
+                fixture.Inject(context.Keywords);
+                fixture.Inject(context.Database.BeginTransaction());
             }
         }
     }

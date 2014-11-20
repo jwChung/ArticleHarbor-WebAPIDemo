@@ -7,6 +7,7 @@
     using DomainModel.Models;
     using Ploeh.AutoFixture.Xunit;
     using Xunit;
+    using IIdentity = System.Security.Principal.IIdentity;
 
     public class SimplePrincipalTest : IdiomaticTest<SimplePrincipal>
     {

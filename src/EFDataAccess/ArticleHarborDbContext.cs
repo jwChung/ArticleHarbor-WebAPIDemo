@@ -14,19 +14,20 @@
             IDatabaseInitializer<ArticleHarborDbContext> initializer)
             : base("ArticleHarborDbContext")
         {
+            this.Configuration.AutoDetectChangesEnabled = false;
+            
             Database.SetInitializer(initializer);
-
             this.userStore = new UserStore<User>(this);
             this.roleStore = new RoleStore<UserRole>(this);
             this.userManager = new UserManager(this.userStore);
             this.userRoleManager = new UserRoleManager(this.roleStore);
         }
 
-        public IDbSet<Article> Articles { get; set; }
+        public DbSet<Article> Articles { get; set; }
 
-        public IDbSet<Keyword> Keywords { get; set; }
+        public DbSet<Keyword> Keywords { get; set; }
 
-        public IDbSet<Bookmark> Bookmarks { get; set; }
+        public DbSet<Bookmark> Bookmarks { get; set; }
 
         public UserManager UserManager
         {
