@@ -55,6 +55,9 @@
 
         protected bool Equals(Keys other)
         {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
             return this.keyValues.SequenceEqual(other.keyValues);
         }
     }
