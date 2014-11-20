@@ -20,5 +20,14 @@
             var actual = sut.ConvertToModelAsync(keyword).Result;
             keyword.AsSource().OfLikeness<Keyword>().ShouldEqual(actual);
         }
+
+        [Test]
+        public void ConvertToPersistenceAsyncReturnsCorrectResult(
+            KeywordRepository2 sut,
+            Keyword keyword)
+        {
+            var actual = sut.ConvertToPersistenceAsync(keyword).Result;
+            actual.AsSource().OfLikeness<Keyword>().ShouldEqual(keyword);
+        }
     }
 }

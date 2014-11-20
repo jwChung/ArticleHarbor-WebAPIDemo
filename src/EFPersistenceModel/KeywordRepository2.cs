@@ -25,8 +25,13 @@
         {
             if (model == null)
                 throw new ArgumentNullException("model");
-            
-            throw new NotImplementedException();
+
+            var persistence = new EFDataAccess.Keyword
+            {
+                ArticleId = model.ArticleId,
+                Word = model.Word
+            };
+            return Task.FromResult(persistence);
         }
     }
 }
