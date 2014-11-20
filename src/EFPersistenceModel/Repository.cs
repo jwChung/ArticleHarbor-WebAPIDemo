@@ -56,7 +56,8 @@
         public async Task<IEnumerable<TModel>> SelectAsync()
         {
             var persistences = await this.dbSet.AsNoTracking().ToArrayAsync();
-            return persistences.Select(this.ConvertToModel);
+
+            return await Task.WhenAll(persistences.Select(this.ConvertToModelAsync));
         }
 
         public Task<TModel> InsertAsync(TModel model)
@@ -99,27 +100,27 @@
             return this.ExecuteDeleteCommandAsyncWith(predicate);
         }
 
-        public abstract TModel ConvertToModel(TPersistence persistence);
+        public abstract Task<TModel> ConvertToModelAsync(TPersistence persistence);
 
-        public abstract TPersistence ConvertToPersistence(TModel model);
+        public abstract Task<TPersistence> ConvertToPersistenceAsync(TModel model);
 
         private async Task<TModel> FindAsyncWith(TKeys keys)
         {
             var persistence = await this.dbSet.FindAsync(keys.ToArray());
-            return this.ConvertToModel(persistence);
+            return await this.ConvertToModelAsync(persistence);
         }
 
         private async Task<TModel> InsertAsyncWith(TModel model)
         {
-            var persistence = this.dbSet.Add(this.ConvertToPersistence(model));
+            var persistence = this.dbSet.Add(await this.ConvertToPersistenceAsync(model));
             await this.context.SaveChangesAsync();
-            return this.ConvertToModel(persistence);
+            return await this.ConvertToModelAsync(persistence);
         }
 
         private async Task UpdateAsyncWith(TModel model)
         {
             await this.DetachFromObjectContext(model);
-            this.context.Entry(this.ConvertToPersistence(model)).State = EntityState.Modified;
+            this.context.Entry(await this.ConvertToPersistenceAsync(model)).State = EntityState.Modified;
         }
 
         private async Task DetachFromObjectContext(TModel model)
@@ -144,7 +145,7 @@
 
             var result = await this.dbSet.SqlQuery(sql, sqlParameters)
                 .AsNoTracking().ToArrayAsync();
-            return result.Select(x => this.ConvertToModel(x));
+            return await Task.WhenAll(result.Select(this.ConvertToModelAsync));
         }
 
         private async Task ExecuteDeleteCommandAsyncWith(IPredicate predicate)

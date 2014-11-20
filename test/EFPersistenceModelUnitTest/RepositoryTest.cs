@@ -7,6 +7,7 @@
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Reflection;
+    using System.Threading.Tasks;
     using DomainModel.Models;
     using DomainModel.Repositories;
     using EFDataAccess;
@@ -332,9 +333,9 @@
         {
         }
 
-        public override Article ConvertToModel(EFDataAccess.Article persistence)
+        public override Task<Article> ConvertToModelAsync(EFDataAccess.Article persistence)
         {
-            return new Article(
+            return Task.FromResult(new Article(
                 persistence.Id,
                 persistence.Provider,
                 persistence.Guid,
@@ -342,12 +343,12 @@
                 persistence.Body,
                 persistence.Date,
                 persistence.Url,
-                "dummy userid");
+                "dummy userid"));
         }
 
-        public override EFDataAccess.Article ConvertToPersistence(Article model)
+        public override Task<EFDataAccess.Article> ConvertToPersistenceAsync(Article model)
         {
-            return new EFDataAccess.Article
+            return Task.FromResult(new EFDataAccess.Article
             {
                 Id = model.Id,
                 Provider = model.Provider,
@@ -356,7 +357,7 @@
                 Body = model.Body,
                 Date = model.Date,
                 Url = model.Url
-            };
+            });
         }
     }
 
@@ -367,18 +368,18 @@
         {
         }
 
-        public override Keyword ConvertToModel(EFDataAccess.Keyword persistence)
+        public override Task<Keyword> ConvertToModelAsync(EFDataAccess.Keyword persistence)
         {
-            return new Keyword(persistence.ArticleId, persistence.Word);
+            return Task.FromResult(new Keyword(persistence.ArticleId, persistence.Word));
         }
 
-        public override EFDataAccess.Keyword ConvertToPersistence(Keyword model)
+        public override Task<EFDataAccess.Keyword> ConvertToPersistenceAsync(Keyword model)
         {
-            return new EFDataAccess.Keyword
+            return Task.FromResult(new EFDataAccess.Keyword
             {
                 ArticleId = model.ArticleId,
                 Word = model.Word
-            };
+            });
         }
     }
 }
