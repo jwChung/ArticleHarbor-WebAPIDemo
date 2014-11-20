@@ -54,5 +54,20 @@
                 .With(x => x.Role).EqualsWhen((a, b) => Role.Administrator == b.Role)
                 .ShouldEqual(user);
         }
+
+        [Test]
+        public void SelectAsyncReturnsCorrectResult(UserRepository2 sut)
+        {
+            var actual = sut.SelectAsync().Result;
+            Assert.Equal(3, actual.Count());
+        }
+
+        [Test]
+        public void ExecuteSelectCommandAsyncReturnsCorrectResult(UserRepository2 sut)
+        {
+            var predicate = new EqualPredicate("@username", "user1");
+            var actual = sut.ExecuteSelectCommandAsync(predicate).Result;
+            Assert.Equal("user1", actual.Single().Id);
+        }
     }
 }
