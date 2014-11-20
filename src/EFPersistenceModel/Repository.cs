@@ -45,7 +45,7 @@
             get { return this.dbSet; }
         }
 
-        public Task<TModel> FindAsync(TKeys keys)
+        public virtual Task<TModel> FindAsync(TKeys keys)
         {
             if (keys == null)
                 throw new ArgumentNullException("keys");
@@ -53,13 +53,13 @@
             return this.FindAsyncWith(keys);
         }
 
-        public async Task<IEnumerable<TModel>> SelectAsync()
+        public virtual async Task<IEnumerable<TModel>> SelectAsync()
         {
             var persistences = await this.dbSet.AsNoTracking().ToArrayAsync();
             return await this.ConvertToModels(persistences);
         }
 
-        public Task<TModel> InsertAsync(TModel model)
+        public virtual Task<TModel> InsertAsync(TModel model)
         {
             if (model == null)
                 throw new ArgumentNullException("model");
@@ -67,7 +67,7 @@
             return this.InsertAsyncWith(model);
         }
 
-        public Task UpdateAsync(TModel model)
+        public virtual Task UpdateAsync(TModel model)
         {
             if (model == null)
                 throw new ArgumentNullException("model");
@@ -75,7 +75,7 @@
             return this.UpdateAsyncWith(model);
         }
 
-        public Task DeleteAsync(TKeys keys)
+        public virtual Task DeleteAsync(TKeys keys)
         {
             if (keys == null)
                 throw new ArgumentNullException("keys");
@@ -83,7 +83,7 @@
             return this.DeleteAsyncWith(keys);
         }
 
-        public Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(IPredicate predicate)
+        public virtual Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(IPredicate predicate)
         {
             if (predicate == null)
                 throw new ArgumentNullException("predicate");
@@ -91,7 +91,7 @@
             return this.ExecuteSelectCommandAsyncWith(predicate);
         }
 
-        public Task ExecuteDeleteCommandAsync(IPredicate predicate)
+        public virtual Task ExecuteDeleteCommandAsync(IPredicate predicate)
         {
             if (predicate == null)
                 throw new ArgumentNullException("predicate");
