@@ -17,7 +17,8 @@
             if (persistence == null)
                 throw new ArgumentNullException("persistence");
 
-            throw new NotImplementedException();
+            var model = new Keyword(persistence.ArticleId, persistence.Word);
+            return Task.FromResult(model);
         }
 
         public override Task<EFDataAccess.Keyword> ConvertToPersistenceAsync(Keyword model)
