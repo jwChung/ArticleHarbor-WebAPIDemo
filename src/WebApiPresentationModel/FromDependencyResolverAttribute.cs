@@ -12,7 +12,7 @@
             if (parameter == null)
                 throw new ArgumentNullException("parameter");
 
-            throw new NotImplementedException();
+            return new DependencyParameterBinding(parameter.ParameterType, parameter);
         }
     }
 }
