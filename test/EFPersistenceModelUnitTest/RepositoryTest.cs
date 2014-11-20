@@ -290,7 +290,7 @@
         }
 
         [Test]
-        public IEnumerable<ITestCase> ExecuteDeleteommandAsyncCorrectlyDeletes()
+        public IEnumerable<ITestCase> ExecuteDeleteCommandAsyncCorrectlyDeletes()
         {
             yield return TestCase.WithAuto<DbContextTransaction, TssKeywordRepository>().Create(
                 (transaction, sut) =>
