@@ -288,6 +288,41 @@
             var e = Assert.Throws<AggregateException>(() => sut.DeleteAsync(keys).Wait());
             Assert.IsType<ArgumentException>(e.InnerException);
         }
+
+        [Test]
+        public IEnumerable<ITestCase> ExecuteDeleteommandAsyncCorrectlyDeletes()
+        {
+            yield return TestCase.WithAuto<DbContextTransaction, TssKeywordRepository>().Create(
+                (transaction, sut) =>
+                {
+                    try
+                    {
+                        sut.ExecuteDeleteCommandAsync(new EqualPredicate("@articleId", 1)).Wait();
+                        Assert.Equal(2, sut.DbSet.AsNoTracking().Count());
+                        Assert.Empty(sut.DbSet.Local);
+                    }
+                    finally
+                    {
+                        transaction.Rollback();
+                        transaction.Dispose();
+                    }
+                });
+            yield return TestCase.WithAuto<DbContextTransaction, TssKeywordRepository>().Create(
+                (transaction, sut) =>
+                {
+                    try
+                    {
+                        sut.ExecuteDeleteCommandAsync(new EqualPredicate("@word", "worda1")).Wait();
+                        Assert.Equal(2, sut.DbSet.AsNoTracking().Count());
+                        Assert.Empty(sut.DbSet.Local);
+                    }
+                    finally
+                    {
+                        transaction.Rollback();
+                        transaction.Dispose();
+                    }
+                });
+        }
     }
 
     public class TssArticleRepository : Repository<Keys<int>, Article, EFDataAccess.Article>

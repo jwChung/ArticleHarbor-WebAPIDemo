@@ -96,7 +96,7 @@
             if (predicate == null)
                 throw new ArgumentNullException("predicate");
 
-            throw new NotImplementedException();
+            return this.ExecuteDeleteCommandAsyncWith(predicate);
         }
 
         public abstract TModel ConvertToModel(TPersistence persistence);
@@ -137,6 +137,7 @@
         private async Task<IEnumerable<TModel>> ExecuteSelectCommandAsyncWith(IPredicate predicate)
         {
             string sql = string.Format("{0} WHERE {1};", this.dbSet, predicate.Condition);
+
             var sqlParameters = predicate.Parameters
                 .Select(x => new SqlParameter(x.Name, x.Value))
                 .ToArray();
@@ -144,6 +145,18 @@
             var result = await this.dbSet.SqlQuery(sql, sqlParameters)
                 .AsNoTracking().ToArrayAsync();
             return result.Select(x => this.ConvertToModel(x));
+        }
+
+        private async Task ExecuteDeleteCommandAsyncWith(IPredicate predicate)
+        {
+            string sql = string.Format(
+                "DELETE FROM {0} WHERE {1};", this.GetTableName(), predicate.Condition);
+
+            var sqlParameters = predicate.Parameters
+                .Select(x => new SqlParameter(x.Name, x.Value))
+                .ToArray();
+
+            await this.context.Database.ExecuteSqlCommandAsync(sql, sqlParameters);
         }
 
         private async Task<TPersistence> GetEntity(object[] keys)
@@ -159,6 +172,14 @@
                     "model");
 
             return entity;
+        }
+
+        private string GetTableName()
+        {
+            string selectSql = this.dbSet.ToString();
+            var start = selectSql.IndexOf("FROM") + 5;
+            var end = selectSql.LastIndexOf("AS");
+            return selectSql.Substring(start, end - start - 1);
         }
     }
 }
