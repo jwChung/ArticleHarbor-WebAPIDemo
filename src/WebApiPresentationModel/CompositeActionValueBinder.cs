@@ -23,10 +23,14 @@
 
         public HttpActionBinding GetBinding(HttpActionDescriptor actionDescriptor)
         {
-            if (actionDescriptor == null)
-                throw new ArgumentNullException("actionDescriptor");
+            foreach (var binder in this.Binders)
+            {
+                var binding = binder.GetBinding(actionDescriptor);
+                if (binding != null)
+                    return binding;
+            }
 
-            throw new NotImplementedException();
+            throw new InvalidOperationException("Cannot find action binding...");
         }
     }
 }
