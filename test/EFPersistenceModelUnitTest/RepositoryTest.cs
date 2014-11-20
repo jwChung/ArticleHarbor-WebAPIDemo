@@ -235,6 +235,35 @@
                 transaction.Dispose();
             }
         }
+
+        [Test]
+        public void DeleteAsyncCorrectlyDeletes(
+            DbContextTransaction transaction,
+            TssKeywordRepository sut)
+        {
+            try
+            {
+                var keys = new Keys<int, string>(1, "WordA1");
+
+                sut.DeleteAsync(keys).Wait();
+                sut.Context.SaveChanges();
+
+                Assert.Equal(2, sut.DbSet.AsNoTracking().Count());
+            }
+            finally
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+            }
+        }
+
+        [Test]
+        public void DeleteAsyncThrowsWhenDeletingNonExistEntity(
+            TssKeywordRepository sut, Keys<int, string> keys)
+        {
+            var e = Assert.Throws<AggregateException>(() => sut.DeleteAsync(keys).Wait());
+            Assert.IsType<ArgumentException>(e.InnerException);
+        }
     }
 
     public class TssArticleRepository : Repository<Keys<int>, Article, EFDataAccess.Article>

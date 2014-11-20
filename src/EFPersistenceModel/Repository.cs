@@ -79,7 +79,7 @@
             if (keys == null)
                 throw new ArgumentNullException("keys");
 
-            throw new NotImplementedException();
+            return this.DeleteAsyncWith(keys);
         }
 
         public Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(IPredicate predicate)
@@ -123,17 +123,29 @@
 
         private async Task DetachFromObjectContext(TModel model)
         {
-            var keyValues = model.GetKeys().ToArray();
-            var entity = await this.dbSet.FindAsync(keyValues);
+            var entity = await this.GetEntity(model.GetKeys().ToArray());
+            ((IObjectContextAdapter)this.context).ObjectContext.Detach(entity);
+        }
+
+        private async Task DeleteAsyncWith(TKeys keys)
+        {
+            var entity = await this.GetEntity(keys.ToArray());
+            this.dbSet.Remove(entity);
+        }
+
+        private async Task<TPersistence> GetEntity(object[] keys)
+        {
+            var entity = await this.dbSet.FindAsync(keys);
             if (entity == null)
                 throw new ArgumentException(
                     string.Format(
                         CultureInfo.CurrentCulture,
-                        "There is no entity corresponding with identity '{0}'.",
-                        string.Join(", ", keyValues)),
+                        "There is no '{0}' entity matched with identity '{1}'.",
+                        typeof(TPersistence).Name,
+                        string.Join(", ", keys)),
                     "model");
 
-            ((IObjectContextAdapter)this.context).ObjectContext.Detach(entity);
+            return entity;
         }
     }
 }
