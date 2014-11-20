@@ -10,6 +10,7 @@
     using DomainModel.Models;
     using DomainModel.Repositories;
     using EFDataAccess;
+    using Jwc.Experiment.Xunit;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit;
     using Ploeh.SemanticComparison.Fluent;
@@ -188,6 +189,29 @@
             article = article.WithId(4);
             var e = Assert.Throws<AggregateException>(() => sut.UpdateAsync(article).Wait());
             Assert.IsType<ArgumentException>(e.InnerException);
+        }
+
+        [Test]
+        public IEnumerable<ITestCase> ExecuteSelectCommandAsyncReturnsCorrectResult()
+        {
+            yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
+            {
+                var actual = sut.ExecuteSelectCommandAsync(new EqualPredicate("@id", 1)).Result;
+                Assert.Equal(1, actual.Single().Id);
+                Assert.Empty(sut.DbSet.Local);
+            });
+            yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
+            {
+                var actual = sut.ExecuteSelectCommandAsync(new EqualPredicate("@Guid", "1")).Result;
+                Assert.Equal(1, actual.Single().Id);
+                Assert.Empty(sut.DbSet.Local);
+            });
+            yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
+            {
+                var actual = sut.ExecuteSelectCommandAsync(new EqualPredicate("@body", "Body 1")).Result;
+                Assert.Equal(1, actual.Single().Id);
+                Assert.Empty(sut.DbSet.Local);
+            });
         }
     }
 

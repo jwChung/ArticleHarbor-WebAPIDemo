@@ -6,6 +6,7 @@
     using System.Data.Entity.Core;
     using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
+    using System.Data.SqlClient;
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
@@ -54,7 +55,7 @@
 
         public async Task<IEnumerable<TModel>> SelectAsync()
         {
-            var persistences = await this.dbSet.AsNoTracking().ToListAsync();
+            var persistences = await this.dbSet.AsNoTracking().ToArrayAsync();
             return persistences.Select(this.ConvertToModel);
         }
 
@@ -87,7 +88,7 @@
             if (predicate == null)
                 throw new ArgumentNullException("predicate");
 
-            throw new NotImplementedException();
+            return this.ExecuteSelectCommandAsyncWith(predicate);
         }
 
         public Task ExecuteDeleteCommandAsync(IPredicate predicate)
@@ -131,6 +132,18 @@
         {
             var entity = await this.GetEntity(keys.ToArray());
             this.dbSet.Remove(entity);
+        }
+
+        private async Task<IEnumerable<TModel>> ExecuteSelectCommandAsyncWith(IPredicate predicate)
+        {
+            string sql = string.Format("{0} WHERE {1};", this.dbSet, predicate.Condition);
+            var sqlParameters = predicate.Parameters
+                .Select(x => new SqlParameter(x.Name, x.Value))
+                .ToArray();
+
+            var result = await this.dbSet.SqlQuery(sql, sqlParameters)
+                .AsNoTracking().ToArrayAsync();
+            return result.Select(x => this.ConvertToModel(x));
         }
 
         private async Task<TPersistence> GetEntity(object[] keys)
