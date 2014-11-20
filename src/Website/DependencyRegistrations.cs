@@ -3,6 +3,7 @@ namespace ArticleHarbor.Website
     using System;
     using System.Data.Entity;
     using ArticleHarbor.DomainModel;
+    using ArticleHarbor.DomainModel.Models;
     using ArticleHarbor.EFDataAccess;
     using ArticleHarbor.EFPersistenceModel;
     using ArticleHarbor.WebApiPresentationModel;
@@ -39,6 +40,10 @@ namespace ArticleHarbor.Website
                 .ReusedWithinContainer();
 
             container.Register(
+                c => c.Resolve<ArticleHarborDbContext>().Articles)
+                .ReusedWithinContainer();
+
+            container.Register(
                 c => new Lazy<IUnitOfWork>(
                     () => new UnitOfWork(c.Resolve<ArticleHarborDbContext>())))
                 .ReusedWithinContainer();
@@ -61,6 +66,18 @@ namespace ArticleHarbor.Website
 
             container.Register<IBookmarkRepository>(
                 c => new BookmarkRepository(c.Resolve<ArticleHarborDbContext>()))
+                .ReusedWithinContainer();
+
+            container.Register(
+                c => new ArticleRepository2(
+                    c.Resolve<ArticleHarborDbContext>(),
+                    c.Resolve<DbSet<EFDataAccess.Article>>()))
+                .ReusedWithinContainer();
+            container.Register<IRepository<Keys<int>, Article>>(
+                c => c.Resolve<ArticleRepository2>())
+                .ReusedWithinContainer();
+            container.Register<IRepository<Article>>(
+                c => c.Resolve<ArticleRepository2>())
                 .ReusedWithinContainer();
 
             // Domain services
