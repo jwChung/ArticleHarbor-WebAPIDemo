@@ -113,7 +113,7 @@
         {
             try
             {
-                article = article.WithId(-1);
+                article = article.WithId(-1).WithUserId("user1");
 
                 var actual = sut.InsertAsync(article).Result;
                 
@@ -143,7 +143,7 @@
             try
             {
                 var actual = sut.DbSet.Find(1);
-                article = article.WithId(1).WithSubject(subject);
+                article = article.WithId(1).WithSubject(subject).WithUserId("user1");
 
                 sut.UpdateAsync(article).Wait();
                 sut.Context.SaveChanges();
@@ -167,7 +167,7 @@
         {
             try
             {
-                article = article.WithId(1).WithSubject(subject);
+                article = article.WithId(1).WithSubject(subject).WithUserId("user1");
 
                 sut.UpdateAsync(article).Wait();
                 sut.Context.SaveChanges();
@@ -211,6 +211,16 @@
             {
                 var actual = sut.ExecuteSelectCommandAsync(new EqualPredicate("@body", "Body 1")).Result;
                 Assert.Equal(1, actual.Single().Id);
+                Assert.Empty(sut.DbSet.Local);
+            });
+            yield return TestCase.WithAuto<TssArticleRepository, IPredicate>().Create((sut, predicate) =>
+            {
+                predicate.Of(x => x.Condition == "id <> @id");
+                predicate.Of(x => x.Parameters == new IParameter[] { new Parameter("@id", -1) });
+
+                var actual = sut.ExecuteSelectCommandAsync(predicate).Result;
+
+                Assert.Equal(3, actual.Count());
                 Assert.Empty(sut.DbSet.Local);
             });
         }
@@ -328,14 +338,18 @@
 
     public class TssArticleRepository : Repository<Keys<int>, Article, EFDataAccess.Article>
     {
-        public TssArticleRepository(DbContext context, DbSet<EFDataAccess.Article> dbSet)
+        private readonly ArticleHarborDbContext context;
+
+        public TssArticleRepository(ArticleHarborDbContext context, DbSet<EFDataAccess.Article> dbSet)
             : base(context, dbSet)
         {
+            this.context = context;
         }
 
-        public override Task<Article> ConvertToModelAsync(EFDataAccess.Article persistence)
+        public override async Task<Article> ConvertToModelAsync(EFDataAccess.Article persistence)
         {
-            return Task.FromResult(new Article(
+            var user = await this.context.UserManager.FindByIdAsync(persistence.UserId);
+            return new Article(
                 persistence.Id,
                 persistence.Provider,
                 persistence.Guid,
@@ -343,12 +357,13 @@
                 persistence.Body,
                 persistence.Date,
                 persistence.Url,
-                "dummy userid"));
+                user.UserName);
         }
 
-        public override Task<EFDataAccess.Article> ConvertToPersistenceAsync(Article model)
+        public override async Task<EFDataAccess.Article> ConvertToPersistenceAsync(Article model)
         {
-            return Task.FromResult(new EFDataAccess.Article
+            var user = await this.context.UserManager.FindByNameAsync(model.UserId);
+            return new EFDataAccess.Article
             {
                 Id = model.Id,
                 Provider = model.Provider,
@@ -356,8 +371,9 @@
                 Subject = model.Subject,
                 Body = model.Body,
                 Date = model.Date,
-                Url = model.Url
-            });
+                Url = model.Url,
+                UserId = user.Id
+            };
         }
     }
 

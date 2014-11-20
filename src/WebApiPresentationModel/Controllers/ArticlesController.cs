@@ -6,6 +6,7 @@
     using System.Web.Http;
     using DomainModel;
     using DomainModel.Models;
+    using DomainModel.Repositories;
     using DomainModel.Services;
     using Models;
 
@@ -26,10 +27,13 @@
             get { return this.articleService; }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This method is controller action.")]
-        public Task<IEnumerable<Article>> GetAsync()
+        public Task<IEnumerable<Article>> GetAsync(
+            [FromDependencyResolver] IRepository<Article> repository)
         {
-            return this.articleService.GetAsync();
+            if (repository == null)
+                throw new ArgumentNullException("repository");
+
+            return repository.SelectAsync();
         }
 
         [Authorize] // TODO: return unauthorized code when Unauthorized exceptin is thrown.

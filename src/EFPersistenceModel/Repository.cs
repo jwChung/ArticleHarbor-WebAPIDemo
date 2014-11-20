@@ -56,8 +56,7 @@
         public async Task<IEnumerable<TModel>> SelectAsync()
         {
             var persistences = await this.dbSet.AsNoTracking().ToArrayAsync();
-
-            return await Task.WhenAll(persistences.Select(this.ConvertToModelAsync));
+            return await this.ConvertToModels(persistences);
         }
 
         public Task<TModel> InsertAsync(TModel model)
@@ -143,9 +142,9 @@
                 .Select(x => new SqlParameter(x.Name, x.Value))
                 .ToArray();
 
-            var result = await this.dbSet.SqlQuery(sql, sqlParameters)
+            var persistences = await this.dbSet.SqlQuery(sql, sqlParameters)
                 .AsNoTracking().ToArrayAsync();
-            return await Task.WhenAll(result.Select(this.ConvertToModelAsync));
+            return await this.ConvertToModels(persistences);
         }
 
         private async Task ExecuteDeleteCommandAsyncWith(IPredicate predicate)
@@ -181,6 +180,15 @@
             var start = selectSql.IndexOf("FROM", StringComparison.CurrentCulture) + 5;
             var end = selectSql.LastIndexOf("AS", StringComparison.CurrentCulture);
             return selectSql.Substring(start, end - start - 1);
+        }
+
+        private async Task<IEnumerable<TModel>> ConvertToModels(TPersistence[] persistences)
+        {
+            var models = new TModel[persistences.Length];
+            for (int i = 0; i < models.Length; i++)
+                models[i] = await this.ConvertToModelAsync(persistences[i]);
+
+            return models;
         }
     }
 }
