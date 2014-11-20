@@ -1,6 +1,8 @@
 ﻿namespace ArticleHarbor.WebApiPresentationModel
 {
     using System;
+    using System.Globalization;
+    using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http.Controllers;
@@ -33,8 +35,16 @@
 
             if (actionContext == null)
                 throw new ArgumentNullException("actionContext");
+            
+            var value = actionContext.Request.GetDependencyScope().GetService(this.parameterType);
+            if (value == null)
+                throw new ArgumentException(string.Format(
+                    CultureInfo.CurrentCulture,
+                    "The parameter type '{0}' cannot be serviced by the depedency resolver.",
+                    this.parameterType));
 
-            throw new NotImplementedException();
+            this.SetValue(actionContext, value);
+            return Task.FromResult<object>(null);
         }
     }
 }
