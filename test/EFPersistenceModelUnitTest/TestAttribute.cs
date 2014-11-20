@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor
 {
     using System.Collections.Generic;
+    using System.Data.Common;
     using System.Data.Entity;
     using EFDataAccess;
     using Jwc.Experiment;

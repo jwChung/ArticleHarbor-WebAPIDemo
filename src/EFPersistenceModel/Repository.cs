@@ -3,6 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using System.Data.Entity.Core;
+    using System.Data.Entity.Core.Objects;
+    using System.Data.Entity.Infrastructure;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
     using DomainModel.Models;
@@ -67,7 +71,7 @@
             if (model == null)
                 throw new ArgumentNullException("model");
 
-            throw new NotImplementedException();
+            return this.UpdateAsyncWith(model);
         }
 
         public Task DeleteAsync(TKeys keys)
@@ -109,6 +113,27 @@
             var persistence = this.dbSet.Add(this.ConvertToPersistence(model));
             await this.context.SaveChangesAsync();
             return this.ConvertToModel(persistence);
+        }
+
+        private async Task UpdateAsyncWith(TModel model)
+        {
+            await this.DetachFromObjectContext(model);
+            this.context.Entry(this.ConvertToPersistence(model)).State = EntityState.Modified;
+        }
+
+        private async Task DetachFromObjectContext(TModel model)
+        {
+            var keyValues = model.GetKeys().ToArray();
+            var entity = await this.dbSet.FindAsync(keyValues);
+            if (entity == null)
+                throw new ArgumentException(
+                    string.Format(
+                        CultureInfo.CurrentCulture,
+                        "There is no entity corresponding with identity '{0}'.",
+                        string.Join(", ", keyValues)),
+                    "model");
+
+            ((IObjectContextAdapter)this.context).ObjectContext.Detach(entity);
         }
     }
 }

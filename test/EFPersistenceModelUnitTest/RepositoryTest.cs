@@ -104,7 +104,7 @@
 
         [Test]
         public void InsertAsyncReturnsCorrectResult(
-            DbTransaction transaction,
+            DbContextTransaction transaction,
             TssArticleRepository sut,
             Article article)
         {
@@ -127,13 +127,72 @@
                 transaction.Dispose();
             }
         }
+        
+        [Test]
+        public void UpdateAsyncCorrectlyUpdatesWhenContextAlreadyHasCorrespondingEntity(
+            DbContextTransaction transaction,
+            TssArticleRepository sut,
+            Article article,
+            string subject)
+        {
+            try
+            {
+                var actual = sut.DbSet.Find(1);
+                article = article.WithId(1).WithSubject(subject);
+
+                sut.UpdateAsync(article).Wait();
+                sut.Context.SaveChanges();
+
+                actual = sut.DbSet.Find(1);
+                Assert.Equal(subject, actual.Subject);
+            }
+            finally
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+            }
+        }
+
+        [Test]
+        public void UpdateAsyncCorrectlyUpdatesWhenContextDoesNotHaveCorrespondingEntity(
+            DbContextTransaction transaction,
+            TssArticleRepository sut,
+            Article article,
+            string subject)
+        {
+            try
+            {
+                article = article.WithId(1).WithSubject(subject);
+
+                sut.UpdateAsync(article).Wait();
+                sut.Context.SaveChanges();
+
+                var actual = sut.DbSet.Find(1);
+                Assert.Equal(subject, actual.Subject);
+            }
+            finally
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+            }
+        }
+
+        [Test]
+        public void UpdateAsyncWithIncorrectIdentityThrows(
+            TssArticleRepository sut,
+            Article article)
+        {
+            article = article.WithId(4);
+            var e = Assert.Throws<AggregateException>(() => sut.UpdateAsync(article).Wait());
+            Assert.IsType<ArgumentException>(e.InnerException);
+        }
     }
 
     public class RepositoryOfKeywordTest : RepositoryTest<Keys<int, string>, Keyword, EFDataAccess.Keyword>
     {
         [Test]
         public void InsertAsyncReturnsCorrectResult(
-            DbTransaction transaction,
+            DbContextTransaction transaction,
             TssKeywordRepository sut,
             string word)
         {
