@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data.Common;
     using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Reflection;
     using DomainModel.Models;
@@ -110,6 +111,8 @@
         {
             try
             {
+                article = article.WithId(-1);
+
                 var actual = sut.InsertAsync(article).Result;
                 
                 var count = sut.DbSet.AsNoTracking().Count();
@@ -207,6 +210,24 @@
                 Assert.Equal(1, actual.ArticleId);
                 keyword.AsSource().OfLikeness<Keyword>()
                     .ShouldEqual(actual);
+            }
+            finally
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+            }
+        }
+        
+        [Test]
+        public void InsertAsyncWithDuplicatedIdentityThrows(
+            DbContextTransaction transaction,
+            TssKeywordRepository sut)
+        {
+            try
+            {
+                var keyword = new Keyword(1, "WordA1");
+                var e = Assert.Throws<AggregateException>(() => sut.InsertAsync(keyword).Result);
+                Assert.IsType<DbUpdateException>(e.InnerException);
             }
             finally
             {
