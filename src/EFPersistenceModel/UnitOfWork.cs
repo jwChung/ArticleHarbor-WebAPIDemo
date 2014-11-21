@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.EFPersistenceModel
 {
     using System;
+    using System.Data.Entity;
     using System.Threading.Tasks;
     using DomainModel.Models;
     using DomainModel.Repositories;
@@ -29,22 +30,27 @@
 
         public IRepository<Keys<int>, Article> Articles
         {
-            get { throw new NotImplementedException(); }
+            get { return new ArticleRepository2(this.context, this.context.Articles); }
         }
 
         public IRepository<Keys<int, string>, Keyword> Keywords
         {
-            get { throw new NotImplementedException(); }
+            get { return new KeywordRepository2(this.context, this.context.Keywords); }
         }
 
         public IRepository<Keys<string, int>, Bookmark> Bookmarks
         {
-            get { throw new NotImplementedException(); }
+            get { return new BookmarkRepository2(this.context, this.context.Bookmarks); }
         }
 
         public IRepository<Keys<string>, User> Users
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                return new UserRepository2(
+                    this.context,
+                    (DbSet<EFDataAccess.User>)this.context.Users);
+            }
         }
 
         public Task SaveAsync()
