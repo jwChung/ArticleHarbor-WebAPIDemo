@@ -16,7 +16,7 @@ namespace ArticleHarbor.DomainModel.Models
 
         IModelCommand<TResult> Execute(IEnumerable<Keyword> keywords);
 
-        IModelCommand<TResult> Execute(Keyword keywords);
+        IModelCommand<TResult> Execute(Keyword keyword);
 
         IModelCommand<TResult> Execute(IEnumerable<Bookmark> bookmarks);
 

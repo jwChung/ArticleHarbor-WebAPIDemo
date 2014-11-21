@@ -45,7 +45,7 @@
                this, (c, k) => c.Execute(k));
         }
 
-        public virtual IModelCommand<TResult> Execute(Keyword keywords)
+        public virtual IModelCommand<TResult> Execute(Keyword keyword)
         {
             return this;
         }
