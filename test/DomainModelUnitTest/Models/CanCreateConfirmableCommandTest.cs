@@ -5,11 +5,11 @@
     using System.Threading.Tasks;
     using Xunit;
 
-    public class CreatePermissionInspectingCommandTest
-        : IdiomaticTest<CreatePermissionInspectingCommand>
+    public class CanCreateConfirmableCommandTest
+        : IdiomaticTest<CanCreateConfirmableCommand>
     {
         [Test]
-        public void SutIsModelCommand(CreatePermissionInspectingCommand sut)
+        public void SutIsModelCommand(CanCreateConfirmableCommand sut)
         {
             Assert.IsAssignableFrom<ModelCommand<IEnumerable<Task>>>(sut);
         }

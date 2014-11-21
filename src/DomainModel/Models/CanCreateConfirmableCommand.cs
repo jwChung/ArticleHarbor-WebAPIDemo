@@ -5,11 +5,11 @@
     using System.Security.Principal;
     using System.Threading.Tasks;
 
-    public class CreatePermissionInspectingCommand : ModelCommand<IEnumerable<Task>>
+    public class CanCreateConfirmableCommand : ModelCommand<IEnumerable<Task>>
     {
         private readonly IPrincipal principal;
 
-        public CreatePermissionInspectingCommand(IPrincipal principal)
+        public CanCreateConfirmableCommand(IPrincipal principal)
         {
             if (principal == null)
                 throw new ArgumentNullException("principal");

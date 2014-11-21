@@ -59,7 +59,7 @@
     <Compile Include="Collectors\ArticleTransformationCollector.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\CompositeModel.cs" />
-    <Compile Include="Models\CreatePermissionInspectingCommand.cs" />
+    <Compile Include="Models\CanCreateConfirmableCommand.cs" />
     <Compile Include="Models\EqualPredicate.cs" />
     <Compile Include="Models\IKeys.cs" />
     <Compile Include="Models\IModelCommand.cs" />
