@@ -33,7 +33,7 @@
         }
 
         [Test]
-        public void GetAsync2HasCorrectAttributeOnRepositoryParameter()
+        public void GetAsyncHasCorrectAttributeOnRepositoryParameter()
         {
             var attribute = this.Methods.Select(x => x.GetAsync(null))
                 .GetParameters().Single(x => x.Name == "repository")
