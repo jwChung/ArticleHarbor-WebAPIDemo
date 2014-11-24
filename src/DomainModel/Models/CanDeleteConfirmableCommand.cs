@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Security.Principal;
     using System.Threading.Tasks;
     using Repositories;
@@ -10,22 +11,33 @@
     {
         private readonly IPrincipal principal;
         private readonly IUnitOfWork unitOfWork;
+        private readonly IEnumerable<Task> result;
 
         public CanDeleteConfirmableCommand(IPrincipal principal, IUnitOfWork unitOfWork)
+            : this(principal, unitOfWork, Enumerable.Empty<Task>())
+        {
+        }
+        
+        public CanDeleteConfirmableCommand(
+            IPrincipal principal, IUnitOfWork unitOfWork, IEnumerable<Task> result)
         {
             if (principal == null)
                 throw new ArgumentNullException("principal");
 
             if (unitOfWork == null)
                 throw new ArgumentNullException("unitOfWork");
-            
+
+            if (result == null)
+                throw new ArgumentNullException("result");
+
             this.principal = principal;
             this.unitOfWork = unitOfWork;
+            this.result = result;
         }
 
         public override IEnumerable<Task> Result
         {
-            get { yield break; }
+            get { return this.result; }
         }
 
         public IPrincipal Principal
@@ -78,6 +90,23 @@
                 return base.Execute(bookmark);
 
             throw new UnauthorizedException();
+        }
+
+        public override IModelCommand<Task> Execute(Keyword keyword)
+        {
+            if (keyword == null)
+                throw new ArgumentNullException("keyword");
+
+            var task = Task.Run(async () =>
+            {
+                var article = await this.unitOfWork.Articles.FindAsync(
+                    new Keys<int>(keyword.ArticleId));
+
+                this.Execute(article);
+            });
+
+            return new CanDeleteConfirmableCommand(
+                this.principal, this.unitOfWork, new[] { task });
         }
 
         private bool IsAdministrator()

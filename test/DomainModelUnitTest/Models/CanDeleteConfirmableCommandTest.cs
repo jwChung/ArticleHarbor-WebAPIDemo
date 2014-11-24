@@ -1,8 +1,10 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
+    using Moq;
     using Xunit;
 
     public class CanDeleteConfirmableCommandTest : IdiomaticTest<CanDeleteConfirmableCommand>
@@ -179,9 +181,33 @@
             Assert.Equal(sut, actual);
         }
 
-        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
+        [Test]
+        public void ExecuteKeywordReturnsCorrectCommand(
+            CanDeleteConfirmableCommand sut,
+            Keyword keyword)
         {
-            yield return this.Properties.Select(x => x.Result);
+            var actual = sut.Execute(keyword);
+
+            var command = Assert.IsAssignableFrom<CanDeleteConfirmableCommand>(actual);
+            Assert.Equal(sut.Principal, command.Principal);
+            Assert.Equal(sut.UnitOfWork, command.UnitOfWork);
+        }
+
+        [Test]
+        public void ExecuteKeywordCallsExecuteWithCorrespondingArticle(
+            Mock<CanDeleteConfirmableCommand> mock,
+            Keyword keyword,
+            Article article)
+        {
+            var sut = mock.Object;
+            sut.UnitOfWork.Articles.Of(
+                x => x.FindAsync(new Keys<int>(keyword.ArticleId)) == Task.FromResult(article));
+            mock.Setup(x => x.Execute(article)).Returns(sut);
+
+            IModelCommand<Task> actual = sut.Execute(keyword);
+
+            actual.Result.Single().Wait();
+            mock.Verify(x => x.Execute(article));
         }
     }
 }
