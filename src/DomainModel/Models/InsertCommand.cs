@@ -79,5 +79,19 @@
             return new InsertCommand(
                 this.unitOfWork, this.result.Concat(new Task<IModel>[] { task }));
         }
+
+        public override IModelCommand<Task<IModel>> Execute(Bookmark bookmark)
+        {
+            if (bookmark == null)
+                throw new ArgumentNullException("bookmark");
+
+            var task = Task.Run<IModel>(async () =>
+            {
+                return await this.unitOfWork.Bookmarks.InsertAsync(bookmark);
+            });
+
+            return new InsertCommand(
+                this.unitOfWork, this.result.Concat(new Task<IModel>[] { task }));
+        }
     }
 }

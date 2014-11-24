@@ -105,5 +105,33 @@
             Assert.Equal(sut.UnitOfWork, command.UnitOfWork);
             Assert.True(result.All(x => command.Result.Contains(x)));
         }
+
+        [Test]
+        public void ExecuteBookmarkAddsBookmarkToRepository(
+            InsertCommand sut,
+            Bookmark bookmark,
+            Bookmark newBookmark)
+        {
+            sut.UnitOfWork.Bookmarks.Of(x => x.InsertAsync(bookmark) == Task.FromResult(newBookmark));
+
+            var actual = sut.Execute(bookmark);
+
+            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            var model = command.Result.Single().Result;
+            Assert.Equal(newBookmark, model);
+        }
+
+        [Test]
+        public void ExecuteBookmarkReturnsCorrectResult(
+            [Frozen] IEnumerable<Task<IModel>> result,
+            [Greedy] InsertCommand sut,
+            Bookmark bookmark)
+        {
+            var actual = sut.Execute(bookmark);
+
+            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            Assert.Equal(sut.UnitOfWork, command.UnitOfWork);
+            Assert.True(result.All(x => command.Result.Contains(x)));
+        }
     }
 }
