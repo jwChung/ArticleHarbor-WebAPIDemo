@@ -18,7 +18,8 @@
         {
         }
 
-        public CanModifyConfirmableCommand(IPrincipal principal, IUnitOfWork unitOfWork, IEnumerable<Task> result)
+        public CanModifyConfirmableCommand(
+            IPrincipal principal, IUnitOfWork unitOfWork, IEnumerable<Task> result)
         {
             if (principal == null)
                 throw new ArgumentNullException("principal");
@@ -51,13 +52,45 @@
 
         public override IModelCommand<Task> Execute(Article article)
         {
-            if (this.Principal.IsInRole(Role.Administrator.ToString()))
+            if (this.IsAdministrator())
                 return base.Execute(article);
 
-            if (this.Principal.IsInRole(Role.Author.ToString()) && article.UserId.Equals(this.principal.Identity.Name, StringComparison.CurrentCultureIgnoreCase))
+            if (this.IsAuthorOwner(article.UserId))
                 return base.Execute(article);
 
             throw new UnauthorizedException();
+        }
+
+        public override IModelCommand<Task> Execute(Keyword keyword)
+        {
+            if (keyword == null)
+                throw new ArgumentNullException("keyword");
+
+            var task = Task.Run(async () =>
+            {
+                var article = await this.unitOfWork.Articles.FindAsync(
+                    new Keys<int>(keyword.ArticleId));
+
+                this.Execute(article);
+            });
+
+            return new CanModifyConfirmableCommand(
+                this.principal,
+                this.unitOfWork,
+                this.result.Concat(new[] { task }));
+        }
+
+        private bool IsAdministrator()
+        {
+            return this.principal.IsInRole(Role.Administrator.ToString());
+        }
+
+        private bool IsAuthorOwner(string userId)
+        {
+            bool isOwner = userId.Equals(
+                this.principal.Identity.Name, StringComparison.CurrentCultureIgnoreCase);
+
+            return this.principal.IsInRole(Role.Author.ToString()) && isOwner;
         }
     }
 }
