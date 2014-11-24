@@ -19,7 +19,7 @@
         [Test]
         public void ResultReturnsEmpty(CanCreateConfirmableCommand sut)
         {
-            Assert.Empty(sut.Result2);
+            Assert.Empty(sut.Result);
         }
 
         [Test]
@@ -93,7 +93,7 @@
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
-            yield return this.Properties.Select(x => x.Result2);
+            yield return this.Properties.Select(x => x.Result);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()

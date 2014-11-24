@@ -4,7 +4,7 @@ namespace ArticleHarbor.DomainModel.Models
 
     public interface IModelCommand<out TResult>
     {
-        IEnumerable<TResult> Result2 { get; }
+        IEnumerable<TResult> Result { get; }
 
         IModelCommand<TResult> Execute(IEnumerable<User> users);
 

@@ -17,7 +17,7 @@
             this.principal = principal;
         }
 
-        public override IEnumerable<object> Result2
+        public override IEnumerable<object> Result
         {
             get { yield break; }
         }
