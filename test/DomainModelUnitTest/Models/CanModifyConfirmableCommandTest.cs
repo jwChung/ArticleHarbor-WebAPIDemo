@@ -150,9 +150,57 @@
             Assert.Equal(sut, actual);
         }
 
-        protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
+        [Test]
+        public void ExecuteUserWithInvalidRoleThrows(
+            CanModifyConfirmableCommand sut,
+            User user)
         {
-            yield return this.Methods.Select(x => x.Execute(default(User)));
+            Assert.Throws<UnauthorizedException>(() => sut.Execute(user));
+        }
+
+        [Test]
+        public void ExecuteUserWithAdministratorRoleDoesNotThrow(
+            CanModifyConfirmableCommand sut,
+            User user)
+        {
+            sut.Principal.Of(x => x.IsInRole("Administrator") == true);
+            var actual = sut.Execute(user);
+            Assert.Equal(sut, actual);
+        }
+
+        [Test]
+        public void ExecuteUserWithAuthorRoleAndCorrectOwnerIdDoesNotThrow(
+            CanModifyConfirmableCommand sut,
+            User user)
+        {
+            sut.Principal.Of(x => x.IsInRole("Author") == true);
+            sut.Principal.Identity.Of(x => x.Name == user.Id);
+
+            var actual = sut.Execute(user);
+
+            Assert.Equal(sut, actual);
+        }
+
+        [Test]
+        public void ExecuteUserWithAuthorRoleAndIncorrectOwnerIdThrow(
+            CanModifyConfirmableCommand sut,
+            User user)
+        {
+            sut.Principal.Of(x => x.IsInRole("Author") == true);
+            Assert.Throws<UnauthorizedException>(() => sut.Execute(user));
+        }
+
+        [Test]
+        public void ExecuteUserIgnoresUserNameCase(
+            CanModifyConfirmableCommand sut,
+            User user)
+        {
+            sut.Principal.Of(x => x.IsInRole("Author") == true);
+            sut.Principal.Identity.Of(x => x.Name == user.Id.ToUpper());
+
+            var actual = sut.Execute(user);
+
+            Assert.Equal(sut, actual);
         }
     }
 }

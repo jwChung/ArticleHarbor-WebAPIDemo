@@ -50,6 +50,20 @@
             get { return this.unitOfWork; }
         }
 
+        public override IModelCommand<Task> Execute(User user)
+        {
+            if (user == null)
+                throw new ArgumentNullException("user");
+
+            if (this.IsAdministrator())
+                return base.Execute(user);
+
+            if (this.IsAuthorOwner(user.Id))
+                return base.Execute(user);
+
+            throw new UnauthorizedException();
+        }
+
         public override IModelCommand<Task> Execute(Article article)
         {
             if (article == null)
