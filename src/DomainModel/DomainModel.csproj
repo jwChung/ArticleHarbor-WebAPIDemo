@@ -58,6 +58,7 @@
     <Compile Include="Collectors\SubjectFromBodyTransformation.cs" />
     <Compile Include="Collectors\ArticleTransformationCollector.cs" />
     <Compile Include="Models\Article.cs" />
+    <Compile Include="Models\CanDeleteConfirmableCommand.cs" />
     <Compile Include="Models\CanModifyConfirmableCommand.cs" />
     <Compile Include="Models\CompositeModel.cs" />
     <Compile Include="Models\CanCreateConfirmableCommand.cs" />
