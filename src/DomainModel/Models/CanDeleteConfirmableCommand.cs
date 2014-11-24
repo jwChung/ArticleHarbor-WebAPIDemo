@@ -8,7 +8,7 @@
     {
         public override IEnumerable<Task> Result
         {
-            get { throw new NotImplementedException(); }
+            get { yield break; }
         }
     }
 }
