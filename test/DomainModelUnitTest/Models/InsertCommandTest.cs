@@ -13,6 +13,13 @@
             Assert.IsAssignableFrom<ModelCommand<Task<IModel>>>(sut);
         }
 
+        [Test]
+        public void ResultIsEmpty(InsertCommand sut)
+        {
+            var actual = sut.Result;
+            Assert.Empty(actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.Result);
