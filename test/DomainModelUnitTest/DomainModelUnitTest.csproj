@@ -109,6 +109,7 @@
     <Compile Include="Models\CompositeModelTest.cs" />
     <Compile Include="Models\CanCreateConfirmableCommandTest.cs" />
     <Compile Include="Models\EqualPredicateTest.cs" />
+    <Compile Include="Models\InsertCommandTest.cs" />
     <Compile Include="Models\KeysTest.cs" />
     <Compile Include="Models\ModelCommandTest.cs" />
     <Compile Include="Models\ParameterTest.cs" />

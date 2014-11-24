@@ -65,6 +65,7 @@
     <Compile Include="Models\EqualPredicate.cs" />
     <Compile Include="Models\IKeys.cs" />
     <Compile Include="Models\IModelCommand.cs" />
+    <Compile Include="Models\InsertCommand.cs" />
     <Compile Include="Models\Keys.cs" />
     <Compile Include="Models\IParameter.cs" />
     <Compile Include="Models\IPredicate.cs" />
