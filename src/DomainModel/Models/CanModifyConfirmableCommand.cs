@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
     using Repositories;
 
-    public class CanModifyConfirmableCommand : ModelCommand<Task>
+    public class CanModifyConfirmableCommand : ModelCommand<IEnumerable<Task>>
     {
         private readonly IPrincipal principal;
         private readonly IUnitOfWork unitOfWork;
@@ -45,7 +45,7 @@
             get { return this.unitOfWork; }
         }
 
-        public override IModelCommand<Task> Execute(User user)
+        public override IModelCommand<IEnumerable<Task>> Execute(User user)
         {
             if (user == null)
                 throw new ArgumentNullException("user");
@@ -59,7 +59,7 @@
             throw new UnauthorizedException();
         }
 
-        public override IModelCommand<Task> Execute(Article article)
+        public override IModelCommand<IEnumerable<Task>> Execute(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
@@ -73,7 +73,7 @@
             throw new UnauthorizedException();
         }
 
-        public override IModelCommand<Task> Execute(Keyword keyword)
+        public override IModelCommand<IEnumerable<Task>> Execute(Keyword keyword)
         {
             if (keyword == null)
                 throw new ArgumentNullException("keyword");
@@ -92,7 +92,7 @@
                 this.result.Concat(new[] { task }));
         }
 
-        public override IModelCommand<Task> Execute(Bookmark bookmark)
+        public override IModelCommand<IEnumerable<Task>> Execute(Bookmark bookmark)
         {
             if (bookmark == null)
                 throw new ArgumentNullException("bookmark");

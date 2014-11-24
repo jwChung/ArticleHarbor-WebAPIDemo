@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using Repositories;
 
-    public class ModelInsertingCommand : ModelCommand<Task<IModel>>
+    public class ModelInsertingCommand : ModelCommand<IEnumerable<Task<IModel>>>
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IEnumerable<Task<IModel>> result;
@@ -33,7 +33,7 @@
             get { return this.unitOfWork; }
         }
 
-        public override IModelCommand<Task<IModel>> Execute(User user)
+        public override IModelCommand<IEnumerable<Task<IModel>>> Execute(User user)
         {
             if (user == null)
                 throw new ArgumentNullException("user");
@@ -47,7 +47,7 @@
                 this.unitOfWork, this.result.Concat(new Task<IModel>[] { task }));
         }
 
-        public override IModelCommand<Task<IModel>> Execute(Article article)
+        public override IModelCommand<IEnumerable<Task<IModel>>> Execute(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
@@ -61,7 +61,7 @@
                 this.unitOfWork, this.result.Concat(new Task<IModel>[] { task }));
         }
 
-        public override IModelCommand<Task<IModel>> Execute(Keyword keyword)
+        public override IModelCommand<IEnumerable<Task<IModel>>> Execute(Keyword keyword)
         {
             if (keyword == null)
                 throw new ArgumentNullException("keyword");
@@ -75,7 +75,7 @@
                 this.unitOfWork, this.result.Concat(new Task<IModel>[] { task }));
         }
 
-        public override IModelCommand<Task<IModel>> Execute(Bookmark bookmark)
+        public override IModelCommand<IEnumerable<Task<IModel>>> Execute(Bookmark bookmark)
         {
             if (bookmark == null)
                 throw new ArgumentNullException("bookmark");

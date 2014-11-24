@@ -13,7 +13,7 @@
         [Test]
         public void SutIsModelCommand(CanDeleteConfirmableCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<Task>>(sut);
+            Assert.IsAssignableFrom<ModelCommand<IEnumerable<Task>>>(sut);
         }
 
         [Test]
@@ -200,7 +200,7 @@
                 x => x.FindAsync(new Keys<int>(keyword.ArticleId)) == Task.FromResult(article));
             mock.Setup(x => x.Execute(article)).Returns(sut);
 
-            IModelCommand<Task> actual = sut.Execute(keyword);
+            IModelCommand<IEnumerable<Task>> actual = sut.Execute(keyword);
 
             actual.Result.Last().Wait();
             mock.Verify(x => x.Execute(article));

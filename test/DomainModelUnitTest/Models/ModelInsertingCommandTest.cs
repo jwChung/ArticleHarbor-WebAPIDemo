@@ -12,7 +12,7 @@
         [Test]
         public void SutIsModelCommand(ModelInsertingCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<Task<IModel>>>(sut);
+            Assert.IsAssignableFrom<ModelCommand<IEnumerable<Task<IModel>>>>(sut);
         }
 
         [Test]
