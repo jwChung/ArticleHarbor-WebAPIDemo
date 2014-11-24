@@ -7,6 +7,24 @@
     [AttributeUsage(AttributeTargets.Parameter)]
     public sealed class FromDependencyResolverAttribute : ParameterBindingAttribute
     {
+        private Type @as;
+
+        public Type As
+        {
+            get
+            {
+                return this.@as;
+            }
+
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("value");
+
+                this.@as = value;
+            }
+        }
+
         public override HttpParameterBinding GetBinding(HttpParameterDescriptor parameter)
         {
             if (parameter == null)
