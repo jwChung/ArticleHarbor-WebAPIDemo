@@ -65,6 +65,20 @@
 
             throw new UnauthorizedException();
         }
+        
+        public override IModelCommand<Task> Execute(Bookmark bookmark)
+        {
+            if (bookmark == null)
+                throw new ArgumentNullException("bookmark");
+
+            if (this.IsAdministrator())
+                return base.Execute(bookmark);
+
+            if (this.IsAuthorOwner(bookmark.UserId))
+                return base.Execute(bookmark);
+
+            throw new UnauthorizedException();
+        }
 
         private bool IsAdministrator()
         {

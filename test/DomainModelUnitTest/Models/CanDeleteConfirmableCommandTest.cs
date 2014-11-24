@@ -126,6 +126,59 @@
             Assert.Equal(sut, actual);
         }
 
+        [Test]
+        public void ExecuteBookmarkWithInvalidRoleThrows(
+            CanDeleteConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            Assert.Throws<UnauthorizedException>(() => sut.Execute(bookmark));
+        }
+
+        [Test]
+        public void ExecuteBookmarkWithAdministratorRoleDoesNotThrow(
+            CanDeleteConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            sut.Principal.Of(x => x.IsInRole("Administrator") == true);
+            var actual = sut.Execute(bookmark);
+            Assert.Equal(sut, actual);
+        }
+
+        [Test]
+        public void ExecuteBookmarkWithAuthorRoleAndCorrectOwnerIdDoesNotThrow(
+            CanDeleteConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            sut.Principal.Of(x => x.IsInRole("Author") == true);
+            sut.Principal.Identity.Of(x => x.Name == bookmark.UserId);
+
+            var actual = sut.Execute(bookmark);
+
+            Assert.Equal(sut, actual);
+        }
+
+        [Test]
+        public void ExecuteBookmarkWithAuthorRoleAndIncorrectOwnerIdThrow(
+            CanDeleteConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            sut.Principal.Of(x => x.IsInRole("Author") == true);
+            Assert.Throws<UnauthorizedException>(() => sut.Execute(bookmark));
+        }
+
+        [Test]
+        public void ExecuteBookmarkIgnoresBookmarkNameCase(
+            CanDeleteConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            sut.Principal.Of(x => x.IsInRole("Author") == true);
+            sut.Principal.Identity.Of(x => x.Name == bookmark.UserId.ToUpper());
+
+            var actual = sut.Execute(bookmark);
+
+            Assert.Equal(sut, actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.Result);
