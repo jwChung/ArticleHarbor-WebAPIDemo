@@ -34,7 +34,7 @@
         }
 
         [Test]
-        public void ExecuteArticleWithAuthorRoleAndOwnIdDoesNotThrow(
+        public void ExecuteArticleWithAuthorRoleAndCorrectOwnerIdDoesNotThrow(
             CanModifyConfirmableCommand sut,
             Article article)
         {
@@ -47,7 +47,7 @@
         }
 
         [Test]
-        public void ExecuteArticleWithAuthorRoleAndIncorrectOwnIdThrow(
+        public void ExecuteArticleWithAuthorRoleAndIncorrectOwnerIdThrow(
             CanModifyConfirmableCommand sut,
             Article article)
         {
@@ -96,7 +96,60 @@
             Assert.Equal(sut.Principal, command.Principal);
             Assert.Equal(sut.UnitOfWork, command.UnitOfWork);
         }
-        
+
+        [Test]
+        public void ExecuteBookmarkWithInvalidRoleThrows(
+            CanModifyConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            Assert.Throws<UnauthorizedException>(() => sut.Execute(bookmark));
+        }
+
+        [Test]
+        public void ExecuteBookmarkWithAdministratorRoleDoesNotThrow(
+            CanModifyConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            sut.Principal.Of(x => x.IsInRole("Administrator") == true);
+            var actual = sut.Execute(bookmark);
+            Assert.Equal(sut, actual);
+        }
+
+        [Test]
+        public void ExecuteBookmarkWithAuthorRoleAndCorrectOwnerIdDoesNotThrow(
+            CanModifyConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            sut.Principal.Of(x => x.IsInRole("Author") == true);
+            sut.Principal.Identity.Of(x => x.Name == bookmark.UserId);
+
+            var actual = sut.Execute(bookmark);
+
+            Assert.Equal(sut, actual);
+        }
+
+        [Test]
+        public void ExecuteBookmarkWithAuthorRoleAndIncorrectOwnerIdThrow(
+            CanModifyConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            sut.Principal.Of(x => x.IsInRole("Author") == true);
+            Assert.Throws<UnauthorizedException>(() => sut.Execute(bookmark));
+        }
+
+        [Test]
+        public void ExecuteBookmarkIgnoresUserNameCase(
+            CanModifyConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            sut.Principal.Of(x => x.IsInRole("Author") == true);
+            sut.Principal.Identity.Of(x => x.Name == bookmark.UserId.ToUpper());
+
+            var actual = sut.Execute(bookmark);
+
+            Assert.Equal(sut, actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
             yield return this.Methods.Select(x => x.Execute(default(Article)));

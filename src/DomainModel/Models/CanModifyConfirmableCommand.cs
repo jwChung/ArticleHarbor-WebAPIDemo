@@ -80,6 +80,17 @@
                 this.result.Concat(new[] { task }));
         }
 
+        public override IModelCommand<Task> Execute(Bookmark bookmark)
+        {
+            if (this.IsAdministrator())
+                return base.Execute(bookmark);
+
+            if (this.IsAuthorOwner(bookmark.UserId))
+                return base.Execute(bookmark);
+
+            throw new UnauthorizedException();
+        }
+
         private bool IsAdministrator()
         {
             return this.principal.IsInRole(Role.Administrator.ToString());
