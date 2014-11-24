@@ -16,13 +16,6 @@
         }
 
         [Test]
-        public void ResultIsEmpty(ModelInsertingCommand sut)
-        {
-            var actual = sut.Result;
-            Assert.Empty(actual);
-        }
-
-        [Test]
         public void ExecuteUserAddsUserToRepository(
             ModelInsertingCommand sut,
             User user,
@@ -33,7 +26,7 @@
             var actual = sut.Execute(user);
 
             var command = Assert.IsAssignableFrom<ModelInsertingCommand>(actual);
-            var model = command.Result.Single().Result;
+            var model = command.Result.Last().Result;
             Assert.Equal(newUser, model);
         }
 
@@ -61,7 +54,7 @@
             var actual = sut.Execute(article);
 
             var command = Assert.IsAssignableFrom<ModelInsertingCommand>(actual);
-            var model = command.Result.Single().Result;
+            var model = command.Result.Last().Result;
             Assert.Equal(newArticle, model);
         }
 
@@ -89,7 +82,7 @@
             var actual = sut.Execute(keyword);
 
             var command = Assert.IsAssignableFrom<ModelInsertingCommand>(actual);
-            var model = command.Result.Single().Result;
+            var model = command.Result.Last().Result;
             Assert.Equal(newKeyword, model);
         }
 
@@ -117,7 +110,7 @@
             var actual = sut.Execute(bookmark);
 
             var command = Assert.IsAssignableFrom<ModelInsertingCommand>(actual);
-            var model = command.Result.Single().Result;
+            var model = command.Result.Last().Result;
             Assert.Equal(newBookmark, model);
         }
 

@@ -17,13 +17,6 @@
         }
 
         [Test]
-        public void ResultIsEmpty(CanDeleteConfirmableCommand sut)
-        {
-            var actual = sut.Result;
-            Assert.Empty(actual);
-        }
-
-        [Test]
         public void ExecuteUserWithInvalidRoleThrows(
             CanDeleteConfirmableCommand sut,
             User user)
@@ -185,7 +178,7 @@
         [Test]
         public void ExecuteKeywordReturnsCorrectCommand(
             [Frozen] IEnumerable<Task> result,
-            [Greedy] CanDeleteConfirmableCommand sut,
+            CanDeleteConfirmableCommand sut,
             Keyword keyword)
         {
             var actual = sut.Execute(keyword);
@@ -209,7 +202,7 @@
 
             IModelCommand<Task> actual = sut.Execute(keyword);
 
-            actual.Result.Single().Wait();
+            actual.Result.Last().Wait();
             mock.Verify(x => x.Execute(article));
         }
     }

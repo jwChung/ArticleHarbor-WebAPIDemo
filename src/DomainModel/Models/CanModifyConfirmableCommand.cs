@@ -13,11 +13,6 @@
         private readonly IUnitOfWork unitOfWork;
         private readonly IEnumerable<Task> result;
 
-        public CanModifyConfirmableCommand(IPrincipal principal, IUnitOfWork unitOfWork)
-            : this(principal, unitOfWork, Enumerable.Empty<Task>())
-        {
-        }
-
         public CanModifyConfirmableCommand(
             IPrincipal principal, IUnitOfWork unitOfWork, IEnumerable<Task> result)
         {

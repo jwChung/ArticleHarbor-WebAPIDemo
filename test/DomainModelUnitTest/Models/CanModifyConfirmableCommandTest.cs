@@ -82,14 +82,14 @@
 
             IModelCommand<Task> actual = sut.Execute(keyword);
 
-            actual.Result.Single().Wait();
+            actual.Result.Last().Wait();
             mock.Verify(x => x.Execute(article));
         }
 
         [Test]
         public void ExecuteKeywordReturnsCorrectCommand(
             [Frozen] IEnumerable<Task> result,
-            [Greedy] CanModifyConfirmableCommand sut,
+            CanModifyConfirmableCommand sut,
             Keyword keyword)
         {
             var actual = sut.Execute(keyword);

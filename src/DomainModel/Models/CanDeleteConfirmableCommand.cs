@@ -13,11 +13,6 @@
         private readonly IUnitOfWork unitOfWork;
         private readonly IEnumerable<Task> result;
 
-        public CanDeleteConfirmableCommand(IPrincipal principal, IUnitOfWork unitOfWork)
-            : this(principal, unitOfWork, Enumerable.Empty<Task>())
-        {
-        }
-        
         public CanDeleteConfirmableCommand(
             IPrincipal principal, IUnitOfWork unitOfWork, IEnumerable<Task> result)
         {

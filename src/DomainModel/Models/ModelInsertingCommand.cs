@@ -11,11 +11,6 @@
         private readonly IUnitOfWork unitOfWork;
         private readonly IEnumerable<Task<IModel>> result;
 
-        public ModelInsertingCommand(IUnitOfWork unitOfWork)
-            : this(unitOfWork, Enumerable.Empty<Task<IModel>>())
-        {
-        }
-
         public ModelInsertingCommand(IUnitOfWork unitOfWork, IEnumerable<Task<IModel>> result)
         {
             if (unitOfWork == null)
