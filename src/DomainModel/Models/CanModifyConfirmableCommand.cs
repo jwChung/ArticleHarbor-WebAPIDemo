@@ -3,9 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Security.Principal;
+    using System.Threading.Tasks;
     using Repositories;
 
-    public class CanModifyConfirmableCommand : ModelCommand<object>
+    public class CanModifyConfirmableCommand : ModelCommand<Task>
     {
         private readonly IPrincipal principal;
         private readonly IUnitOfWork unitOfWork;
@@ -22,7 +23,7 @@
             this.unitOfWork = unitOfWork;
         }
 
-        public override IEnumerable<object> Result
+        public override IEnumerable<Task> Result
         {
             get { throw new NotImplementedException(); }
         }
@@ -37,7 +38,7 @@
             get { return this.unitOfWork; }
         }
 
-        public override IModelCommand<object> Execute(Article article)
+        public override IModelCommand<Task> Execute(Article article)
         {
             if (this.Principal.IsInRole(Role.Administrator.ToString()))
                 return base.Execute(article);

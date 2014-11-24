@@ -5,7 +5,7 @@
     using System.Security.Principal;
     using System.Threading.Tasks;
 
-    public class CanCreateConfirmableCommand : ModelCommand<object>
+    public class CanCreateConfirmableCommand : ModelCommand<Task>
     {
         private readonly IPrincipal principal;
 
@@ -17,7 +17,7 @@
             this.principal = principal;
         }
 
-        public override IEnumerable<object> Result
+        public override IEnumerable<Task> Result
         {
             get { yield break; }
         }
@@ -27,25 +27,25 @@
             get { return this.principal; }
         }
 
-        public override IModelCommand<object> Execute(Article article)
+        public override IModelCommand<Task> Execute(Article article)
         {
             this.ConfirmCanCreate();
             return base.Execute(article);
         }
 
-        public override IModelCommand<object> Execute(Keyword keyword)
+        public override IModelCommand<Task> Execute(Keyword keyword)
         {
             this.ConfirmCanCreate();
             return base.Execute(keyword);
         }
 
-        public override IModelCommand<object> Execute(Bookmark bookmark)
+        public override IModelCommand<Task> Execute(Bookmark bookmark)
         {
             this.ConfirmCanCreate();
             return base.Execute(bookmark);
         }
 
-        public override IModelCommand<object> Execute(User user)
+        public override IModelCommand<Task> Execute(User user)
         {
             throw new UnauthorizedException();
         }

@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Reflection;
-    using Ploeh.Albedo;
+    using System.Threading.Tasks;
     using Xunit;
 
     public class CanModifyConfirmableCommandTest : IdiomaticTest<CanModifyConfirmableCommand>
@@ -10,7 +10,7 @@
         [Test]
         public void SutIsModelCommand(CanModifyConfirmableCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<object>>(sut);
+            Assert.IsAssignableFrom<ModelCommand<Task>>(sut);
         }
 
         [Test]

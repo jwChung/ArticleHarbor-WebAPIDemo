@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Threading.Tasks;
     using Jwc.Experiment.Xunit;
     using Ploeh.Albedo;
     using Xunit;
@@ -13,7 +14,7 @@
         [Test]
         public void SutIsModelCommand(CanCreateConfirmableCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<object>>(sut);
+            Assert.IsAssignableFrom<ModelCommand<Task>>(sut);
         }
 
         [Test]
