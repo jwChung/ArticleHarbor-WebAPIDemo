@@ -37,5 +37,32 @@
         {
             get { return this.unitOfWork; }
         }
+
+        public override IModelCommand<Task> Execute(User user)
+        {
+            if (user == null)
+                throw new ArgumentNullException("user");
+
+            if (this.IsAdministrator())
+                return base.Execute(user);
+
+            if (this.IsAuthorOwner(user.Id))
+                return base.Execute(user);
+
+            throw new UnauthorizedException();
+        }
+
+        private bool IsAdministrator()
+        {
+            return this.principal.IsInRole(Role.Administrator.ToString());
+        }
+
+        private bool IsAuthorOwner(string userId)
+        {
+            bool isOwner = userId.Equals(
+                this.principal.Identity.Name, StringComparison.CurrentCultureIgnoreCase);
+
+            return this.principal.IsInRole(Role.Author.ToString()) && isOwner;
+        }
     }
 }
