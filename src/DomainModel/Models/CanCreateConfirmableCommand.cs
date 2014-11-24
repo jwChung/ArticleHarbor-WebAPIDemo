@@ -17,14 +17,9 @@
             this.principal = principal;
         }
 
-        public override object Result
-        {
-            get { throw new NotSupportedException("This command does not have any result."); }
-        }
-
         public override IEnumerable<object> Result2
         {
-            get { throw new NotImplementedException(); }
+            get { yield break; }
         }
 
         public IPrincipal Principal

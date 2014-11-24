@@ -1,6 +1,5 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -18,9 +17,9 @@
         }
 
         [Test]
-        public void ResultThrows(CanCreateConfirmableCommand sut)
+        public void ResultReturnsEmpty(CanCreateConfirmableCommand sut)
         {
-            Assert.Throws<NotSupportedException>(() => sut.Result);
+            Assert.Empty(sut.Result2);
         }
 
         [Test]
@@ -94,8 +93,7 @@
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
-            yield return this.Properties.Select(x => x.Result);
-            yield return Constructors.Select(() => new CanCreateConfirmableCommand(null));
+            yield return this.Properties.Select(x => x.Result2);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
