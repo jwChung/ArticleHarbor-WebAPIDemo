@@ -52,6 +52,9 @@
 
         public override IModelCommand<Task> Execute(Article article)
         {
+            if (article == null)
+                throw new ArgumentNullException("article");
+
             if (this.IsAdministrator())
                 return base.Execute(article);
 
@@ -82,6 +85,9 @@
 
         public override IModelCommand<Task> Execute(Bookmark bookmark)
         {
+            if (bookmark == null)
+                throw new ArgumentNullException("bookmark");
+
             if (this.IsAdministrator())
                 return base.Execute(bookmark);
 

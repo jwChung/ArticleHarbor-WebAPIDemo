@@ -152,8 +152,6 @@
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
-            yield return this.Methods.Select(x => x.Execute(default(Article)));
-            yield return this.Methods.Select(x => x.Execute(default(Bookmark)));
             yield return this.Methods.Select(x => x.Execute(default(User)));
         }
     }
