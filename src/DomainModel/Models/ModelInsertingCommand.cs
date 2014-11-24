@@ -6,17 +6,17 @@
     using System.Threading.Tasks;
     using Repositories;
 
-    public class InsertCommand : ModelCommand<Task<IModel>>
+    public class ModelInsertingCommand : ModelCommand<Task<IModel>>
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IEnumerable<Task<IModel>> result;
 
-        public InsertCommand(IUnitOfWork unitOfWork)
+        public ModelInsertingCommand(IUnitOfWork unitOfWork)
             : this(unitOfWork, Enumerable.Empty<Task<IModel>>())
         {
         }
 
-        public InsertCommand(IUnitOfWork unitOfWork, IEnumerable<Task<IModel>> result)
+        public ModelInsertingCommand(IUnitOfWork unitOfWork, IEnumerable<Task<IModel>> result)
         {
             if (unitOfWork == null)
                 throw new ArgumentNullException("unitOfWork");
@@ -48,7 +48,7 @@
                 return await this.unitOfWork.Users.InsertAsync(user);
             });
 
-            return new InsertCommand(
+            return new ModelInsertingCommand(
                 this.unitOfWork, this.result.Concat(new Task<IModel>[] { task }));
         }
 
@@ -62,7 +62,7 @@
                 return await this.unitOfWork.Articles.InsertAsync(article);
             });
             
-            return new InsertCommand(
+            return new ModelInsertingCommand(
                 this.unitOfWork, this.result.Concat(new Task<IModel>[] { task }));
         }
 
@@ -76,7 +76,7 @@
                 return await this.unitOfWork.Keywords.InsertAsync(keyword);
             });
 
-            return new InsertCommand(
+            return new ModelInsertingCommand(
                 this.unitOfWork, this.result.Concat(new Task<IModel>[] { task }));
         }
 
@@ -90,7 +90,7 @@
                 return await this.unitOfWork.Bookmarks.InsertAsync(bookmark);
             });
 
-            return new InsertCommand(
+            return new ModelInsertingCommand(
                 this.unitOfWork, this.result.Concat(new Task<IModel>[] { task }));
         }
     }

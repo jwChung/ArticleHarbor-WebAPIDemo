@@ -7,16 +7,16 @@
     using Ploeh.AutoFixture.Xunit;
     using Xunit;
 
-    public class InsertCommandTest : IdiomaticTest<InsertCommand>
+    public class ModelInsertingCommandTest : IdiomaticTest<ModelInsertingCommand>
     {
         [Test]
-        public void SutIsModelCommand(InsertCommand sut)
+        public void SutIsModelCommand(ModelInsertingCommand sut)
         {
             Assert.IsAssignableFrom<ModelCommand<Task<IModel>>>(sut);
         }
 
         [Test]
-        public void ResultIsEmpty(InsertCommand sut)
+        public void ResultIsEmpty(ModelInsertingCommand sut)
         {
             var actual = sut.Result;
             Assert.Empty(actual);
@@ -24,7 +24,7 @@
 
         [Test]
         public void ExecuteUserAddsUserToRepository(
-            InsertCommand sut,
+            ModelInsertingCommand sut,
             User user,
             User newUser)
         {
@@ -32,7 +32,7 @@
             
             var actual = sut.Execute(user);
 
-            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            var command = Assert.IsAssignableFrom<ModelInsertingCommand>(actual);
             var model = command.Result.Single().Result;
             Assert.Equal(newUser, model);
         }
@@ -40,19 +40,19 @@
         [Test]
         public void ExecuteUserReturnsCorrectResult(
             [Frozen] IEnumerable<Task<IModel>> result,
-            [Greedy] InsertCommand sut,
+            [Greedy] ModelInsertingCommand sut,
             User user)
         {
             var actual = sut.Execute(user);
 
-            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            var command = Assert.IsAssignableFrom<ModelInsertingCommand>(actual);
             Assert.Equal(sut.UnitOfWork, command.UnitOfWork);
             Assert.True(result.All(x => command.Result.Contains(x)));
         }
 
         [Test]
         public void ExecuteArticleAddsArticleToRepository(
-            InsertCommand sut,
+            ModelInsertingCommand sut,
             Article article,
             Article newArticle)
         {
@@ -60,7 +60,7 @@
 
             var actual = sut.Execute(article);
 
-            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            var command = Assert.IsAssignableFrom<ModelInsertingCommand>(actual);
             var model = command.Result.Single().Result;
             Assert.Equal(newArticle, model);
         }
@@ -68,19 +68,19 @@
         [Test]
         public void ExecuteArticleReturnsCorrectResult(
             [Frozen] IEnumerable<Task<IModel>> result,
-            [Greedy] InsertCommand sut,
+            [Greedy] ModelInsertingCommand sut,
             Article article)
         {
             var actual = sut.Execute(article);
 
-            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            var command = Assert.IsAssignableFrom<ModelInsertingCommand>(actual);
             Assert.Equal(sut.UnitOfWork, command.UnitOfWork);
             Assert.True(result.All(x => command.Result.Contains(x)));
         }
 
         [Test]
         public void ExecuteKeywordAddsKeywordToRepository(
-            InsertCommand sut,
+            ModelInsertingCommand sut,
             Keyword keyword,
             Keyword newKeyword)
         {
@@ -88,7 +88,7 @@
 
             var actual = sut.Execute(keyword);
 
-            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            var command = Assert.IsAssignableFrom<ModelInsertingCommand>(actual);
             var model = command.Result.Single().Result;
             Assert.Equal(newKeyword, model);
         }
@@ -96,19 +96,19 @@
         [Test]
         public void ExecuteKeywordReturnsCorrectResult(
             [Frozen] IEnumerable<Task<IModel>> result,
-            [Greedy] InsertCommand sut,
+            [Greedy] ModelInsertingCommand sut,
             Keyword keyword)
         {
             var actual = sut.Execute(keyword);
 
-            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            var command = Assert.IsAssignableFrom<ModelInsertingCommand>(actual);
             Assert.Equal(sut.UnitOfWork, command.UnitOfWork);
             Assert.True(result.All(x => command.Result.Contains(x)));
         }
 
         [Test]
         public void ExecuteBookmarkAddsBookmarkToRepository(
-            InsertCommand sut,
+            ModelInsertingCommand sut,
             Bookmark bookmark,
             Bookmark newBookmark)
         {
@@ -116,7 +116,7 @@
 
             var actual = sut.Execute(bookmark);
 
-            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            var command = Assert.IsAssignableFrom<ModelInsertingCommand>(actual);
             var model = command.Result.Single().Result;
             Assert.Equal(newBookmark, model);
         }
@@ -124,12 +124,12 @@
         [Test]
         public void ExecuteBookmarkReturnsCorrectResult(
             [Frozen] IEnumerable<Task<IModel>> result,
-            [Greedy] InsertCommand sut,
+            [Greedy] ModelInsertingCommand sut,
             Bookmark bookmark)
         {
             var actual = sut.Execute(bookmark);
 
-            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            var command = Assert.IsAssignableFrom<ModelInsertingCommand>(actual);
             Assert.Equal(sut.UnitOfWork, command.UnitOfWork);
             Assert.True(result.All(x => command.Result.Contains(x)));
         }
