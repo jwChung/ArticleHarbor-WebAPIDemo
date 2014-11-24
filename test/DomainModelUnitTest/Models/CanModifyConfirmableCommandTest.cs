@@ -5,6 +5,7 @@
     using System.Reflection;
     using System.Threading.Tasks;
     using Moq;
+    using Ploeh.AutoFixture.Xunit;
     using Xunit;
 
     public class CanModifyConfirmableCommandTest : IdiomaticTest<CanModifyConfirmableCommand>
@@ -87,7 +88,8 @@
 
         [Test]
         public void ExecuteKeywordReturnsCorrectCommand(
-            CanModifyConfirmableCommand sut,
+            [Frozen] IEnumerable<Task> result,
+            [Greedy] CanModifyConfirmableCommand sut,
             Keyword keyword)
         {
             var actual = sut.Execute(keyword);
@@ -95,6 +97,7 @@
             var command = Assert.IsAssignableFrom<CanModifyConfirmableCommand>(actual);
             Assert.Equal(sut.Principal, command.Principal);
             Assert.Equal(sut.UnitOfWork, command.UnitOfWork);
+            Assert.True(result.All(x => command.Result.Contains(x)));
         }
 
         [Test]

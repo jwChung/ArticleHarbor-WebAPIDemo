@@ -106,7 +106,7 @@
             });
 
             return new CanDeleteConfirmableCommand(
-                this.principal, this.unitOfWork, new[] { task });
+                this.principal, this.unitOfWork, this.result.Concat(new[] { task }));
         }
 
         private bool IsAdministrator()
