@@ -49,8 +49,21 @@
             });
 
             return new InsertCommand(
-                this.unitOfWork,
-                this.result.Concat(new Task<IModel>[] { task }));
+                this.unitOfWork, this.result.Concat(new Task<IModel>[] { task }));
+        }
+
+        public override IModelCommand<Task<IModel>> Execute(Article article)
+        {
+            if (article == null)
+                throw new ArgumentNullException("article");
+
+            var task = Task.Run<IModel>(async () =>
+            {
+                return await this.unitOfWork.Articles.InsertAsync(article);
+            });
+
+            return new InsertCommand(
+                this.unitOfWork, this.result.Concat(new Task<IModel>[] { task }));
         }
     }
 }

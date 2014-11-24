@@ -23,7 +23,10 @@
         }
 
         [Test]
-        public void ExecuteUserAddsUserToRepository(InsertCommand sut, User user, User newUser)
+        public void ExecuteUserAddsUserToRepository(
+            InsertCommand sut,
+            User user,
+            User newUser)
         {
             sut.UnitOfWork.Users.Of(x => x.InsertAsync(user) == Task.FromResult(newUser));
             
@@ -41,6 +44,34 @@
             User user)
         {
             var actual = sut.Execute(user);
+
+            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            Assert.Equal(sut.UnitOfWork, command.UnitOfWork);
+            Assert.True(result.All(x => command.Result.Contains(x)));
+        }
+
+        [Test]
+        public void ExecuteArticleAddsArticleToRepository(
+            InsertCommand sut,
+            Article article,
+            Article newArticle)
+        {
+            sut.UnitOfWork.Articles.Of(x => x.InsertAsync(article) == Task.FromResult(newArticle));
+
+            var actual = sut.Execute(article);
+
+            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            var model = command.Result.Single().Result;
+            Assert.Equal(newArticle, model);
+        }
+
+        [Test]
+        public void ExecuteArticleReturnsCorrectResult(
+            [Frozen] IEnumerable<Task<IModel>> result,
+            [Greedy] InsertCommand sut,
+            Article article)
+        {
+            var actual = sut.Execute(article);
 
             var command = Assert.IsAssignableFrom<InsertCommand>(actual);
             Assert.Equal(sut.UnitOfWork, command.UnitOfWork);
