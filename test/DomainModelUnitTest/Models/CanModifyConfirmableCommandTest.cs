@@ -66,11 +66,6 @@
             Assert.Equal(sut, actual);
         }
 
-        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
-        {
-            yield return this.Properties.Select(x => x.Result);
-        }
-
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
             yield return this.Methods.Select(x => x.Execute(default(Article)));
