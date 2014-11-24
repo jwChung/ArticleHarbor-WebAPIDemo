@@ -52,6 +52,20 @@
             throw new UnauthorizedException();
         }
 
+        public override IModelCommand<Task> Execute(Article article)
+        {
+            if (article == null)
+                throw new ArgumentNullException("article");
+
+            if (this.IsAdministrator())
+                return base.Execute(article);
+
+            if (this.IsAuthorOwner(article.UserId))
+                return base.Execute(article);
+
+            throw new UnauthorizedException();
+        }
+
         private bool IsAdministrator()
         {
             return this.principal.IsInRole(Role.Administrator.ToString());
