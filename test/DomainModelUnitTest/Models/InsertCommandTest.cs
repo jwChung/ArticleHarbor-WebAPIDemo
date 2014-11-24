@@ -77,5 +77,33 @@
             Assert.Equal(sut.UnitOfWork, command.UnitOfWork);
             Assert.True(result.All(x => command.Result.Contains(x)));
         }
+
+        [Test]
+        public void ExecuteKeywordAddsKeywordToRepository(
+            InsertCommand sut,
+            Keyword keyword,
+            Keyword newKeyword)
+        {
+            sut.UnitOfWork.Keywords.Of(x => x.InsertAsync(keyword) == Task.FromResult(newKeyword));
+
+            var actual = sut.Execute(keyword);
+
+            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            var model = command.Result.Single().Result;
+            Assert.Equal(newKeyword, model);
+        }
+
+        [Test]
+        public void ExecuteKeywordReturnsCorrectResult(
+            [Frozen] IEnumerable<Task<IModel>> result,
+            [Greedy] InsertCommand sut,
+            Keyword keyword)
+        {
+            var actual = sut.Execute(keyword);
+
+            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            Assert.Equal(sut.UnitOfWork, command.UnitOfWork);
+            Assert.True(result.All(x => command.Result.Contains(x)));
+        }
     }
 }

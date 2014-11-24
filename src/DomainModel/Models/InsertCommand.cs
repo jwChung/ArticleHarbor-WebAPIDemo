@@ -61,6 +61,20 @@
             {
                 return await this.unitOfWork.Articles.InsertAsync(article);
             });
+            
+            return new InsertCommand(
+                this.unitOfWork, this.result.Concat(new Task<IModel>[] { task }));
+        }
+
+        public override IModelCommand<Task<IModel>> Execute(Keyword keyword)
+        {
+            if (keyword == null)
+                throw new ArgumentNullException("keyword");
+
+            var task = Task.Run<IModel>(async () =>
+            {
+                return await this.unitOfWork.Keywords.InsertAsync(keyword);
+            });
 
             return new InsertCommand(
                 this.unitOfWork, this.result.Concat(new Task<IModel>[] { task }));
