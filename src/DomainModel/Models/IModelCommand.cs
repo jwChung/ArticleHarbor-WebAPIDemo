@@ -6,6 +6,8 @@ namespace ArticleHarbor.DomainModel.Models
     {
         TResult Result { get; }
 
+        IEnumerable<TResult> Result2 { get; }
+
         IModelCommand<TResult> Execute(IEnumerable<User> users);
 
         IModelCommand<TResult> Execute(User user);

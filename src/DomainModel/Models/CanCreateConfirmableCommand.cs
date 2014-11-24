@@ -22,6 +22,11 @@
             get { throw new NotSupportedException("This command does not have any result."); }
         }
 
+        public override IEnumerable<object> Result2
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public IPrincipal Principal
         {
             get { return this.principal; }
