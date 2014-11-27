@@ -34,7 +34,7 @@
             return new Keys<string, int>(this.userId, this.articleId);
         }
 
-        public IModelCommand<TResult> ExecuteCommand<TResult>(IModelCommand<TResult> command)
+        public IModelCommand<TResult> Execute<TResult>(IModelCommand<TResult> command)
         {
             if (command == null)
                 throw new ArgumentNullException("command");

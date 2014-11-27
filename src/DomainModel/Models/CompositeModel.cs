@@ -26,12 +26,12 @@
             return new Keys(this.models.SelectMany(m => m.GetKeys()));
         }
 
-        public IModelCommand<TResult> ExecuteCommand<TResult>(IModelCommand<TResult> command)
+        public IModelCommand<TResult> Execute<TResult>(IModelCommand<TResult> command)
         {
             if (command == null)
                 throw new ArgumentNullException("command");
 
-            return this.Models.Aggregate(command, (c, m) => m.ExecuteCommand(c));
+            return this.Models.Aggregate(command, (c, m) => m.Execute(c));
         }
     }
 }
