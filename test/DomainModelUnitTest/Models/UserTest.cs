@@ -11,13 +11,13 @@
         }
 
         [Test]
-        public void ExecuteCommandReturnsCorrectResult(
+        public void ExecuteReturnsCorrectResult(
             User sut,
             IModelCommand<object> command,
             IModelCommand<object> expected)
         {
             command.Of(x => x.Execute(sut) == expected);
-            var actual = sut.ExecuteCommand(command);
+            var actual = sut.Execute(command);
             Assert.Equal(expected, actual);
         }
 
