@@ -3,40 +3,40 @@ namespace ArticleHarbor.DomainModel.Models
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public interface IModelCommand<TResult>
+    public interface IModelCommand<TValue>
     {
-        TResult Result { get; }
+        TValue Value { get; }
 
-        IModelCommand<TResult> Execute(IEnumerable<User> users);
+        IModelCommand<TValue> Execute(IEnumerable<User> users);
 
-        IModelCommand<TResult> Execute(User user);
+        IModelCommand<TValue> Execute(User user);
 
-        IModelCommand<TResult> Execute(IEnumerable<Article> articles);
+        IModelCommand<TValue> Execute(IEnumerable<Article> articles);
 
-        IModelCommand<TResult> Execute(Article article);
+        IModelCommand<TValue> Execute(Article article);
 
-        IModelCommand<TResult> Execute(IEnumerable<Keyword> keywords);
+        IModelCommand<TValue> Execute(IEnumerable<Keyword> keywords);
 
-        IModelCommand<TResult> Execute(Keyword keywords);
+        IModelCommand<TValue> Execute(Keyword keywords);
 
-        IModelCommand<TResult> Execute(IEnumerable<Bookmark> bookmarks);
+        IModelCommand<TValue> Execute(IEnumerable<Bookmark> bookmarks);
 
-        IModelCommand<TResult> Execute(Bookmark bookmark);
+        IModelCommand<TValue> Execute(Bookmark bookmark);
 
-        Task<IModelCommand<TResult>> ExecuteAsync(IEnumerable<User> users);
+        Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<User> users);
 
-        Task<IModelCommand<TResult>> ExecuteAsync(User user);
+        Task<IModelCommand<TValue>> ExecuteAsync(User user);
 
-        Task<IModelCommand<TResult>> ExecuteAsync(IEnumerable<Article> articles);
+        Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Article> articles);
 
-        Task<IModelCommand<TResult>> ExecuteAsync(Article article);
+        Task<IModelCommand<TValue>> ExecuteAsync(Article article);
 
-        Task<IModelCommand<TResult>> ExecuteAsync(IEnumerable<Keyword> keywords);
+        Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Keyword> keywords);
 
-        Task<IModelCommand<TResult>> ExecuteAsync(Keyword keywords);
+        Task<IModelCommand<TValue>> ExecuteAsync(Keyword keywords);
 
-        Task<IModelCommand<TResult>> ExecuteAsync(IEnumerable<Bookmark> bookmarks);
+        Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Bookmark> bookmarks);
 
-        Task<IModelCommand<TResult>> ExecuteAsync(Bookmark bookmark);
+        Task<IModelCommand<TValue>> ExecuteAsync(Bookmark bookmark);
     }
 }

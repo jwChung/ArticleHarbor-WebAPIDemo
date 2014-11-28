@@ -7,7 +7,7 @@
 
     public abstract class ModelCommand<TResult> : IModelCommand<TResult>
     {
-        public abstract TResult Result { get; }
+        public abstract TResult Value { get; }
 
         public virtual IModelCommand<TResult> Execute(IEnumerable<User> users)
         {
