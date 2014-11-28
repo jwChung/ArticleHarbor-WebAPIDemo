@@ -108,6 +108,16 @@
             yield return this.Methods.Select(x => x.Execute(default(Article)));
             yield return this.Methods.Select(x => x.Execute(default(Bookmark)));
             yield return this.Methods.Select(x => x.Execute(default(Keyword)));
+
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(IEnumerable<User>)));
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(IEnumerable<Article>)));
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(IEnumerable<Bookmark>)));
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(IEnumerable<Keyword>)));
+
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(User)));
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(Article)));
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(Bookmark)));
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(Keyword)));
         }
     }
 }

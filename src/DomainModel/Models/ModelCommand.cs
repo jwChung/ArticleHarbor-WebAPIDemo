@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public abstract class ModelCommand<TResult> : IModelCommand<TResult>
     {
@@ -42,7 +43,7 @@
                 throw new ArgumentNullException("keywords");
 
             return keywords.Aggregate<Keyword, IModelCommand<TResult>>(
-               this, (c, k) => c.Execute(k));
+                this, (c, k) => c.Execute(k));
         }
 
         public virtual IModelCommand<TResult> Execute(Keyword keywords)
@@ -62,6 +63,46 @@
         public virtual IModelCommand<TResult> Execute(Bookmark bookmark)
         {
             return this;
+        }
+
+        public Task<IModelCommand<TResult>> ExecuteAsync(IEnumerable<User> users)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IModelCommand<TResult>> ExecuteAsync(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IModelCommand<TResult>> ExecuteAsync(IEnumerable<Article> articles)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IModelCommand<TResult>> ExecuteAsync(Article article)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IModelCommand<TResult>> ExecuteAsync(IEnumerable<Keyword> keywords)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IModelCommand<TResult>> ExecuteAsync(Keyword keywords)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IModelCommand<TResult>> ExecuteAsync(IEnumerable<Bookmark> bookmarks)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IModelCommand<TResult>> ExecuteAsync(Bookmark bookmark)
+        {
+            throw new NotImplementedException();
         }
     }
 }
