@@ -26,5 +26,20 @@
             var command = Assert.IsAssignableFrom<InsertCommand>(actual);
             Assert.Equal(newUser, command.Value.Last());
         }
+
+        [Test]
+        public void ExecuteAsyncArticleCorrectlyInsertsArticle(
+            InsertCommand sut,
+            Article article,
+            Article newArticle)
+        {
+            sut.Repositories.Articles.Of(
+                x => x.InsertAsync(article) == Task.FromResult(newArticle));
+
+            var actual = sut.ExecuteAsync(article).Result;
+
+            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            Assert.Equal(newArticle, command.Value.Last());
+        }
     }
 }
