@@ -32,14 +32,6 @@
             return new Keys<int, string>(this.articleId, this.word);
         }
 
-        public IModelCommand<TResult> Execute<TResult>(IModelCommand<TResult> command)
-        {
-            if (command == null)
-                throw new ArgumentNullException("command");
-
-            return command.Execute(this);
-        }
-
         public Task<IModelCommand<TValue>> ExecuteAsync<TValue>(IModelCommand<TValue> command)
         {
             if (command == null)

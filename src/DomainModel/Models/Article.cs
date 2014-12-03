@@ -176,14 +176,6 @@
             return new Keys<int>(this.id);
         }
 
-        public IModelCommand<TValue> Execute<TValue>(IModelCommand<TValue> command)
-        {
-            if (command == null)
-                throw new ArgumentNullException("command");
-
-            return command.Execute(this);
-        }
-
         public Task<IModelCommand<TValue>> ExecuteAsync<TValue>(IModelCommand<TValue> command)
         {
             if (command == null)

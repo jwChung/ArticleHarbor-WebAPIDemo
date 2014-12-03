@@ -27,14 +27,6 @@
             return new Keys(this.models.SelectMany(m => m.GetKeys()));
         }
 
-        public IModelCommand<TResult> Execute<TResult>(IModelCommand<TResult> command)
-        {
-            if (command == null)
-                throw new ArgumentNullException("command");
-
-            return this.Models.Aggregate(command, (c, m) => m.Execute(c));
-        }
-
         public Task<IModelCommand<TValue>> ExecuteAsync<TValue>(IModelCommand<TValue> command)
         {
             if (command == null)

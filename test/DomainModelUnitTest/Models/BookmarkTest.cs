@@ -24,17 +24,6 @@
         }
 
         [Test]
-        public void ExecuteReturnsCorrectResult(
-            Bookmark sut,
-            IModelCommand<object> command,
-            IModelCommand<object> expected)
-        {
-            command.Of(x => x.Execute(sut) == expected);
-            var actual = sut.Execute(command);
-            Assert.Equal(expected, actual);
-        }
-
-        [Test]
         public void ExecuteAsyncReturnsCorrectResult(
             Bookmark sut,
             IModelCommand<object> command,

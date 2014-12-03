@@ -14,22 +14,6 @@
         }
 
         [Test]
-        public void ExecuteCallsExecuteRespectively(
-            CompositeModel sut,
-            IModelCommand<object> command,
-            IModelCommand<object>[] commands)
-        {
-            var models = sut.Models.ToArray();
-            models[0].Of(x => x.Execute(command) == commands[0]);
-            models[1].Of(x => x.Execute(commands[0]) == commands[1]);
-            models[2].Of(x => x.Execute(commands[1]) == commands[2]);
-
-            var actual = sut.Execute(command);
-
-            Assert.Equal(commands[2], actual);
-        }
-
-        [Test]
         public void ExecuteAsyncRespectivelyCallsExecuteAsync(
             CompositeModel sut,
             IModelCommand<object> command,

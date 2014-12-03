@@ -132,17 +132,6 @@
         }
 
         [Test]
-        public void ExecuteReturnsCorrectResult(
-            Article sut,
-            IModelCommand<object> command,
-            IModelCommand<object> expected)
-        {
-            command.Of(x => x.Execute(sut) == expected);
-            var actual = sut.Execute(command);
-            Assert.Equal(expected, actual);
-        }
-
-        [Test]
         public void ExecuteAsyncReturnsCorrectResult(
             Article sut,
             IModelCommand<object> command,

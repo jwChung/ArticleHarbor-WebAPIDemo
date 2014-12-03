@@ -7,22 +7,6 @@ namespace ArticleHarbor.DomainModel.Models
     {
         TValue Value { get; }
 
-        IModelCommand<TValue> Execute(IEnumerable<User> users);
-
-        IModelCommand<TValue> Execute(User user);
-
-        IModelCommand<TValue> Execute(IEnumerable<Article> articles);
-
-        IModelCommand<TValue> Execute(Article article);
-
-        IModelCommand<TValue> Execute(IEnumerable<Keyword> keywords);
-
-        IModelCommand<TValue> Execute(Keyword keywords);
-
-        IModelCommand<TValue> Execute(IEnumerable<Bookmark> bookmarks);
-
-        IModelCommand<TValue> Execute(Bookmark bookmark);
-
         Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<User> users);
 
         Task<IModelCommand<TValue>> ExecuteAsync(User user);

@@ -11,63 +11,7 @@
         {
             get { return default(TValue); }
         }
-
-        public virtual IModelCommand<TValue> Execute(IEnumerable<User> users)
-        {
-            if (users == null)
-                throw new ArgumentNullException("users");
-
-            return users.Aggregate<User, IModelCommand<TValue>>(
-                this, (c, u) => c.Execute(u));
-        }
-
-        public virtual IModelCommand<TValue> Execute(User user)
-        {
-            return this;
-        }
-
-        public virtual IModelCommand<TValue> Execute(IEnumerable<Article> articles)
-        {
-            if (articles == null)
-                throw new ArgumentNullException("articles");
-
-            return articles.Aggregate<Article, IModelCommand<TValue>>(
-                this, (c, a) => c.Execute(a));
-        }
-
-        public virtual IModelCommand<TValue> Execute(Article article)
-        {
-            return this;
-        }
-
-        public virtual IModelCommand<TValue> Execute(IEnumerable<Keyword> keywords)
-        {
-            if (keywords == null)
-                throw new ArgumentNullException("keywords");
-
-            return keywords.Aggregate<Keyword, IModelCommand<TValue>>(
-                this, (c, k) => c.Execute(k));
-        }
-
-        public virtual IModelCommand<TValue> Execute(Keyword keywords)
-        {
-            return this;
-        }
-
-        public virtual IModelCommand<TValue> Execute(IEnumerable<Bookmark> bookmarks)
-        {
-            if (bookmarks == null)
-                throw new ArgumentNullException("bookmarks");
-
-            return bookmarks.Aggregate<Bookmark, IModelCommand<TValue>>(
-                this, (c, b) => c.Execute(b));
-        }
-
-        public virtual IModelCommand<TValue> Execute(Bookmark bookmark)
-        {
-            return this;
-        }
-
+        
         public virtual Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<User> users)
         {
             if (users == null)
@@ -110,7 +54,7 @@
         public virtual Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Bookmark> bookmarks)
         {
             if (bookmarks == null)
-                throw new ArgumentNullException("articles");
+                throw new ArgumentNullException("bookmarks");
 
             return this.ExecuteAsyncWith(bookmarks);
         }
