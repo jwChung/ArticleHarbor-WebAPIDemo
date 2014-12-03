@@ -2,6 +2,7 @@ namespace ArticleHarbor.Website
 {
     using System;
     using System.Data.Entity;
+    using System.Web;
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.DomainModel.Models;
     using ArticleHarbor.EFDataAccess;
@@ -68,16 +69,15 @@ namespace ArticleHarbor.Website
                 c => new BookmarkRepository(c.Resolve<ArticleHarborDbContext>()))
                 .ReusedWithinContainer();
 
-            container.Register(
-                c => new ArticleRepository2(
-                    c.Resolve<ArticleHarborDbContext>(),
-                    c.Resolve<DbSet<EFDataAccess.Article>>()))
+            container.Register<IRepositories>(
+                c => new Repositories(c.Resolve<ArticleHarborDbContext>()))
                 .ReusedWithinContainer();
+
             container.Register<IRepository<Keys<int>, Article>>(
-                c => c.Resolve<ArticleRepository2>())
+                c => c.Resolve<IRepositories>().Articles)
                 .ReusedWithinContainer();
             container.Register<IRepository<Article>>(
-                c => c.Resolve<ArticleRepository2>())
+                c => c.Resolve<IRepositories>().Articles)
                 .ReusedWithinContainer();
 
             // Domain services
