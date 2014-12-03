@@ -125,6 +125,7 @@
     <Compile Include="KeywordRepositoryTest.cs" />
     <Compile Include="AssemblyTest.cs" />
     <Compile Include="BookmarkRepositoryTest.cs" />
+    <Compile Include="RepositoriesTest.cs" />
     <Compile Include="RepositoryTest.cs" />
     <Compile Include="UnitOfWorkTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
