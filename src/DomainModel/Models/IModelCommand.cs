@@ -17,7 +17,7 @@ namespace ArticleHarbor.DomainModel.Models
 
         Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Keyword> keywords);
 
-        Task<IModelCommand<TValue>> ExecuteAsync(Keyword keywords);
+        Task<IModelCommand<TValue>> ExecuteAsync(Keyword keyword);
 
         Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Bookmark> bookmarks);
 

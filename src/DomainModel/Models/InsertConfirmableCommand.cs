@@ -33,10 +33,10 @@
             return base.ExecuteAsync(bookmark);
         }
 
-        public override Task<IModelCommand<object>> ExecuteAsync(Keyword keywords)
+        public override Task<IModelCommand<object>> ExecuteAsync(Keyword keyword)
         {
             this.ConfirmCanCreate();
-            return base.ExecuteAsync(keywords);
+            return base.ExecuteAsync(keyword);
         }
 
         public override Task<IModelCommand<object>> ExecuteAsync(User user)

@@ -49,6 +49,14 @@
             return this.ExecuteAsyncWith(article);
         }
 
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Keyword keyword)
+        {
+            if (keyword == null)
+                throw new ArgumentNullException("keyword");
+
+            return this.ExecuteAsyncWith(keyword);
+        }
+
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(User user)
         {
             var newUser = await this.repositories.Users.InsertAsync(user);
@@ -59,6 +67,12 @@
         {
             var newArticle = await this.repositories.Articles.InsertAsync(article);
             return new InsertCommand(this.repositories, this.Value.Concat(new[] { newArticle }));
+        }
+
+        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Keyword keyword)
+        {
+            var newKeyword = await this.repositories.Keywords.InsertAsync(keyword);
+            return new InsertCommand(this.repositories, this.Value.Concat(new[] { newKeyword }));
         }
     }
 }

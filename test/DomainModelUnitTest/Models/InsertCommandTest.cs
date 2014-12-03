@@ -41,5 +41,20 @@
             var command = Assert.IsAssignableFrom<InsertCommand>(actual);
             Assert.Equal(newArticle, command.Value.Last());
         }
+
+        [Test]
+        public void ExecuteAsyncKeywordCorrectlyInsertsKeyword(
+            InsertCommand sut,
+            Keyword keyword,
+            Keyword newKeyword)
+        {
+            sut.Repositories.Keywords.Of(
+                x => x.InsertAsync(keyword) == Task.FromResult(newKeyword));
+
+            var actual = sut.ExecuteAsync(keyword).Result;
+
+            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            Assert.Equal(newKeyword, command.Value.Last());
+        }
     }
 }
