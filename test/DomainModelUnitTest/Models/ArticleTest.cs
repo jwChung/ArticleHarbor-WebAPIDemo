@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Threading.Tasks;
     using Jwc.Experiment.Xunit;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Kernel;
@@ -138,6 +139,17 @@
         {
             command.Of(x => x.Execute(sut) == expected);
             var actual = sut.Execute(command);
+            Assert.Equal(expected, actual);
+        }
+
+        [Test]
+        public void ExecuteAsyncReturnsCorrectResult(
+            Article sut,
+            IModelCommand<object> command,
+            IModelCommand<object> expected)
+        {
+            command.Of(x => x.ExecuteAsync(sut) == Task.FromResult(expected));
+            var actual = sut.ExecuteAsync(command).Result;
             Assert.Equal(expected, actual);
         }
 

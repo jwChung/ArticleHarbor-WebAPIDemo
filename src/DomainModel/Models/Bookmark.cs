@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System;
+    using System.Threading.Tasks;
 
     public class Bookmark : IModel
     {
@@ -40,6 +41,14 @@
                 throw new ArgumentNullException("command");
 
             return command.Execute(this);
+        }
+
+        public Task<IModelCommand<TValue>> ExecuteAsync<TValue>(IModelCommand<TValue> command)
+        {
+            if (command == null)
+                throw new ArgumentNullException("command");
+
+            return command.ExecuteAsync(this);
         }
     }
 }

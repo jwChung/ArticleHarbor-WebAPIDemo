@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.Threading.Tasks;
 
     public class Article : IModel
     {
@@ -175,12 +176,20 @@
             return new Keys<int>(this.id);
         }
 
-        public IModelCommand<TResult> Execute<TResult>(IModelCommand<TResult> command)
+        public IModelCommand<TValue> Execute<TValue>(IModelCommand<TValue> command)
         {
             if (command == null)
                 throw new ArgumentNullException("command");
 
             return command.Execute(this);
+        }
+
+        public Task<IModelCommand<TValue>> ExecuteAsync<TValue>(IModelCommand<TValue> command)
+        {
+            if (command == null)
+                throw new ArgumentNullException("command");
+
+            return command.ExecuteAsync(this);
         }
     }
 }

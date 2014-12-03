@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public class CompositeModel : IModel
     {
@@ -32,6 +33,23 @@
                 throw new ArgumentNullException("command");
 
             return this.Models.Aggregate(command, (c, m) => m.Execute(c));
+        }
+
+        public Task<IModelCommand<TValue>> ExecuteAsync<TValue>(IModelCommand<TValue> command)
+        {
+            if (command == null)
+                throw new ArgumentNullException("command");
+
+            return this.ExecuteAsyncWith(command);
+        }
+
+        private async Task<IModelCommand<TValue>> ExecuteAsyncWith<TValue>(
+            IModelCommand<TValue> command)
+        {
+            foreach (var model in this.Models)
+                command = await model.ExecuteAsync(command);
+
+            return command;
         }
     }
 }
