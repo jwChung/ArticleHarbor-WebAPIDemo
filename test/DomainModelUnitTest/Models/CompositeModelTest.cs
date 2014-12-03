@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System.Linq;
+    using System.Threading.Tasks;
     using Ploeh.AutoFixture;
     using Xunit;
 
@@ -13,17 +14,17 @@
         }
 
         [Test]
-        public void ExecuteCommandCallsExecuteCommandRespectively(
+        public void ExecuteAsyncRespectivelyCallsExecuteAsync(
             CompositeModel sut,
             IModelCommand<object> command,
             IModelCommand<object>[] commands)
         {
             var models = sut.Models.ToArray();
-            models[0].Of(x => x.ExecuteCommand(command) == commands[0]);
-            models[1].Of(x => x.ExecuteCommand(commands[0]) == commands[1]);
-            models[2].Of(x => x.ExecuteCommand(commands[1]) == commands[2]);
+            models[0].Of(x => x.ExecuteAsync(command) == Task.FromResult(commands[0]));
+            models[1].Of(x => x.ExecuteAsync(commands[0]) == Task.FromResult(commands[1]));
+            models[2].Of(x => x.ExecuteAsync(commands[1]) == Task.FromResult(commands[2]));
 
-            var actual = sut.ExecuteCommand(command);
+            var actual = sut.ExecuteAsync(command).Result;
 
             Assert.Equal(commands[2], actual);
         }

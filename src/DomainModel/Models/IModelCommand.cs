@@ -1,25 +1,26 @@
 namespace ArticleHarbor.DomainModel.Models
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
-    public interface IModelCommand<TResult>
+    public interface IModelCommand<TValue>
     {
-        TResult Result { get; }
+        TValue Value { get; }
 
-        IModelCommand<TResult> Execute(IEnumerable<User> users);
+        Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<User> users);
 
-        IModelCommand<TResult> Execute(User user);
+        Task<IModelCommand<TValue>> ExecuteAsync(User user);
 
-        IModelCommand<TResult> Execute(IEnumerable<Article> articles);
+        Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Article> articles);
 
-        IModelCommand<TResult> Execute(Article article);
+        Task<IModelCommand<TValue>> ExecuteAsync(Article article);
 
-        IModelCommand<TResult> Execute(IEnumerable<Keyword> keywords);
+        Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Keyword> keywords);
 
-        IModelCommand<TResult> Execute(Keyword keywords);
+        Task<IModelCommand<TValue>> ExecuteAsync(Keyword keywords);
 
-        IModelCommand<TResult> Execute(IEnumerable<Bookmark> bookmarks);
+        Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Bookmark> bookmarks);
 
-        IModelCommand<TResult> Execute(Bookmark bookmark);
+        Task<IModelCommand<TValue>> ExecuteAsync(Bookmark bookmark);
     }
 }

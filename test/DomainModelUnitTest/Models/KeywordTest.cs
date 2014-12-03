@@ -1,5 +1,6 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
+    using System.Threading.Tasks;
     using Xunit;
 
     public class KeywordTest : IdiomaticTest<Keyword>
@@ -11,13 +12,13 @@
         }
 
         [Test]
-        public void ExecuteCommandReturnsCorrectResult(
+        public void ExecuteAsyncReturnsCorrectResult(
             Keyword sut,
             IModelCommand<object> command,
             IModelCommand<object> expected)
         {
-            command.Of(x => x.Execute(sut) == expected);
-            var actual = sut.ExecuteCommand(command);
+            command.Of(x => x.ExecuteAsync(sut) == Task.FromResult(expected));
+            var actual = sut.ExecuteAsync(command).Result;
             Assert.Equal(expected, actual);
         }
 

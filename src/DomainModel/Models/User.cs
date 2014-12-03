@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System;
+    using System.Threading.Tasks;
 
     public class User : IModel
     {
@@ -41,12 +42,12 @@
             return new Keys<string>(this.id);
         }
 
-        public IModelCommand<TResult> ExecuteCommand<TResult>(IModelCommand<TResult> command)
+        public Task<IModelCommand<TValue>> ExecuteAsync<TValue>(IModelCommand<TValue> command)
         {
             if (command == null)
                 throw new ArgumentNullException("command");
 
-            return command.Execute(this);
+            return command.ExecuteAsync(this);
         }
     }
 }

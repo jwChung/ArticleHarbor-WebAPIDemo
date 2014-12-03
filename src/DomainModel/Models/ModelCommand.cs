@@ -3,65 +3,101 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
-    public abstract class ModelCommand<TResult> : IModelCommand<TResult>
+    public abstract class ModelCommand<TValue> : IModelCommand<TValue>
     {
-        public abstract TResult Result { get; }
-
-        public virtual IModelCommand<TResult> Execute(IEnumerable<User> users)
+        public virtual TValue Value
+        {
+            get { return default(TValue); }
+        }
+        
+        public virtual Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<User> users)
         {
             if (users == null)
                 throw new ArgumentNullException("users");
 
-            return users.Aggregate<User, IModelCommand<TResult>>(
-                this, (c, u) => c.Execute(u));
+            return this.ExecuteAsyncWith(users);
         }
 
-        public virtual IModelCommand<TResult> Execute(User user)
+        public virtual Task<IModelCommand<TValue>> ExecuteAsync(User user)
         {
-            return this;
+            return Task.FromResult<IModelCommand<TValue>>(this);
         }
 
-        public virtual IModelCommand<TResult> Execute(IEnumerable<Article> articles)
+        public virtual Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Article> articles)
         {
             if (articles == null)
                 throw new ArgumentNullException("articles");
 
-            return articles.Aggregate<Article, IModelCommand<TResult>>(
-                this, (c, a) => c.Execute(a));
+            return this.ExecuteAsyncWith(articles);
         }
 
-        public virtual IModelCommand<TResult> Execute(Article article)
+        public virtual Task<IModelCommand<TValue>> ExecuteAsync(Article article)
         {
-            return this;
+            return Task.FromResult<IModelCommand<TValue>>(this);
         }
 
-        public virtual IModelCommand<TResult> Execute(IEnumerable<Keyword> keywords)
+        public virtual Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Keyword> keywords)
         {
             if (keywords == null)
                 throw new ArgumentNullException("keywords");
 
-            return keywords.Aggregate<Keyword, IModelCommand<TResult>>(
-               this, (c, k) => c.Execute(k));
+            return this.ExecuteAsyncWith(keywords);
         }
 
-        public virtual IModelCommand<TResult> Execute(Keyword keywords)
+        public virtual Task<IModelCommand<TValue>> ExecuteAsync(Keyword keywords)
         {
-            return this;
+            return Task.FromResult<IModelCommand<TValue>>(this);
         }
 
-        public virtual IModelCommand<TResult> Execute(IEnumerable<Bookmark> bookmarks)
+        public virtual Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Bookmark> bookmarks)
         {
             if (bookmarks == null)
                 throw new ArgumentNullException("bookmarks");
 
-            return bookmarks.Aggregate<Bookmark, IModelCommand<TResult>>(
-                this, (c, b) => c.Execute(b));
+            return this.ExecuteAsyncWith(bookmarks);
         }
 
-        public virtual IModelCommand<TResult> Execute(Bookmark bookmark)
+        public virtual Task<IModelCommand<TValue>> ExecuteAsync(Bookmark bookmark)
         {
-            return this;
+            return Task.FromResult<IModelCommand<TValue>>(this);
+        }
+
+        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(IEnumerable<User> users)
+        {
+            IModelCommand<TValue> command = this;
+            foreach (var user in users)
+                command = await command.ExecuteAsync(user);
+
+            return command;
+        }
+
+        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(IEnumerable<Article> articles)
+        {
+            IModelCommand<TValue> command = this;
+            foreach (var article in articles)
+                command = await command.ExecuteAsync(article);
+
+            return command;
+        }
+
+        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(IEnumerable<Bookmark> bookmarks)
+        {
+            IModelCommand<TValue> command = this;
+            foreach (var bookmark in bookmarks)
+                command = await command.ExecuteAsync(bookmark);
+
+            return command;
+        }
+
+        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(IEnumerable<Keyword> keywords)
+        {
+            IModelCommand<TValue> command = this;
+            foreach (var keyword in keywords)
+                command = await command.ExecuteAsync(keyword);
+
+            return command;
         }
     }
 }
