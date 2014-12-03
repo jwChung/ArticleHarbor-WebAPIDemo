@@ -58,7 +58,7 @@
     <Compile Include="Collectors\SubjectFromBodyTransformation.cs" />
     <Compile Include="Collectors\ArticleTransformationCollector.cs" />
     <Compile Include="Models\Article.cs" />
-    <Compile Include="Models\CreateConfirmableCommand.cs" />
+    <Compile Include="Models\InsertConfirmableCommand.cs" />
     <Compile Include="Models\CompositeModel.cs" />
     <Compile Include="Models\EqualPredicate.cs" />
     <Compile Include="Models\IKeys.cs" />

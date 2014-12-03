@@ -6,10 +6,10 @@
     using Jwc.Experiment.Xunit;
     using Xunit;
 
-    public class CreateConfirmableCommandTest : IdiomaticTest<CreateConfirmableCommand>
+    public class InsertConfirmableCommandTest : IdiomaticTest<InsertConfirmableCommand>
     {
         [Test]
-        public void SutIsModelCommand(CreateConfirmableCommand sut)
+        public void SutIsModelCommand(InsertConfirmableCommand sut)
         {
             Assert.IsAssignableFrom<ModelCommand<object>>(sut);
         }
@@ -24,7 +24,7 @@
             };
 
             var articleCases = TestCases.WithArgs(roleNames)
-                .WithAuto<CreateConfirmableCommand, Article>()
+                .WithAuto<InsertConfirmableCommand, Article>()
                 .Create((roleName, sut, model) =>
                 {
                     sut.Principal.Of(x => x.IsInRole(roleName));
@@ -33,7 +33,7 @@
                 });
 
             var keywordCases = TestCases.WithArgs(roleNames)
-               .WithAuto<CreateConfirmableCommand, Keyword>()
+               .WithAuto<InsertConfirmableCommand, Keyword>()
                .Create((roleName, sut, model) =>
                {
                    sut.Principal.Of(x => x.IsInRole(roleName));
@@ -42,7 +42,7 @@
                });
 
             var bookmarkCases = TestCases.WithArgs(roleNames)
-                .WithAuto<CreateConfirmableCommand, Bookmark>()
+                .WithAuto<InsertConfirmableCommand, Bookmark>()
                 .Create((roleName, sut, model) =>
                 {
                     sut.Principal.Of(x => x.IsInRole(roleName));
@@ -56,19 +56,19 @@
         [Test]
         public IEnumerable<ITestCase> ExecuteAsyncWithInvalidRoleThrows()
         {
-            yield return TestCase.WithAuto<CreateConfirmableCommand, Article>()
+            yield return TestCase.WithAuto<InsertConfirmableCommand, Article>()
                 .Create((sut, model) =>
                 {
                     Assert.Throws<UnauthorizedException>(() => sut.ExecuteAsync(model).Result);
                 });
 
-            yield return TestCase.WithAuto<CreateConfirmableCommand, Keyword>()
+            yield return TestCase.WithAuto<InsertConfirmableCommand, Keyword>()
                 .Create((sut, model) =>
                 {
                     Assert.Throws<UnauthorizedException>(() => sut.ExecuteAsync(model).Result);
                 });
 
-            yield return TestCase.WithAuto<CreateConfirmableCommand, Bookmark>()
+            yield return TestCase.WithAuto<InsertConfirmableCommand, Bookmark>()
                 .Create((sut, model) =>
                 {
                     Assert.Throws<UnauthorizedException>(() => sut.ExecuteAsync(model).Result);
@@ -77,7 +77,7 @@
 
         [Test]
         public void ExecuteAsyncUserAlwaysThrows(
-            CreateConfirmableCommand sut,
+            InsertConfirmableCommand sut,
             User user)
         {
             Assert.Throws<UnauthorizedException>(() => sut.ExecuteAsync(user).Result);

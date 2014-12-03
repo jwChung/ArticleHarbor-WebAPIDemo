@@ -4,11 +4,11 @@
     using System.Security.Principal;
     using System.Threading.Tasks;
 
-    public class CreateConfirmableCommand : ModelCommand<object>
+    public class InsertConfirmableCommand : ModelCommand<object>
     {
         private readonly IPrincipal principal;
 
-        public CreateConfirmableCommand(IPrincipal principal)
+        public InsertConfirmableCommand(IPrincipal principal)
         {
             if (principal == null)
                 throw new ArgumentNullException("principal");
