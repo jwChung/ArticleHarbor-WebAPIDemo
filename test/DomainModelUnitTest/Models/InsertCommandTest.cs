@@ -56,5 +56,20 @@
             var command = Assert.IsAssignableFrom<InsertCommand>(actual);
             Assert.Equal(newKeyword, command.Value.Last());
         }
+
+        [Test]
+        public void ExecuteAsyncBookmarkCorrectlyInsertsBookmark(
+            InsertCommand sut,
+            Bookmark bookmark,
+            Bookmark newBookmark)
+        {
+            sut.Repositories.Bookmarks.Of(
+                x => x.InsertAsync(bookmark) == Task.FromResult(newBookmark));
+
+            var actual = sut.ExecuteAsync(bookmark).Result;
+
+            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
+            Assert.Equal(newBookmark, command.Value.Last());
+        }
     }
 }
