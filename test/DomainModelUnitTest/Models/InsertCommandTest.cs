@@ -3,10 +3,10 @@
     using System.Collections.Generic;
     using Xunit;
 
-    public class CreateCommandTest : IdiomaticTest<CreateCommand>
+    public class InsertCommandTest : IdiomaticTest<InsertCommand>
     {
         [Test]
-        public void SutIsModelCommand(CreateCommand sut)
+        public void SutIsModelCommand(InsertCommand sut)
         {
             Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
         }

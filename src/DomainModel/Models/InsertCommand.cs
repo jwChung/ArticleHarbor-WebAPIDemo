@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using Repositories;
 
-    public class CreateCommand : ModelCommand<IEnumerable<IModel>>
+    public class InsertCommand : ModelCommand<IEnumerable<IModel>>
     {
         private readonly IRepositories repositories;
         private readonly IEnumerable<IModel> value;
 
-        public CreateCommand(IRepositories repositories, IEnumerable<IModel> value)
+        public InsertCommand(IRepositories repositories, IEnumerable<IModel> value)
         {
             if (repositories == null)
                 throw new ArgumentNullException("repositories");
