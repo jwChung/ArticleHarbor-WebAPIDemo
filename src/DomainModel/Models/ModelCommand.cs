@@ -46,7 +46,7 @@
             return this.ExecuteAsyncWith(keywords);
         }
 
-        public virtual Task<IModelCommand<TValue>> ExecuteAsync(Keyword keywords)
+        public virtual Task<IModelCommand<TValue>> ExecuteAsync(Keyword keyword)
         {
             return Task.FromResult<IModelCommand<TValue>>(this);
         }
