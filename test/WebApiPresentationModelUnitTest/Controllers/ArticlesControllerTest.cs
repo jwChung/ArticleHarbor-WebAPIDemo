@@ -32,31 +32,6 @@
         }
 
         [Test]
-        public async Task PostAsyncCorrectlyAddsArticle(
-            ArticlesController sut,
-            PostArticleViewModel postArticle,
-            string userId,
-            Article expected)
-        {
-            // Fixture setup
-            sut.User.Identity.Of(x => x.Name == userId);
-
-            var articleLikeness = postArticle.AsSource().OfLikeness<Article>()
-                .With(x => x.Id).EqualsWhen((p, a) => a.Id == -1)
-                .With(x => x.UserId).EqualsWhen((p, a) => a.UserId == userId);
-
-            sut.ArticleService.Of(
-                x => x.AddAsync(It.Is<Article>(p => articleLikeness.Equals(p)))
-                    == Task.FromResult(expected));
-
-            // Exercise system
-            var actual = await sut.PostAsync(postArticle);
-
-            // Verify outcome
-            Assert.Equal(expected, actual);
-        }
-
-        [Test]
         public async Task PostAsyncResturnsCorrectResult(
             ArticlesController sut,
             PostArticleViewModel postArticle,

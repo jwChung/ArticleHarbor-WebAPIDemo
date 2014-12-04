@@ -57,25 +57,6 @@
             return this.repository.SelectAsync();
         }
 
-        [Authorize] // TODO: return unauthorized code when Unauthorized exceptin is thrown.
-        public Task<Article> PostAsync(PostArticleViewModel postArticle)
-        {
-            if (postArticle == null)
-                throw new ArgumentNullException("postArticle");
-
-            var article = new Article(
-                -1,
-                postArticle.Provider,
-                postArticle.Guid,
-                postArticle.Subject,
-                postArticle.Body,
-                postArticle.Date,
-                postArticle.Url,
-                this.User.Identity.Name);
-
-            return this.articleService.AddAsync(article);
-        }
-
         [Authorize]
         public Task<ArticleDetailViewModel> PostAsync2(PostArticleViewModel postArticle)
         {
