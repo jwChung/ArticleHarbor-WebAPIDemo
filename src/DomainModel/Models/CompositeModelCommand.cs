@@ -2,38 +2,39 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class CompositeModelCommand<TValue> : IModelCommand<TValue>
     {
         private readonly TValue value;
-        private readonly Func<TValue, TValue, TValue> composer;
+        private readonly Func<TValue, TValue, TValue> concat;
         private readonly IEnumerable<IModelCommand<TValue>> commands;
 
         public CompositeModelCommand(
             TValue value,
-            Func<TValue, TValue, TValue> composer,
+            Func<TValue, TValue, TValue> concat,
             params IModelCommand<TValue>[] commands)
-            : this(value, composer, (IEnumerable<IModelCommand<TValue>>)commands)
+            : this(value, concat, (IEnumerable<IModelCommand<TValue>>)commands)
         {
         }
 
         public CompositeModelCommand(
             TValue value,
-            Func<TValue, TValue, TValue> composer,
+            Func<TValue, TValue, TValue> concat,
             IEnumerable<IModelCommand<TValue>> commands)
         {
             if (value == null)
                 throw new ArgumentNullException("value");
 
-            if (composer == null)
-                throw new ArgumentNullException("composer");
+            if (concat == null)
+                throw new ArgumentNullException("concat");
 
             if (commands == null)
                 throw new ArgumentNullException("commands");
 
             this.value = value;
-            this.composer = composer;
+            this.concat = concat;
             this.commands = commands;
         }
 
@@ -42,9 +43,9 @@
             get { return this.value; }
         }
 
-        public Func<TValue, TValue, TValue> Composer
+        public Func<TValue, TValue, TValue> Concat
         {
-            get { return this.composer; }
+            get { return this.concat; }
         }
 
         public IEnumerable<IModelCommand<TValue>> Commands
