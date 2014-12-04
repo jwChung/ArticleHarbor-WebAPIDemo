@@ -28,6 +28,7 @@
         [Test]
         public void ExecuteAsyncArticleCorrectlyRelaysKeywords(
             Article article,
+            Article insertedArticle,
             IEnumerable<string> words,
             IModelCommand<IEnumerable<IModel>> innerCommand1,
             IModelCommand<IEnumerable<IModel>> innerCommand2,
@@ -36,16 +37,17 @@
             // Fixture setup
             fixture.Inject<Func<string, IEnumerable<string>>>(x =>
             {
-                Assert.Equal(article.Subject, x);
+                Assert.Equal(insertedArticle.Subject, x);
                 return words;
             });
             
             var sut = fixture.Create<RelayKeywordCommand>();
 
             sut.InnerCommand.Of(x => x.ExecuteAsync(article) == Task.FromResult(innerCommand1));
+            innerCommand1.Of(x => x.Value == new IModel[] { insertedArticle });
 
             var keywords = words.Select(
-                w => new Keyword(article.Id, w).AsSource().OfLikeness<Keyword>().CreateProxy());
+                w => new Keyword(insertedArticle.Id, w).AsSource().OfLikeness<Keyword>().CreateProxy());
             innerCommand1.Of(x => x.ExecuteAsync(keywords) == Task.FromResult(innerCommand2));
 
             // Exercise system
