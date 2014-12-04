@@ -146,6 +146,7 @@
     <Compile Include="JsonConstructorDeserializerTest.cs" />
     <Compile Include="JsonCustomMediaTypeFormatterTest.cs" />
     <Compile Include="LogContextTest.cs" />
+    <Compile Include="Models\ArticleDetailViewModelTest.cs" />
     <Compile Include="Models\PutArticleViewModelTest.cs" />
     <Compile Include="Models\PostArticleViewModelTest.cs" />
     <Compile Include="PermissionAuthorizationFilterAttributeTest.cs" />
