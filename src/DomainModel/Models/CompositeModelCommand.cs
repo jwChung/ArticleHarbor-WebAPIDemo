@@ -61,9 +61,13 @@
             return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
         }
 
-        public Task<IModelCommand<TValue>> ExecuteAsync(User user)
+        public async Task<IModelCommand<TValue>> ExecuteAsync(User user)
         {
-            throw new NotImplementedException();
+            TValue value = this.value;
+            foreach (var command in this.commands)
+                value = this.concat(value, (await command.ExecuteAsync(user)).Value);
+
+            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
         }
 
         public Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Article> articles)

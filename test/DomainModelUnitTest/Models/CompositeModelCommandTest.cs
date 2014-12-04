@@ -63,4 +63,35 @@
             Assert.Empty(expected.Except(compositeModelCommand.Value));
         }
     }
+
+    public class CompositeModelCommandOfInt32Test : CompositeModelCommandTest<int>
+    {
+        [Test]
+        public void ExecuteAsyncUserReturnsCorrectResult(
+            User user,
+            int[] values,
+            IFixture fixture)
+        {
+            // Fixture setup
+            fixture.Inject<Func<int, int, int>>(
+                (x, y) => x + y);
+            var sut = fixture.Create<CompositeModelCommand<int>>();
+
+            sut.Commands.Select((c, i) => c.Of(
+                x => x.ExecuteAsync(user) == Task.FromResult(
+                    Mock.Of<IModelCommand<int>>(m => m.Value == values[i]))))
+                .ToArray();
+
+            var expected = sut.Value + values.Sum();
+
+            // Exercise system
+            var actual = sut.ExecuteAsync(user).Result;
+
+            // Verify outcome
+            var compositeModelCommand = Assert
+                .IsAssignableFrom<CompositeModelCommand<int>>(actual);
+            Assert.Equal(sut.Commands, compositeModelCommand.Commands);
+            Assert.Equal(expected, compositeModelCommand.Value);
+        }
+    }
 }
