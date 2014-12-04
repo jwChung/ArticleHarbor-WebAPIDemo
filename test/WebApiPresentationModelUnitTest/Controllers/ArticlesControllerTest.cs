@@ -24,21 +24,11 @@
         [Test]
         public async Task GetAsyncReturnsCorrectResult(
             ArticlesController sut,
-            IRepository<Article> repository,
             IEnumerable<Article> articles)
         {
-            repository.Of(x => x.SelectAsync() == Task.FromResult(articles));
-            var actual = await sut.GetAsync(repository);
+            sut.Repository.Of(x => x.SelectAsync() == Task.FromResult(articles));
+            var actual = await sut.GetAsync();
             Assert.Equal(articles, actual);
-        }
-
-        [Test]
-        public void GetAsyncHasCorrectAttributeOnRepositoryParameter()
-        {
-            var attribute = this.Methods.Select(x => x.GetAsync(null))
-                .GetParameters().Single(x => x.Name == "repository")
-                .GetCustomAttribute<FromDependencyResolverAttribute>();
-            Assert.NotNull(attribute);
         }
 
         [Test]

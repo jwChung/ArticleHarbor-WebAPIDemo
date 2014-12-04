@@ -73,10 +73,7 @@ namespace ArticleHarbor.Website
                 c => new Repositories(c.Resolve<ArticleHarborDbContext>()))
                 .ReusedWithinContainer();
 
-            container.Register<IRepository<Keys<int>, Article>>(
-                c => c.Resolve<IRepositories>().Articles)
-                .ReusedWithinContainer();
-            container.Register<IRepository<Article>>(
+            container.Register(
                 c => c.Resolve<IRepositories>().Articles)
                 .ReusedWithinContainer();
 
@@ -110,7 +107,9 @@ namespace ArticleHarbor.Website
 
             // Presentation controllers
             container.Register(
-                c => new ArticlesController(c.Resolve<IArticleService>()))
+                c => new ArticlesController(
+                    c.Resolve<IArticleService>(),
+                    c.Resolve<IRepository<Keys<int>, Article>>()))
                 .ReusedWithinContainer();
 
             container.Register(

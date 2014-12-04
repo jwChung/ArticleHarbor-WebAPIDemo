@@ -13,13 +13,18 @@
     public class ArticlesController : ApiController
     {
         private readonly IArticleService articleService;
+        private readonly IRepository<Keys<int>, Article> repository;
 
-        public ArticlesController(IArticleService articleService)
+        public ArticlesController(IArticleService articleService, IRepository<Keys<int>, Article> repository)
         {
             if (articleService == null)
                 throw new ArgumentNullException("articleService");
 
+            if (repository == null)
+                throw new ArgumentNullException("repository");
+
             this.articleService = articleService;
+            this.repository = repository;
         }
 
         public IArticleService ArticleService
@@ -27,13 +32,15 @@
             get { return this.articleService; }
         }
 
-        public Task<IEnumerable<Article>> GetAsync(
-            [FromDependencyResolver] IRepository<Article> repository)
+        public IRepository<Keys<int>, Article> Repository
         {
-            if (repository == null)
-                throw new ArgumentNullException("repository");
+            get { return this.repository; }
+        }
 
-            return repository.SelectAsync();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is action method.")]
+        public Task<IEnumerable<Article>> GetAsync()
+        {
+            return this.repository.SelectAsync();
         }
 
         [Authorize] // TODO: return unauthorized code when Unauthorized exceptin is thrown.
