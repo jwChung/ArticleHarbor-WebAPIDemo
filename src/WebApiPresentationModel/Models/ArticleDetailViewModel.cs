@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using DomainModel.Models;
+    using Newtonsoft.Json;
 
     public class ArticleDetailViewModel
     {
@@ -21,6 +22,7 @@
             this.keywords = keywords;
         }
 
+        [JsonIgnore]
         public Article Article
         {
             get { return this.article; }
