@@ -29,23 +29,31 @@
         public void ExecuteAsyncArticleCorrectlyRelaysKeywords(
             Article article,
             IEnumerable<string> words,
-            IModelCommand<IEnumerable<IModel>> newInnerCommand,
+            IModelCommand<IEnumerable<IModel>> innerCommand1,
+            IModelCommand<IEnumerable<IModel>> innerCommand2,
             IFixture fixture)
         {
+            // Fixture setup
             fixture.Inject<Func<string, IEnumerable<string>>>(x =>
             {
                 Assert.Equal(article.Subject, x);
                 return words;
             });
+            
             var sut = fixture.Create<RelayKeywordCommand>();
+
+            sut.InnerCommand.Of(x => x.ExecuteAsync(article) == Task.FromResult(innerCommand1));
+
             var keywords = words.Select(
                 w => new Keyword(article.Id, w).AsSource().OfLikeness<Keyword>().CreateProxy());
-            sut.InnerCommand.Of(x => x.ExecuteAsync(keywords) == Task.FromResult(newInnerCommand));
+            innerCommand1.Of(x => x.ExecuteAsync(keywords) == Task.FromResult(innerCommand2));
 
+            // Exercise system
             var actual = sut.ExecuteAsync(article).Result;
 
+            // Verify outcome
             var relayKeywordCommand = Assert.IsAssignableFrom<RelayKeywordCommand>(actual);
-            Assert.Equal(newInnerCommand, relayKeywordCommand.InnerCommand);
+            Assert.Equal(innerCommand2, relayKeywordCommand.InnerCommand);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()

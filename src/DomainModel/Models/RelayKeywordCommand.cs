@@ -49,11 +49,13 @@
 
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Article article)
         {
+            var innerCommand1 = await this.innerCommand.ExecuteAsync(article);
+
             var keywords = this.nounExtractor(article.Subject)
                 .Select(w => new Keyword(article.Id, w));
-            var innerCommand = await this.innerCommand.ExecuteAsync(keywords);
+            var innerCommand2 = await innerCommand1.ExecuteAsync(keywords);
 
-            return new RelayKeywordCommand(innerCommand, this.nounExtractor);
+            return new RelayKeywordCommand(innerCommand2, this.nounExtractor);
         }
     }
 }
