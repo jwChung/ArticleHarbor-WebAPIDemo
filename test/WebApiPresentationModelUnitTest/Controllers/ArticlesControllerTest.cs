@@ -32,7 +32,7 @@
         }
 
         [Test]
-        public async Task PostAsyncResturnsCorrectResult(
+        public async Task PostAsyncReturnsCorrectResult(
             ArticlesController sut,
             PostArticleViewModel postArticle,
             string userId,
