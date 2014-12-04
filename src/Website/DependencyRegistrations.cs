@@ -109,7 +109,8 @@ namespace ArticleHarbor.Website
             container.Register(
                 c => new ArticlesController(
                     c.Resolve<IArticleService>(),
-                    c.Resolve<IRepository<Keys<int>, Article>>()))
+                    c.Resolve<IRepository<Keys<int>, Article>>(),
+                    null))
                 .ReusedWithinContainer();
 
             container.Register(
