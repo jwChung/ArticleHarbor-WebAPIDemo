@@ -84,6 +84,7 @@
     <Compile Include="JsonConstructorDeserializer.cs" />
     <Compile Include="JsonCustomMediaTypeFormatter.cs" />
     <Compile Include="LogContext.cs" />
+    <Compile Include="Models\ArticleDetailViewModel.cs" />
     <Compile Include="Models\PostArticleViewModel.cs" />
     <Compile Include="Models\PutArticleViewModel.cs" />
     <Compile Include="PermissionAuthorizationFilterAttribute.cs" />
