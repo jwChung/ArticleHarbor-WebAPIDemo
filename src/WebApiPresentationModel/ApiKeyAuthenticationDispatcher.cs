@@ -30,7 +30,7 @@
         {
             if (request == null)
                 throw new ArgumentNullException("request");
-
+            
             return this.SendAsync(request, cancellationToken);
         }
 
@@ -38,7 +38,7 @@
             HttpRequestMessage request, CancellationToken cancellationToken)
         {
             var authentication = request.Headers.Authorization;
-
+            
             if (authentication == null || authentication.Scheme != "apikey")
                 return await base.SendAsync(request, cancellationToken);
 
@@ -48,7 +48,7 @@
 
             if (user != null)
                 request.GetRequestContext().Principal = new SimplePrincipal(user.Id, user.Role);
-
+            
             return await base.SendAsync(request, cancellationToken);
         }
     }
