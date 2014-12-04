@@ -57,13 +57,6 @@
         }
 
         [Test]
-        public void PostAsyncHasAuthorizeAttribute()
-        {
-            var method = this.Methods.Select(x => x.PostAsync(null));
-            Assert.NotNull(method.GetCustomAttribute<AuthorizeAttribute>());
-        }
-
-        [Test]
         public async Task PostAsyncResturnsCorrectResult(
             ArticlesController sut,
             PostArticleViewModel postArticle,
@@ -93,6 +86,13 @@
             Assert.Equal(article, articleDetail.Article);
             Assert.Equal(keywords.Count(), articleDetail.Keywords.Count());
             Assert.Empty(articleDetail.Keywords.Except(keywords));
+        }
+
+        [Test]
+        public void PostAsyncHasAuthorizeAttribute()
+        {
+            var method = this.Methods.Select(x => x.PostAsync2(null));
+            Assert.NotNull(method.GetCustomAttribute<AuthorizeAttribute>());
         }
 
         [Test]

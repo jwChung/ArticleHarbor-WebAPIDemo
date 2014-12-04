@@ -76,6 +76,7 @@
             return this.articleService.AddAsync(article);
         }
 
+        [Authorize]
         public Task<ArticleDetailViewModel> PostAsync2(PostArticleViewModel postArticle)
         {
             if (postArticle == null)
