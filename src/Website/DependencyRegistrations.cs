@@ -2,6 +2,8 @@ namespace ArticleHarbor.Website
 {
     using System;
     using System.Data.Entity;
+    using System.Linq;
+    using System.Security.Principal;
     using System.Web;
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.DomainModel.Models;
@@ -105,11 +107,25 @@ namespace ArticleHarbor.Website
                     c.Resolve<IArticleRepository>()))
                 .ReusedWithinContainer();
 
+            // Commands
+            container.Register(
+                c => new InsertConfirmableCommand(c.Resolve<IPrincipal>()))
+                .ReusedWithinContainer();
+
+            container.Register(
+                c => new InsertCommand(c.Resolve<IRepositories>(), Enumerable.Empty<IModel>()))
+                .ReusedWithinContainer();
+
             // Presentation controllers
             container.Register(
                 c => new ArticlesController(
                     c.Resolve<IArticleService>(),
-                    c.Resolve<IRepository<Keys<int>, Article>>()))
+                    c.Resolve<IRepository<Keys<int>, Article>>(),
+                    new RelayKeywordCommand(
+                        new CompositeEnumerableCommand<IModel>(
+                            c.Resolve<InsertConfirmableCommand>(),
+                            c.Resolve<InsertCommand>()),
+                        KoreanNounExtractor.Execute)))
                 .ReusedWithinContainer();
 
             container.Register(

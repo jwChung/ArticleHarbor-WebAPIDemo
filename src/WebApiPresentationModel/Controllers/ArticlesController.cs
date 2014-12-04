@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Http;
     using DomainModel;
@@ -14,8 +15,12 @@
     {
         private readonly IArticleService articleService;
         private readonly IRepository<Keys<int>, Article> repository;
+        private readonly IModelCommand<IEnumerable<IModel>> insertCommand;
 
-        public ArticlesController(IArticleService articleService, IRepository<Keys<int>, Article> repository)
+        public ArticlesController(
+            IArticleService articleService,
+            IRepository<Keys<int>, Article> repository,
+            IModelCommand<IEnumerable<IModel>> insertCommand)
         {
             if (articleService == null)
                 throw new ArgumentNullException("articleService");
@@ -23,8 +28,12 @@
             if (repository == null)
                 throw new ArgumentNullException("repository");
 
+            if (insertCommand == null)
+                throw new ArgumentNullException("insertCommand");
+
             this.articleService = articleService;
             this.repository = repository;
+            this.insertCommand = insertCommand;
         }
 
         public IArticleService ArticleService
@@ -37,29 +46,24 @@
             get { return this.repository; }
         }
 
+        public IModelCommand<IEnumerable<IModel>> InsertCommand
+        {
+            get { return this.insertCommand; }
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is action method.")]
         public Task<IEnumerable<Article>> GetAsync()
         {
             return this.repository.SelectAsync();
         }
 
-        [Authorize] // TODO: return unauthorized code when Unauthorized exceptin is thrown.
-        public Task<Article> PostAsync(PostArticleViewModel postArticle)
+        [Authorize]
+        public Task<ArticleDetailViewModel> PostAsync(PostArticleViewModel postArticle)
         {
             if (postArticle == null)
                 throw new ArgumentNullException("postArticle");
 
-            var article = new Article(
-                -1,
-                postArticle.Provider,
-                postArticle.Guid,
-                postArticle.Subject,
-                postArticle.Body,
-                postArticle.Date,
-                postArticle.Url,
-                this.User.Identity.Name);
-
-            return this.articleService.AddAsync(article);
+            return this.PostAsyncWith(postArticle);
         }
 
         [Authorize]
@@ -76,6 +80,24 @@
         {
             var actor = this.User.Identity.Name;
             return this.articleService.RemoveAsync(actor, id);
+        }
+
+        private async Task<ArticleDetailViewModel> PostAsyncWith(PostArticleViewModel postArticle)
+        {
+            var article = new Article(
+                -1,
+                postArticle.Provider,
+                postArticle.Guid,
+                postArticle.Subject,
+                postArticle.Body,
+                postArticle.Date,
+                postArticle.Url,
+                this.User.Identity.Name);
+
+            var models = (await article.ExecuteAsync(this.insertCommand)).Value;
+
+            return new ArticleDetailViewModel(
+                models.OfType<Article>().Single(), models.OfType<Keyword>());
         }
 
         private async Task PutAsyncImpl(PutArticleViewModel putArticle)

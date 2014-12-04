@@ -153,6 +153,7 @@
     </Compile>
     <Compile Include="ArticleHarborDbContextTestInitializer.cs" />
     <Compile Include="IdentityConfig.cs" />
+    <Compile Include="PrincipalRegisteringHandler.cs" />
     <Compile Include="ThrowController.cs" />
     <Compile Include="WebApiConfig.cs" />
     <Compile Include="ArticleHarborAssembliesResolver.cs" />

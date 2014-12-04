@@ -18,14 +18,19 @@
             this.container = container;
         }
 
+        public Container Container
+        {
+            get { return this.container; }
+        }
+
         public IDependencyScope BeginScope()
         {
-            return new DependencyResolver(this.container.CreateChild());
+            return new DependencyResolver(this.Container.CreateChild());
         }
 
         public T GetService<T>()
         {
-            return this.container.TryResolve<T>();
+            return this.Container.TryResolve<T>();
         }
 
         public object GetService(Type serviceType)
@@ -53,7 +58,7 @@
             if (this.disposed)
                 return;
 
-            this.container.Dispose();
+            this.Container.Dispose();
             this.disposed = true;
         }
     }

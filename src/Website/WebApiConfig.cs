@@ -51,7 +51,8 @@
                 return new AuthService(new UserRepository(context), context);
             };
             config.MessageHandlers.Add(new ApiKeyAuthenticationDispatcher(authServiceFactory));
-
+            config.MessageHandlers.Add(new PrincipalRegisteringHandler());
+            
             // Web API routes
             config.MapHttpAttributeRoutes();
 
