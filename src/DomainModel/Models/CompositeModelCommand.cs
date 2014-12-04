@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     public class CompositeModelCommand<TValue> : IModelCommand<TValue>
@@ -53,9 +52,13 @@
             get { return this.commands; }
         }
 
-        public Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<User> users)
+        public async Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<User> users)
         {
-            throw new NotImplementedException();
+            TValue value = this.value;
+            foreach (var command in this.commands)
+                value = this.concat(value, (await command.ExecuteAsync(users)).Value);
+
+            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
         }
 
         public Task<IModelCommand<TValue>> ExecuteAsync(User user)
