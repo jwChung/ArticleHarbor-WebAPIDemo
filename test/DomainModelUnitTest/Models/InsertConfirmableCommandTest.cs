@@ -11,7 +11,7 @@
         [Test]
         public void SutIsModelCommand(InsertConfirmableCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<object>>(sut);
+            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
         }
 
         [Test]

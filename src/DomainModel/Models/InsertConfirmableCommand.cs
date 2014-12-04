@@ -1,10 +1,11 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.Security.Principal;
     using System.Threading.Tasks;
 
-    public class InsertConfirmableCommand : ModelCommand<object>
+    public class InsertConfirmableCommand : ModelCommand<IEnumerable<IModel>>
     {
         private readonly IPrincipal principal;
 
@@ -21,25 +22,25 @@
             get { return this.principal; }
         }
 
-        public override Task<IModelCommand<object>> ExecuteAsync(Article article)
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
         {
             this.ConfirmCanCreate();
             return base.ExecuteAsync(article);
         }
 
-        public override Task<IModelCommand<object>> ExecuteAsync(Bookmark bookmark)
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Bookmark bookmark)
         {
             this.ConfirmCanCreate();
             return base.ExecuteAsync(bookmark);
         }
 
-        public override Task<IModelCommand<object>> ExecuteAsync(Keyword keyword)
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Keyword keyword)
         {
             this.ConfirmCanCreate();
             return base.ExecuteAsync(keyword);
         }
 
-        public override Task<IModelCommand<object>> ExecuteAsync(User user)
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(User user)
         {
             throw new UnauthorizedException();
         }
