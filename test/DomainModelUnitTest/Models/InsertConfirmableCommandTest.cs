@@ -15,6 +15,13 @@
         }
 
         [Test]
+        public void ValueIsEmpty(InsertConfirmableCommand sut)
+        {
+            var actual = sut.Value;
+            Assert.Empty(actual);
+        }
+
+        [Test]
         public IEnumerable<ITestCase> ExecuteAsyncWithValidRoleDoesNotThrow()
         {
             var roleNames = new[]

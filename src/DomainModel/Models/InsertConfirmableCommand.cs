@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Security.Principal;
     using System.Threading.Tasks;
 
@@ -15,6 +16,11 @@
                 throw new ArgumentNullException("principal");
 
             this.principal = principal;
+        }
+
+        public override IEnumerable<IModel> Value
+        {
+            get { return Enumerable.Empty<IModel>(); }
         }
 
         public IPrincipal Principal
