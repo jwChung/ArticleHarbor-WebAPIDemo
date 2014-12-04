@@ -54,7 +54,7 @@
                     == Task.FromResult(Mock.Of<IModelCommand<IEnumerable<IModel>>>(c => c.Value == models)));
 
             // Exercise system
-            var actual = await sut.PostAsync2(postArticle);
+            var actual = await sut.PostAsync(postArticle);
 
             // Verify outcome
             var articleDetail = Assert.IsAssignableFrom<ArticleDetailViewModel>(actual);
@@ -66,7 +66,7 @@
         [Test]
         public void PostAsyncHasAuthorizeAttribute()
         {
-            var method = this.Methods.Select(x => x.PostAsync2(null));
+            var method = this.Methods.Select(x => x.PostAsync(null));
             Assert.NotNull(method.GetCustomAttribute<AuthorizeAttribute>());
         }
 

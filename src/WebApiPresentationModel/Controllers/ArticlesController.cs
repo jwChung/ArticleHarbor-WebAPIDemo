@@ -58,7 +58,7 @@
         }
 
         [Authorize]
-        public Task<ArticleDetailViewModel> PostAsync2(PostArticleViewModel postArticle)
+        public Task<ArticleDetailViewModel> PostAsync(PostArticleViewModel postArticle)
         {
             if (postArticle == null)
                 throw new ArgumentNullException("postArticle");
