@@ -37,7 +37,7 @@
             this.commands = commands;
         }
 
-        public TValue Value
+        public virtual TValue Value
         {
             get { return this.value; }
         }
@@ -52,7 +52,7 @@
             get { return this.commands; }
         }
 
-        public async Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<User> users)
+        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<User> users)
         {
             TValue value = this.value;
             foreach (var command in this.commands)
@@ -61,7 +61,7 @@
             return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
         }
 
-        public async Task<IModelCommand<TValue>> ExecuteAsync(User user)
+        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(User user)
         {
             TValue value = this.value;
             foreach (var command in this.commands)
@@ -70,34 +70,58 @@
             return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
         }
 
-        public Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Article> articles)
+        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Article> articles)
         {
-            throw new NotImplementedException();
+            TValue value = this.value;
+            foreach (var command in this.commands)
+                value = this.concat(value, (await command.ExecuteAsync(articles)).Value);
+
+            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
         }
 
-        public Task<IModelCommand<TValue>> ExecuteAsync(Article article)
+        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(Article article)
         {
-            throw new NotImplementedException();
+            TValue value = this.value;
+            foreach (var command in this.commands)
+                value = this.concat(value, (await command.ExecuteAsync(article)).Value);
+
+            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
         }
 
-        public Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Keyword> keywords)
+        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Keyword> keywords)
         {
-            throw new NotImplementedException();
+            TValue value = this.value;
+            foreach (var command in this.commands)
+                value = this.concat(value, (await command.ExecuteAsync(keywords)).Value);
+
+            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
         }
 
-        public Task<IModelCommand<TValue>> ExecuteAsync(Keyword keyword)
+        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(Keyword keyword)
         {
-            throw new NotImplementedException();
+            TValue value = this.value;
+            foreach (var command in this.commands)
+                value = this.concat(value, (await command.ExecuteAsync(keyword)).Value);
+
+            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
         }
 
-        public Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Bookmark> bookmarks)
+        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Bookmark> bookmarks)
         {
-            throw new NotImplementedException();
+            TValue value = this.value;
+            foreach (var command in this.commands)
+                value = this.concat(value, (await command.ExecuteAsync(bookmarks)).Value);
+
+            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
         }
 
-        public Task<IModelCommand<TValue>> ExecuteAsync(Bookmark bookmark)
+        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(Bookmark bookmark)
         {
-            throw new NotImplementedException();
+            TValue value = this.value;
+            foreach (var command in this.commands)
+                value = this.concat(value, (await command.ExecuteAsync(bookmark)).Value);
+
+            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
         }
     }
 }
