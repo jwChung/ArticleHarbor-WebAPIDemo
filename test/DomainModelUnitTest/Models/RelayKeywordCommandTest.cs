@@ -9,16 +9,16 @@
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 
-    public class ExtractKeywordCommandTest : IdiomaticTest<ExtractKeywordCommand>
+    public class RelayKeywordCommandTest : IdiomaticTest<RelayKeywordCommand>
     {
         [Test]
-        public void SutIsModelCommand(ExtractKeywordCommand sut)
+        public void SutIsModelCommand(RelayKeywordCommand sut)
         {
             Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
         }
 
         [Test]
-        public void ValueIsCorrect(ExtractKeywordCommand sut, IEnumerable<IModel> models)
+        public void ValueIsCorrect(RelayKeywordCommand sut, IEnumerable<IModel> models)
         {
             sut.InnerCommand.Of(x => x.Value == models);
             var actual = sut.Value;
@@ -37,14 +37,14 @@
                 Assert.Equal(article.Subject, x);
                 return words;
             });
-            var sut = fixture.Create<ExtractKeywordCommand>();
+            var sut = fixture.Create<RelayKeywordCommand>();
             var keywords = words.Select(
                 w => new Keyword(article.Id, w).AsSource().OfLikeness<Keyword>().CreateProxy());
             sut.InnerCommand.Of(x => x.ExecuteAsync(keywords) == Task.FromResult(newInnerCommand));
 
             var actual = sut.ExecuteAsync(article).Result;
 
-            var relayKeywordCommand = Assert.IsAssignableFrom<ExtractKeywordCommand>(actual);
+            var relayKeywordCommand = Assert.IsAssignableFrom<RelayKeywordCommand>(actual);
             Assert.Equal(newInnerCommand, relayKeywordCommand.InnerCommand);
         }
 
