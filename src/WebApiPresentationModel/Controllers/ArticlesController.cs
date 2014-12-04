@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Http;
     using DomainModel;
@@ -75,6 +76,14 @@
             return this.articleService.AddAsync(article);
         }
 
+        public Task<ArticleDetailViewModel> PostAsync2(PostArticleViewModel postArticle)
+        {
+            if (postArticle == null)
+                throw new ArgumentNullException("postArticle");
+
+            return this.PostAsyncWith(postArticle);
+        }
+
         [Authorize]
         public Task PutAsync(PutArticleViewModel putArticle)
         {
@@ -89,6 +98,24 @@
         {
             var actor = this.User.Identity.Name;
             return this.articleService.RemoveAsync(actor, id);
+        }
+
+        private async Task<ArticleDetailViewModel> PostAsyncWith(PostArticleViewModel postArticle)
+        {
+            var article = new Article(
+                -1,
+                postArticle.Provider,
+                postArticle.Guid,
+                postArticle.Subject,
+                postArticle.Body,
+                postArticle.Date,
+                postArticle.Url,
+                this.User.Identity.Name);
+
+            var models = (await article.ExecuteAsync(this.insertCommand)).Value;
+
+            return new ArticleDetailViewModel(
+                models.OfType<Article>().Single(), models.OfType<Keyword>());
         }
 
         private async Task PutAsyncImpl(PutArticleViewModel putArticle)

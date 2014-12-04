@@ -64,6 +64,38 @@
         }
 
         [Test]
+        public async Task PostAsyncResturnsCorrectResult(
+            ArticlesController sut,
+            PostArticleViewModel postArticle,
+            string userId,
+            Article article,
+            IEnumerable<IModel> models,
+            IEnumerable<Keyword> keywords)
+        {
+            // Fixture setup
+            sut.User.Identity.Of(x => x.Name == userId);
+
+            var articleLikeness = postArticle.AsSource().OfLikeness<Article>()
+                .With(x => x.Id).EqualsWhen((p, a) => a.Id == -1)
+                .With(x => x.UserId).EqualsWhen((p, a) => a.UserId == userId);
+
+            models = new IModel[] { article }.Concat(keywords).Concat(models);
+            models = models.OrderBy(x => x.GetHashCode());
+            sut.InsertCommand.Of(
+                x => x.ExecuteAsync(It.Is<Article>(p => articleLikeness.Equals(p)))
+                    == Task.FromResult(Mock.Of<IModelCommand<IEnumerable<IModel>>>(c => c.Value == models)));
+
+            // Exercise system
+            var actual = await sut.PostAsync2(postArticle);
+
+            // Verify outcome
+            var articleDetail = Assert.IsAssignableFrom<ArticleDetailViewModel>(actual);
+            Assert.Equal(article, articleDetail.Article);
+            Assert.Equal(keywords.Count(), articleDetail.Keywords.Count());
+            Assert.Empty(articleDetail.Keywords.Except(keywords));
+        }
+
+        [Test]
         public async Task PutAsyncCorrectlyModifiesArticle(
             ArticlesController sut,
             PutArticleViewModel putArticle,
