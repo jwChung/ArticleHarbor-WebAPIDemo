@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
+    using Moq;
     using Ploeh.AutoFixture;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
@@ -56,6 +57,22 @@
             // Verify outcome
             var relayKeywordCommand = Assert.IsAssignableFrom<RelayKeywordCommand>(actual);
             Assert.Equal(innerCommand2, relayKeywordCommand.InnerCommand);
+        }
+
+        [Test]
+        public void ExecuteAsyncArticleRelaysKeywordsOnlyOnce(
+            Article article,
+            IModelCommand<IEnumerable<IModel>> innerCommand,
+            RelayKeywordCommand sut)
+        {
+            sut.InnerCommand.Of(x => x.ExecuteAsync(article) == Task.FromResult(innerCommand));
+            innerCommand.Of(x => x.Value == new IModel[] { article }
+                && x.ExecuteAsync(It.IsAny<IEnumerable<Keyword>>()) == Task.FromResult(innerCommand));
+            
+            sut.ExecuteAsync(article).Wait();
+
+            innerCommand.ToMock().Verify(
+                x => x.ExecuteAsync(It.Is<IEnumerable<Keyword>>(p => p.GetType().IsArray)));
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()

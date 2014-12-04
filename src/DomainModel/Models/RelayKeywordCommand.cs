@@ -53,7 +53,7 @@
             
             var insertedArticle = innerCommand.Value.OfType<Article>().Single();
             var keywords = this.nounExtractor(insertedArticle.Subject)
-                .Select(w => new Keyword(insertedArticle.Id, w));
+                .Select(w => new Keyword(insertedArticle.Id, w)).ToArray();
 
             innerCommand = await innerCommand.ExecuteAsync(keywords);
 
