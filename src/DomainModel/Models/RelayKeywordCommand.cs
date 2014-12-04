@@ -31,5 +31,10 @@
         {
             get { return this.nounExtractor; }
         }
+
+        public override IEnumerable<IModel> Value
+        {
+            get { return this.innerCommand.Value; }
+        }
     }
 }
