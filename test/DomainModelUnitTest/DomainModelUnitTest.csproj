@@ -104,6 +104,7 @@
     <Compile Include="Collectors\SubjectFromBodyTransformationTest.cs" />
     <Compile Include="Collectors\ArticleTransformationCollectorTest.cs" />
     <Compile Include="Models\BookmarkTest.cs" />
+    <Compile Include="Models\CompositeModelCommandTest.cs" />
     <Compile Include="Models\InsertConfirmableCommandTest.cs" />
     <Compile Include="Models\InsertCommandTest.cs" />
     <Compile Include="Models\CompositeModelTest.cs" />
