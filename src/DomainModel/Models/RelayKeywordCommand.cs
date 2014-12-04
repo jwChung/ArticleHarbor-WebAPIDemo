@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public class RelayKeywordCommand : ModelCommand<IEnumerable<IModel>>
     {
@@ -35,6 +37,23 @@
         public override IEnumerable<IModel> Value
         {
             get { return this.innerCommand.Value; }
+        }
+
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
+        {
+            if (article == null)
+                throw new ArgumentNullException("article");
+
+            return this.ExecuteAsyncWith(article);
+        }
+
+        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Article article)
+        {
+            var keywords = this.nounExtractor(article.Subject)
+                .Select(w => new Keyword(article.Id, w));
+            var innerCommand = await this.innerCommand.ExecuteAsync(keywords);
+
+            return new RelayKeywordCommand(innerCommand, this.nounExtractor);
         }
     }
 }
