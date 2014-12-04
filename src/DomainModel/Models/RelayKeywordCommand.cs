@@ -3,12 +3,12 @@
     using System;
     using System.Collections.Generic;
 
-    public class RelayKeywordsCommand : ModelCommand<IEnumerable<IModel>>
+    public class RelayKeywordCommand : ModelCommand<IEnumerable<IModel>>
     {
         private readonly IModelCommand<IEnumerable<IModel>> innerCommand;
         private readonly Func<string, IEnumerable<string>> nounExtractor;
 
-        public RelayKeywordsCommand(
+        public RelayKeywordCommand(
             IModelCommand<IEnumerable<IModel>> innerCommand,
             Func<string, IEnumerable<string>> nounExtractor)
         {

@@ -3,10 +3,10 @@
     using System.Collections.Generic;
     using Xunit;
 
-    public class RelayKeywordsCommandTest : IdiomaticTest<RelayKeywordsCommand>
+    public class RelayKeywordCommandTest : IdiomaticTest<RelayKeywordCommand>
     {
         [Test]
-        public void SutIsModelCommand(RelayKeywordsCommand sut)
+        public void SutIsModelCommand(RelayKeywordCommand sut)
         {
             Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
         }
