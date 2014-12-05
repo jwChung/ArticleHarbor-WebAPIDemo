@@ -88,8 +88,15 @@
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Article article)
         {
             var newArticle = await this.repositories.Articles.InsertAsync(article);
+
+            var keywords = this.nounExtractor(newArticle.Subject)
+                .Select(n => new Keyword(newArticle.Id, n));
+            var newKeywords = (await this.ExecuteAsync(keywords)).Value;
+
             return new InsertCommand(
-                this.repositories, this.nounExtractor, this.Value.Concat(new[] { newArticle }));
+                this.repositories,
+                this.nounExtractor,
+                newKeywords.Concat(new[] { newArticle }));
         }
 
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Keyword keyword)
