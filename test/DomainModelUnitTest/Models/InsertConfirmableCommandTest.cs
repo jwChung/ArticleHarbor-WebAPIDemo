@@ -34,7 +34,7 @@
                 .WithAuto<InsertConfirmableCommand, Article>()
                 .Create((roleName, sut, model) =>
                 {
-                    sut.Principal.Of(x => x.IsInRole(roleName));
+                    sut.Principal.Of(x => x.IsInRole(roleName) == true);
                     var actual = sut.ExecuteAsync(model).Result;
                     Assert.Equal(sut, actual);
                 });
@@ -43,7 +43,7 @@
                .WithAuto<InsertConfirmableCommand, Keyword>()
                .Create((roleName, sut, model) =>
                {
-                   sut.Principal.Of(x => x.IsInRole(roleName));
+                   sut.Principal.Of(x => x.IsInRole(roleName) == true);
                    var actual = sut.ExecuteAsync(model).Result;
                    Assert.Equal(sut, actual);
                });
@@ -52,7 +52,7 @@
                 .WithAuto<InsertConfirmableCommand, Bookmark>()
                 .Create((roleName, sut, model) =>
                 {
-                    sut.Principal.Of(x => x.IsInRole(roleName));
+                    sut.Principal.Of(x => x.IsInRole(roleName) == true);
                     var actual = sut.ExecuteAsync(model).Result;
                     Assert.Equal(sut, actual);
                 });
@@ -88,6 +88,16 @@
             User user)
         {
             Assert.Throws<UnauthorizedException>(() => sut.ExecuteAsync(user).Result);
+        }
+
+        [Test]
+        public void ExecuteAsyncBookmarkWithUserRoleDoesNotThrow(
+            InsertConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            sut.Principal.Of(x => x.IsInRole("User") == true);
+            var actual = sut.ExecuteAsync(bookmark).Result;
+            Assert.Equal(sut, actual);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()

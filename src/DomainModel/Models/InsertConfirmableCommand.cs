@@ -30,19 +30,19 @@
 
         public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
         {
-            this.ConfirmCanCreate();
+            this.ConfirmCanCreate("Administrator", "Author");
             return base.ExecuteAsync(article);
         }
 
         public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Bookmark bookmark)
         {
-            this.ConfirmCanCreate();
+            this.ConfirmCanCreate("Administrator", "Author", "User");
             return base.ExecuteAsync(bookmark);
         }
 
         public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Keyword keyword)
         {
-            this.ConfirmCanCreate();
+            this.ConfirmCanCreate("Administrator", "Author");
             return base.ExecuteAsync(keyword);
         }
 
@@ -51,9 +51,9 @@
             throw new UnauthorizedException();
         }
 
-        private void ConfirmCanCreate()
+        private void ConfirmCanCreate(params string[] roleNames)
         {
-            if (!this.principal.IsInRole("Author") && !this.principal.IsInRole("Administrator"))
+            if (roleNames.All(r => !this.principal.IsInRole(r)))
                 throw new UnauthorizedException();
         }
     }
