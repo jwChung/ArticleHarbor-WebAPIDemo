@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using kr.ac.kaist.swrc.jhannanum.comm;
     using kr.ac.kaist.swrc.jhannanum.hannanum;
 
@@ -24,9 +25,7 @@
                     workflow.analyze(document);
                     var sentence = workflow.getResultOfSentence(new Sentence(0, 0, false));
 
-                    foreach (var eojeol in sentence.Eojeols)
-                        foreach (var morpheme in eojeol.Morphemes)
-                            yield return morpheme;
+                    return sentence.Eojeols.SelectMany(e => e.Morphemes);
                 }
                 finally
                 {
