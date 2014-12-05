@@ -97,5 +97,10 @@
             yield return this.Methods.Select(x => x.ExecuteAsync(default(Bookmark)));
             yield return this.Methods.Select(x => x.ExecuteAsync(default(User)));
         }
+
+        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
+        {
+            yield return this.Properties.Select(x => x.Value);
+        }
     }
 }
