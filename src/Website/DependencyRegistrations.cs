@@ -124,11 +124,9 @@ namespace ArticleHarbor.Website
                 c => new ArticlesController(
                     c.Resolve<IArticleService>(),
                     c.Resolve<IRepository<Keys<int>, Article>>(),
-                    new RelayKeywordCommand(
-                        new CompositeEnumerableCommand<IModel>(
-                            c.Resolve<InsertConfirmableCommand>(),
-                            c.Resolve<InsertCommand>()),
-                        KoreanNounExtractor.Execute)))
+                    new CompositeEnumerableCommand<IModel>(
+                        c.Resolve<InsertConfirmableCommand>(),
+                        c.Resolve<InsertCommand>())))
                 .ReusedWithinContainer();
 
             container.Register(
