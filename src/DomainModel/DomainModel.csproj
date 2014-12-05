@@ -79,6 +79,7 @@
     <Compile Include="Models\NullCommand.cs" />
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\RelayKeywordCommand.cs" />
+    <Compile Include="Models\UpdateConfirmableCommand.cs" />
     <Compile Include="Repositories\IBookmarkRepository.cs" />
     <Compile Include="Repositories\IRepositories.cs" />
     <Compile Include="Repositories\IRepository.cs" />
