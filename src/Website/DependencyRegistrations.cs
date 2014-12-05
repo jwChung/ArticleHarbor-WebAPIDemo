@@ -113,7 +113,10 @@ namespace ArticleHarbor.Website
                 .ReusedWithinContainer();
 
             container.Register(
-                c => new InsertCommand(c.Resolve<IRepositories>(), Enumerable.Empty<IModel>()))
+                c => new InsertCommand(
+                    c.Resolve<IRepositories>(),
+                    KoreanNounExtractor.Execute,
+                    Enumerable.Empty<IModel>()))
                 .ReusedWithinContainer();
 
             // Presentation controllers
