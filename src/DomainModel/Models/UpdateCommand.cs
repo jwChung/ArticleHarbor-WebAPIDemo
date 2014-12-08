@@ -38,5 +38,11 @@
             await this.repositories.Articles.UpdateAsync(article);
             return this;
         }
+
+        public async override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Keyword keyword)
+        {
+            await this.repositories.Keywords.UpdateAsync(keyword);
+            return this;
+        }
     }
 }

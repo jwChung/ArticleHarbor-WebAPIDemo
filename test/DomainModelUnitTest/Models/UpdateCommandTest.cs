@@ -57,6 +57,24 @@
             Assert.True(verifies);
         }
 
+        [Test]
+        public void ExecuteAsyncKeywordCorrectlyUpdates(
+            UpdateCommand sut,
+            Keyword keyword)
+        {
+            bool verifies = false;
+            var task = Task.Run(() =>
+            {
+                Thread.Sleep(300);
+                verifies = true;
+            });
+            sut.Repositories.Keywords.Of(x => x.UpdateAsync(keyword) == task);
+
+            var actual = sut.ExecuteAsync(keyword).Result;
+
+            Assert.True(verifies);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.Value);
@@ -66,6 +84,7 @@
         {
             yield return this.Methods.Select(x => x.ExecuteAsync(default(User)));
             yield return this.Methods.Select(x => x.ExecuteAsync(default(Article)));
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(Keyword)));
         }
     }
 }
