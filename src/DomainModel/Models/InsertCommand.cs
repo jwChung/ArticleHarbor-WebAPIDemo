@@ -6,12 +6,12 @@
     using System.Threading.Tasks;
     using Repositories;
 
-    public class NewInsertCommand : ModelCommand<IEnumerable<IModel>>
+    public class InsertCommand : ModelCommand<IEnumerable<IModel>>
     {
         private readonly IRepositories repositories;
         private readonly IModelCommand<IEnumerable<IModel>> innerCommand;
 
-        public NewInsertCommand(
+        public InsertCommand(
             IRepositories repositories,
             IModelCommand<IEnumerable<IModel>> innerCommand,
             IEnumerable<IModel> value) : base(value)
@@ -73,7 +73,7 @@
             var newUser = await this.repositories.Users.InsertAsync(user);
             var newInnerCommand = await this.innerCommand.ExecuteAsync(newUser);
 
-            return new NewInsertCommand(
+            return new InsertCommand(
                 this.repositories,
                 this.innerCommand,
                 this.Value.Concat(new IModel[] { newUser }).Concat(newInnerCommand.Value));
@@ -84,7 +84,7 @@
             var newArticle = await this.repositories.Articles.InsertAsync(article);
             var newInnerCommand = await this.innerCommand.ExecuteAsync(newArticle);
 
-            return new NewInsertCommand(
+            return new InsertCommand(
                 this.repositories,
                 this.innerCommand,
                 this.Value.Concat(new IModel[] { newArticle }).Concat(newInnerCommand.Value));
@@ -95,7 +95,7 @@
             var newKeyword = await this.repositories.Keywords.InsertAsync(keyword);
             var newInnerCommand = await this.innerCommand.ExecuteAsync(newKeyword);
 
-            return new NewInsertCommand(
+            return new InsertCommand(
                 this.repositories,
                 this.innerCommand,
                 this.Value.Concat(new IModel[] { newKeyword }).Concat(newInnerCommand.Value));
@@ -106,7 +106,7 @@
             var newKeyword = await this.repositories.Bookmarks.InsertAsync(bookmark);
             var newInnerCommand = await this.innerCommand.ExecuteAsync(newKeyword);
 
-            return new NewInsertCommand(
+            return new InsertCommand(
                 this.repositories,
                 this.innerCommand,
                 this.Value.Concat(new IModel[] { newKeyword }).Concat(newInnerCommand.Value));

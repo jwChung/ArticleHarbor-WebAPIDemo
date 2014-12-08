@@ -117,10 +117,10 @@ namespace ArticleHarbor.Website
                 .ReusedWithinContainer();
 
             container.Register(
-                c => new NewInsertCommand(
+                c => new InsertCommand(
                     c.Resolve<IRepositories>(),
                     new RelayKeywordCommand(
-                        new NewInsertCommand(
+                        new InsertCommand(
                             c.Resolve<IRepositories>(),
                             c.Resolve<NullCommand>(),
                             new IModel[0]),
@@ -136,7 +136,7 @@ namespace ArticleHarbor.Website
                     c.Resolve<IRepository<Keys<int>, Article>>(),
                     new CompositeEnumerableCommand<IModel>(
                         c.Resolve<InsertConfirmableCommand>(),
-                        c.Resolve<NewInsertCommand>())))
+                        c.Resolve<InsertCommand>())))
                 .ReusedWithinContainer();
 
             container.Register(

@@ -6,17 +6,17 @@
     using Moq;
     using Xunit;
 
-    public class NewInsertCommandTest : IdiomaticTest<NewInsertCommand>
+    public class InsertCommandTest : IdiomaticTest<InsertCommand>
     {
         [Test]
-        public void SutIsModelCommand(NewInsertCommand sut)
+        public void SutIsModelCommand(InsertCommand sut)
         {
             Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
         }
 
         [Test]
         public void ExecuteAsyncUserCorrectlyInsertsUser(
-            NewInsertCommand sut,
+            InsertCommand sut,
             User user,
             User newUser,
             IEnumerable<IModel> newInnerCommandValue)
@@ -28,14 +28,14 @@
 
             var actual = sut.ExecuteAsync(user).Result;
 
-            var newCommand = Assert.IsAssignableFrom<NewInsertCommand>(actual);
+            var newCommand = Assert.IsAssignableFrom<InsertCommand>(actual);
             Assert.Equal(sut.InnerCommand, newCommand.InnerCommand);
             this.AssertEquivalent(expected, newCommand.Value);
         }
 
         [Test]
         public void ExecuteAsyncArticleCorrectlyInsertsArticle(
-            NewInsertCommand sut,
+            InsertCommand sut,
             Article article,
             Article newArticle,
             IEnumerable<IModel> newInnerCommandValue)
@@ -47,14 +47,14 @@
 
             var actual = sut.ExecuteAsync(article).Result;
 
-            var newCommand = Assert.IsAssignableFrom<NewInsertCommand>(actual);
+            var newCommand = Assert.IsAssignableFrom<InsertCommand>(actual);
             Assert.Equal(sut.InnerCommand, newCommand.InnerCommand);
             this.AssertEquivalent(expected, newCommand.Value);
         }
 
         [Test]
         public void ExecuteAsyncKeywordCorrectlyInsertsKeyword(
-            NewInsertCommand sut,
+            InsertCommand sut,
             Keyword keyword,
             Keyword newKeyword,
             IEnumerable<IModel> newInnerCommandValue)
@@ -66,14 +66,14 @@
 
             var actual = sut.ExecuteAsync(keyword).Result;
 
-            var newCommand = Assert.IsAssignableFrom<NewInsertCommand>(actual);
+            var newCommand = Assert.IsAssignableFrom<InsertCommand>(actual);
             Assert.Equal(sut.InnerCommand, newCommand.InnerCommand);
             this.AssertEquivalent(expected, newCommand.Value);
         }
 
         [Test]
         public void ExecuteAsyncBookmarkCorrectlyInsertsBookmark(
-            NewInsertCommand sut,
+            InsertCommand sut,
             Bookmark bookmark,
             Bookmark newBookmark,
             IEnumerable<IModel> newInnerCommandValue)
@@ -85,7 +85,7 @@
 
             var actual = sut.ExecuteAsync(bookmark).Result;
 
-            var newCommand = Assert.IsAssignableFrom<NewInsertCommand>(actual);
+            var newCommand = Assert.IsAssignableFrom<InsertCommand>(actual);
             Assert.Equal(sut.InnerCommand, newCommand.InnerCommand);
             this.AssertEquivalent(expected, newCommand.Value);
         }
