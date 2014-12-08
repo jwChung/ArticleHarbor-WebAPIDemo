@@ -114,6 +114,7 @@
     <Compile Include="Models\ModelCommandTest.cs" />
     <Compile Include="Models\NewInsertCommandTest.cs" />
     <Compile Include="Models\ParameterTest.cs" />
+    <Compile Include="Models\RelayKeywordCommandTest.cs" />
     <Compile Include="Services\KeywordServiceTest.cs" />
     <Compile Include="Services\AuthArticleServiceTest.cs" />
     <Compile Include="Models\ArticleTest.cs" />
