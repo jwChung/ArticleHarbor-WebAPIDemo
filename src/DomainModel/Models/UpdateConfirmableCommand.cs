@@ -38,6 +38,11 @@
             get { return this.repositories; }
         }
 
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(User user)
+        {
+            throw new NotSupportedException();
+        }
+
         public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
         {
             if (article == null)

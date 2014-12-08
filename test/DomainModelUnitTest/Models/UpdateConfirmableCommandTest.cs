@@ -1,5 +1,6 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.Reflection;
     using System.Threading.Tasks;
@@ -21,6 +22,15 @@
             Assert.Empty(actual);
         }
 
+        [Test]
+        public void ExecuteAsyncUserThrows(
+            UpdateConfirmableCommand sut,
+            User user)
+        {
+            Assert.Throws<NotSupportedException>(() => sut.ExecuteAsync(user).Result);
+        }
+
+        [Test]
         public void ExecuteAsyncArticleWithInvalidRoleThrows(
             UpdateConfirmableCommand sut,
             Article article)
@@ -97,7 +107,7 @@
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
-            yield break;
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(User)));
         }
     }
 }
