@@ -97,6 +97,31 @@
             Assert.Equal(newInnerCommand, command.InnerCommand);
         }
 
+        [Test]
+        public void ExecuteAsyncBookmarkReturnsSutItselfWhenCanExecuteAsyncBookmarkReturnsFalse(
+            ConditionalCommand<string> sut,
+            Bookmark bookmark)
+        {
+            sut.Condition.Of(x => x.CanExecuteAsync(bookmark) == Task.FromResult(false));
+            var actual = sut.ExecuteAsync(bookmark).Result;
+            Assert.Equal(sut, actual);
+        }
+
+        [Test]
+        public void ExecuteAsyncBookmarkReturnsCorrectCommandWhenCanExecuteAsyncBookmarkReturnsTrue(
+            ConditionalCommand<object> sut,
+            Bookmark bookmark,
+            IModelCommand<object> newInnerCommand)
+        {
+            sut.Condition.Of(x => x.CanExecuteAsync(bookmark) == Task.FromResult(true));
+            sut.InnerCommand.Of(x => x.ExecuteAsync(bookmark) == Task.FromResult(newInnerCommand));
+
+            var actual = sut.ExecuteAsync(bookmark).Result;
+
+            var command = Assert.IsAssignableFrom<ConditionalCommand<object>>(actual);
+            Assert.Equal(newInnerCommand, command.InnerCommand);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.Value);

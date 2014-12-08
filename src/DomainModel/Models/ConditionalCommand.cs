@@ -61,6 +61,14 @@
             return this.ExecuteAsyncWith(keyword);
         }
 
+        public override Task<IModelCommand<TValue>> ExecuteAsync(Bookmark bookmark)
+        {
+            if (bookmark == null)
+                throw new ArgumentNullException("bookmark");
+
+            return this.ExecuteAsyncWith(bookmark);
+        }
+
         private async Task<IModelCommand<TValue>> ExecuteAsyncWith(User user)
         {
             if (!await this.condition.CanExecuteAsync(user))
@@ -85,6 +93,15 @@
                 return this;
 
             var newInnerCommand = await this.innerCommand.ExecuteAsync(keyword);
+            return new ConditionalCommand<TValue>(this.condition, newInnerCommand);
+        }
+
+        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(Bookmark bookmark)
+        {
+            if (!await this.condition.CanExecuteAsync(bookmark))
+                return this;
+
+            var newInnerCommand = await this.innerCommand.ExecuteAsync(bookmark);
             return new ConditionalCommand<TValue>(this.condition, newInnerCommand);
         }
     }
