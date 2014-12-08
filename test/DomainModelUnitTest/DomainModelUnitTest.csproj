@@ -112,6 +112,7 @@
     <Compile Include="Models\EqualPredicateTest.cs" />
     <Compile Include="Models\KeysTest.cs" />
     <Compile Include="Models\ModelCommandTest.cs" />
+    <Compile Include="Models\NewInsertCommandTest.cs" />
     <Compile Include="Models\ParameterTest.cs" />
     <Compile Include="Services\KeywordServiceTest.cs" />
     <Compile Include="Services\AuthArticleServiceTest.cs" />
