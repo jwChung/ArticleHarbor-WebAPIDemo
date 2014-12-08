@@ -1,7 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System;
-    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public class ConditionalCommand<TValue> : ModelCommand<TValue>
     {
@@ -35,6 +35,23 @@
         public override TValue Value
         {
             get { return this.innerCommand.Value; }
+        }
+
+        public override Task<IModelCommand<TValue>> ExecuteAsync(User user)
+        {
+            if (user == null)
+                throw new ArgumentNullException("user");
+
+            return this.ExecuteAsyncWith(user);
+        }
+
+        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(User user)
+        {
+            if (!await this.condition.CanExecuteAsync(user))
+                return this;
+
+            var newInnerCommand = await this.innerCommand.ExecuteAsync(user);
+            return new ConditionalCommand<TValue>(this.condition, newInnerCommand);
         }
     }
 }
