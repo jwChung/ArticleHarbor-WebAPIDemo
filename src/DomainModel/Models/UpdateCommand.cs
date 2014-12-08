@@ -44,5 +44,11 @@
             await this.repositories.Keywords.UpdateAsync(keyword);
             return this;
         }
+
+        public async override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Bookmark bookmark)
+        {
+            await this.repositories.Bookmarks.UpdateAsync(bookmark);
+            return this;
+        }
     }
 }
