@@ -124,8 +124,7 @@ namespace ArticleHarbor.Website
                             c.Resolve<IRepositories>(),
                             c.Resolve<NullCommand>(),
                             new IModel[0]),
-                        KoreanNounExtractor.Execute,
-                        new IModel[0]),
+                        KoreanNounExtractor.Execute),
                     new IModel[0]))
                 .ReusedWithinContainer();
             

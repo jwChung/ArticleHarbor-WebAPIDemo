@@ -6,7 +6,7 @@
     using Jwc.Experiment.Xunit;
     using Xunit;
 
-    public class ModelCommandTest : IdiomaticTest<ModelCommandTest.TssModelCommand>
+    public class ModelCommandTest : IdiomaticTest<ModelCommand<object>>
     {
         [Test]
         public void SutIsModelCommand(ModelCommand<object> sut)
@@ -109,18 +109,6 @@
             yield return this.Methods.Select(x => x.ExecuteAsync(default(Article)));
             yield return this.Methods.Select(x => x.ExecuteAsync(default(Bookmark)));
             yield return this.Methods.Select(x => x.ExecuteAsync(default(Keyword)));
-        }
-
-        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
-        {
-            yield break;
-        }
-
-        public class TssModelCommand : ModelCommand<object>
-        {
-            public TssModelCommand(object value) : base(value)
-            {
-            }
         }
     }
 }

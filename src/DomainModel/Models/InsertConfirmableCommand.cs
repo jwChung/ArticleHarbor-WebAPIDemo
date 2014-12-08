@@ -11,12 +11,16 @@
         private readonly IPrincipal principal;
 
         public InsertConfirmableCommand(IPrincipal principal)
-            : base(Enumerable.Empty<IModel>())
         {
             if (principal == null)
                 throw new ArgumentNullException("principal");
 
             this.principal = principal;
+        }
+
+        public override IEnumerable<IModel> Value
+        {
+            get { yield break; }
         }
 
         public IPrincipal Principal

@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
-    using Moq;
     using Ploeh.AutoFixture;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
@@ -18,10 +18,18 @@
         }
 
         [Test]
+        public void ValueIsFromInnerCommand(RelayKeywordCommand sut)
+        {
+            var expected = sut.InnerCommand.Value;
+            var actual = sut.Value;
+            Assert.Equal(expected, actual);
+        }
+
+        [Test]
         public void ExecuteAsyncArticleCorrectlyRelaysKeywords(
             Article article,
             IEnumerable<string> words,
-            IEnumerable<IModel> innerCommandValue,
+            IModelCommand<IEnumerable<IModel>> newInnerCommand,
             IFixture fixture)
         {
             // Fixture setup
@@ -36,24 +44,19 @@
             var keywords = words.Select(
                 w => new Keyword(article.Id, w).AsSource().OfLikeness<Keyword>().CreateProxy());
 
-            sut.InnerCommand.Of(x => x.ExecuteAsync(keywords) == Task.FromResult(
-                Mock.Of<IModelCommand<IEnumerable<IModel>>>(c => c.Value == innerCommandValue)));
-
-            var expected = sut.Value.Concat(innerCommandValue);
+            sut.InnerCommand.Of(x => x.ExecuteAsync(keywords) == Task.FromResult(newInnerCommand));
 
             // Exercise system
             var actual = sut.ExecuteAsync(article).Result;
 
             // Verify outcome
             var relayKeywordCommand = Assert.IsAssignableFrom<RelayKeywordCommand>(actual);
-            Assert.Equal(sut.InnerCommand, relayKeywordCommand.InnerCommand);
-            this.AssertEquivalent(expected, relayKeywordCommand.Value);
+            Assert.Equal(newInnerCommand, relayKeywordCommand.InnerCommand);
         }
 
-        private void AssertEquivalent<T>(IEnumerable<T> expected, IEnumerable<T> actual)
+        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
-            Assert.Equal(expected.Count(), actual.Count());
-            Assert.Empty(expected.Except(actual));
+            yield return this.Properties.Select(x => x.Value);
         }
     }
 }

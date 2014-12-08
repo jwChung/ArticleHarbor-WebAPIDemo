@@ -4,8 +4,9 @@
 
     public class NullCommand : ModelCommand<IEnumerable<IModel>>
     {
-        public NullCommand() : base(new IModel[0])
+        public override IEnumerable<IModel> Value
         {
+            get { yield break; }
         }
     }
 }
