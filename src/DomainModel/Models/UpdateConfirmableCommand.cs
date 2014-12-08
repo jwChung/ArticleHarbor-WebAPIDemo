@@ -52,5 +52,19 @@
 
             throw new UnauthorizedException();
         }
+
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Keyword keyword)
+        {
+            if (keyword == null)
+                throw new ArgumentNullException("keyword");
+
+            return this.ExecuteAsyncWith(keyword);
+        }
+
+        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Keyword keyword)
+        {
+            var article = await this.repositories.Articles.FindAsync(new Keys<int>(keyword.ArticleId));
+            return await this.ExecuteAsync(article);
+        }
     }
 }
