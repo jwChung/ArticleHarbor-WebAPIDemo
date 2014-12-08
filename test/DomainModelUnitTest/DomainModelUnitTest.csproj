@@ -107,7 +107,6 @@
     <Compile Include="Models\CompositeEnumerableCommandTest.cs" />
     <Compile Include="Models\CompositeModelCommandTest.cs" />
     <Compile Include="Models\InsertConfirmableCommandTest.cs" />
-    <Compile Include="Models\InsertCommandTest.cs" />
     <Compile Include="Models\CompositeModelTest.cs" />
     <Compile Include="Models\EqualPredicateTest.cs" />
     <Compile Include="Models\KeysTest.cs" />

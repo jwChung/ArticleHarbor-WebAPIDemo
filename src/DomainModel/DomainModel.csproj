@@ -61,7 +61,6 @@
     <Compile Include="Models\CompositeEnumerableCommand.cs" />
     <Compile Include="Models\CompositeModelCommand.cs" />
     <Compile Include="Models\InsertConfirmableCommand.cs" />
-    <Compile Include="Models\InsertCommand.cs" />
     <Compile Include="Models\CompositeModel.cs" />
     <Compile Include="Models\EqualPredicate.cs" />
     <Compile Include="Models\IKeys.cs" />
