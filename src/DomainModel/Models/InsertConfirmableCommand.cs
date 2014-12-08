@@ -28,6 +28,11 @@
             get { return this.principal; }
         }
 
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(User user)
+        {
+            throw new NotSupportedException();
+        }
+
         public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
         {
             this.ConfirmCanCreate("Administrator", "Author");

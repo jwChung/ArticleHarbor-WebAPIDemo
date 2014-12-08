@@ -1,5 +1,6 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -19,6 +20,14 @@
         {
             var actual = sut.Value;
             Assert.Empty(actual);
+        }
+
+        [Test]
+        public void ExecuteAsyncUserThrows(
+            InsertConfirmableCommand sut,
+            User user)
+        {
+            Assert.Throws<NotSupportedException>(() => sut.ExecuteAsync(user).Result);
         }
 
         [Test]
