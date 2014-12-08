@@ -15,15 +15,6 @@
         }
 
         [Test]
-        public void ValueReturnsDefaultValueOfGivenType(
-            ModelCommand<object> sut1,
-            ModelCommand<int> sut2)
-        {
-            Assert.Null(sut1.Value);
-            Assert.Equal(0, sut2.Value);
-        }
-
-        [Test]
         public IEnumerable<ITestCase> ExecuteAsyncReturnsSutItself(ModelCommand<object> sut)
         {
             yield return TestCase.WithAuto<User>().Create(

@@ -9,10 +9,6 @@
     {
         private readonly TValue value;
 
-        protected ModelCommand()
-        {
-        }
-
         protected ModelCommand(TValue value)
         {
             if (value == null)
