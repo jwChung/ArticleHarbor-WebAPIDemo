@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using Repositories;
 
     public class NewInsertCommand : ModelCommand<IEnumerable<IModel>>
@@ -32,6 +34,25 @@
         public IRepositories Repositories
         {
             get { return this.repositories; }
+        }
+
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(User user)
+        {
+            if (user == null)
+                throw new ArgumentNullException("user");
+
+            return this.ExecuteAsyncWith(user);
+        }
+
+        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(User user)
+        {
+            var newUser = await this.repositories.Users.InsertAsync(user);
+            var newInnerCommand = await this.innerCommand.ExecuteAsync(newUser);
+
+            return new NewInsertCommand(
+                this.repositories,
+                this.innerCommand,
+                this.Value.Concat(new IModel[] { newUser }).Concat(newInnerCommand.Value));
         }
     }
 }
