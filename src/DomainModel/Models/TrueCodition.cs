@@ -3,7 +3,7 @@
     using System;
     using System.Threading.Tasks;
 
-    public class ModelCodition : IModelCondition
+    public class TrueCodition : IModelCondition
     {
         public virtual Task<bool> CanExecuteAsync(User user)
         {

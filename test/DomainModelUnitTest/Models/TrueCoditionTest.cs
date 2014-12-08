@@ -2,10 +2,10 @@
 {
     using Xunit;
 
-    public class ModelCoditionTest
+    public class TrueCoditionTest
     {
         [Test]
-        public void SutIsModelCondition(ModelCodition sut)
+        public void SutIsModelCondition(TrueCodition sut)
         {
             Assert.IsAssignableFrom<IModelCondition>(sut);
         }
