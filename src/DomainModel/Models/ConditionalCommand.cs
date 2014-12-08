@@ -45,12 +45,29 @@
             return this.ExecuteAsyncWith(user);
         }
 
+        public override Task<IModelCommand<TValue>> ExecuteAsync(Article article)
+        {
+            if (article == null)
+                throw new ArgumentNullException("article");
+
+            return this.ExecuteAsyncWith(article);
+        }
+
         private async Task<IModelCommand<TValue>> ExecuteAsyncWith(User user)
         {
             if (!await this.condition.CanExecuteAsync(user))
                 return this;
 
             var newInnerCommand = await this.innerCommand.ExecuteAsync(user);
+            return new ConditionalCommand<TValue>(this.condition, newInnerCommand);
+        }
+
+        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(Article article)
+        {
+            if (!await this.condition.CanExecuteAsync(article))
+                return this;
+
+            var newInnerCommand = await this.innerCommand.ExecuteAsync(article);
             return new ConditionalCommand<TValue>(this.condition, newInnerCommand);
         }
     }

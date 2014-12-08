@@ -47,6 +47,31 @@
             Assert.Equal(newInnerCommand, command.InnerCommand);
         }
 
+        [Test]
+        public void ExecuteAsyncArticleReturnsSutItselfWhenCanExecuteAsyncArticleReturnsFalse(
+            ConditionalCommand<string> sut,
+            Article article)
+        {
+            sut.Condition.Of(x => x.CanExecuteAsync(article) == Task.FromResult(false));
+            var actual = sut.ExecuteAsync(article).Result;
+            Assert.Equal(sut, actual);
+        }
+
+        [Test]
+        public void ExecuteAsyncArticleReturnsCorrectCommandWhenCanExecuteAsyncArticleReturnsTrue(
+            ConditionalCommand<object> sut,
+            Article article,
+            IModelCommand<object> newInnerCommand)
+        {
+            sut.Condition.Of(x => x.CanExecuteAsync(article) == Task.FromResult(true));
+            sut.InnerCommand.Of(x => x.ExecuteAsync(article) == Task.FromResult(newInnerCommand));
+
+            var actual = sut.ExecuteAsync(article).Result;
+
+            var command = Assert.IsAssignableFrom<ConditionalCommand<object>>(actual);
+            Assert.Equal(newInnerCommand, command.InnerCommand);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.Value);
