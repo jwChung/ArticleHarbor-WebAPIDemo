@@ -34,7 +34,7 @@
 
         public override TValue Value
         {
-            get { throw new NotImplementedException(); }
+            get { return this.innerCommand.Value; }
         }
     }
 }
