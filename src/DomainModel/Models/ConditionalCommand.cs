@@ -53,6 +53,14 @@
             return this.ExecuteAsyncWith(article);
         }
 
+        public override Task<IModelCommand<TValue>> ExecuteAsync(Keyword keyword)
+        {
+            if (keyword == null)
+                throw new ArgumentNullException("keyword");
+
+            return this.ExecuteAsyncWith(keyword);
+        }
+
         private async Task<IModelCommand<TValue>> ExecuteAsyncWith(User user)
         {
             if (!await this.condition.CanExecuteAsync(user))
@@ -68,6 +76,15 @@
                 return this;
 
             var newInnerCommand = await this.innerCommand.ExecuteAsync(article);
+            return new ConditionalCommand<TValue>(this.condition, newInnerCommand);
+        }
+
+        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(Keyword keyword)
+        {
+            if (!await this.condition.CanExecuteAsync(keyword))
+                return this;
+
+            var newInnerCommand = await this.innerCommand.ExecuteAsync(keyword);
             return new ConditionalCommand<TValue>(this.condition, newInnerCommand);
         }
     }
