@@ -66,6 +66,11 @@
             return this.ExecuteAsyncWith(keyword);
         }
 
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Bookmark bookmark)
+        {
+            throw new NotSupportedException();
+        }
+
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Keyword keyword)
         {
             var article = await this.repositories.Articles.FindAsync(new Keys<int>(keyword.ArticleId));

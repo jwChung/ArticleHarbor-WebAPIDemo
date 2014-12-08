@@ -100,6 +100,14 @@
             Assert.Equal(sut, actual);
         }
 
+        [Test]
+        public void ExecuteAsyncBookmarkThrows(
+            UpdateConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            Assert.Throws<NotSupportedException>(() => sut.ExecuteAsync(bookmark).Result);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.Value);
@@ -108,6 +116,7 @@
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
             yield return this.Methods.Select(x => x.ExecuteAsync(default(User)));
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(Bookmark)));
         }
     }
 }
