@@ -40,13 +40,7 @@
 
         public IEnumerable<IParameter> Parameters
         {
-            get
-            {
-                return new IParameter[]
-                {
-                    new Parameter(this.name, this.value)
-                };
-            }
+            get { yield return new Parameter(this.name, this.value); }
         }
     }
 }
