@@ -33,6 +33,25 @@
             this.AssertEquivalent(expected, newCommand.Value);
         }
 
+        [Test]
+        public void ExecuteAsyncArticleCorrectlyInsertsArticle(
+            NewInsertCommand sut,
+            Article article,
+            Article newArticle,
+            IEnumerable<IModel> newInnerCommandValue)
+        {
+            sut.Repositories.Articles.Of(x => x.InsertAsync(article) == Task.FromResult(newArticle));
+            sut.InnerCommand.Of(x => x.ExecuteAsync(newArticle) == Task.FromResult(
+                Mock.Of<IModelCommand<IEnumerable<IModel>>>(c => c.Value == newInnerCommandValue)));
+            var expected = sut.Value.Concat(new IModel[] { newArticle }).Concat(newInnerCommandValue);
+
+            var actual = sut.ExecuteAsync(article).Result;
+
+            var newCommand = Assert.IsAssignableFrom<NewInsertCommand>(actual);
+            Assert.Equal(sut.InnerCommand, newCommand.InnerCommand);
+            this.AssertEquivalent(expected, newCommand.Value);
+        }
+
         private void AssertEquivalent<T>(IEnumerable<T> expected, IEnumerable<T> actual)
         {
             Assert.Equal(expected.Count(), actual.Count());

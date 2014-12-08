@@ -44,6 +44,14 @@
             return this.ExecuteAsyncWith(user);
         }
 
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
+        {
+            if (article == null)
+                throw new ArgumentNullException("article");
+
+            return this.ExecuteAsyncWith(article);
+        }
+
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(User user)
         {
             var newUser = await this.repositories.Users.InsertAsync(user);
@@ -53,6 +61,17 @@
                 this.repositories,
                 this.innerCommand,
                 this.Value.Concat(new IModel[] { newUser }).Concat(newInnerCommand.Value));
+        }
+
+        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Article article)
+        {
+            var newArticle = await this.repositories.Articles.InsertAsync(article);
+            var newInnerCommand = await this.innerCommand.ExecuteAsync(newArticle);
+
+            return new NewInsertCommand(
+                this.repositories,
+                this.innerCommand,
+                this.Value.Concat(new IModel[] { newArticle }).Concat(newInnerCommand.Value));
         }
     }
 }
