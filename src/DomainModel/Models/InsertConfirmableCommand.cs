@@ -46,11 +46,6 @@
             return base.ExecuteAsync(keyword);
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(User user)
-        {
-            throw new UnauthorizedException();
-        }
-
         private void ConfirmCanCreate(params string[] roleNames)
         {
             if (roleNames.All(r => !this.principal.IsInRole(r)))

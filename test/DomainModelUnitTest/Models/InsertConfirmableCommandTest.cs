@@ -83,14 +83,6 @@
         }
 
         [Test]
-        public void ExecuteAsyncUserAlwaysThrows(
-            InsertConfirmableCommand sut,
-            User user)
-        {
-            Assert.Throws<UnauthorizedException>(() => sut.ExecuteAsync(user).Result);
-        }
-
-        [Test]
         public void ExecuteAsyncBookmarkWithUserRoleDoesNotThrow(
             InsertConfirmableCommand sut,
             Bookmark bookmark)
