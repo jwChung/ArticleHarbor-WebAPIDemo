@@ -15,6 +15,12 @@
         }
 
         [Test]
+        public void ValueIsEmpty(UpdateConfirmableCommand sut)
+        {
+            var actual = sut.Value;
+            Assert.Empty(actual);
+        }
+
         public void ExecuteAsyncArticleWithInvalidRoleThrows(
             UpdateConfirmableCommand sut,
             Article article)
