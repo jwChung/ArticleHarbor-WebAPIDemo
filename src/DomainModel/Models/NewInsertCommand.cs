@@ -60,6 +60,14 @@
             return this.ExecuteAsyncWith(keyword);
         }
 
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Bookmark bookmark)
+        {
+            if (bookmark == null)
+                throw new ArgumentNullException("bookmark");
+
+            return this.ExecuteAsyncWith(bookmark);
+        }
+
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(User user)
         {
             var newUser = await this.repositories.Users.InsertAsync(user);
@@ -85,6 +93,17 @@
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Keyword keyword)
         {
             var newKeyword = await this.repositories.Keywords.InsertAsync(keyword);
+            var newInnerCommand = await this.innerCommand.ExecuteAsync(newKeyword);
+
+            return new NewInsertCommand(
+                this.repositories,
+                this.innerCommand,
+                this.Value.Concat(new IModel[] { newKeyword }).Concat(newInnerCommand.Value));
+        }
+
+        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Bookmark bookmark)
+        {
+            var newKeyword = await this.repositories.Bookmarks.InsertAsync(bookmark);
             var newInnerCommand = await this.innerCommand.ExecuteAsync(newKeyword);
 
             return new NewInsertCommand(
