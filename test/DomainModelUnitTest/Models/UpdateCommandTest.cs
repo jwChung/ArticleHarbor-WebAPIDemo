@@ -15,6 +15,13 @@
         }
 
         [Test]
+        public void ValueIsEmpty(UpdateCommand sut)
+        {
+            var actual = sut.Value;
+            Assert.Empty(actual);
+        }
+
+        [Test]
         public void ExecuteAsyncUserCorrectlyUpdates(
             UpdateCommand sut,
             User user)

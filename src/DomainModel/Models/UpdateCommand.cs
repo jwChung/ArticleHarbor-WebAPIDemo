@@ -19,7 +19,7 @@
 
         public override IEnumerable<IModel> Value
         {
-            get { throw new NotImplementedException(); }
+            get { yield break; }
         }
 
         public IRepositories Repositories
