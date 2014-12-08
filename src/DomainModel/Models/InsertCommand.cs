@@ -10,11 +10,12 @@
     {
         private readonly IRepositories repositories;
         private readonly IModelCommand<IEnumerable<IModel>> innerCommand;
+        private readonly IEnumerable<IModel> baseValue;
 
         public InsertCommand(
             IRepositories repositories,
             IModelCommand<IEnumerable<IModel>> innerCommand,
-            IEnumerable<IModel> value) : base(value)
+            IEnumerable<IModel> baseValue)
         {
             if (repositories == null)
                 throw new ArgumentNullException("repositories");
@@ -22,8 +23,25 @@
             if (innerCommand == null)
                 throw new ArgumentNullException("innerCommand");
 
+            if (baseValue == null)
+                throw new ArgumentNullException("baseValue");
+
             this.repositories = repositories;
             this.innerCommand = innerCommand;
+            this.baseValue = baseValue;
+        }
+
+        public override IEnumerable<IModel> Value
+        {
+            get
+            {
+                return this.baseValue.Concat(this.innerCommand.Value);
+            }
+        }
+
+        public IEnumerable<IModel> BaseValue
+        {
+            get { return this.baseValue; }
         }
 
         public IModelCommand<IEnumerable<IModel>> InnerCommand
@@ -75,8 +93,8 @@
 
             return new InsertCommand(
                 this.repositories,
-                this.innerCommand,
-                this.Value.Concat(new IModel[] { newUser }).Concat(newInnerCommand.Value));
+                newInnerCommand,
+                this.baseValue.Concat(new IModel[] { newUser }));
         }
 
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Article article)
@@ -86,8 +104,8 @@
 
             return new InsertCommand(
                 this.repositories,
-                this.innerCommand,
-                this.Value.Concat(new IModel[] { newArticle }).Concat(newInnerCommand.Value));
+                newInnerCommand,
+                this.baseValue.Concat(new IModel[] { newArticle }));
         }
 
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Keyword keyword)
@@ -97,19 +115,19 @@
 
             return new InsertCommand(
                 this.repositories,
-                this.innerCommand,
-                this.Value.Concat(new IModel[] { newKeyword }).Concat(newInnerCommand.Value));
+                newInnerCommand,
+                this.baseValue.Concat(new IModel[] { newKeyword }));
         }
 
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Bookmark bookmark)
         {
-            var newKeyword = await this.repositories.Bookmarks.InsertAsync(bookmark);
-            var newInnerCommand = await this.innerCommand.ExecuteAsync(newKeyword);
+            var newBookmark = await this.repositories.Bookmarks.InsertAsync(bookmark);
+            var newInnerCommand = await this.innerCommand.ExecuteAsync(newBookmark);
 
             return new InsertCommand(
                 this.repositories,
-                this.innerCommand,
-                this.Value.Concat(new IModel[] { newKeyword }).Concat(newInnerCommand.Value));
+                newInnerCommand,
+                this.baseValue.Concat(new IModel[] { newBookmark }));
         }
     }
 }
