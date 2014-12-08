@@ -39,6 +39,24 @@
             Assert.True(verifies);
         }
 
+        [Test]
+        public void ExecuteAsyncArticleCorrectlyUpdates(
+            UpdateCommand sut,
+            Article article)
+        {
+            bool verifies = false;
+            var task = Task.Run(() =>
+            {
+                Thread.Sleep(300);
+                verifies = true;
+            });
+            sut.Repositories.Articles.Of(x => x.UpdateAsync(article) == task);
+
+            var actual = sut.ExecuteAsync(article).Result;
+
+            Assert.True(verifies);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.Value);
@@ -47,6 +65,7 @@
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
             yield return this.Methods.Select(x => x.ExecuteAsync(default(User)));
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(Article)));
         }
     }
 }

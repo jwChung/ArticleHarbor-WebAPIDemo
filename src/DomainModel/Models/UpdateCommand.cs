@@ -32,5 +32,11 @@
             await this.repositories.Users.UpdateAsync(user);
             return this;
         }
+
+        public async override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
+        {
+            await this.repositories.Articles.UpdateAsync(article);
+            return this;
+        }
     }
 }
