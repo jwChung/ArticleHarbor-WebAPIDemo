@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Repositories;
 
     public class UpdateCommand : ModelCommand<IEnumerable<IModel>>
@@ -24,6 +25,12 @@
         public IRepositories Repositories
         {
             get { return this.repositories; }
+        }
+
+        public async override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(User user)
+        {
+            await this.repositories.Users.UpdateAsync(user);
+            return this;
         }
     }
 }
