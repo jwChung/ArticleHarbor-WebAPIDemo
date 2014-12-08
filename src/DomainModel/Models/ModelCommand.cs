@@ -7,9 +7,19 @@
 
     public abstract class ModelCommand<TValue> : IModelCommand<TValue>
     {
+        private readonly TValue value;
+
+        protected ModelCommand(TValue value)
+        {
+            if (value == null)
+                throw new ArgumentNullException("value");
+
+            this.value = value;
+        }
+
         public virtual TValue Value
         {
-            get { return default(TValue); }
+            get { return this.value; }
         }
         
         public virtual Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<User> users)

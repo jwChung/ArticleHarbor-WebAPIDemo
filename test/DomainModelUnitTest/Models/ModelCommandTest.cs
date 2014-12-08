@@ -6,21 +6,12 @@
     using Jwc.Experiment.Xunit;
     using Xunit;
 
-    public class ModelCommandTest : IdiomaticTest<ModelCommand<object>>
+    public class ModelCommandTest : IdiomaticTest<ModelCommandTest.TssModelCommand>
     {
         [Test]
         public void SutIsModelCommand(ModelCommand<object> sut)
         {
             Assert.IsAssignableFrom<IModelCommand<object>>(sut);
-        }
-
-        [Test]
-        public void ValueReturnsDefaultValueOfGivenType(
-            ModelCommand<object> sut1,
-            ModelCommand<int> sut2)
-        {
-            Assert.Null(sut1.Value);
-            Assert.Equal(0, sut2.Value);
         }
 
         [Test]
@@ -122,7 +113,14 @@
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
-            yield return this.Properties.Select(x => x.Value);
+            yield break;
+        }
+
+        public class TssModelCommand : ModelCommand<object>
+        {
+            public TssModelCommand(object value) : base(value)
+            {
+            }
         }
     }
 }

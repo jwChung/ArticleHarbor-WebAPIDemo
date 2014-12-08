@@ -15,7 +15,7 @@
         public InsertCommand(
             IRepositories repositories,
             Func<string, IEnumerable<string>> nounExtractor,
-            IEnumerable<IModel> value)
+            IEnumerable<IModel> value) : base(value)
         {
             if (repositories == null)
                 throw new ArgumentNullException("repositories");
