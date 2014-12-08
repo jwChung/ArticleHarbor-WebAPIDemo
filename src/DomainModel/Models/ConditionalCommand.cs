@@ -3,13 +3,14 @@
     using System;
     using System.Collections.Generic;
 
-    public class ConditionalCommand : ModelCommand<IEnumerable<IModel>>
+    public class ConditionalCommand<TValue> : ModelCommand<TValue>
     {
         private readonly IModelCondition condition;
-        private readonly IModelCommand<IEnumerable<IModel>> innerCommand;
+        private readonly IModelCommand<TValue> innerCommand;
 
         public ConditionalCommand(
-            IModelCondition condition, IModelCommand<IEnumerable<IModel>> innerCommand)
+            IModelCondition condition,
+            IModelCommand<TValue> innerCommand)
         {
             if (condition == null)
                 throw new ArgumentNullException("condition");
@@ -26,12 +27,12 @@
             get { return this.condition; }
         }
 
-        public IModelCommand<IEnumerable<IModel>> InnerCommand
+        public IModelCommand<TValue> InnerCommand
         {
             get { return this.innerCommand; }
         }
 
-        public override IEnumerable<IModel> Value
+        public override TValue Value
         {
             get { throw new NotImplementedException(); }
         }

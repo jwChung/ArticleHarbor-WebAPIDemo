@@ -4,12 +4,12 @@
     using System.Reflection;
     using Xunit;
 
-    public class ConditionalCommandTest : IdiomaticTest<ConditionalCommand>
+    public class ConditionalCommandTest : IdiomaticTest<ConditionalCommand<object>>
     {
         [Test]
-        public void SutIsModelCommand(ConditionalCommand sut)
+        public void SutIsModelCommand(ConditionalCommand<int> sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
+            Assert.IsAssignableFrom<ModelCommand<int>>(sut);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
