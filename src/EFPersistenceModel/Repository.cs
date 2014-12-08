@@ -136,7 +136,7 @@
 
         private async Task<IEnumerable<TModel>> ExecuteSelectCommandAsyncWith(IPredicate predicate)
         {
-            string sql = string.Format("{0} WHERE {1};", this.dbSet, predicate.Condition);
+            string sql = string.Format("{0} WHERE {1};", this.dbSet, predicate.SqlText);
 
             var sqlParameters = predicate.Parameters
                 .Select(x => new SqlParameter(x.Name, x.Value))
@@ -150,7 +150,7 @@
         private async Task ExecuteDeleteCommandAsyncWith(IPredicate predicate)
         {
             string sql = string.Format(
-                "DELETE FROM {0} WHERE {1};", this.GetTableName(), predicate.Condition);
+                "DELETE FROM {0} WHERE {1};", this.GetTableName(), predicate.SqlText);
 
             var sqlParameters = predicate.Parameters
                 .Select(x => new SqlParameter(x.Name, x.Value))

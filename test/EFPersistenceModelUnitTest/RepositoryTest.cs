@@ -215,7 +215,7 @@
             });
             yield return TestCase.WithAuto<TssArticleRepository, IPredicate>().Create((sut, predicate) =>
             {
-                predicate.Of(x => x.Condition == "id <> @id");
+                predicate.Of(x => x.SqlText == "id <> @id");
                 predicate.Of(x => x.Parameters == new IParameter[] { new Parameter("@id", -1) });
 
                 var actual = sut.ExecuteSelectCommandAsync(predicate).Result;

@@ -33,7 +33,7 @@
             get { return this.value; }
         }
 
-        public string Condition
+        public string SqlText
         {
             get { return this.name.Remove(0, 1) + " = " + this.name; }
         }

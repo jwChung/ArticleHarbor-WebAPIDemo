@@ -26,7 +26,7 @@
         {
             var sut = new EqualPredicate("@foo", value);
             var expected = "foo = @foo";
-            var actual = sut.Condition;
+            var actual = sut.SqlText;
             Assert.Equal(expected, actual);
         }
 
@@ -40,7 +40,7 @@
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
-            yield return this.Properties.Select(x => x.Condition);
+            yield return this.Properties.Select(x => x.SqlText);
             yield return this.Properties.Select(x => x.Parameters);
         }
     }
