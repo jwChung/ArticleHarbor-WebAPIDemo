@@ -74,6 +74,7 @@
     <Compile Include="Models\Bookmark.cs" />
     <Compile Include="Models\ModelCommand.cs" />
     <Compile Include="Models\NewInsertCommand.cs" />
+    <Compile Include="Models\NullCommand.cs" />
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\RelayKeywordCommand.cs" />
     <Compile Include="Repositories\IBookmarkRepository.cs" />
