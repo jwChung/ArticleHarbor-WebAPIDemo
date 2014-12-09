@@ -124,6 +124,12 @@ namespace ArticleHarbor.Website
                 .ReusedWithinContainer();
 
             container.Register(
+                c => new DeleteConfirmableCommand(
+                    c.Resolve<IPrincipal>(),
+                    c.Resolve<IRepositories>()))
+                .ReusedWithinContainer();
+
+            container.Register(
                 c => new UpdateKeywordsCondition(
                     c.Resolve<IRepositories>()))
                 .ReusedWithinContainer();
@@ -135,6 +141,11 @@ namespace ArticleHarbor.Website
 
             container.Register(
                c => new UpdateCommand(
+                   c.Resolve<IRepositories>()))
+               .ReusedWithinContainer();
+
+            container.Register(
+               c => new DeleteCommand(
                    c.Resolve<IRepositories>()))
                .ReusedWithinContainer();
 
@@ -166,7 +177,10 @@ namespace ArticleHarbor.Website
                                     c.Resolve<IRepositories>(),
                                     c.Resolve<NullCommand>(),
                                     new IModel[0]),
-                                KoreanNounExtractor.Execute))))))
+                                KoreanNounExtractor.Execute)))),
+                     new CompositeEnumerableCommand<IModel>(
+                        c.Resolve<DeleteConfirmableCommand>(),
+                        c.Resolve<DeleteCommand>())))
                 .ReusedWithinContainer();
 
             container.Register(
