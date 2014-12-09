@@ -17,12 +17,14 @@
         private readonly IRepositories repositories;
         private readonly IModelCommand<IEnumerable<IModel>> insertCommand;
         private readonly IModelCommand<IEnumerable<IModel>> updateCommand;
+        private readonly IModelCommand<IEnumerable<IModel>> deleteCommand;
 
         public ArticlesController(
             IArticleService articleService,
             IRepositories repositories,
             IModelCommand<IEnumerable<IModel>> insertCommand,
-            IModelCommand<IEnumerable<IModel>> updateCommand)
+            IModelCommand<IEnumerable<IModel>> updateCommand,
+            IModelCommand<IEnumerable<IModel>> deleteCommand)
         {
             if (articleService == null)
                 throw new ArgumentNullException("articleService");
@@ -36,10 +38,14 @@
             if (updateCommand == null)
                 throw new ArgumentNullException("updateCommand");
 
+            if (deleteCommand == null)
+                throw new ArgumentNullException("deleteCommand");
+
             this.articleService = articleService;
             this.repositories = repositories;
             this.insertCommand = insertCommand;
             this.updateCommand = updateCommand;
+            this.deleteCommand = deleteCommand;
         }
 
         public IArticleService ArticleService
@@ -60,6 +66,11 @@
         public IRepositories Repositories
         {
             get { return this.repositories; }
+        }
+
+        public IModelCommand<IEnumerable<IModel>> DeleteCommand
+        {
+            get { return this.deleteCommand; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is action method.")]
@@ -87,10 +98,14 @@
         }
 
         [Authorize]
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            var actor = this.User.Identity.Name;
-            return this.articleService.RemoveAsync(actor, id);
+            var userId = (await this.Repositories.Articles.FindAsync(new Keys<int>(id))).UserId;
+            string none = Guid.NewGuid().ToString("N");
+
+            var article = new Article(id, none, none, none, none, default(DateTime), none, userId);
+
+            await this.deleteCommand.ExecuteAsync(article);
         }
 
         private async Task<ArticleDetailViewModel> PostAsyncWith(PostArticleViewModel postArticle)

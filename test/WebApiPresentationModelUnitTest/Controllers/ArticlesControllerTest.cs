@@ -109,14 +109,30 @@
         }
 
         [Test]
-        public async Task DeleteAsyncCorrectlyRemovesArticle(
+        public void DeleteAsyncCorrectlyDeletesArticle(
             ArticlesController sut,
-            string actor,
-            int id)
+            int id,
+            Article article)
         {
-            sut.User.Identity.Of(x => x.Name == actor);
-            await sut.DeleteAsync(id);
-            sut.ArticleService.ToMock().Verify(x => x.RemoveAsync(actor, id));
+            // Fixture setup
+            sut.Repositories.Articles.Of(x => x.FindAsync(
+                new Keys<int>(id)) == Task.FromResult(article));
+
+            bool verifies = false;
+            var task = Task.Run<IModelCommand<IEnumerable<IModel>>>(() =>
+            {
+                Thread.Sleep(300);
+                verifies = true;
+                return new NullCommand();
+            });
+            sut.DeleteCommand.Of(x => x.ExecuteAsync(
+                It.Is<Article>(p => p.Id == id && p.UserId == article.UserId)) == task);
+
+            // Exercise system
+            sut.DeleteAsync(id).Wait();
+
+            // Verify outcome
+            Assert.True(verifies);
         }
 
         [Test]
