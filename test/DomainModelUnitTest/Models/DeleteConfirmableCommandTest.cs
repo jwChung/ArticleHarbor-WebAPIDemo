@@ -100,6 +100,59 @@
             Assert.Equal(sut, actual);
         }
 
+        [Test]
+        public void ExecuteAsyncBookmarkWithInvalidRoleThrows(
+            DeleteConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            Assert.Throws<UnauthorizedException>(() => sut.ExecuteAsync(bookmark).Result);
+        }
+
+        [Test]
+        public void ExecuteAsyncBookmarkWithAdministratorRoleDoesNotThrow(
+            DeleteConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            sut.Principal.Of(x => x.IsInRole("Administrator") == true);
+            var actual = sut.ExecuteAsync(bookmark).Result;
+            Assert.Equal(sut, actual);
+        }
+
+        [Test]
+        public void ExecuteAsyncBookmarkWithAuthorRoleAndCorrectOwnerIdDoesNotThrow(
+            DeleteConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            sut.Principal.Of(x => x.IsInRole("Author") == true);
+            sut.Principal.Identity.Of(x => x.Name == bookmark.UserId);
+
+            var actual = sut.ExecuteAsync(bookmark).Result;
+
+            Assert.Equal(sut, actual);
+        }
+
+        [Test]
+        public void ExecuteAsyncBookmarkWithAuthorRoleAndIncorrectOwnerIdThrow(
+            DeleteConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            sut.Principal.Of(x => x.IsInRole("Author") == true);
+            Assert.Throws<UnauthorizedException>(() => sut.ExecuteAsync(bookmark).Result);
+        }
+
+        [Test]
+        public void ExecuteAsyncBookmarkIgnoresUserNameCase(
+            DeleteConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            sut.Principal.Of(x => x.IsInRole("Author") == true);
+            sut.Principal.Identity.Of(x => x.Name == bookmark.UserId.ToUpper());
+
+            var actual = sut.ExecuteAsync(bookmark).Result;
+
+            Assert.Equal(sut, actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.Value);

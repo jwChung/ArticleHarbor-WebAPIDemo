@@ -66,6 +66,21 @@
             return this.ExecuteAsyncWith(keyword);
         }
 
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Bookmark bookmark)
+        {
+            if (bookmark == null)
+                throw new ArgumentNullException("bookmark");
+
+            if (this.principal.IsInRole("Administrator"))
+                return base.ExecuteAsync(bookmark);
+
+            if (this.principal.IsInRole("Author") && bookmark.UserId.Equals(
+                this.principal.Identity.Name, StringComparison.CurrentCultureIgnoreCase))
+                return base.ExecuteAsync(bookmark);
+
+            throw new UnauthorizedException();
+        }
+
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Keyword keyword)
         {
             var article = await this.repositories.Articles.FindAsync(new Keys<int>(keyword.ArticleId));
