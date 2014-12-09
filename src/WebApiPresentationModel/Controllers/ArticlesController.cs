@@ -78,16 +78,6 @@
         }
 
         [Authorize]
-        [NonAction]
-        public Task PutAsync(PutArticleViewModel putArticle)
-        {
-            if (putArticle == null)
-                throw new ArgumentNullException("putArticle");
-
-            return this.PutAsyncImpl(putArticle);
-        }
-
-        [Authorize]
         [HttpPut]
         public Task NewPutAsync(PutArticleViewModel putArticle)
         {

@@ -72,35 +72,6 @@
         }
 
         [Test]
-        public async Task PutAsyncCorrectlyModifiesArticle(
-            ArticlesController sut,
-            PutArticleViewModel putArticle,
-            string actor,
-            string userId)
-        {
-            // Fixture setup
-            sut.User.Identity.Of(x => x.Name == actor);
-            sut.ArticleService.Of(x => x.GetUserIdAsync(putArticle.Id) == Task.FromResult(userId));
-
-            var articleLikeness = putArticle.AsSource().OfLikeness<Article>()
-                .With(x => x.UserId).EqualsWhen((p, a) => a.UserId == userId);
-
-            // Exercise system
-            await sut.PutAsync(putArticle);
-
-            // Verify outcome
-            sut.ArticleService.ToMock().Verify(
-                x => x.ModifyAsync(actor, It.Is<Article>(p => articleLikeness.Equals(p))));
-        }
-
-        [Test]
-        public void PutAsyncHasAuthorizeAttribute()
-        {
-            var method = this.Methods.Select(x => x.PutAsync(null));
-            Assert.NotNull(method.GetCustomAttribute<AuthorizeAttribute>());
-        }
-
-        [Test]
         public void NewPutAsyncCorrectlyUpdatesArticle(
             ArticlesController sut,
             PutArticleViewModel putArticle,
