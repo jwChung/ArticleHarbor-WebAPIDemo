@@ -52,7 +52,7 @@
 
         private async Task<IEnumerable<DomainBookmark>> SelectAsyncWith(string userId)
         {
-            var user = await this.context.UserManager.FindByNameAsync(userId);
+            var user = await this.context.UserManager.FindByIdAsync(userId);
 
             var query = from bookmark in this.context.Bookmarks
                         where bookmark.UserId == user.Id
@@ -64,13 +64,13 @@
 
         private async Task InsertAsyncWith(DomainBookmark bookmark)
         {
-            var user = await this.context.UserManager.FindByNameAsync(bookmark.UserId);
+            var user = await this.context.UserManager.FindByIdAsync(bookmark.UserId);
             this.context.Bookmarks.Add(bookmark.ToPersistence(user.Id));
         }
 
         private async Task DeleteAsyncWith(DomainBookmark bookmark)
         {
-            var user = await this.context.UserManager.FindByNameAsync(bookmark.UserId);
+            var user = await this.context.UserManager.FindByIdAsync(bookmark.UserId);
             var persistenceBookmark = this.context.Bookmarks.Find(user.Id, bookmark.ArticleId);
             this.context.Bookmarks.Remove(persistenceBookmark);
         }
