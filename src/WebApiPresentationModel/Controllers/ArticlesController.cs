@@ -78,13 +78,12 @@
         }
 
         [Authorize]
-        [HttpPut]
-        public Task NewPutAsync(PutArticleViewModel putArticle)
+        public Task PutAsync(PutArticleViewModel putArticle)
         {
             if (putArticle == null)
                 throw new ArgumentNullException("putArticle");
 
-            return this.NewPutAsyncWith(putArticle);
+            return this.PutAsyncWith(putArticle);
         }
 
         [Authorize]
@@ -112,25 +111,7 @@
                 models.OfType<Article>().Single(), models.OfType<Keyword>());
         }
 
-        private async Task PutAsyncImpl(PutArticleViewModel putArticle)
-        {
-            var actor = this.User.Identity.Name;
-            var userId = await this.articleService.GetUserIdAsync(putArticle.Id);
-
-            var article = new Article(
-                putArticle.Id,
-                putArticle.Provider,
-                putArticle.Guid,
-                putArticle.Subject,
-                putArticle.Body,
-                putArticle.Date,
-                putArticle.Url,
-                userId);
-
-            await this.articleService.ModifyAsync(actor, article);
-        }
-
-        private async Task NewPutAsyncWith(PutArticleViewModel putArticle)
+        private async Task PutAsyncWith(PutArticleViewModel putArticle)
         {
             var userId = (await this.Repositories.Articles.FindAsync(
                 new Keys<int>(putArticle.Id))).UserId;

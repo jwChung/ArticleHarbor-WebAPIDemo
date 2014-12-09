@@ -72,7 +72,7 @@
         }
 
         [Test]
-        public void NewPutAsyncCorrectlyUpdatesArticle(
+        public void PutAsyncCorrectlyUpdatesArticle(
             ArticlesController sut,
             PutArticleViewModel putArticle,
             Article article)
@@ -95,16 +95,16 @@
                 It.Is<Article>(p => articleLikeness.Equals(p))) == task);
 
             // Exercise system
-            sut.NewPutAsync(putArticle).Wait();
+            sut.PutAsync(putArticle).Wait();
 
             // Verify outcome
             Assert.True(verifies);
         }
 
         [Test]
-        public void NewPutAsyncHasAuthorizeAttribute()
+        public void PutAsyncHasAuthorizeAttribute()
         {
-            var method = this.Methods.Select(x => x.NewPutAsync(null));
+            var method = this.Methods.Select(x => x.PutAsync(null));
             Assert.NotNull(method.GetCustomAttribute<AuthorizeAttribute>());
         }
 
