@@ -11,6 +11,13 @@
         {
             Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
         }
+        
+        [Test]
+        public void ValueIsEmpty(DeleteConfirmableCommand sut)
+        {
+            var actual = sut.Value;
+            Assert.Empty(actual);
+        }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
