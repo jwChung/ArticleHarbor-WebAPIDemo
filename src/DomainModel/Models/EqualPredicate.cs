@@ -5,27 +5,28 @@
 
     public class EqualPredicate : IPredicate
     {
-        private readonly string name;
+        private readonly string columnName;
         private readonly object value;
         
-        public EqualPredicate(string name, object value)
+        public EqualPredicate(string columnName, object value)
         {
-            if (name == null)
-                throw new ArgumentNullException("name");
+            if (columnName == null)
+                throw new ArgumentNullException("columnName");
 
             if (value == null)
                 throw new ArgumentNullException("value");
 
-            if (name.Length == 0)
-                throw new ArgumentException("The name should not be empty string.", "name");
+            if (columnName.Length == 0)
+                throw new ArgumentException(
+                    "The columnName should not be empty string.", "columnName");
 
-            this.name = name;
+            this.columnName = columnName;
             this.value = value;
         }
 
-        public string Name
+        public string ColumnName
         {
-            get { return this.name; }
+            get { return this.columnName; }
         }
 
         public object Value
@@ -35,12 +36,12 @@
 
         public string SqlText
         {
-            get { return this.name + " = @" + this.name; }
+            get { return this.columnName + " = @" + this.columnName; }
         }
 
         public IEnumerable<IParameter> Parameters
         {
-            get { yield return new Parameter("@" + this.name, this.value); }
+            get { yield return new Parameter("@" + this.columnName, this.value); }
         }
     }
 }

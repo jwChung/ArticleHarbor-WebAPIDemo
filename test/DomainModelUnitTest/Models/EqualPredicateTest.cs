@@ -24,7 +24,7 @@
         [Test]
         public void SqlTextIsCorrect(EqualPredicate sut)
         {
-            var expected = string.Format("{0} = @{0}", sut.Name);
+            var expected = string.Format("{0} = @{0}", sut.ColumnName);
             var actual = sut.SqlText;
             Assert.Equal(expected, actual);
         }
@@ -33,7 +33,7 @@
         public void ParametersIsCorrect(EqualPredicate sut)
         {
             var actual = sut.Parameters.Single();
-            Assert.Equal(new Parameter("@" + sut.Name, sut.Value), actual);
+            Assert.Equal(new Parameter("@" + sut.ColumnName, sut.Value), actual);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
