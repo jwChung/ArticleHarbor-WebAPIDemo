@@ -2,11 +2,17 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class InClausePredicate : IPredicate
     {
         private readonly string columnName;
         private readonly IEnumerable<IParameter> parameters;
+
+        public InClausePredicate(string columnName, params IParameter[] parameters)
+            : this(columnName, (IEnumerable<IParameter>)parameters)
+        {
+        }
 
         public InClausePredicate(string columnName, IEnumerable<IParameter> parameters)
         {
