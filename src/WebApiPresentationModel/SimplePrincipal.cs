@@ -20,11 +20,6 @@
             this.role = role;
         }
 
-        public string UserId
-        {
-            get { return this.userId; }
-        }
-
         public Role Role
         {
             get { return this.role; }
