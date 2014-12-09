@@ -77,6 +77,7 @@
     <Compile Include="Models\IModel.cs" />
     <Compile Include="Models\Keyword.cs" />
     <Compile Include="Models\Bookmark.cs" />
+    <Compile Include="Models\SelectBookmarkedArticlesCommand.cs" />
     <Compile Include="Models\TrueCondition.cs" />
     <Compile Include="Models\ModelCommand.cs" />
     <Compile Include="Models\InsertCommand.cs" />
