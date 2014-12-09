@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
 
     public class InClausePredicate : IPredicate
@@ -28,7 +29,14 @@
 
         public string SqlText
         {
-            get { throw new System.NotImplementedException(); }
+            get
+            {
+                return string.Format(
+                    CultureInfo.CurrentCulture,
+                    "{0} IN ({1})",
+                    this.columnName,
+                    string.Join(", ", this.parameters.Select(p => p.Name)));
+            }
         }
 
         public string ColumnName
