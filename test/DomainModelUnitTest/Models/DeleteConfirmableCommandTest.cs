@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Reflection;
+    using System.Threading.Tasks;
+    using Moq;
     using Xunit;
 
     public class DeleteConfirmableCommandTest : IdiomaticTest<DeleteConfirmableCommand>
@@ -78,6 +80,23 @@
 
             var actual = sut.ExecuteAsync(article).Result;
 
+            Assert.Equal(sut, actual);
+        }
+        
+        [Test]
+        public void ExecuteAsyncKeywordRelaysExecuteAsyncArticle(
+            Mock<DeleteConfirmableCommand> mock,
+            Keyword keyword,
+            Article article)
+        {
+            var sut = mock.Object;
+            sut.Principal.Of(x => x.IsInRole("Administrator") == true);
+            sut.Repositories.Articles.Of(
+                x => x.FindAsync(new Keys<int>(keyword.ArticleId)) == Task.FromResult(article));
+
+            var actual = sut.ExecuteAsync(keyword).Result;
+
+            mock.Verify(x => x.ExecuteAsync(article));
             Assert.Equal(sut, actual);
         }
 
