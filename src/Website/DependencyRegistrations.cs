@@ -168,7 +168,8 @@ namespace ArticleHarbor.Website
             container.Register(
                 c => new BookmarksController(
                     c.Resolve<IBookmarkService>(),
-                    c.Resolve<IRepositories>()))
+                    c.Resolve<IRepositories>(),
+                    new NullCommand()))
                 .ReusedWithinContainer();
 
             return this;

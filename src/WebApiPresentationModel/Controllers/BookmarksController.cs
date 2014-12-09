@@ -13,8 +13,12 @@
     {
         private readonly IBookmarkService bookmarkService;
         private readonly IRepositories repositories;
+        private readonly IModelCommand<IEnumerable<IModel>> selectArticlesCommand;
 
-        public BookmarksController(IBookmarkService bookmarkService, IRepositories repositories)
+        public BookmarksController(
+            IBookmarkService bookmarkService,
+            IRepositories repositories,
+            IModelCommand<IEnumerable<IModel>> selectArticlesCommand)
         {
             if (bookmarkService == null)
                 throw new ArgumentNullException("bookmarkService");
@@ -22,8 +26,12 @@
             if (repositories == null)
                 throw new ArgumentNullException("repositories");
 
+            if (selectArticlesCommand == null)
+                throw new ArgumentNullException("selectArticlesCommand");
+
             this.bookmarkService = bookmarkService;
             this.repositories = repositories;
+            this.selectArticlesCommand = selectArticlesCommand;
         }
 
         public IBookmarkService BookmarkService
@@ -34,6 +42,11 @@
         public IRepositories Repositories
         {
             get { return this.repositories; }
+        }
+
+        public IModelCommand<IEnumerable<IModel>> SelectArticlesCommand
+        {
+            get { return this.selectArticlesCommand; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is action method.")]
