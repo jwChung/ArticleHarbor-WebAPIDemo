@@ -83,22 +83,13 @@
 
             var articleLikeness = putArticle.AsSource().OfLikeness<Article>()
                 .With(x => x.UserId).EqualsWhen((p, a) => a.UserId == article.UserId);
-
-            bool verifies = false;
-            var task = Task.Run<IModelCommand<IEnumerable<IModel>>>(() =>
-            {
-                Thread.Sleep(300);
-                verifies = true;
-                return new NullCommand();
-            });
-            sut.UpdateCommand.Of(x => x.ExecuteAsync(
-                It.Is<Article>(p => articleLikeness.Equals(p))) == task);
-
+            
             // Exercise system
             sut.PutAsync(putArticle).Wait();
 
             // Verify outcome
-            Assert.True(verifies);
+            sut.UpdateCommand.ToMock().Verify(
+                x => x.ExecuteAsync(It.Is<Article>(p => articleLikeness.Equals(p))));
         }
 
         [Test]
@@ -114,25 +105,13 @@
             int id,
             Article article)
         {
-            // Fixture setup
             sut.Repositories.Articles.Of(x => x.FindAsync(
                 new Keys<int>(id)) == Task.FromResult(article));
-
-            bool verifies = false;
-            var task = Task.Run<IModelCommand<IEnumerable<IModel>>>(() =>
-            {
-                Thread.Sleep(300);
-                verifies = true;
-                return new NullCommand();
-            });
-            sut.DeleteCommand.Of(x => x.ExecuteAsync(
-                It.Is<Article>(p => p.Id == id && p.UserId == article.UserId)) == task);
-
-            // Exercise system
+            
             sut.DeleteAsync(id).Wait();
 
-            // Verify outcome
-            Assert.True(verifies);
+            sut.DeleteCommand.ToMock().Verify(
+                x => x.ExecuteAsync(It.Is<Article>(p => p.Id == id && p.UserId == article.UserId)));
         }
 
         [Test]

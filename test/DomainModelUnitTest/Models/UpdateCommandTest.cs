@@ -26,17 +26,9 @@
             UpdateCommand sut,
             User user)
         {
-            bool verifies = false;
-            var task = Task.Run(() =>
-            {
-                Thread.Sleep(300);
-                verifies = true;
-            });
-            sut.Repositories.Users.Of(x => x.UpdateAsync(user) == task);
-
             var actual = sut.ExecuteAsync(user).Result;
-
-            Assert.True(verifies);
+            Assert.Equal(sut, actual);
+            sut.Repositories.Users.ToMock().Verify(x => x.UpdateAsync(user));
         }
 
         [Test]
@@ -44,17 +36,9 @@
             UpdateCommand sut,
             Article article)
         {
-            bool verifies = false;
-            var task = Task.Run(() =>
-            {
-                Thread.Sleep(300);
-                verifies = true;
-            });
-            sut.Repositories.Articles.Of(x => x.UpdateAsync(article) == task);
-
             var actual = sut.ExecuteAsync(article).Result;
-
-            Assert.True(verifies);
+            Assert.Equal(sut, actual);
+            sut.Repositories.Articles.ToMock().Verify(x => x.UpdateAsync(article));
         }
 
         [Test]
@@ -62,17 +46,9 @@
             UpdateCommand sut,
             Keyword keyword)
         {
-            bool verifies = false;
-            var task = Task.Run(() =>
-            {
-                Thread.Sleep(300);
-                verifies = true;
-            });
-            sut.Repositories.Keywords.Of(x => x.UpdateAsync(keyword) == task);
-
             var actual = sut.ExecuteAsync(keyword).Result;
-
-            Assert.True(verifies);
+            Assert.Equal(sut, actual);
+            sut.Repositories.Keywords.ToMock().Verify(x => x.UpdateAsync(keyword));
         }
 
         [Test]
@@ -80,17 +56,9 @@
             UpdateCommand sut,
             Bookmark bookmark)
         {
-            bool verifies = false;
-            var task = Task.Run(() =>
-            {
-                Thread.Sleep(300);
-                verifies = true;
-            });
-            sut.Repositories.Bookmarks.Of(x => x.UpdateAsync(bookmark) == task);
-
             var actual = sut.ExecuteAsync(bookmark).Result;
-
-            Assert.True(verifies);
+            Assert.Equal(sut, actual);
+            sut.Repositories.Bookmarks.ToMock().Verify(x => x.UpdateAsync(bookmark));
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
