@@ -45,31 +45,31 @@
                 this.context.UserManager.Create(
                     new User
                     {
-                        UserName = "user1",
+                        Id = "user1",
+                        UserName = "user1Name",
                         ApiKey = Guid.Parse("692c7798206844b88ba9a660e3374eef")
                     },
                     "password1");
                 this.context.UserManager.Create(
                     new User
                     {
-                        UserName = "user2",
+                        Id = "user2",
+                        UserName = "user2Name",
                         ApiKey = Guid.Parse("232494f5670943dfac807226449fe795")
                     },
                     "password2");
                 this.context.UserManager.Create(
                     new User
                     {
-                        UserName = "user3",
+                        Id = "user3",
+                        UserName = "user3Name",
                         ApiKey = Guid.Parse("930eaf281412423592f35104836f2771")
                     },
                     "password3");
 
-                this.context.UserManager.AddToRoles(
-                    this.context.UserManager.FindByName("user1").Id, "Administrator");
-                this.context.UserManager.AddToRoles(
-                    this.context.UserManager.FindByName("user2").Id, "Author");
-                this.context.UserManager.AddToRoles(
-                    this.context.UserManager.FindByName("user3").Id, "User");
+                this.context.UserManager.AddToRoles("user1", "Administrator");
+                this.context.UserManager.AddToRoles("user2", "Author");
+                this.context.UserManager.AddToRoles("user3", "User");
             }
 
             public void InitializeArticles()
@@ -82,7 +82,7 @@
                     Body = "Body 1",
                     Date = DateTime.Now,
                     Url = "http://abc1.com",
-                    UserId = this.context.Users.Local[0].Id
+                    UserId = "user1"
                 });
 
                 this.context.Articles.Add(new Article
@@ -93,7 +93,7 @@
                     Body = "Body 2",
                     Date = DateTime.Now,
                     Url = "http://abc2.com",
-                    UserId = this.context.Users.Local[1].Id
+                    UserId = "user2"
                 });
 
                 this.context.Articles.Add(new Article
@@ -104,7 +104,7 @@
                     Body = "Body 3",
                     Date = DateTime.Now,
                     Url = "http://abc3.com",
-                    UserId = this.context.Users.Local[1].Id
+                    UserId = "user2"
                 });
             }
 
@@ -133,17 +133,17 @@
             {
                 this.context.Bookmarks.Add(new Bookmark
                 {
-                    UserId = this.context.Users.Local[0].Id,
+                    UserId = "user1",
                     ArticleId = 1,
                 });
                 this.context.Bookmarks.Add(new Bookmark
                 {
-                    UserId = this.context.Users.Local[0].Id,
+                    UserId = "user1",
                     ArticleId = 2,
                 });
                 this.context.Bookmarks.Add(new Bookmark
                 {
-                    UserId = this.context.Users.Local[1].Id,
+                    UserId = "user2",
                     ArticleId = 3,
                 });
             }

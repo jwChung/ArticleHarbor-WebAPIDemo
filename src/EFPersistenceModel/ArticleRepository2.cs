@@ -2,7 +2,6 @@
 {
     using System;
     using System.Data.Entity;
-    using System.Globalization;
     using System.Threading.Tasks;
     using DomainModel.Models;
     using EFDataAccess;
@@ -35,18 +34,9 @@
             return this.ConvertToPersistenceAsyncWith(model);
         }
 
-        private async Task<Article> ConvertToModelAsyncWith(EFDataAccess.Article persistence)
+        private Task<Article> ConvertToModelAsyncWith(EFDataAccess.Article persistence)
         {
-            var user = await this.context.UserManager.FindByIdAsync(persistence.UserId);
-            if (user == null)
-                throw new ArgumentException(
-                    string.Format(
-                        CultureInfo.CurrentCulture,
-                        "There is no user matched with the id '{0}'.",
-                        persistence.UserId),
-                    "persistence");
-
-            return new Article(
+            var article = new Article(
                 persistence.Id,
                 persistence.Provider,
                 persistence.Guid,
@@ -54,21 +44,14 @@
                 persistence.Body,
                 persistence.Date,
                 persistence.Url,
-                user.UserName);
+                persistence.UserId);
+
+            return Task.FromResult(article);
         }
 
-        private async Task<EFDataAccess.Article> ConvertToPersistenceAsyncWith(Article model)
+        private Task<EFDataAccess.Article> ConvertToPersistenceAsyncWith(Article model)
         {
-            var user = await this.context.UserManager.FindByNameAsync(model.UserId);
-            if (user == null)
-                throw new ArgumentException(
-                    string.Format(
-                        CultureInfo.CurrentCulture,
-                        "There is no user matched with the name '{0}'.",
-                        model.UserId),
-                    "persistence");
-
-            return new EFDataAccess.Article
+            var article = new EFDataAccess.Article
             {
                 Id = model.Id,
                 Provider = model.Provider,
@@ -77,8 +60,10 @@
                 Body = model.Body,
                 Date = model.Date,
                 Url = model.Url,
-                UserId = user.Id
+                UserId = model.UserId
             };
+
+            return Task.FromResult(article);
         }
     }
 }

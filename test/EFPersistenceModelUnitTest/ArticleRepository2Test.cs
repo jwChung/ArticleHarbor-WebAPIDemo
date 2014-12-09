@@ -1,6 +1,5 @@
 ﻿namespace ArticleHarbor.EFPersistenceModel
 {
-    using System;
     using ArticleHarbor.DomainModel.Models;
     using EFDataAccess;
     using Ploeh.SemanticComparison.Fluent;
@@ -21,47 +20,17 @@
             ArticleRepository2 sut)
         {
             var article = context.Articles.Find(1);
-            
             var actual = sut.ConvertToModelAsync(article).Result;
-
-            Assert.Equal("user1", actual.UserId);
-            article.AsSource().OfLikeness<Article>().Without(x => x.UserId).ShouldEqual(actual);
-        }
-
-        [Test]
-        public void ConvertToModelAsyncWithIncorrectUserIdThrows(
-            ArticleRepository2 sut,
-            EFDataAccess.Article article)
-        {
-            article.Id = -1;
-            var e = Assert.Throws<AggregateException>(
-                () => sut.ConvertToModelAsync(article).Result);
-            Assert.IsType<ArgumentException>(e.InnerException);
+            article.AsSource().OfLikeness<Article>().ShouldEqual(actual);
         }
 
         [Test]
         public void ConvertToPersistenceAsyncReturnsCorrectPersistence(
-            ArticleHarborDbContext context,
             ArticleRepository2 sut,
             Article article)
         {
-            var user = context.UserManager.FindByNameAsync("user1").Result;
-            article = article.WithUserId("user1");
-
             var actual = sut.ConvertToPersistenceAsync(article).Result;
-
-            Assert.Equal(user.Id, actual.UserId);
-            actual.AsSource().OfLikeness<Article>().Without(x => x.UserId).ShouldEqual(article);
-        }
-
-        [Test]
-        public void ConvertToPersistenceAsyncWithIncorrectUserIdThrows(
-            ArticleRepository2 sut,
-            Article article)
-        {
-            var e = Assert.Throws<AggregateException>(
-                () => sut.ConvertToPersistenceAsync(article).Result);
-            Assert.IsType<ArgumentException>(e.InnerException);
+            actual.AsSource().OfLikeness<Article>().ShouldEqual(article);
         }
     }
 }
