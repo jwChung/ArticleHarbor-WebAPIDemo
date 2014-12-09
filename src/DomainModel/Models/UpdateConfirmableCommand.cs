@@ -11,7 +11,7 @@
         private readonly IRepositories repositories;
         private readonly IPrincipal principal;
 
-        public UpdateConfirmableCommand(IRepositories repositories, IPrincipal principal)
+        public UpdateConfirmableCommand(IPrincipal principal, IRepositories repositories)
         {
             if (repositories == null)
                 throw new ArgumentNullException("repositories");

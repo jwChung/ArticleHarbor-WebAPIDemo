@@ -119,8 +119,8 @@ namespace ArticleHarbor.Website
 
             container.Register(
                 c => new UpdateConfirmableCommand(
-                    c.Resolve<IRepositories>(),
-                    c.Resolve<IPrincipal>()))
+                    c.Resolve<IPrincipal>(),
+                    c.Resolve<IRepositories>()))
                 .ReusedWithinContainer();
 
             container.Register(
