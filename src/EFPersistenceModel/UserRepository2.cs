@@ -19,14 +19,6 @@
             this.context = context;
         }
 
-        public override Task<User> FindAsync(Keys<string> keys)
-        {
-            if (keys == null)
-                throw new ArgumentNullException("keys");
-
-            return this.FinaAsyncWith(keys);
-        }
-
         public override Task<User> ConvertToModelAsync(EFDataAccess.User persistence)
         {
             if (persistence == null)
@@ -43,28 +35,12 @@
             throw new NotImplementedException();
         }
 
-        private async Task<User> FinaAsyncWith(Keys<string> keys)
-        {
-            var users = await this.ExecuteSelectCommandAsync(
-                new EqualPredicate("UserName", keys.Single()));
-            return users.Single();
-        }
-
         private async Task<User> ConvertToModelAsyncWith(EFDataAccess.User persistence)
         {
-            var user = await this.context.UserManager.FindByIdAsync(persistence.Id);
-            if (user == null)
-                throw new ArgumentException(
-                    string.Format(
-                        CultureInfo.CurrentCulture,
-                        "There is no user matched with the id '{0}'.",
-                        persistence.Id),
-                    "persistence");
-
             var roleNames = await this.context.UserManager.GetRolesAsync(persistence.Id);
 
             return new User(
-                user.UserName,
+                persistence.Id,
                 (Role)Enum.Parse(typeof(Role), roleNames.Single()),
                 persistence.ApiKey);
         }

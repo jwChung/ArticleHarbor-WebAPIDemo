@@ -21,22 +21,13 @@
             ArticleHarborDbContext context,
             UserRepository2 sut)
         {
-            EFDataAccess.User persistence = context.UserManager.FindByNameAsync("user2").Result;
+            EFDataAccess.User persistence = context.UserManager.FindByIdAsync("user2").Result;
 
             var actual = sut.ConvertToModelAsync(persistence).Result;
 
             Assert.Equal("user2", actual.Id);
             Assert.Equal(Guid.Parse("232494f5670943dfac807226449fe795"), actual.ApiKey);
             Assert.Equal(Role.Author, actual.Role);
-        }
-
-        [Test]
-        public void ConvertToModelAsyncWithIncorrectUserIdThrows(
-            UserRepository2 sut,
-            EFDataAccess.User persistence)
-        {
-            var e = Assert.Throws<AggregateException>(() => sut.ConvertToModelAsync(persistence).Result);
-            Assert.IsType<ArgumentException>(e.InnerException);
         }
 
         [Test(Skip = "NotImplementedException")]
@@ -65,7 +56,7 @@
         [Test]
         public void ExecuteSelectCommandAsyncReturnsCorrectResult(UserRepository2 sut)
         {
-            var predicate = new EqualPredicate("username", "user1");
+            var predicate = new EqualPredicate("id", "user1");
             var actual = sut.ExecuteSelectCommandAsync(predicate).Result;
             Assert.Equal("user1", actual.Single().Id);
         }
