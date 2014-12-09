@@ -26,7 +26,7 @@
             ArticlesController sut,
             IEnumerable<Article> articles)
         {
-            sut.Repository.Of(x => x.SelectAsync() == Task.FromResult(articles));
+            sut.Repositories.Articles.Of(x => x.SelectAsync() == Task.FromResult(articles));
             var actual = await sut.GetAsync();
             Assert.Equal(articles, actual);
         }

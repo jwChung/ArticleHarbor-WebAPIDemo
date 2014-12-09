@@ -14,21 +14,21 @@
     public class ArticlesController : ApiController
     {
         private readonly IArticleService articleService;
-        private readonly IRepository<Keys<int>, Article> repository;
+        private readonly IRepositories repositories;
         private readonly IModelCommand<IEnumerable<IModel>> insertCommand;
         private readonly IModelCommand<IEnumerable<IModel>> updateCommand;
 
         public ArticlesController(
             IArticleService articleService,
-            IRepository<Keys<int>, Article> repository,
+            IRepositories repositories,
             IModelCommand<IEnumerable<IModel>> insertCommand,
             IModelCommand<IEnumerable<IModel>> updateCommand)
         {
             if (articleService == null)
                 throw new ArgumentNullException("articleService");
 
-            if (repository == null)
-                throw new ArgumentNullException("repository");
+            if (repositories == null)
+                throw new ArgumentNullException("repositories");
 
             if (insertCommand == null)
                 throw new ArgumentNullException("insertCommand");
@@ -37,7 +37,7 @@
                 throw new ArgumentNullException("updateCommand");
 
             this.articleService = articleService;
-            this.repository = repository;
+            this.repositories = repositories;
             this.insertCommand = insertCommand;
             this.updateCommand = updateCommand;
         }
@@ -45,11 +45,6 @@
         public IArticleService ArticleService
         {
             get { return this.articleService; }
-        }
-
-        public IRepository<Keys<int>, Article> Repository
-        {
-            get { return this.repository; }
         }
 
         public IModelCommand<IEnumerable<IModel>> InsertCommand
@@ -62,10 +57,15 @@
             get { return this.updateCommand; }
         }
 
+        public IRepositories Repositories
+        {
+            get { return this.repositories; }
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is action method.")]
         public Task<IEnumerable<Article>> GetAsync()
         {
-            return this.repository.SelectAsync();
+            return this.repositories.Articles.SelectAsync();
         }
 
         [Authorize]

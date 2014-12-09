@@ -14,7 +14,6 @@ namespace ArticleHarbor.Website
     using DomainModel.Services;
     using Jwc.Funz;
     using WebApiPresentationModel.Controllers;
-    using Article = DomainModel.Models.Article;
     using Keyword = DomainModel.Models.Keyword;
 
     public class DependencyRegistrations : IContainerVisitor<object>
@@ -132,7 +131,7 @@ namespace ArticleHarbor.Website
             container.Register(
                 c => new ArticlesController(
                     c.Resolve<IArticleService>(),
-                    c.Resolve<IRepository<Keys<int>, Article>>(),
+                    c.Resolve<IRepositories>(),
                     new CompositeEnumerableCommand<IModel>(
                         c.Resolve<InsertConfirmableCommand>(),
                         c.Resolve<InsertCommand>()),
