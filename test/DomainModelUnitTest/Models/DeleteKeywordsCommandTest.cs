@@ -30,8 +30,9 @@
             Article article)
         {
             var likeness = new EqualPredicate("articleId", article.Id).AsSource()
-                .OfLikeness<IPredicate>().With(x => x.Parameters)
-                .EqualsWhen((e, p) => e.Parameters.SequenceEqual(p.Parameters));
+                .OfLikeness<EqualPredicate>()
+                .Without(x => x.SqlText)
+                .Without(x => x.Parameters);
             bool verifies = false;
             var task = Task.Run(() =>
             {
