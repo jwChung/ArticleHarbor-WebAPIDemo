@@ -5,12 +5,12 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class RelayKeywordCommand : ModelCommand<IEnumerable<IModel>>
+    public class RelayKeywordsCommand : ModelCommand<IEnumerable<IModel>>
     {
         private readonly IModelCommand<IEnumerable<IModel>> innerCommand;
         private readonly Func<string, IEnumerable<string>> nounExtractor;
 
-        public RelayKeywordCommand(
+        public RelayKeywordsCommand(
             IModelCommand<IEnumerable<IModel>> innerCommand,
             Func<string, IEnumerable<string>> nounExtractor)
         {
@@ -54,7 +54,7 @@
 
             var newInnerComand = await this.innerCommand.ExecuteAsync(keywords);
 
-            return new RelayKeywordCommand(newInnerComand, this.nounExtractor);
+            return new RelayKeywordsCommand(newInnerComand, this.nounExtractor);
         }
     }
 }

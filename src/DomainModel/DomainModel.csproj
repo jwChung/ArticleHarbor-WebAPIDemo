@@ -82,7 +82,7 @@
     <Compile Include="Models\InsertCommand.cs" />
     <Compile Include="Models\NullCommand.cs" />
     <Compile Include="Models\Parameter.cs" />
-    <Compile Include="Models\RelayKeywordCommand.cs" />
+    <Compile Include="Models\RelayKeywordsCommand.cs" />
     <Compile Include="Models\UpdateCommand.cs" />
     <Compile Include="Models\UpdateConfirmableCommand.cs" />
     <Compile Include="Models\UpdateKeywordsCondition.cs" />

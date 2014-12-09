@@ -136,7 +136,7 @@ namespace ArticleHarbor.Website
                         c.Resolve<InsertConfirmableCommand>(),
                         new InsertCommand(
                             c.Resolve<IRepositories>(),
-                            new RelayKeywordCommand(
+                            new RelayKeywordsCommand(
                                 new InsertCommand(
                                     c.Resolve<IRepositories>(),
                                     c.Resolve<NullCommand>(),
@@ -150,7 +150,7 @@ namespace ArticleHarbor.Website
                             c.Resolve<UpdateKeywordsCondition>(),
                             new CompositeEnumerableCommand<IModel>(
                                 c.Resolve<DeleteKeywordsCommand>(),
-                                new RelayKeywordCommand(
+                                new RelayKeywordsCommand(
                                     new InsertCommand(
                                         c.Resolve<IRepositories>(),
                                         c.Resolve<NullCommand>(),
