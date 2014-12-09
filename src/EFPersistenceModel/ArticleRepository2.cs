@@ -9,13 +9,10 @@
 
     public class ArticleRepository2 : Repository<Keys<int>, Article, EFDataAccess.Article>
     {
-        private readonly ArticleHarborDbContext context;
-
         public ArticleRepository2(
             ArticleHarborDbContext context, DbSet<EFDataAccess.Article> dbSet)
             : base(context, dbSet)
         {
-            this.context = context;
         }
 
         public override Task<Article> ConvertToModelAsync(EFDataAccess.Article persistence)
@@ -23,7 +20,7 @@
             if (persistence == null)
                 throw new ArgumentNullException("persistence");
 
-            return this.ConvertToModelAsyncWith(persistence);
+            return ConvertToModelAsyncWith(persistence);
         }
 
         public override Task<EFDataAccess.Article> ConvertToPersistenceAsync(Article model)
@@ -31,10 +28,10 @@
             if (model == null)
                 throw new ArgumentNullException("model");
 
-            return this.ConvertToPersistenceAsyncWith(model);
+            return ConvertToPersistenceAsyncWith(model);
         }
 
-        private Task<Article> ConvertToModelAsyncWith(EFDataAccess.Article persistence)
+        private static Task<Article> ConvertToModelAsyncWith(EFDataAccess.Article persistence)
         {
             var article = new Article(
                 persistence.Id,
@@ -49,7 +46,7 @@
             return Task.FromResult(article);
         }
 
-        private Task<EFDataAccess.Article> ConvertToPersistenceAsyncWith(Article model)
+        private static Task<EFDataAccess.Article> ConvertToPersistenceAsyncWith(Article model)
         {
             var article = new EFDataAccess.Article
             {

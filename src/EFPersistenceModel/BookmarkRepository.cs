@@ -65,7 +65,7 @@
         private async Task InsertAsyncWith(DomainBookmark bookmark)
         {
             var user = await this.context.UserManager.FindByIdAsync(bookmark.UserId);
-            this.context.Bookmarks.Add(bookmark.ToPersistence(user.Id));
+            this.context.Bookmarks.Add(bookmark.ToPersistence());
         }
 
         private async Task DeleteAsyncWith(DomainBookmark bookmark)

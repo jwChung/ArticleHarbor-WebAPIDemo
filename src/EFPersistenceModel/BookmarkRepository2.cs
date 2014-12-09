@@ -9,14 +9,11 @@
 
     public class BookmarkRepository2 : Repository<Keys<string, int>, Bookmark, EFDataAccess.Bookmark>
     {
-        private readonly ArticleHarborDbContext context;
-
         public BookmarkRepository2(
             ArticleHarborDbContext context,
             DbSet<EFDataAccess.Bookmark> dbSet)
             : base(context, dbSet)
         {
-            this.context = context;
         }
 
         public override Task<Bookmark> ConvertToModelAsync(EFDataAccess.Bookmark persistence)

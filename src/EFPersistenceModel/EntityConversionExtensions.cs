@@ -18,7 +18,7 @@ namespace ArticleHarbor.EFPersistenceModel
                 article.UserId);
         }
 
-        public static EFDataAccess.Article ToPersistence(this Article article, string userId)
+        public static EFDataAccess.Article ToPersistence(this Article article)
         {
             return new EFDataAccess.Article
             {
@@ -58,7 +58,7 @@ namespace ArticleHarbor.EFPersistenceModel
             return new Bookmark(bookmark.UserId, bookmark.ArticleId);
         }
 
-        public static EFDataAccess.Bookmark ToPersistence(this Bookmark bookmark, string userId)
+        public static EFDataAccess.Bookmark ToPersistence(this Bookmark bookmark)
         {
             return new EFDataAccess.Bookmark
             {

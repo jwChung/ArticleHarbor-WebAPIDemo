@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
     using DomainModel;
@@ -63,7 +62,7 @@
             if (persistenceArticle != null)
             {
                 ((IObjectContextAdapter)this.context).ObjectContext.Detach(persistenceArticle);
-                this.context.Entry(article.ToPersistence(persistenceArticle.UserId)).State
+                this.context.Entry(article.ToPersistence()).State
                     = EntityState.Modified;
             }
 
@@ -100,22 +99,10 @@
             if ((await this.FindAsync(item.Id)) != null)
                 return item;
 
-            var persistenceArticle = item.ToPersistence(await this.GetUserId(item));
+            var persistenceArticle = item.ToPersistence();
             var newPersistenceArticle = this.context.Articles.Add(persistenceArticle);
             await this.context.SaveChangesAsync();
             return newPersistenceArticle.ToDomain();
-        }
-
-        private async Task<string> GetUserId(DomainArticle article)
-        {
-            var persistenceUser = await this.context.UserManager.FindByIdAsync(article.UserId);
-            if (persistenceUser == null)
-                throw new ArgumentException(string.Format(
-                    CultureInfo.CurrentCulture,
-                    "The user id '{0}' is invalid.",
-                    article.UserId));
-
-            return persistenceUser.Id;
         }
     }
 }
