@@ -21,18 +21,9 @@
 
             this.columnName = columnName;
             this.parameterValues = parameterValues;
-        }
-
-        public InClausePredicate(string columnName, params IParameter[] parameters)
-        {
-            if (columnName == null)
-                throw new ArgumentNullException("columnName");
-
-            if (parameters == null)
-                throw new ArgumentNullException("parameters");
-
-            this.columnName = columnName;
-            this.parameters = parameters;
+            this.parameters = this.parameterValues.Select(v =>
+                new Parameter("@" + this.columnName + Guid.NewGuid().ToString("N"), v))
+                .ToArray();
         }
 
         public string SqlText
@@ -43,7 +34,7 @@
                     CultureInfo.CurrentCulture,
                     "{0} IN ({1})",
                     this.columnName,
-                    string.Join(", ", this.GetParameterNames()));
+                    string.Join(", ", this.Parameters.Select(p => p.Name)));
             }
         }
 
@@ -59,20 +50,7 @@
 
         public IEnumerable<object> ParameterValues
         {
-            get
-            {
-                return this.parameters != null
-                    ? this.parameters.Select(x => x.Value)
-                    : this.parameterValues;
-            }
-        }
-
-        private IEnumerable<string> GetParameterNames()
-        {
-            return this.parameters != null
-                ? this.parameters.Select(p => p.Name)
-                : this.parameterValues.Select(
-                    (v, i) => this.columnName + (i + 1).ToString().PadLeft(2, '0'));
+            get { return this.parameters.Select(x => x.Value); }
         }
     }
 }
