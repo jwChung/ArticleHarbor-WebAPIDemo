@@ -346,10 +346,9 @@
             this.context = context;
         }
 
-        public override async Task<Article> ConvertToModelAsync(EFDataAccess.Article persistence)
+        public override Task<Article> ConvertToModelAsync(EFDataAccess.Article persistence)
         {
-            var user = await this.context.UserManager.FindByIdAsync(persistence.UserId);
-            return new Article(
+            var article = new Article(
                 persistence.Id,
                 persistence.Provider,
                 persistence.Guid,
@@ -357,13 +356,13 @@
                 persistence.Body,
                 persistence.Date,
                 persistence.Url,
-                user.UserName);
+                persistence.UserId);
+            return Task.FromResult(article);
         }
 
-        public override async Task<EFDataAccess.Article> ConvertToPersistenceAsync(Article model)
+        public override Task<EFDataAccess.Article> ConvertToPersistenceAsync(Article model)
         {
-            var user = await this.context.UserManager.FindByNameAsync(model.UserId);
-            return new EFDataAccess.Article
+            var article = new EFDataAccess.Article
             {
                 Id = model.Id,
                 Provider = model.Provider,
@@ -372,8 +371,9 @@
                 Body = model.Body,
                 Date = model.Date,
                 Url = model.Url,
-                UserId = user.Id
+                UserId = model.UserId
             };
+            return Task.FromResult(article);
         }
     }
 
