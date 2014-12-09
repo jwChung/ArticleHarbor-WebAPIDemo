@@ -16,11 +16,13 @@
         private readonly IArticleService articleService;
         private readonly IRepository<Keys<int>, Article> repository;
         private readonly IModelCommand<IEnumerable<IModel>> insertCommand;
+        private readonly IModelCommand<IEnumerable<IModel>> updateCommand;
 
         public ArticlesController(
             IArticleService articleService,
             IRepository<Keys<int>, Article> repository,
-            IModelCommand<IEnumerable<IModel>> insertCommand)
+            IModelCommand<IEnumerable<IModel>> insertCommand,
+            IModelCommand<IEnumerable<IModel>> updateCommand)
         {
             if (articleService == null)
                 throw new ArgumentNullException("articleService");
@@ -31,9 +33,13 @@
             if (insertCommand == null)
                 throw new ArgumentNullException("insertCommand");
 
+            if (updateCommand == null)
+                throw new ArgumentNullException("updateCommand");
+
             this.articleService = articleService;
             this.repository = repository;
             this.insertCommand = insertCommand;
+            this.updateCommand = updateCommand;
         }
 
         public IArticleService ArticleService
@@ -49,6 +55,11 @@
         public IModelCommand<IEnumerable<IModel>> InsertCommand
         {
             get { return this.insertCommand; }
+        }
+
+        public IModelCommand<IEnumerable<IModel>> UpdateCommand
+        {
+            get { return this.updateCommand; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is action method.")]

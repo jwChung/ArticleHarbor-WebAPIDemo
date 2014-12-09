@@ -135,7 +135,8 @@ namespace ArticleHarbor.Website
                     c.Resolve<IRepository<Keys<int>, Article>>(),
                     new CompositeEnumerableCommand<IModel>(
                         c.Resolve<InsertConfirmableCommand>(),
-                        c.Resolve<InsertCommand>())))
+                        c.Resolve<InsertCommand>()),
+                    new NullCommand()))
                 .ReusedWithinContainer();
 
             container.Register(
