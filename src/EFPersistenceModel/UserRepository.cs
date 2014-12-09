@@ -64,7 +64,9 @@
 
         private async Task<User> FindAsyncImpl(string id, string password)
         {
-            var user = await this.context.UserManager.FindAsync(id, password);
+            var user = await this.context.UserManager.FindByIdAsync(id);
+            user = await this.context.UserManager.FindAsync(user.UserName, password);
+
             if (user == null)
                 return null;
 
@@ -74,7 +76,7 @@
 
         private async Task<User> FindAsyncImpl(string id)
         {
-            var user = await this.context.UserManager.FindByNameAsync(id);
+            var user = await this.context.UserManager.FindByIdAsync(id);
             if (user == null)
                 return null;
 

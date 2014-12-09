@@ -50,12 +50,12 @@ namespace ArticleHarbor.EFPersistenceModel
 
         public static User ToDomain(this EFDataAccess.User user, string roleName)
         {
-            return new User(user.UserName, (Role)Enum.Parse(typeof(Role), roleName), user.ApiKey);
+            return new User(user.Id, (Role)Enum.Parse(typeof(Role), roleName), user.ApiKey);
         }
 
         public static Bookmark ToDomain(this EFDataAccess.Bookmark bookmark)
         {
-            return new Bookmark(bookmark.User.UserName, bookmark.ArticleId);
+            return new Bookmark(bookmark.UserId, bookmark.ArticleId);
         }
 
         public static EFDataAccess.Bookmark ToPersistence(this Bookmark bookmark, string userId)
@@ -63,7 +63,7 @@ namespace ArticleHarbor.EFPersistenceModel
             return new EFDataAccess.Bookmark
             {
                 ArticleId = bookmark.ArticleId,
-                UserId = userId
+                UserId = bookmark.UserId
             };
         }
     }
