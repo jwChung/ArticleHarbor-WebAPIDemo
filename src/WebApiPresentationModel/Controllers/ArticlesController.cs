@@ -87,6 +87,15 @@
         }
 
         [Authorize]
+        public Task NewPutAsync(PutArticleViewModel putArticle)
+        {
+            if (putArticle == null)
+                throw new ArgumentNullException("putArticle");
+
+            return this.NewPutAsyncWith(putArticle);
+        }
+
+        [Authorize]
         public Task DeleteAsync(int id)
         {
             var actor = this.User.Identity.Name;
@@ -127,6 +136,24 @@
                 userId);
 
             await this.articleService.ModifyAsync(actor, article);
+        }
+
+        private async Task NewPutAsyncWith(PutArticleViewModel putArticle)
+        {
+            var userId = (await this.Repositories.Articles.FindAsync(
+                new Keys<int>(putArticle.Id))).UserId;
+
+            var article = new Article(
+                putArticle.Id,
+                putArticle.Provider,
+                putArticle.Guid,
+                putArticle.Subject,
+                putArticle.Body,
+                putArticle.Date,
+                putArticle.Url,
+                userId);
+
+            await this.updateCommand.ExecuteAsync(article);
         }
     }
 }

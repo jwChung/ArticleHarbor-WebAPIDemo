@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http;
     using DomainModel;
@@ -96,6 +97,43 @@
         public void PutAsyncHasAuthorizeAttribute()
         {
             var method = this.Methods.Select(x => x.PutAsync(null));
+            Assert.NotNull(method.GetCustomAttribute<AuthorizeAttribute>());
+        }
+
+        [Test]
+        public void NewPutAsyncCorrectlyUpdatesArticle(
+            ArticlesController sut,
+            PutArticleViewModel putArticle,
+            Article article)
+        {
+            // Fixture setup
+            sut.Repositories.Articles.Of(x => x.FindAsync(
+                new Keys<int>(putArticle.Id)) == Task.FromResult(article));
+
+            var articleLikeness = putArticle.AsSource().OfLikeness<Article>()
+                .With(x => x.UserId).EqualsWhen((p, a) => a.UserId == article.UserId);
+
+            bool verifies = false;
+            var task = Task.Run<IModelCommand<IEnumerable<IModel>>>(() =>
+            {
+                Thread.Sleep(300);
+                verifies = true;
+                return new NullCommand();
+            });
+            sut.UpdateCommand.Of(x => x.ExecuteAsync(
+                It.Is<Article>(p => articleLikeness.Equals(p))) == task);
+
+            // Exercise system
+            sut.NewPutAsync(putArticle).Wait();
+
+            // Verify outcome
+            Assert.True(verifies);
+        }
+
+        [Test]
+        public void NewPutAsyncHasAuthorizeAttribute()
+        {
+            var method = this.Methods.Select(x => x.NewPutAsync(null));
             Assert.NotNull(method.GetCustomAttribute<AuthorizeAttribute>());
         }
 
