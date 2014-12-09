@@ -78,6 +78,7 @@
         }
 
         [Authorize]
+        [NonAction]
         public Task PutAsync(PutArticleViewModel putArticle)
         {
             if (putArticle == null)
@@ -87,6 +88,7 @@
         }
 
         [Authorize]
+        [HttpPut]
         public Task NewPutAsync(PutArticleViewModel putArticle)
         {
             if (putArticle == null)
