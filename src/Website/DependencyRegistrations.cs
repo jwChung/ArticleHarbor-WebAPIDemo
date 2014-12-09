@@ -1,6 +1,7 @@
 namespace ArticleHarbor.Website
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
     using System.Security.Principal;
@@ -14,7 +15,6 @@ namespace ArticleHarbor.Website
     using DomainModel.Services;
     using Jwc.Funz;
     using WebApiPresentationModel.Controllers;
-    using Article = DomainModel.Models.Article;
     using Keyword = DomainModel.Models.Keyword;
 
     public class DependencyRegistrations : IContainerVisitor<object>
@@ -113,29 +113,60 @@ namespace ArticleHarbor.Website
                 .ReusedWithinContainer();
 
             container.Register(
-                c => new InsertConfirmableCommand(c.Resolve<IPrincipal>()))
+                c => new InsertConfirmableCommand(
+                    c.Resolve<IPrincipal>()))
                 .ReusedWithinContainer();
 
             container.Register(
-                c => new InsertCommand(
+                c => new UpdateConfirmableCommand(
                     c.Resolve<IRepositories>(),
-                    new RelayKeywordCommand(
-                        new InsertCommand(
-                            c.Resolve<IRepositories>(),
-                            c.Resolve<NullCommand>(),
-                            new IModel[0]),
-                        KoreanNounExtractor.Execute),
-                    new IModel[0]))
+                    c.Resolve<IPrincipal>()))
                 .ReusedWithinContainer();
-            
-            // Presentation controllers
+
+            container.Register(
+                c => new UpdateKeywordsCondition(
+                    c.Resolve<IRepositories>()))
+                .ReusedWithinContainer();
+
+            container.Register(
+                c => new DeleteKeywordsCommand(
+                    c.Resolve<IRepositories>()))
+                .ReusedWithinContainer();
+
+            container.Register(
+               c => new UpdateCommand(
+                   c.Resolve<IRepositories>()))
+               .ReusedWithinContainer();
+
+           // Presentation controllers
             container.Register(
                 c => new ArticlesController(
                     c.Resolve<IArticleService>(),
-                    c.Resolve<IRepository<Keys<int>, Article>>(),
+                    c.Resolve<IRepositories>(),
                     new CompositeEnumerableCommand<IModel>(
                         c.Resolve<InsertConfirmableCommand>(),
-                        c.Resolve<InsertCommand>())))
+                        new InsertCommand(
+                            c.Resolve<IRepositories>(),
+                            new RelayKeywordCommand(
+                                new InsertCommand(
+                                    c.Resolve<IRepositories>(),
+                                    c.Resolve<NullCommand>(),
+                                    new IModel[0]),
+                                KoreanNounExtractor.Execute),
+                            new IModel[0])),
+                    new CompositeEnumerableCommand<IModel>(
+                        c.Resolve<UpdateConfirmableCommand>(),
+                        c.Resolve<UpdateCommand>(),
+                        new ConditionalCommand<IEnumerable<IModel>>(
+                            c.Resolve<UpdateKeywordsCondition>(),
+                            new CompositeEnumerableCommand<IModel>(
+                                c.Resolve<DeleteKeywordsCommand>(),
+                                new RelayKeywordCommand(
+                                new InsertCommand(
+                                    c.Resolve<IRepositories>(),
+                                    c.Resolve<NullCommand>(),
+                                    new IModel[0]),
+                                KoreanNounExtractor.Execute))))))
                 .ReusedWithinContainer();
 
             container.Register(

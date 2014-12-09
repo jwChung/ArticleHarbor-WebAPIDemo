@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http;
     using DomainModel;
@@ -26,7 +27,7 @@
             ArticlesController sut,
             IEnumerable<Article> articles)
         {
-            sut.Repository.Of(x => x.SelectAsync() == Task.FromResult(articles));
+            sut.Repositories.Articles.Of(x => x.SelectAsync() == Task.FromResult(articles));
             var actual = await sut.GetAsync();
             Assert.Equal(articles, actual);
         }
@@ -71,25 +72,33 @@
         }
 
         [Test]
-        public async Task PutAsyncCorrectlyModifiesArticle(
+        public void PutAsyncCorrectlyUpdatesArticle(
             ArticlesController sut,
             PutArticleViewModel putArticle,
-            string actor,
-            string userId)
+            Article article)
         {
             // Fixture setup
-            sut.User.Identity.Of(x => x.Name == actor);
-            sut.ArticleService.Of(x => x.GetUserIdAsync(putArticle.Id) == Task.FromResult(userId));
+            sut.Repositories.Articles.Of(x => x.FindAsync(
+                new Keys<int>(putArticle.Id)) == Task.FromResult(article));
 
             var articleLikeness = putArticle.AsSource().OfLikeness<Article>()
-                .With(x => x.UserId).EqualsWhen((p, a) => a.UserId == userId);
+                .With(x => x.UserId).EqualsWhen((p, a) => a.UserId == article.UserId);
+
+            bool verifies = false;
+            var task = Task.Run<IModelCommand<IEnumerable<IModel>>>(() =>
+            {
+                Thread.Sleep(300);
+                verifies = true;
+                return new NullCommand();
+            });
+            sut.UpdateCommand.Of(x => x.ExecuteAsync(
+                It.Is<Article>(p => articleLikeness.Equals(p))) == task);
 
             // Exercise system
-            await sut.PutAsync(putArticle);
+            sut.PutAsync(putArticle).Wait();
 
             // Verify outcome
-            sut.ArticleService.ToMock().Verify(
-                x => x.ModifyAsync(actor, It.Is<Article>(p => articleLikeness.Equals(p))));
+            Assert.True(verifies);
         }
 
         [Test]
