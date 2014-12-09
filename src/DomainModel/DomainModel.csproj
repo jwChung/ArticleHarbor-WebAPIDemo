@@ -89,7 +89,6 @@
     <Compile Include="Repositories\IRepositories.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Services\KeywordService.cs" />
-    <Compile Include="Services\AuthArticleService.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="EmptyDisposable.cs" />
     <Compile Include="GlobalSuppressions.cs" />

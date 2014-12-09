@@ -124,7 +124,6 @@
     <Compile Include="Models\UpdateConfirmableCommandTest.cs" />
     <Compile Include="Models\UpdateKeywordsConditionTest.cs" />
     <Compile Include="Services\KeywordServiceTest.cs" />
-    <Compile Include="Services\AuthArticleServiceTest.cs" />
     <Compile Include="Models\ArticleTest.cs" />
     <Compile Include="Models\KeywordTest.cs" />
     <Compile Include="AssemblyTest.cs" />
