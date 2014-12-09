@@ -24,7 +24,8 @@
         [Test]
         public void SqlTextIsCorrect(EqualPredicate sut)
         {
-            var expected = string.Format("{0} = @{0}", sut.ColumnName);
+            var parameter = sut.Parameters.Single();
+            var expected = string.Format("{0} = {1}", sut.ColumnName, parameter.Name);
             var actual = sut.SqlText;
             Assert.Equal(expected, actual);
         }
@@ -33,7 +34,17 @@
         public void ParametersIsCorrect(EqualPredicate sut)
         {
             var actual = sut.Parameters.Single();
-            Assert.Equal(new Parameter("@" + sut.ColumnName, sut.Value), actual);
+
+            Assert.True(actual.Name.StartsWith("@" + sut.ColumnName));
+            Assert.DoesNotThrow(() => Guid.Parse(actual.Name.Remove(0, sut.ColumnName.Length + 1)));
+            Assert.Equal(sut.Value, actual.Value);
+        }
+
+        [Test]
+        public void ParametersReturnsAlwaysSameValue(EqualPredicate sut)
+        {
+            var actual = sut.Parameters;
+            Assert.Equal(sut.Parameters, actual);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()

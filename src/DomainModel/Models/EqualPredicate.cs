@@ -2,11 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class EqualPredicate : IPredicate
     {
         private readonly string columnName;
         private readonly object value;
+        private readonly IParameter parameter;
         
         public EqualPredicate(string columnName, object value)
         {
@@ -22,6 +24,9 @@
 
             this.columnName = columnName;
             this.value = value;
+            this.parameter = new Parameter(
+                "@" + this.columnName + Guid.NewGuid().ToString("N"),
+                this.value);
         }
 
         public string ColumnName
@@ -36,12 +41,12 @@
 
         public string SqlText
         {
-            get { return this.columnName + " = @" + this.columnName; }
+            get { return this.columnName + " = " + this.parameter.Name; }
         }
 
         public IEnumerable<IParameter> Parameters
         {
-            get { yield return new Parameter("@" + this.columnName, this.value); }
+            get { yield return this.parameter; }
         }
     }
 }
