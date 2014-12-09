@@ -141,6 +141,7 @@
     <Compile Include="TestAttribute.cs" />
     <Compile Include="IdiomaticTest.cs" />
     <Compile Include="Models\UserTest.cs" />
+    <Compile Include="TypeFavoringConstructorQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
