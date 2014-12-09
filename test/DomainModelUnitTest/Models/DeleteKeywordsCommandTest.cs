@@ -29,23 +29,16 @@
             DeleteKeywordsCommand sut,
             Article article)
         {
-            var likeness = new EqualPredicate("articleId", article.Id).AsSource()
+            var likeness = new EqualPredicate("ArticleId", article.Id).AsSource()
                 .OfLikeness<EqualPredicate>()
                 .Without(x => x.SqlText)
                 .Without(x => x.Parameters);
-            bool verifies = false;
-            var task = Task.Run(() =>
-            {
-                Thread.Sleep(300);
-                verifies = true;
-            });
-            sut.Repositories.Keywords.Of(
-                x => x.ExecuteDeleteCommandAsync(It.Is<IPredicate>(p => likeness.Equals(p))) == task);
-
+            
             var actual = sut.ExecuteAsync(article).Result;
 
             Assert.Equal(sut, actual);
-            Assert.True(verifies);
+            sut.Repositories.Keywords.ToMock().Verify(
+                x => x.ExecuteDeleteCommandAsync(It.Is<IPredicate>(p => likeness.Equals(p))));
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()

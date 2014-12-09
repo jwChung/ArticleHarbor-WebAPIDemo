@@ -38,7 +38,7 @@
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Article article)
         {
             await this.repositories.Keywords.ExecuteDeleteCommandAsync(
-                new EqualPredicate("articleId", article.Id));
+                new EqualPredicate("ArticleId", article.Id));
 
             return this;
         }
