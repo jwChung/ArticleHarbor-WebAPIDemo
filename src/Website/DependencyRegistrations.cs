@@ -80,19 +80,6 @@ namespace ArticleHarbor.Website
                 .ReusedWithinContainer();
 
             // Domain services
-            container.Register<IAuthService>(
-                c => new AuthService(
-                    c.Resolve<IUserRepository>(),
-                    new EmptyDisposable()))
-                .ReusedWithinContainer();
-
-            container.Register<IKeywordService>(
-                c => new KeywordService(
-                    c.Resolve<IKeywordRepository>(),
-                    c.Resolve<IArticleRepository>(), 
-                    KoreanNounExtractor.Execute))
-                .ReusedWithinContainer();
-
             container.Register<IBookmarkService>(
                 c => new BookmarkService(
                     c.Resolve<IBookmarkRepository>(),
