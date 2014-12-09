@@ -59,6 +59,26 @@
             Assert.True(verifies);
         }
 
+        [Test]
+        public void ExecuteAsyncKeywordCorrectlyDeletes(
+            DeleteCommand sut,
+            Keyword keyword)
+        {
+            bool verifies = false;
+            var task = Task.Run(() =>
+            {
+                Thread.Sleep(300);
+                verifies = true;
+            });
+            sut.Repositories.Keywords.Of(x => x.DeleteAsync(
+                (Keys<int, string>)keyword.GetKeys()) == task);
+
+            var actual = sut.ExecuteAsync(keyword).Result;
+
+            Assert.Equal(actual, sut);
+            Assert.True(verifies);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.Value);
