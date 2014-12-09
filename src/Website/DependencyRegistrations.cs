@@ -72,7 +72,11 @@ namespace ArticleHarbor.Website
                 .ReusedWithinContainer();
 
             container.Register<IRepositories>(
-                c => new Repositories(c.Resolve<ArticleHarborDbContext>()))
+                c =>
+                {
+                    c.Resolve<IUnitOfWork>();
+                    return new Repositories(c.Resolve<ArticleHarborDbContext>());
+                })
                 .ReusedWithinContainer();
 
             container.Register(
