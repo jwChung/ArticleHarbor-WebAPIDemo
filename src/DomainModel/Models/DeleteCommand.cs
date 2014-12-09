@@ -35,6 +35,20 @@
             return this.ExecuteAsyncWith(user);
         }
 
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
+        {
+            if (article == null)
+                throw new ArgumentNullException("article");
+
+            return this.ExecuteAsyncWith(article);
+        }
+
+        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Article article)
+        {
+            await this.Repositories.Articles.DeleteAsync(new Keys<int>(article.Id));
+            return this;
+        }
+
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(User user)
         {
             await this.Repositories.Users.DeleteAsync(new Keys<string>(user.Id));

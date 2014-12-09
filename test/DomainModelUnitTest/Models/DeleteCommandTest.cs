@@ -40,6 +40,25 @@
             Assert.True(verifies);
         }
 
+        [Test]
+        public void ExecuteAsyncArticleCorrectlyDeletes(
+            DeleteCommand sut,
+            Article article)
+        {
+            bool verifies = false;
+            var task = Task.Run(() =>
+            {
+                Thread.Sleep(300);
+                verifies = true;
+            });
+            sut.Repositories.Articles.Of(x => x.DeleteAsync(new Keys<int>(article.Id)) == task);
+
+            var actual = sut.ExecuteAsync(article).Result;
+
+            Assert.Equal(actual, sut);
+            Assert.True(verifies);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.Value);
