@@ -6,7 +6,7 @@
     {
         public override IEnumerable<IModel> Value
         {
-            get { throw new System.NotImplementedException(); }
+            get { yield break; }
         }
     }
 }
