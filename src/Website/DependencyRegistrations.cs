@@ -152,7 +152,6 @@ namespace ArticleHarbor.Website
            // Presentation controllers
             container.Register(
                 c => new ArticlesController(
-                    c.Resolve<IArticleService>(),
                     c.Resolve<IRepositories>(),
                     new CompositeEnumerableCommand<IModel>(
                         c.Resolve<InsertConfirmableCommand>(),
@@ -173,12 +172,12 @@ namespace ArticleHarbor.Website
                             new CompositeEnumerableCommand<IModel>(
                                 c.Resolve<DeleteKeywordsCommand>(),
                                 new RelayKeywordCommand(
-                                new InsertCommand(
-                                    c.Resolve<IRepositories>(),
-                                    c.Resolve<NullCommand>(),
-                                    new IModel[0]),
-                                KoreanNounExtractor.Execute)))),
-                     new CompositeEnumerableCommand<IModel>(
+                                    new InsertCommand(
+                                        c.Resolve<IRepositories>(),
+                                        c.Resolve<NullCommand>(),
+                                        new IModel[0]),
+                                    KoreanNounExtractor.Execute)))),
+                    new CompositeEnumerableCommand<IModel>(
                         c.Resolve<DeleteConfirmableCommand>(),
                         c.Resolve<DeleteCommand>())))
                 .ReusedWithinContainer();

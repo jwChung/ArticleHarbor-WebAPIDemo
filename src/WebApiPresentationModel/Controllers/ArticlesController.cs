@@ -8,27 +8,21 @@
     using DomainModel;
     using DomainModel.Models;
     using DomainModel.Repositories;
-    using DomainModel.Services;
     using Models;
 
     public class ArticlesController : ApiController
     {
-        private readonly IArticleService articleService;
         private readonly IRepositories repositories;
         private readonly IModelCommand<IEnumerable<IModel>> insertCommand;
         private readonly IModelCommand<IEnumerable<IModel>> updateCommand;
         private readonly IModelCommand<IEnumerable<IModel>> deleteCommand;
 
         public ArticlesController(
-            IArticleService articleService,
             IRepositories repositories,
             IModelCommand<IEnumerable<IModel>> insertCommand,
             IModelCommand<IEnumerable<IModel>> updateCommand,
             IModelCommand<IEnumerable<IModel>> deleteCommand)
         {
-            if (articleService == null)
-                throw new ArgumentNullException("articleService");
-
             if (repositories == null)
                 throw new ArgumentNullException("repositories");
 
@@ -41,16 +35,10 @@
             if (deleteCommand == null)
                 throw new ArgumentNullException("deleteCommand");
 
-            this.articleService = articleService;
             this.repositories = repositories;
             this.insertCommand = insertCommand;
             this.updateCommand = updateCommand;
             this.deleteCommand = deleteCommand;
-        }
-
-        public IArticleService ArticleService
-        {
-            get { return this.articleService; }
         }
 
         public IModelCommand<IEnumerable<IModel>> InsertCommand
