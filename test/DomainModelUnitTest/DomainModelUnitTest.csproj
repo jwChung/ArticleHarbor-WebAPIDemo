@@ -110,6 +110,7 @@
     <Compile Include="Models\DeleteCommandTest.cs" />
     <Compile Include="Models\DeleteConfirmableCommandTest.cs" />
     <Compile Include="Models\DeleteKeywordsCommandTest.cs" />
+    <Compile Include="Models\InClausePredicateTest.cs" />
     <Compile Include="Models\InsertConfirmableCommandTest.cs" />
     <Compile Include="Models\CompositeModelTest.cs" />
     <Compile Include="Models\EqualPredicateTest.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="TestAttribute.cs" />
     <Compile Include="IdiomaticTest.cs" />
     <Compile Include="Models\UserTest.cs" />
+    <Compile Include="TypeFavoringConstructorQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
