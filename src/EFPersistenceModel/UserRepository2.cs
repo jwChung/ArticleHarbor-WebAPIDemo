@@ -19,6 +19,14 @@
             this.context = context;
         }
 
+        public override Task<User> FindAsync(Keys<string> keys)
+        {
+            if (keys == null)
+                throw new ArgumentNullException("keys");
+
+            return this.FinaAsyncWith(keys);
+        }
+
         public override Task<User> ConvertToModelAsync(EFDataAccess.User persistence)
         {
             if (persistence == null)
@@ -33,6 +41,13 @@
                 throw new ArgumentNullException("model");
 
             throw new NotImplementedException();
+        }
+
+        private async Task<User> FinaAsyncWith(Keys<string> keys)
+        {
+            var users = await this.ExecuteSelectCommandAsync(
+                new EqualPredicate("UserName", keys.Single()));
+            return users.Single();
         }
 
         private async Task<User> ConvertToModelAsyncWith(EFDataAccess.User persistence)

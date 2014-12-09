@@ -33,7 +33,7 @@
         [Test]
         public void ConvertToModelAsyncWithIncorrectUserIdThrows(
             UserRepository2 sut,
-             EFDataAccess.User persistence)
+            EFDataAccess.User persistence)
         {
             var e = Assert.Throws<AggregateException>(() => sut.ConvertToModelAsync(persistence).Result);
             Assert.IsType<ArgumentException>(e.InnerException);
@@ -68,6 +68,13 @@
             var predicate = new EqualPredicate("username", "user1");
             var actual = sut.ExecuteSelectCommandAsync(predicate).Result;
             Assert.Equal("user1", actual.Single().Id);
+        }
+
+        [Test]
+        public void FindAsyncReturnsCorrectUser(UserRepository2 sut)
+        {
+            var actual = sut.FindAsync(new Keys<string>("User1")).Result;
+            Assert.Equal("user1", actual.Id);
         }
     }
 }
