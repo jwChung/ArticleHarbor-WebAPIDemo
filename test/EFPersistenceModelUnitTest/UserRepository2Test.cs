@@ -65,7 +65,7 @@
         [Test]
         public void ExecuteSelectCommandAsyncReturnsCorrectResult(UserRepository2 sut)
         {
-            var predicate = new EqualPredicate("@username", "user1");
+            var predicate = new EqualPredicate("username", "user1");
             var actual = sut.ExecuteSelectCommandAsync(predicate).Result;
             Assert.Equal("user1", actual.Single().Id);
         }
