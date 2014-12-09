@@ -15,7 +15,6 @@
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.SqlText);
-            yield return this.Properties.Select(x => x.Parameters);
         }
     }
 }
