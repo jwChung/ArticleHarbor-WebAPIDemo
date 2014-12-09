@@ -61,6 +61,7 @@
     <Compile Include="Models\CompositeEnumerableCommand.cs" />
     <Compile Include="Models\CompositeModelCommand.cs" />
     <Compile Include="Models\ConditionalCommand.cs" />
+    <Compile Include="Models\DeleteConfirmableCommand.cs" />
     <Compile Include="Models\DeleteKeywordsCommand.cs" />
     <Compile Include="Models\IModelCondition.cs" />
     <Compile Include="Models\InsertConfirmableCommand.cs" />
