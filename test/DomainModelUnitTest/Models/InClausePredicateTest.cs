@@ -35,7 +35,8 @@
         }
 
         [Test]
-        public void ParametersIsCorrect(InClausePredicate sut)
+        public void ParametersIsCorrectWhenInitializedWithArray(
+            [FavorArrays] InClausePredicate sut)
         {
             var actual = sut.Parameters;
 
@@ -48,7 +49,30 @@
         }
 
         [Test]
-        public void ParametersReturnsAlwaysSameValue(InClausePredicate sut)
+        public void ParametersIsCorrectWhenInitializedWithEnumerable(
+            [FavorEnumerables] InClausePredicate sut)
+        {
+            var actual = sut.Parameters;
+
+            Assert.Equal(sut.ParameterValues, actual.Select(x => x.Value));
+            Assert.DoesNotThrow(() => actual.Select(x =>
+            {
+                Assert.True(x.Name.StartsWith("@" + sut.ColumnName));
+                return Guid.Parse(x.Name.Remove(0, sut.ColumnName.Length + 1));
+            }).ToArray());
+        }
+
+        [Test]
+        public void ParametersReturnsAlwaysSameValueWhenInitializedWithArray(
+            InClausePredicate sut)
+        {
+            var actual = sut.Parameters;
+            Assert.Equal(sut.Parameters, actual);
+        }
+
+        [Test]
+        public void ParametersReturnsAlwaysSameValueWhenInitializedWithEnumerable(
+            [FavorEnumerables] InClausePredicate sut)
         {
             var actual = sut.Parameters;
             Assert.Equal(sut.Parameters, actual);

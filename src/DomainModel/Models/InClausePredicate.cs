@@ -8,10 +8,15 @@
     public class InClausePredicate : IPredicate
     {
         private readonly string columnName;
-        private readonly object[] parameterValues;
+        private readonly IEnumerable<object> parameterValues;
         private readonly IEnumerable<IParameter> parameters;
 
         public InClausePredicate(string columnName, params object[] parameterValues)
+            : this(columnName, parameterValues.AsEnumerable())
+        {
+        }
+
+        public InClausePredicate(string columnName, IEnumerable<object> parameterValues)
         {
             if (columnName == null)
                 throw new ArgumentNullException("columnName");
@@ -34,7 +39,7 @@
                     CultureInfo.CurrentCulture,
                     "{0} IN ({1})",
                     this.columnName,
-                    string.Join(", ", this.Parameters.Select(p => p.Name)));
+                    string.Join(", ", this.parameters.Select(p => p.Name)));
             }
         }
 
@@ -50,7 +55,7 @@
 
         public IEnumerable<object> ParameterValues
         {
-            get { return this.parameters.Select(x => x.Value); }
+            get { return this.parameterValues; }
         }
     }
 }
