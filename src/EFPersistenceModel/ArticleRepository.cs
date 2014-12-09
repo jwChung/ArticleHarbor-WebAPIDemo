@@ -108,7 +108,7 @@
 
         private async Task<string> GetUserId(DomainArticle article)
         {
-            var persistenceUser = await this.context.UserManager.FindByNameAsync(article.UserId);
+            var persistenceUser = await this.context.UserManager.FindByIdAsync(article.UserId);
             if (persistenceUser == null)
                 throw new ArgumentException(string.Format(
                     CultureInfo.CurrentCulture,

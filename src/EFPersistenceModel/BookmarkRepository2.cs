@@ -2,7 +2,6 @@
 {
     using System;
     using System.Data.Entity;
-    using System.Globalization;
     using System.Threading.Tasks;
     using DomainModel.Models;
     using EFDataAccess;
@@ -25,7 +24,8 @@
             if (persistence == null)
                 throw new ArgumentNullException("persistence");
 
-            return this.ConvertToModelAsyncWith(persistence);
+            var bookmark = new Bookmark(persistence.UserId, persistence.ArticleId);
+            return Task.FromResult(bookmark);
         }
 
         public override Task<EFDataAccess.Bookmark> ConvertToPersistenceAsync(Bookmark model)
@@ -33,39 +33,12 @@
             if (model == null)
                 throw new ArgumentNullException("model");
 
-            return this.ConvertToPersistenceAsyncWith(model);
-        }
-
-        private async Task<Bookmark> ConvertToModelAsyncWith(EFDataAccess.Bookmark persistence)
-        {
-            var user = await this.context.UserManager.FindByIdAsync(persistence.UserId);
-            if (user == null)
-                throw new ArgumentException(
-                    string.Format(
-                        CultureInfo.CurrentCulture,
-                        "There is no user matched with the id '{0}'.",
-                        persistence.UserId),
-                    "persistence");
-
-            return new Bookmark(user.UserName, persistence.ArticleId);
-        }
-
-        private async Task<EFDataAccess.Bookmark> ConvertToPersistenceAsyncWith(Bookmark model)
-        {
-            var user = await this.context.UserManager.FindByNameAsync(model.UserId);
-            if (user == null)
-                throw new ArgumentException(
-                    string.Format(
-                        CultureInfo.CurrentCulture,
-                        "There is no user matched with the name '{0}'.",
-                        model.UserId),
-                    "persistence");
-
-            return new EFDataAccess.Bookmark
+            var bookmark = new EFDataAccess.Bookmark
             {
                 ArticleId = model.ArticleId,
-                UserId = user.Id
+                UserId = model.UserId
             };
+            return Task.FromResult(bookmark);
         }
     }
 }
