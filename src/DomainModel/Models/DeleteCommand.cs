@@ -51,6 +51,14 @@
             return this.ExecuteAsyncWith(keyword);
         }
 
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Bookmark bookmark)
+        {
+            if (bookmark == null)
+                throw new ArgumentNullException("bookmark");
+
+            return this.ExecuteAsyncWith(bookmark);
+        }
+
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Article article)
         {
             await this.Repositories.Articles.DeleteAsync(new Keys<int>(article.Id));
@@ -67,6 +75,13 @@
         {
             await this.Repositories.Keywords.DeleteAsync(
                 new Keys<int, string>(keyword.ArticleId, keyword.Word));
+            return this;
+        }
+
+        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Bookmark bookmark)
+        {
+            await this.Repositories.Bookmarks.DeleteAsync(
+                new Keys<string, int>(bookmark.UserId, bookmark.ArticleId));
             return this;
         }
     }
