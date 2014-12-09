@@ -86,14 +86,6 @@ namespace ArticleHarbor.Website
                     new EmptyDisposable()))
                 .ReusedWithinContainer();
 
-            container.Register<IArticleService>(
-                c => new AuthArticleService(
-                    c.Resolve<IAuthService>(),
-                    new ArticleService(
-                        c.Resolve<IArticleRepository>(),
-                        c.Resolve<IKeywordService>())))
-                .ReusedWithinContainer();
-
             container.Register<IKeywordService>(
                 c => new KeywordService(
                     c.Resolve<IKeywordRepository>(),
