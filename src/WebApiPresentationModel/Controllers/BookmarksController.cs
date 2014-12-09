@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Http;
     using DomainModel.Models;
@@ -13,12 +14,12 @@
     {
         private readonly IBookmarkService bookmarkService;
         private readonly IRepositories repositories;
-        private readonly IModelCommand<IEnumerable<IModel>> selectArticlesCommand;
+        private readonly IModelCommand<IModel> selectArticlesCommand;
 
         public BookmarksController(
             IBookmarkService bookmarkService,
             IRepositories repositories,
-            IModelCommand<IEnumerable<IModel>> selectArticlesCommand)
+            IModelCommand<IModel> selectArticlesCommand)
         {
             if (bookmarkService == null)
                 throw new ArgumentNullException("bookmarkService");
@@ -44,16 +45,18 @@
             get { return this.repositories; }
         }
 
-        public IModelCommand<IEnumerable<IModel>> SelectArticlesCommand
+        public IModelCommand<IModel> SelectArticlesCommand
         {
             get { return this.selectArticlesCommand; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is action method.")]
-        public Task<IEnumerable<Article>> GetAsync()
+        public async Task<IEnumerable<Article>> GetAsync()
         {
-            var actor = this.User.Identity.Name;
-            return this.bookmarkService.GetAsync(actor);
+            var userId = this.User.Identity.Name;
+            var user = await this.repositories.Users.FindAsync(new Keys<string>(userId));
+
+            return (await user.ExecuteAsync(this.selectArticlesCommand)).Cast<Article>();
         }
 
         public Task PostAsync(int id)

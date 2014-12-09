@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using System.Web.Http;
     using DomainModel.Models;
+    using Moq;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 
@@ -27,10 +28,14 @@
         public void GetAsyncReturnsCorrectResult(
             BookmarksController sut,
             string userId,
+            User user,
             IEnumerable<Article> articles)
         {
             sut.User.Identity.Of(x => x.Name == userId);
-            sut.BookmarkService.Of(x => x.GetAsync(userId) == Task.FromResult(articles));
+            sut.Repositories.Users.Of(
+                x => x.FindAsync(new Keys<string>(userId)) == Task.FromResult(user));
+            sut.SelectArticlesCommand.Of(
+                x => x.ExecuteAsync(user) == Task.FromResult<IEnumerable<IModel>>(articles));
 
             var actual = sut.GetAsync().Result;
 
