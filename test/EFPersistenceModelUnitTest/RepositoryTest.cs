@@ -197,19 +197,19 @@
         {
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
-                var actual = sut.ExecuteSelectCommandAsync(new EqualPredicate("@id", 1)).Result;
+                var actual = sut.ExecuteSelectCommandAsync(new EqualPredicate("id", 1)).Result;
                 Assert.Equal(1, actual.Single().Id);
                 Assert.Empty(sut.DbSet.Local);
             });
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
-                var actual = sut.ExecuteSelectCommandAsync(new EqualPredicate("@Guid", "1")).Result;
+                var actual = sut.ExecuteSelectCommandAsync(new EqualPredicate("Guid", "1")).Result;
                 Assert.Equal(1, actual.Single().Id);
                 Assert.Empty(sut.DbSet.Local);
             });
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
-                var actual = sut.ExecuteSelectCommandAsync(new EqualPredicate("@body", "Body 1")).Result;
+                var actual = sut.ExecuteSelectCommandAsync(new EqualPredicate("body", "Body 1")).Result;
                 Assert.Equal(1, actual.Single().Id);
                 Assert.Empty(sut.DbSet.Local);
             });
@@ -308,7 +308,7 @@
                 {
                     try
                     {
-                        sut.ExecuteDeleteCommandAsync(new EqualPredicate("@articleId", 1)).Wait();
+                        sut.ExecuteDeleteCommandAsync(new EqualPredicate("articleId", 1)).Wait();
                         Assert.Equal(2, sut.DbSet.AsNoTracking().Count());
                         Assert.Empty(sut.DbSet.Local);
                     }
@@ -323,7 +323,7 @@
                 {
                     try
                     {
-                        sut.ExecuteDeleteCommandAsync(new EqualPredicate("@word", "worda1")).Wait();
+                        sut.ExecuteDeleteCommandAsync(new EqualPredicate("word", "worda1")).Wait();
                         Assert.Equal(2, sut.DbSet.AsNoTracking().Count());
                         Assert.Empty(sut.DbSet.Local);
                     }

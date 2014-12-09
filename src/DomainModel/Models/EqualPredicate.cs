@@ -35,12 +35,12 @@
 
         public string SqlText
         {
-            get { return this.name.Remove(0, 1) + " = " + this.name; }
+            get { return this.name + " = @" + this.name; }
         }
 
         public IEnumerable<IParameter> Parameters
         {
-            get { yield return new Parameter(this.name, this.value); }
+            get { yield return new Parameter("@" + this.name, this.value); }
         }
     }
 }

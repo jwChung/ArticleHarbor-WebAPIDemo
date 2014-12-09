@@ -22,20 +22,18 @@
         }
 
         [Test]
-        public void ConditionIsCorrect(object value)
+        public void SqlTextIsCorrect(EqualPredicate sut)
         {
-            var sut = new EqualPredicate("@foo", value);
-            var expected = "foo = @foo";
+            var expected = string.Format("{0} = @{0}", sut.Name);
             var actual = sut.SqlText;
             Assert.Equal(expected, actual);
         }
 
         [Test]
-        public void ParametersIsCorrect(object value)
+        public void ParametersIsCorrect(EqualPredicate sut)
         {
-            var sut = new EqualPredicate("@foo", value);
             var actual = sut.Parameters.Single();
-            Assert.Equal(new Parameter(sut.Name, sut.Value), actual);
+            Assert.Equal(new Parameter("@" + sut.Name, sut.Value), actual);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
