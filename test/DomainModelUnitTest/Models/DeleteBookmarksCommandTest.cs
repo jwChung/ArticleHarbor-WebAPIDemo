@@ -11,23 +11,24 @@
         [Test]
         public void SutIsModelCommand(DeleteBookmarksCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
+            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
         }
 
+        [Test]
         public void ExecuteAsyncUserDeletesBookmarksRelatedWithUser(
             DeleteBookmarksCommand sut,
             User user)
         {
-            ////var likeness = new EqualPredicate("UserId", user.Id).AsSource()
-            ////    .OfLikeness<EqualPredicate>()
-            ////    .Without(x => x.SqlText)
-            ////    .Without(x => x.Parameters);
+            var likeness = new EqualPredicate("UserId", user.Id).AsSource()
+                .OfLikeness<EqualPredicate>()
+                .Without(x => x.SqlText)
+                .Without(x => x.Parameters);
 
-            ////var actual = sut.ExecuteAsync(user).Result;
+            var actual = sut.ExecuteAsync(user).Result;
 
-            ////Assert.Equal(sut, actual);
-            ////sut.Repositories.Bookmarks.ToMock().Verify(
-            ////    x => x.ExecuteDeleteCommandAsync(It.Is<IPredicate>(p => likeness.Equals(p))));
+            Assert.Empty(actual);
+            sut.Repositories.Bookmarks.ToMock().Verify(
+                x => x.ExecuteDeleteCommandAsync(It.Is<IPredicate>(p => likeness.Equals(p))));
         }
 
         [Test]
@@ -35,16 +36,16 @@
             DeleteBookmarksCommand sut,
             Article article)
         {
-            ////var likeness = new EqualPredicate("ArticleId", article.Id).AsSource()
-            ////    .OfLikeness<EqualPredicate>()
-            ////    .Without(x => x.SqlText)
-            ////    .Without(x => x.Parameters);
+            var likeness = new EqualPredicate("ArticleId", article.Id).AsSource()
+                .OfLikeness<EqualPredicate>()
+                .Without(x => x.SqlText)
+                .Without(x => x.Parameters);
 
-            ////var actual = sut.ExecuteAsync(article).Result;
+            var actual = sut.ExecuteAsync(article).Result;
 
-            ////Assert.Equal(sut, actual);
-            ////sut.Repositories.Bookmarks.ToMock().Verify(
-            ////    x => x.ExecuteDeleteCommandAsync(It.Is<IPredicate>(p => likeness.Equals(p))));
+            Assert.Empty(actual);
+            sut.Repositories.Bookmarks.ToMock().Verify(
+                x => x.ExecuteDeleteCommandAsync(It.Is<IPredicate>(p => likeness.Equals(p))));
         }
     }
 }

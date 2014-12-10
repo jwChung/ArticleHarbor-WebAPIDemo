@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Repositories;
 
@@ -24,38 +25,34 @@
 
         public override Task<IEnumerable<IModel>> ExecuteAsync(User user)
         {
-            ////if (user == null)
-            ////    throw new ArgumentNullException("user");
+            if (user == null)
+                throw new ArgumentNullException("user");
 
-            ////return this.ExecuteAsyncWith(user);
-            return null;
+            return this.ExecuteAsyncWith(user);
         }
 
         public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
         {
-            ////if (article == null)
-            ////    throw new ArgumentNullException("article");
+            if (article == null)
+                throw new ArgumentNullException("article");
 
-            ////return this.ExecuteAsyncWith(article);
-            return null;
+            return this.ExecuteAsyncWith(article);
         }
 
-        private Task<IEnumerable<IModel>> ExecuteAsyncWith(User user)
+        private async Task<IEnumerable<IModel>> ExecuteAsyncWith(User user)
         {
-            ////await this.repositories.Bookmarks.ExecuteDeleteCommandAsync(
-            ////    new EqualPredicate("UserId", user.Id));
+            await this.repositories.Bookmarks.ExecuteDeleteCommandAsync(
+                new EqualPredicate("UserId", user.Id));
 
-            ////return this;
-            return null;
+            return Enumerable.Empty<IModel>();
         }
 
-        private Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Article article)
+        private async Task<IEnumerable<IModel>> ExecuteAsyncWith(Article article)
         {
-            ////await this.repositories.Bookmarks.ExecuteDeleteCommandAsync(
-            ////    new EqualPredicate("ArticleId", article.Id));
+            await this.repositories.Bookmarks.ExecuteDeleteCommandAsync(
+                new EqualPredicate("ArticleId", article.Id));
 
-            ////return this;
-            return null;
+            return Enumerable.Empty<IModel>();
         }
     }
 }
