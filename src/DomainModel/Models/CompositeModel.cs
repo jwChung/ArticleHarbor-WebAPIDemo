@@ -29,21 +29,20 @@
 
         public Task<IEnumerable<TReturn>> ExecuteAsync<TReturn>(IModelCommand<TReturn> command)
         {
-            ////if (command == null)
-            ////    throw new ArgumentNullException("command");
+            if (command == null)
+                throw new ArgumentNullException("command");
 
-            ////return this.ExecuteAsyncWith(command);
-            return null;
+            return this.ExecuteAsyncWith(command);
         }
 
-        private Task<IEnumerable<TReturn>> ExecuteAsyncWith<TReturn>(
+        private async Task<IEnumerable<TReturn>> ExecuteAsyncWith<TReturn>(
             IModelCommand<TReturn> command)
         {
-            ////foreach (var model in this.Models)
-            ////    command = await model.ExecuteAsync(command);
+            var value = Enumerable.Empty<TReturn>();
+            foreach (var model in this.Models)
+                value = value.Concat(await model.ExecuteAsync(command));
 
-            ////return command;
-            return null;
+            return value;
         }
     }
 }
