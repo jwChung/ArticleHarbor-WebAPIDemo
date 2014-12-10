@@ -38,11 +38,10 @@
 
         public Task<IEnumerable<TReturn>> ExecuteAsync<TReturn>(IModelCommand<TReturn> command)
         {
-            ////if (command == null)
-            ////    throw new ArgumentNullException("command");
+            if (command == null)
+                throw new ArgumentNullException("command");
 
-            ////return command.ExecuteAsync(this);
-            return null;
+            return command.ExecuteAsync(this);
         }
     }
 }
