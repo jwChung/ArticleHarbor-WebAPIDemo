@@ -14,14 +14,14 @@
         [Test]
         public void SutIsModelCommand(RelayKeywordsCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
+            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
         }
 
         [Test]
         public void ExecuteAsyncArticleCorrectlyRelaysKeywords(
             Article article,
-            IEnumerable<string> words,
-            IModelCommand<IEnumerable<IModel>> newInnerCommand,
+            string[] words,
+            IEnumerable<IModel>[] values,
             IFixture fixture)
         {
             // Fixture setup
@@ -36,14 +36,14 @@
             var keywords = words.Select(
                 w => new Keyword(article.Id, w).AsSource().OfLikeness<Keyword>().CreateProxy());
 
-            ////sut.InnerCommand.Of(x => x.ExecuteAsync(keywords) == Task.FromResult(newInnerCommand));
+            keywords.Select((k, i) => sut.InnerCommand.Of(
+                x => x.ExecuteAsync(k) == Task.FromResult(values[i]))).ToArray();
 
             // Exercise system
             var actual = sut.ExecuteAsync(article).Result;
 
             // Verify outcome
-            var relayKeywordCommand = Assert.IsAssignableFrom<RelayKeywordsCommand>(actual);
-            Assert.Equal(newInnerCommand, relayKeywordCommand.InnerCommand);
+            Assert.Equal(values.SelectMany(x => x), actual);
         }
     }
 }

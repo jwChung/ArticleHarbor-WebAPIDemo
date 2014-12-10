@@ -7,11 +7,11 @@
 
     public class RelayKeywordsCommand : ModelCommand<IModel>
     {
-        private readonly IModelCommand<IEnumerable<IModel>> innerCommand;
+        private readonly IModelCommand<IModel> innerCommand;
         private readonly Func<string, IEnumerable<string>> nounExtractor;
 
         public RelayKeywordsCommand(
-            IModelCommand<IEnumerable<IModel>> innerCommand,
+            IModelCommand<IModel> innerCommand,
             Func<string, IEnumerable<string>> nounExtractor)
         {
             if (innerCommand == null)
@@ -24,7 +24,7 @@
             this.nounExtractor = nounExtractor;
         }
 
-        public IModelCommand<IEnumerable<IModel>> InnerCommand
+        public IModelCommand<IModel> InnerCommand
         {
             get { return this.innerCommand; }
         }
@@ -42,15 +42,17 @@
             return this.ExecuteAsyncWith(article);
         }
 
-        private Task<IEnumerable<IModel>> ExecuteAsyncWith(Article article)
+        private async Task<IEnumerable<IModel>> ExecuteAsyncWith(Article article)
         {
-            ////var keywords = this.nounExtractor(article.Subject)
-            ////    .Select(w => new Keyword(article.Id, w));
+            var keywords = this.nounExtractor(article.Subject)
+                .Select(w => new Keyword(article.Id, w));
 
-            ////var newInnerComand = await this.innerCommand.ExecuteAsync(keywords);
+            var values = Enumerable.Empty<IModel>();
 
-            ////return new RelayKeywordsCommand(newInnerComand, this.nounExtractor);
-            return null;
+            foreach (var keyword in keywords)
+                values = values.Concat(await this.innerCommand.ExecuteAsync(keyword));
+
+            return values;
         }
     }
 }
