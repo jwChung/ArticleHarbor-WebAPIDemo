@@ -7,6 +7,11 @@
     {
         private readonly IEnumerable<IPredicate> predicates;
 
+        public AndPredicate(params IPredicate[] predicates) 
+            : this((IEnumerable<IPredicate>)predicates)
+        {
+        }
+
         public AndPredicate(IEnumerable<IPredicate> predicates)
         {
             if (predicates == null)
