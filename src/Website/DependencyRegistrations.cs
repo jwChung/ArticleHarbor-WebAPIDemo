@@ -92,10 +92,6 @@ namespace ArticleHarbor.Website
 
             // Commands
             container.Register(
-                c => new NullCommand())
-                .ReusedWithinContainer();
-
-            container.Register(
                 c => new InsertConfirmableCommand(
                     c.Resolve<IPrincipal>()))
                 .ReusedWithinContainer();
@@ -141,31 +137,28 @@ namespace ArticleHarbor.Website
             container.Register(
                 c => new ArticlesController(
                     c.Resolve<IRepositories>(),
-                    new CompositeEnumerableCommand<IModel>(
+                    new CompositeCommand<IModel>(
                         c.Resolve<InsertConfirmableCommand>(),
                         new InsertCommand(
                             c.Resolve<IRepositories>(),
                             new RelayKeywordsCommand(
                                 new InsertCommand(
                                     c.Resolve<IRepositories>(),
-                                    c.Resolve<NullCommand>(),
-                                    new IModel[0]),
-                                KoreanNounExtractor.Execute),
-                            new IModel[0])),
-                    new CompositeEnumerableCommand<IModel>(
+                                    new ModelCommand<IModel>()),
+                                KoreanNounExtractor.Execute))),
+                    new CompositeCommand<IModel>(
                         c.Resolve<UpdateConfirmableCommand>(),
                         c.Resolve<UpdateCommand>(),
-                        new ConditionalCommand<IEnumerable<IModel>>(
+                        new ConditionalCommand<IModel>(
                             c.Resolve<UpdateKeywordsCondition>(),
-                            new CompositeEnumerableCommand<IModel>(
+                            new CompositeCommand<IModel>(
                                 c.Resolve<DeleteKeywordsCommand>(),
                                 new RelayKeywordsCommand(
                                     new InsertCommand(
                                         c.Resolve<IRepositories>(),
-                                        c.Resolve<NullCommand>(),
-                                        new IModel[0]),
+                                        new ModelCommand<IModel>()),
                                     KoreanNounExtractor.Execute)))),
-                    new CompositeEnumerableCommand<IModel>(
+                    new CompositeCommand<IModel>(
                         c.Resolve<DeleteConfirmableCommand>(),
                         c.Resolve<DeleteKeywordsCommand>(),
                         c.Resolve<DeleteBookmarksCommand>(),
