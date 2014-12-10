@@ -40,6 +40,25 @@
         }
 
         [Test]
+        public void FindAsyncWithApiKeyReturnsCorrectUser(UserManager sut)
+        {
+            var actual = sut.FindAsync(Guid.Parse("232494f5670943dfac807226449fe795")).Result;
+
+            Assert.Equal("user2", actual.Id);
+            Assert.Equal(Guid.Parse("232494f5670943dfac807226449fe795"), actual.ApiKey);
+            Assert.Equal(Role.Author, actual.Role);
+        }
+
+        [Test]
+        public void FindAsyncWithIncorrectApiKeyReturnsNullUser(
+            UserManager sut,
+            Guid apiKey)
+        {
+            var actual = sut.FindAsync(apiKey).Result;
+            Assert.Null(actual);
+        }
+
+        [Test]
         public void DisposeDiposesContext(UserManager sut)
         {
             sut.Dispose();

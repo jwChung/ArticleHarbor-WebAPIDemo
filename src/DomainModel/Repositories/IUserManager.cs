@@ -7,5 +7,7 @@ namespace ArticleHarbor.DomainModel.Repositories
     public interface IUserManager : IDisposable
     {
         Task<User> FindAsync(string id, string password);
+
+        Task<User> FindAsync(Guid apiKey);
     }
 }
