@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class ConditionalCommand<TReturn> : ModelCommand<TReturn>
@@ -35,78 +36,62 @@
 
         public override Task<IEnumerable<TReturn>> ExecuteAsync(User user)
         {
-            ////if (user == null)
-            ////    throw new ArgumentNullException("user");
+            if (user == null)
+                throw new ArgumentNullException("user");
 
-            ////return this.ExecuteAsyncWith(user);
-            return null;
+            return this.ExecuteAsyncWith(user);
         }
 
         public override Task<IEnumerable<TReturn>> ExecuteAsync(Article article)
         {
-            ////if (article == null)
-            ////    throw new ArgumentNullException("article");
+            if (article == null)
+                throw new ArgumentNullException("article");
 
-            ////return this.ExecuteAsyncWith(article);
-            return null;
+            return this.ExecuteAsyncWith(article);
         }
 
         public override Task<IEnumerable<TReturn>> ExecuteAsync(Keyword keyword)
         {
-            ////if (keyword == null)
-            ////    throw new ArgumentNullException("keyword");
+            if (keyword == null)
+                throw new ArgumentNullException("keyword");
 
-            ////return this.ExecuteAsyncWith(keyword);
-            return null;
+            return this.ExecuteAsyncWith(keyword);
         }
 
         public override Task<IEnumerable<TReturn>> ExecuteAsync(Bookmark bookmark)
         {
-            ////if (bookmark == null)
-            ////    throw new ArgumentNullException("bookmark");
+            if (bookmark == null)
+                throw new ArgumentNullException("bookmark");
 
-            ////return this.ExecuteAsyncWith(bookmark);
-            return null;
+            return this.ExecuteAsyncWith(bookmark);
         }
 
-        private Task<IEnumerable<TReturn>> ExecuteAsyncWith(User user)
+        private async Task<IEnumerable<TReturn>> ExecuteAsyncWith(User user)
         {
-            ////if (!await this.condition.CanExecuteAsync(user))
-            ////    return this;
-
-            ////var newInnerCommand = await this.innerCommand.ExecuteAsync(user);
-            ////return new ConditionalCommand<TReturn>(this.condition, newInnerCommand);
-            return null;
+            return await this.condition.CanExecuteAsync(user)
+                ? await this.innerCommand.ExecuteAsync(user)
+                : Enumerable.Empty<TReturn>();
         }
 
-        private Task<IEnumerable<TReturn>> ExecuteAsyncWith(Article article)
+        private async Task<IEnumerable<TReturn>> ExecuteAsyncWith(Article article)
         {
-            ////if (!await this.condition.CanExecuteAsync(article))
-            ////    return this;
-
-            ////var newInnerCommand = await this.innerCommand.ExecuteAsync(article);
-            ////return new ConditionalCommand<TReturn>(this.condition, newInnerCommand);
-            return null;
+             return await this.condition.CanExecuteAsync(article)
+                ? await this.innerCommand.ExecuteAsync(article)
+                : Enumerable.Empty<TReturn>();
         }
 
-        private Task<IEnumerable<TReturn>> ExecuteAsyncWith(Keyword keyword)
+        private async Task<IEnumerable<TReturn>> ExecuteAsyncWith(Keyword keyword)
         {
-            ////if (!await this.condition.CanExecuteAsync(keyword))
-            ////    return this;
-
-            ////var newInnerCommand = await this.innerCommand.ExecuteAsync(keyword);
-            ////return new ConditionalCommand<TReturn>(this.condition, newInnerCommand);
-            return null;
+             return await this.condition.CanExecuteAsync(keyword)
+                ? await this.innerCommand.ExecuteAsync(keyword)
+                : Enumerable.Empty<TReturn>();
         }
 
-        private Task<IEnumerable<TReturn>> ExecuteAsyncWith(Bookmark bookmark)
+        private async Task<IEnumerable<TReturn>> ExecuteAsyncWith(Bookmark bookmark)
         {
-            ////if (!await this.condition.CanExecuteAsync(bookmark))
-            ////    return this;
-
-            ////var newInnerCommand = await this.innerCommand.ExecuteAsync(bookmark);
-            ////return new ConditionalCommand<TReturn>(this.condition, newInnerCommand);
-            return null;
+             return await this.condition.CanExecuteAsync(bookmark)
+                ? await this.innerCommand.ExecuteAsync(bookmark)
+                : Enumerable.Empty<TReturn>();
         }
     }
 }
