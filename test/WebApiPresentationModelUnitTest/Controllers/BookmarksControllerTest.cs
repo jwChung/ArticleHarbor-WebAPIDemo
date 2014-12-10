@@ -69,7 +69,7 @@
 
             sut.DeleteAsync(articleId).Wait();
 
-            sut.BookmarkService.ToMock().Verify(x => x.RemoveAsync(bookmark));
+            sut.DeleteCommand.ToMock().Verify(x => x.ExecuteAsync(bookmark));
         }
     }
 }

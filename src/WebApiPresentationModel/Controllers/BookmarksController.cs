@@ -87,11 +87,10 @@
             await new Bookmark(userId, id).ExecuteAsync(this.insertCommand);
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            var actor = this.User.Identity.Name;
-            var bookmark = new Bookmark(actor, id);
-            return this.bookmarkService.RemoveAsync(bookmark);
+            var userId = this.User.Identity.Name;
+            await new Bookmark(userId, id).ExecuteAsync(this.deleteCommand);
         }
     }
 }
