@@ -174,7 +174,9 @@ namespace ArticleHarbor.Website
                 c => new BookmarksController(
                     c.Resolve<IBookmarkService>(),
                     c.Resolve<IRepositories>(),
-                    c.Resolve<SelectBookmarkedArticlesCommand>()))
+                    c.Resolve<SelectBookmarkedArticlesCommand>(),
+                    new ModelCommand<IModel>(),
+                    new ModelCommand<IModel>()))
                 .ReusedWithinContainer();
 
             return this;
