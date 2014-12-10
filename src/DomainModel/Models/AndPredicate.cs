@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class AndPredicate : IPredicate
     {
@@ -22,7 +23,7 @@
 
         public string SqlText
         {
-            get { throw new System.NotImplementedException(); }
+            get { return string.Join(" AND ", this.predicates.Select(p => p.SqlText)); }
         }
 
         public IEnumerable<IParameter> Parameters

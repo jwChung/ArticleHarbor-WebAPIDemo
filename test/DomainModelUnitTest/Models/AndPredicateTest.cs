@@ -1,7 +1,9 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
+    using Ploeh.AutoFixture.Xunit;
     using Xunit;
 
     public class AndPredicateTest : IdiomaticTest<AndPredicate>
@@ -10,6 +12,21 @@
         public void SutIsPredicate(AndPredicate sut)
         {
             Assert.IsAssignableFrom<IPredicate>(sut);
+        }
+
+        [Test]
+        public void SqlTextIsCorrect(
+            [Frozen] IEnumerable<IPredicate> predicates,
+            string[] sqlTexts,
+            [FavorEnumerables] AndPredicate sut)
+        {
+            Assert.Equal(predicates, sut.Predicates);
+            predicates.Select((p, i) => p.Of(x => x.SqlText == sqlTexts[i])).ToArray();
+            var expected = string.Join(" AND ", predicates.Select(p => p.SqlText));
+
+            var actual = sut.SqlText;
+
+            Assert.Equal(expected, actual);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
