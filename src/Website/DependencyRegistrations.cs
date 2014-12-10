@@ -133,6 +133,11 @@ namespace ArticleHarbor.Website
                    c.Resolve<IRepositories>()))
                .ReusedWithinContainer();
 
+            container.Register(
+               c => new SelectBookmarkedArticlesCommand(
+                   c.Resolve<IRepositories>()))
+               .ReusedWithinContainer();
+
            // Presentation controllers
             container.Register(
                 c => new ArticlesController(
@@ -166,7 +171,13 @@ namespace ArticleHarbor.Website
                 .ReusedWithinContainer();
 
             container.Register(
-                c => new BookmarksController(c.Resolve<IBookmarkService>()))
+                c => new BookmarksController(
+                    c.Resolve<IRepositories>(),
+                    c.Resolve<SelectBookmarkedArticlesCommand>(),
+                    new InsertCommand(
+                        c.Resolve<IRepositories>(),
+                        new ModelCommand<IModel>()),
+                    new ModelCommand<IModel>()))
                 .ReusedWithinContainer();
 
             return this;
