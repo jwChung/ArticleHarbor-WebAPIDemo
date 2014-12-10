@@ -6,23 +6,24 @@
     using System.Threading.Tasks;
     using DomainModel;
     using DomainModel.Models;
+    using DomainModel.Repositories;
     using DomainModel.Services;
 
     public class ApiKeyAuthenticationDispatcher : DelegatingHandler
     {
-        private readonly Func<IAuthService> authServiceFactory;
+        private readonly Func<IUserManager> userManagerFactory;
 
-        public ApiKeyAuthenticationDispatcher(Func<IAuthService> authServiceFactory)
+        public ApiKeyAuthenticationDispatcher(Func<IUserManager> userManagerFactory)
         {
-            if (authServiceFactory == null)
-                throw new ArgumentNullException("authServiceFactory");
+            if (userManagerFactory == null)
+                throw new ArgumentNullException("userManagerFactory");
 
-            this.authServiceFactory = authServiceFactory;
+            this.userManagerFactory = userManagerFactory;
         }
 
-        public Func<IAuthService> AuthServiceFactory
+        public Func<IUserManager> UserManagerFactory
         {
-            get { return this.authServiceFactory; }
+            get { return this.userManagerFactory; }
         }
 
         public Task<HttpResponseMessage> ExecuteAsync(
@@ -43,8 +44,8 @@
                 return await base.SendAsync(request, cancellationToken);
 
             User user = null;
-            using (var serviceFactory = this.authServiceFactory())
-                user = await serviceFactory.FindUserAsync(Guid.Parse(authentication.Parameter));
+            using (var serviceFactory = this.userManagerFactory())
+                user = await serviceFactory.FindAsync(Guid.Parse(authentication.Parameter));
 
             if (user != null)
                 request.GetRequestContext().Principal = new SimplePrincipal(user.Id, user.Role);
