@@ -1,16 +1,18 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
-    public class ConditionalCommand<TValue> : ModelCommand<TValue>
+    public class ConditionalCommand<TReturn> : ModelCommand<TReturn>
     {
         private readonly IModelCondition condition;
-        private readonly IModelCommand<TValue> innerCommand;
+        private readonly IModelCommand<TReturn> innerCommand;
 
         public ConditionalCommand(
             IModelCondition condition,
-            IModelCommand<TValue> innerCommand)
+            IModelCommand<TReturn> innerCommand)
         {
             if (condition == null)
                 throw new ArgumentNullException("condition");
@@ -27,17 +29,12 @@
             get { return this.condition; }
         }
 
-        public IModelCommand<TValue> InnerCommand
+        public IModelCommand<TReturn> InnerCommand
         {
             get { return this.innerCommand; }
         }
 
-        public override TValue Value
-        {
-            get { return this.innerCommand.Value; }
-        }
-
-        public override Task<IModelCommand<TValue>> ExecuteAsync(User user)
+        public override Task<IEnumerable<TReturn>> ExecuteAsync(User user)
         {
             if (user == null)
                 throw new ArgumentNullException("user");
@@ -45,7 +42,7 @@
             return this.ExecuteAsyncWith(user);
         }
 
-        public override Task<IModelCommand<TValue>> ExecuteAsync(Article article)
+        public override Task<IEnumerable<TReturn>> ExecuteAsync(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
@@ -53,7 +50,7 @@
             return this.ExecuteAsyncWith(article);
         }
 
-        public override Task<IModelCommand<TValue>> ExecuteAsync(Keyword keyword)
+        public override Task<IEnumerable<TReturn>> ExecuteAsync(Keyword keyword)
         {
             if (keyword == null)
                 throw new ArgumentNullException("keyword");
@@ -61,7 +58,7 @@
             return this.ExecuteAsyncWith(keyword);
         }
 
-        public override Task<IModelCommand<TValue>> ExecuteAsync(Bookmark bookmark)
+        public override Task<IEnumerable<TReturn>> ExecuteAsync(Bookmark bookmark)
         {
             if (bookmark == null)
                 throw new ArgumentNullException("bookmark");
@@ -69,40 +66,32 @@
             return this.ExecuteAsyncWith(bookmark);
         }
 
-        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(User user)
+        private async Task<IEnumerable<TReturn>> ExecuteAsyncWith(User user)
         {
-            if (!await this.condition.CanExecuteAsync(user))
-                return this;
-
-            var newInnerCommand = await this.innerCommand.ExecuteAsync(user);
-            return new ConditionalCommand<TValue>(this.condition, newInnerCommand);
+            return await this.condition.CanExecuteAsync(user)
+                ? await this.innerCommand.ExecuteAsync(user)
+                : Enumerable.Empty<TReturn>();
         }
 
-        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(Article article)
+        private async Task<IEnumerable<TReturn>> ExecuteAsyncWith(Article article)
         {
-            if (!await this.condition.CanExecuteAsync(article))
-                return this;
-
-            var newInnerCommand = await this.innerCommand.ExecuteAsync(article);
-            return new ConditionalCommand<TValue>(this.condition, newInnerCommand);
+             return await this.condition.CanExecuteAsync(article)
+                ? await this.innerCommand.ExecuteAsync(article)
+                : Enumerable.Empty<TReturn>();
         }
 
-        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(Keyword keyword)
+        private async Task<IEnumerable<TReturn>> ExecuteAsyncWith(Keyword keyword)
         {
-            if (!await this.condition.CanExecuteAsync(keyword))
-                return this;
-
-            var newInnerCommand = await this.innerCommand.ExecuteAsync(keyword);
-            return new ConditionalCommand<TValue>(this.condition, newInnerCommand);
+             return await this.condition.CanExecuteAsync(keyword)
+                ? await this.innerCommand.ExecuteAsync(keyword)
+                : Enumerable.Empty<TReturn>();
         }
 
-        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(Bookmark bookmark)
+        private async Task<IEnumerable<TReturn>> ExecuteAsyncWith(Bookmark bookmark)
         {
-            if (!await this.condition.CanExecuteAsync(bookmark))
-                return this;
-
-            var newInnerCommand = await this.innerCommand.ExecuteAsync(bookmark);
-            return new ConditionalCommand<TValue>(this.condition, newInnerCommand);
+             return await this.condition.CanExecuteAsync(bookmark)
+                ? await this.innerCommand.ExecuteAsync(bookmark)
+                : Enumerable.Empty<TReturn>();
         }
     }
 }

@@ -12,14 +12,7 @@
         [Test]
         public void SutIsModelCommand(InsertConfirmableCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
-        }
-
-        [Test]
-        public void ValueIsEmpty(InsertConfirmableCommand sut)
-        {
-            var actual = sut.Value;
-            Assert.Empty(actual);
+            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
         }
 
         [Test]
@@ -45,7 +38,7 @@
                 {
                     sut.Principal.Of(x => x.IsInRole(roleName) == true);
                     var actual = sut.ExecuteAsync(model).Result;
-                    Assert.Equal(sut, actual);
+                    Assert.Empty(actual);
                 });
 
             var keywordCases = TestCases.WithArgs(roleNames)
@@ -54,7 +47,7 @@
                {
                    sut.Principal.Of(x => x.IsInRole(roleName) == true);
                    var actual = sut.ExecuteAsync(model).Result;
-                   Assert.Equal(sut, actual);
+                   Assert.Empty(actual);
                });
 
             var bookmarkCases = TestCases.WithArgs(roleNames)
@@ -63,7 +56,7 @@
                 {
                     sut.Principal.Of(x => x.IsInRole(roleName) == true);
                     var actual = sut.ExecuteAsync(model).Result;
-                    Assert.Equal(sut, actual);
+                    Assert.Empty(actual);
                 });
 
             return articleCases.Concat(keywordCases).Concat(bookmarkCases);
@@ -98,7 +91,7 @@
         {
             sut.Principal.Of(x => x.IsInRole("User") == true);
             var actual = sut.ExecuteAsync(bookmark).Result;
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
@@ -107,11 +100,6 @@
             yield return this.Methods.Select(x => x.ExecuteAsync(default(Keyword)));
             yield return this.Methods.Select(x => x.ExecuteAsync(default(Bookmark)));
             yield return this.Methods.Select(x => x.ExecuteAsync(default(User)));
-        }
-
-        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
-        {
-            yield return this.Properties.Select(x => x.Value);
         }
     }
 }

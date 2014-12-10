@@ -104,8 +104,7 @@
     <Compile Include="Collectors\SubjectFromBodyTransformationTest.cs" />
     <Compile Include="Collectors\ArticleTransformationCollectorTest.cs" />
     <Compile Include="Models\BookmarkTest.cs" />
-    <Compile Include="Models\CompositeEnumerableCommandTest.cs" />
-    <Compile Include="Models\CompositeModelCommandTest.cs" />
+    <Compile Include="Models\CompositeCommandTest.cs" />
     <Compile Include="Models\ConditionalCommandTest.cs" />
     <Compile Include="Models\DeleteBookmarksCommandTest.cs" />
     <Compile Include="Models\DeleteCommandTest.cs" />
@@ -120,7 +119,6 @@
     <Compile Include="Models\TrueConditionTest.cs" />
     <Compile Include="Models\ModelCommandTest.cs" />
     <Compile Include="Models\InsertCommandTest.cs" />
-    <Compile Include="Models\NullCommandTest.cs" />
     <Compile Include="Models\ParameterTest.cs" />
     <Compile Include="Models\RelayKeywordsCommandTest.cs" />
     <Compile Include="Models\UpdateCommandTest.cs" />

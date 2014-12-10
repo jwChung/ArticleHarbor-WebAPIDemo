@@ -5,13 +5,13 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class RelayKeywordsCommand : ModelCommand<IEnumerable<IModel>>
+    public class RelayKeywordsCommand : ModelCommand<IModel>
     {
-        private readonly IModelCommand<IEnumerable<IModel>> innerCommand;
+        private readonly IModelCommand<IModel> innerCommand;
         private readonly Func<string, IEnumerable<string>> nounExtractor;
 
         public RelayKeywordsCommand(
-            IModelCommand<IEnumerable<IModel>> innerCommand,
+            IModelCommand<IModel> innerCommand,
             Func<string, IEnumerable<string>> nounExtractor)
         {
             if (innerCommand == null)
@@ -24,12 +24,7 @@
             this.nounExtractor = nounExtractor;
         }
 
-        public override IEnumerable<IModel> Value
-        {
-            get { return this.innerCommand.Value; }
-        }
-
-        public IModelCommand<IEnumerable<IModel>> InnerCommand
+        public IModelCommand<IModel> InnerCommand
         {
             get { return this.innerCommand; }
         }
@@ -39,7 +34,7 @@
             get { return this.nounExtractor; }
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
@@ -47,14 +42,17 @@
             return this.ExecuteAsyncWith(article);
         }
 
-        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Article article)
+        private async Task<IEnumerable<IModel>> ExecuteAsyncWith(Article article)
         {
             var keywords = this.nounExtractor(article.Subject)
                 .Select(w => new Keyword(article.Id, w));
 
-            var newInnerComand = await this.innerCommand.ExecuteAsync(keywords);
+            var values = Enumerable.Empty<IModel>();
 
-            return new RelayKeywordsCommand(newInnerComand, this.nounExtractor);
+            foreach (var keyword in keywords)
+                values = values.Concat(await this.innerCommand.ExecuteAsync(keyword));
+
+            return values;
         }
     }
 }

@@ -13,15 +13,15 @@
     public class ArticlesController : ApiController
     {
         private readonly IRepositories repositories;
-        private readonly IModelCommand<IEnumerable<IModel>> insertCommand;
-        private readonly IModelCommand<IEnumerable<IModel>> updateCommand;
-        private readonly IModelCommand<IEnumerable<IModel>> deleteCommand;
+        private readonly IModelCommand<IModel> insertCommand;
+        private readonly IModelCommand<IModel> updateCommand;
+        private readonly IModelCommand<IModel> deleteCommand;
 
         public ArticlesController(
             IRepositories repositories,
-            IModelCommand<IEnumerable<IModel>> insertCommand,
-            IModelCommand<IEnumerable<IModel>> updateCommand,
-            IModelCommand<IEnumerable<IModel>> deleteCommand)
+            IModelCommand<IModel> insertCommand,
+            IModelCommand<IModel> updateCommand,
+            IModelCommand<IModel> deleteCommand)
         {
             if (repositories == null)
                 throw new ArgumentNullException("repositories");
@@ -41,22 +41,22 @@
             this.deleteCommand = deleteCommand;
         }
 
-        public IModelCommand<IEnumerable<IModel>> InsertCommand
-        {
-            get { return this.insertCommand; }
-        }
-
-        public IModelCommand<IEnumerable<IModel>> UpdateCommand
-        {
-            get { return this.updateCommand; }
-        }
-
         public IRepositories Repositories
         {
             get { return this.repositories; }
         }
 
-        public IModelCommand<IEnumerable<IModel>> DeleteCommand
+        public IModelCommand<IModel> InsertCommand
+        {
+            get { return this.insertCommand; }
+        }
+
+        public IModelCommand<IModel> UpdateCommand
+        {
+            get { return this.updateCommand; }
+        }
+
+        public IModelCommand<IModel> DeleteCommand
         {
             get { return this.deleteCommand; }
         }
@@ -108,7 +108,7 @@
                 postArticle.Url,
                 this.User.Identity.Name);
 
-            var models = (await article.ExecuteAsync(this.insertCommand)).Value;
+            var models = await article.ExecuteAsync(this.insertCommand);
 
             return new ArticleDetailViewModel(
                 models.OfType<Article>().Single(), models.OfType<Keyword>());

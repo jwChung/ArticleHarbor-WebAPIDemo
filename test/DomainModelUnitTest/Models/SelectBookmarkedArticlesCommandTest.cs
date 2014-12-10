@@ -13,7 +13,7 @@
         [Test]
         public void SutIsModelCommand(SelectBookmarkedArticlesCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
+            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
         }
 
         [Test]
@@ -34,7 +34,8 @@
                 == Task.FromResult(bookmarks));
 
             var inClausePredicateLikeness = new InClausePredicate(
-                "Id", bookmarks.Select(b => b.ArticleId).Cast<object>()).AsSource()
+                "Id", bookmarks.Select(b => b.ArticleId).Cast<object>())
+                .AsSource()
                 .OfLikeness<InClausePredicate>()
                 .With(x => x.ParameterValues)
                 .EqualsWhen((a, b) => a.ParameterValues.SequenceEqual(b.ParameterValues))
@@ -49,8 +50,7 @@
             var actual = sut.ExecuteAsync(user).Result;
 
             // Verify outcome
-            var command = Assert.IsAssignableFrom<SelectBookmarkedArticlesCommand>(actual);
-            Assert.Equal(sut.Value.Concat(articles), command.Value);
+            Assert.Equal(articles, actual);
         }
     }
 }

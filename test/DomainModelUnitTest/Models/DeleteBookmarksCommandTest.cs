@@ -11,14 +11,7 @@
         [Test]
         public void SutIsModelCommand(DeleteBookmarksCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
-        }
-
-        [Test]
-        public void ValueIsEmpty(DeleteBookmarksCommand sut)
-        {
-            var actual = sut.Value;
-            Assert.Empty(actual);
+            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
         }
 
         [Test]
@@ -33,7 +26,7 @@
 
             var actual = sut.ExecuteAsync(user).Result;
 
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
             sut.Repositories.Bookmarks.ToMock().Verify(
                 x => x.ExecuteDeleteCommandAsync(It.Is<IPredicate>(p => likeness.Equals(p))));
         }
@@ -50,14 +43,9 @@
 
             var actual = sut.ExecuteAsync(article).Result;
 
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
             sut.Repositories.Bookmarks.ToMock().Verify(
                 x => x.ExecuteDeleteCommandAsync(It.Is<IPredicate>(p => likeness.Equals(p))));
-        }
-
-        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
-        {
-            yield return this.Properties.Select(x => x.Value);
         }
     }
 }

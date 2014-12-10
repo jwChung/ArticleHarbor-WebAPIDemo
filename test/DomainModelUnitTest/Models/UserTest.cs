@@ -1,5 +1,6 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;
 
@@ -15,7 +16,7 @@
         public void ExecuteAsyncReturnsCorrectResult(
             User sut,
             IModelCommand<object> command,
-            IModelCommand<object> expected)
+            IEnumerable<object> expected)
         {
             command.Of(x => x.ExecuteAsync(sut) == Task.FromResult(expected));
             var actual = sut.ExecuteAsync(command).Result;

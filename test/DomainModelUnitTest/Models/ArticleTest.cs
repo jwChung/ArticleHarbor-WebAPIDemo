@@ -135,7 +135,7 @@
         public void ExecuteAsyncReturnsCorrectResult(
             Article sut,
             IModelCommand<object> command,
-            IModelCommand<object> expected)
+            IEnumerable<object> expected)
         {
             command.Of(x => x.ExecuteAsync(sut) == Task.FromResult(expected));
             var actual = sut.ExecuteAsync(command).Result;

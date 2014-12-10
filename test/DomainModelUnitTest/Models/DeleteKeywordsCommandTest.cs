@@ -14,14 +14,7 @@
         [Test]
         public void SutIsModelCommand(DeleteKeywordsCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
-        }
-
-        [Test]
-        public void ValueIsEmpty(DeleteKeywordsCommand sut)
-        {
-            var actual = sut.Value;
-            Assert.Empty(actual);
+            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
         }
 
         [Test]
@@ -36,14 +29,9 @@
             
             var actual = sut.ExecuteAsync(article).Result;
 
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
             sut.Repositories.Keywords.ToMock().Verify(
                 x => x.ExecuteDeleteCommandAsync(It.Is<IPredicate>(p => likeness.Equals(p))));
-        }
-
-        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
-        {
-            yield return this.Properties.Select(x => x.Value);
         }
     }
 }

@@ -50,9 +50,8 @@
 
             models = new IModel[] { article }.Concat(keywords).Concat(models);
             models = models.OrderBy(x => x.GetHashCode());
-            sut.InsertCommand.Of(
-                x => x.ExecuteAsync(It.Is<Article>(p => articleLikeness.Equals(p)))
-                    == Task.FromResult(Mock.Of<IModelCommand<IEnumerable<IModel>>>(c => c.Value == models)));
+            sut.InsertCommand.Of(x => x.ExecuteAsync(It.Is<Article>(p => articleLikeness.Equals(p)))
+                == Task.FromResult(models));
 
             // Exercise system
             var actual = await sut.PostAsync(postArticle);

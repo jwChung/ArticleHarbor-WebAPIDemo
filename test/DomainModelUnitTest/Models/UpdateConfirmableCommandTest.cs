@@ -12,14 +12,7 @@
         [Test]
         public void SutIsModelCommand(UpdateConfirmableCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
-        }
-
-        [Test]
-        public void ValueIsEmpty(UpdateConfirmableCommand sut)
-        {
-            var actual = sut.Value;
-            Assert.Empty(actual);
+            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
         }
 
         [Test]
@@ -45,7 +38,7 @@
         {
             sut.Principal.Of(x => x.IsInRole("Administrator") == true);
             var actual = sut.ExecuteAsync(article).Result;
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
         }
 
         [Test]
@@ -58,7 +51,7 @@
 
             var actual = sut.ExecuteAsync(article).Result;
 
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
         }
 
         [Test]
@@ -80,7 +73,7 @@
 
             var actual = sut.ExecuteAsync(article).Result;
 
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
         }
 
         [Test]
@@ -97,7 +90,7 @@
             var actual = sut.ExecuteAsync(keyword).Result;
 
             mock.Verify(x => x.ExecuteAsync(article));
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
         }
 
         [Test]
@@ -106,11 +99,6 @@
             Bookmark bookmark)
         {
             Assert.Throws<NotSupportedException>(() => sut.ExecuteAsync(bookmark).Result);
-        }
-
-        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
-        {
-            yield return this.Properties.Select(x => x.Value);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()

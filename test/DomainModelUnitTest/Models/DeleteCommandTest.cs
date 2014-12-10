@@ -11,14 +11,7 @@
         [Test]
         public void SutIsModelCommand(DeleteCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
-        }
-
-        [Test]
-        public void ValueIsEmpty(DeleteCommand sut)
-        {
-            var actual = sut.Value;
-            Assert.Empty(actual);
+            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
         }
 
         [Test]
@@ -28,7 +21,7 @@
         {
             var actual = sut.ExecuteAsync(user).Result;
 
-            Assert.Equal(actual, sut);
+            Assert.Empty(actual);
             sut.Repositories.Users.ToMock().Verify(x => x.DeleteAsync(new Keys<string>(user.Id)));
         }
 
@@ -39,7 +32,7 @@
         {
             var actual = sut.ExecuteAsync(article).Result;
 
-            Assert.Equal(actual, sut);
+            Assert.Empty(actual);
             sut.Repositories.Articles.ToMock().Verify(
                 x => x.DeleteAsync(new Keys<int>(article.Id)));
         }
@@ -51,7 +44,7 @@
         {
             var actual = sut.ExecuteAsync(keyword).Result;
 
-            Assert.Equal(actual, sut);
+            Assert.Empty(actual);
             sut.Repositories.Keywords.ToMock().Verify(
                 x => x.DeleteAsync((Keys<int, string>)keyword.GetKeys()));
         }
@@ -63,14 +56,9 @@
         {
             var actual = sut.ExecuteAsync(bookmark).Result;
 
-            Assert.Equal(actual, sut);
+            Assert.Empty(actual);
             sut.Repositories.Bookmarks.ToMock().Verify(
                 x => x.DeleteAsync((Keys<string, int>)bookmark.GetKeys()));
-        }
-
-        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
-        {
-            yield return this.Properties.Select(x => x.Value);
         }
     }
 }

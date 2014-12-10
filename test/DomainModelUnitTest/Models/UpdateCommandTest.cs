@@ -11,14 +11,7 @@
         [Test]
         public void SutIsModelCommand(UpdateCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
-        }
-
-        [Test]
-        public void ValueIsEmpty(UpdateCommand sut)
-        {
-            var actual = sut.Value;
-            Assert.Empty(actual);
+            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
         }
 
         [Test]
@@ -27,7 +20,7 @@
             User user)
         {
             var actual = sut.ExecuteAsync(user).Result;
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
             sut.Repositories.Users.ToMock().Verify(x => x.UpdateAsync(user));
         }
 
@@ -37,7 +30,7 @@
             Article article)
         {
             var actual = sut.ExecuteAsync(article).Result;
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
             sut.Repositories.Articles.ToMock().Verify(x => x.UpdateAsync(article));
         }
 
@@ -47,7 +40,7 @@
             Keyword keyword)
         {
             var actual = sut.ExecuteAsync(keyword).Result;
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
             sut.Repositories.Keywords.ToMock().Verify(x => x.UpdateAsync(keyword));
         }
 
@@ -57,13 +50,8 @@
             Bookmark bookmark)
         {
             var actual = sut.ExecuteAsync(bookmark).Result;
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
             sut.Repositories.Bookmarks.ToMock().Verify(x => x.UpdateAsync(bookmark));
-        }
-
-        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
-        {
-            yield return this.Properties.Select(x => x.Value);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()

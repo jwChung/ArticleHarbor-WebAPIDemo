@@ -6,27 +6,16 @@
     using System.Threading.Tasks;
     using Repositories;
 
-    public class SelectBookmarkedArticlesCommand : ModelCommand<IEnumerable<IModel>>
+    public class SelectBookmarkedArticlesCommand : ModelCommand<IModel>
     {
         private readonly IRepositories repositories;
-        private readonly IEnumerable<IModel> value;
-
-        public SelectBookmarkedArticlesCommand(
-            IRepositories repositories, IEnumerable<IModel> value)
+        
+        public SelectBookmarkedArticlesCommand(IRepositories repositories)
         {
             if (repositories == null)
                 throw new ArgumentNullException("repositories");
 
-            if (value == null)
-                throw new ArgumentNullException("value");
-
             this.repositories = repositories;
-            this.value = value;
-        }
-
-        public override IEnumerable<IModel> Value
-        {
-            get { return this.value; }
         }
 
         public IRepositories Repositories
@@ -34,7 +23,7 @@
             get { return this.repositories; }
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(User user)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(User user)
         {
             if (user == null)
                 throw new ArgumentNullException("user");
@@ -42,17 +31,14 @@
             return this.ExecuteAsyncWith(user);
         }
 
-        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(User user)
+        private async Task<IEnumerable<IModel>> ExecuteAsyncWith(User user)
         {
             var bookmarks = await this.repositories.Bookmarks
                 .ExecuteSelectCommandAsync(new EqualPredicate("UserId", user.Id));
 
             var parameterValues = bookmarks.Select(b => b.ArticleId).Cast<object>();
-            var articles = await this.repositories.Articles
+            return await this.repositories.Articles
                 .ExecuteSelectCommandAsync(new InClausePredicate("Id", parameterValues));
-
-            return new SelectBookmarkedArticlesCommand(
-                this.repositories, this.value.Concat(articles));
         }
     }
 }

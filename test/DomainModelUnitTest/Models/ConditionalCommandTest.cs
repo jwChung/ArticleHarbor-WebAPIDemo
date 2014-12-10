@@ -15,116 +15,99 @@
         }
 
         [Test]
-        public void ValueIsFromInnerCommand(ConditionalCommand<string> sut)
-        {
-            var expected = sut.InnerCommand.Value;
-            var actual = sut.Value;
-            Assert.Equal(expected, actual);
-        }
-
-        [Test]
-        public void ExecuteAsyncUserReturnsSutItselfWhenCanExecuteAsyncUserReturnsFalse(
+        public void ExecuteAsyncUserReturnsEmptyWhenCanExecuteAsyncUserReturnsFalse(
             ConditionalCommand<string> sut,
             User user)
         {
             sut.Condition.Of(x => x.CanExecuteAsync(user) == Task.FromResult(false));
             var actual = sut.ExecuteAsync(user).Result;
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
         }
 
         [Test]
-        public void ExecuteAsyncUserReturnsCorrectCommandWhenCanExecuteAsyncUserReturnsTrue(
+        public void ExecuteAsyncUserReturnsCorrectResultWhenCanExecuteAsyncUserReturnsTrue(
             ConditionalCommand<object> sut,
             User user,
-            IModelCommand<object> newInnerCommand)
+            IEnumerable<object> value)
         {
             sut.Condition.Of(x => x.CanExecuteAsync(user) == Task.FromResult(true));
-            sut.InnerCommand.Of(x => x.ExecuteAsync(user) == Task.FromResult(newInnerCommand));
+            sut.InnerCommand.Of(x => x.ExecuteAsync(user) == Task.FromResult(value));
 
             var actual = sut.ExecuteAsync(user).Result;
 
-            var command = Assert.IsAssignableFrom<ConditionalCommand<object>>(actual);
-            Assert.Equal(newInnerCommand, command.InnerCommand);
+            Assert.Equal(value, actual);
         }
 
         [Test]
-        public void ExecuteAsyncArticleReturnsSutItselfWhenCanExecuteAsyncArticleReturnsFalse(
+        public void ExecuteAsyncArticleReturnsEmptyWhenCanExecuteAsyncArticleReturnsFalse(
             ConditionalCommand<string> sut,
             Article article)
         {
             sut.Condition.Of(x => x.CanExecuteAsync(article) == Task.FromResult(false));
             var actual = sut.ExecuteAsync(article).Result;
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
         }
 
         [Test]
-        public void ExecuteAsyncArticleReturnsCorrectCommandWhenCanExecuteAsyncArticleReturnsTrue(
+        public void ExecuteAsyncArticleReturnsCorrectResultWhenCanExecuteAsyncArticleReturnsTrue(
             ConditionalCommand<object> sut,
             Article article,
-            IModelCommand<object> newInnerCommand)
+            IEnumerable<object> value)
         {
             sut.Condition.Of(x => x.CanExecuteAsync(article) == Task.FromResult(true));
-            sut.InnerCommand.Of(x => x.ExecuteAsync(article) == Task.FromResult(newInnerCommand));
+            sut.InnerCommand.Of(x => x.ExecuteAsync(article) == Task.FromResult(value));
 
             var actual = sut.ExecuteAsync(article).Result;
 
-            var command = Assert.IsAssignableFrom<ConditionalCommand<object>>(actual);
-            Assert.Equal(newInnerCommand, command.InnerCommand);
+            Assert.Equal(value, actual);
         }
 
         [Test]
-        public void ExecuteAsyncKeywordReturnsSutItselfWhenCanExecuteAsyncKeywordReturnsFalse(
-            ConditionalCommand<string> sut,
+        public void ExecuteAsyncKeywordReturnsEmptyWhenCanExecuteAsyncKeywordReturnsFalse(
+            ConditionalCommand<int> sut,
             Keyword keyword)
         {
             sut.Condition.Of(x => x.CanExecuteAsync(keyword) == Task.FromResult(false));
             var actual = sut.ExecuteAsync(keyword).Result;
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
         }
 
         [Test]
-        public void ExecuteAsyncKeywordReturnsCorrectCommandWhenCanExecuteAsyncKeywordReturnsTrue(
-            ConditionalCommand<object> sut,
+        public void ExecuteAsyncKeywordReturnsCorrectResultWhenCanExecuteAsyncKeywordReturnsTrue(
+            ConditionalCommand<string> sut,
             Keyword keyword,
-            IModelCommand<object> newInnerCommand)
+            IEnumerable<string> value)
         {
             sut.Condition.Of(x => x.CanExecuteAsync(keyword) == Task.FromResult(true));
-            sut.InnerCommand.Of(x => x.ExecuteAsync(keyword) == Task.FromResult(newInnerCommand));
+            sut.InnerCommand.Of(x => x.ExecuteAsync(keyword) == Task.FromResult(value));
 
             var actual = sut.ExecuteAsync(keyword).Result;
 
-            var command = Assert.IsAssignableFrom<ConditionalCommand<object>>(actual);
-            Assert.Equal(newInnerCommand, command.InnerCommand);
+            Assert.Equal(value, actual);
         }
 
         [Test]
-        public void ExecuteAsyncBookmarkReturnsSutItselfWhenCanExecuteAsyncBookmarkReturnsFalse(
+        public void ExecuteAsyncBookmarkReturnsEmptyWhenCanExecuteAsyncBookmarkReturnsFalse(
             ConditionalCommand<string> sut,
             Bookmark bookmark)
         {
             sut.Condition.Of(x => x.CanExecuteAsync(bookmark) == Task.FromResult(false));
             var actual = sut.ExecuteAsync(bookmark).Result;
-            Assert.Equal(sut, actual);
+            Assert.Empty(actual);
         }
 
         [Test]
-        public void ExecuteAsyncBookmarkReturnsCorrectCommandWhenCanExecuteAsyncBookmarkReturnsTrue(
-            ConditionalCommand<object> sut,
+        public void ExecuteAsyncBookmarkReturnsCorrectResultWhenCanExecuteAsyncBookmarkReturnsTrue(
+            ConditionalCommand<int> sut,
             Bookmark bookmark,
-            IModelCommand<object> newInnerCommand)
+            IEnumerable<int> value)
         {
             sut.Condition.Of(x => x.CanExecuteAsync(bookmark) == Task.FromResult(true));
-            sut.InnerCommand.Of(x => x.ExecuteAsync(bookmark) == Task.FromResult(newInnerCommand));
+            sut.InnerCommand.Of(x => x.ExecuteAsync(bookmark) == Task.FromResult(value));
 
             var actual = sut.ExecuteAsync(bookmark).Result;
 
-            var command = Assert.IsAssignableFrom<ConditionalCommand<object>>(actual);
-            Assert.Equal(newInnerCommand, command.InnerCommand);
-        }
-
-        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
-        {
-            yield return this.Properties.Select(x => x.Value);
+            Assert.Equal(value, actual);
         }
     }
 }

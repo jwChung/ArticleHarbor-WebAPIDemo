@@ -58,8 +58,7 @@
     <Compile Include="Collectors\SubjectFromBodyTransformation.cs" />
     <Compile Include="Collectors\ArticleTransformationCollector.cs" />
     <Compile Include="Models\Article.cs" />
-    <Compile Include="Models\CompositeEnumerableCommand.cs" />
-    <Compile Include="Models\CompositeModelCommand.cs" />
+    <Compile Include="Models\CompositeCommand.cs" />
     <Compile Include="Models\ConditionalCommand.cs" />
     <Compile Include="Models\DeleteBookmarksCommand.cs" />
     <Compile Include="Models\DeleteCommand.cs" />
@@ -82,7 +81,6 @@
     <Compile Include="Models\TrueCondition.cs" />
     <Compile Include="Models\ModelCommand.cs" />
     <Compile Include="Models\InsertCommand.cs" />
-    <Compile Include="Models\NullCommand.cs" />
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\RelayKeywordsCommand.cs" />
     <Compile Include="Models\UpdateCommand.cs" />
