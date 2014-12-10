@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.EFDataAccess
 {
     using System.Data.Entity;
+    using System.Data.Entity.ModelConfiguration.Conventions;
     using Microsoft.AspNet.Identity.EntityFramework;
 
     public class ArticleHarborDbContext : IdentityDbContext<User>
@@ -37,6 +38,14 @@
         public UserRoleManager UserRoleManager
         {
             get { return this.userRoleManager; }
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
