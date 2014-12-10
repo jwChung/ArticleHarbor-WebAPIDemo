@@ -107,6 +107,7 @@
     <Compile Include="Models\CompositeEnumerableCommandTest.cs" />
     <Compile Include="Models\CompositeModelCommandTest.cs" />
     <Compile Include="Models\ConditionalCommandTest.cs" />
+    <Compile Include="Models\DeleteBookmarksCommandTest.cs" />
     <Compile Include="Models\DeleteCommandTest.cs" />
     <Compile Include="Models\DeleteConfirmableCommandTest.cs" />
     <Compile Include="Models\DeleteKeywordsCommandTest.cs" />
