@@ -12,22 +12,17 @@
     [Authorize]
     public class BookmarksController : ApiController
     {
-        private readonly IBookmarkService bookmarkService;
         private readonly IRepositories repositories;
         private readonly IModelCommand<IModel> selectArticlesCommand;
         private readonly IModelCommand<IModel> insertCommand;
         private readonly IModelCommand<IModel> deleteCommand;
 
         public BookmarksController(
-            IBookmarkService bookmarkService,
             IRepositories repositories,
             IModelCommand<IModel> selectArticlesCommand,
             IModelCommand<IModel> insertCommand,
             IModelCommand<IModel> deleteCommand)
         {
-            if (bookmarkService == null)
-                throw new ArgumentNullException("bookmarkService");
-
             if (repositories == null)
                 throw new ArgumentNullException("repositories");
 
@@ -40,16 +35,10 @@
             if (deleteCommand == null)
                 throw new ArgumentNullException("deleteCommand");
 
-            this.bookmarkService = bookmarkService;
             this.repositories = repositories;
             this.selectArticlesCommand = selectArticlesCommand;
             this.insertCommand = insertCommand;
             this.deleteCommand = deleteCommand;
-        }
-
-        public IBookmarkService BookmarkService
-        {
-            get { return this.bookmarkService; }
         }
 
         public IRepositories Repositories

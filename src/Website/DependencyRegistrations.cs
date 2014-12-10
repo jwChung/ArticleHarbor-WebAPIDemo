@@ -172,7 +172,6 @@ namespace ArticleHarbor.Website
 
             container.Register(
                 c => new BookmarksController(
-                    c.Resolve<IBookmarkService>(),
                     c.Resolve<IRepositories>(),
                     c.Resolve<SelectBookmarkedArticlesCommand>(),
                     new InsertCommand(
