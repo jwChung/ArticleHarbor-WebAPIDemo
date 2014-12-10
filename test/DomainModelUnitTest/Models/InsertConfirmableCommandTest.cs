@@ -12,7 +12,7 @@
         [Test]
         public void SutIsModelCommand(InsertConfirmableCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
+            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
         }
 
         [Test]
@@ -38,7 +38,7 @@
                 {
                     sut.Principal.Of(x => x.IsInRole(roleName) == true);
                     var actual = sut.ExecuteAsync(model).Result;
-                    ////Assert.Equal(sut, actual);
+                    Assert.Empty(actual);
                 });
 
             var keywordCases = TestCases.WithArgs(roleNames)
@@ -47,7 +47,7 @@
                {
                    sut.Principal.Of(x => x.IsInRole(roleName) == true);
                    var actual = sut.ExecuteAsync(model).Result;
-                   ////Assert.Equal(sut, actual);
+                   Assert.Empty(actual);
                });
 
             var bookmarkCases = TestCases.WithArgs(roleNames)
@@ -56,7 +56,7 @@
                 {
                     sut.Principal.Of(x => x.IsInRole(roleName) == true);
                     var actual = sut.ExecuteAsync(model).Result;
-                    ////Assert.Equal(sut, actual);
+                    Assert.Empty(actual);
                 });
 
             return articleCases.Concat(keywordCases).Concat(bookmarkCases);
@@ -91,7 +91,7 @@
         {
             sut.Principal.Of(x => x.IsInRole("User") == true);
             var actual = sut.ExecuteAsync(bookmark).Result;
-            ////Assert.Equal(sut, actual);
+            Assert.Empty(actual);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
