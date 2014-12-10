@@ -103,6 +103,7 @@
     <Compile Include="Collectors\HaniRssCollectorTest.cs" />
     <Compile Include="Collectors\SubjectFromBodyTransformationTest.cs" />
     <Compile Include="Collectors\ArticleTransformationCollectorTest.cs" />
+    <Compile Include="Models\AndPredicateTest.cs" />
     <Compile Include="Models\BookmarkTest.cs" />
     <Compile Include="Models\CompositeCommandTest.cs" />
     <Compile Include="Models\ConditionalCommandTest.cs" />

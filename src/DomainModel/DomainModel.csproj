@@ -57,6 +57,7 @@
     <Compile Include="Collectors\IArticleTransformation.cs" />
     <Compile Include="Collectors\SubjectFromBodyTransformation.cs" />
     <Compile Include="Collectors\ArticleTransformationCollector.cs" />
+    <Compile Include="Models\AndPredicate.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\CompositeCommand.cs" />
     <Compile Include="Models\ConditionalCommand.cs" />
