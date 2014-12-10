@@ -28,7 +28,7 @@
 
         public IEnumerable<IParameter> Parameters
         {
-            get { throw new System.NotImplementedException(); }
+            get { return this.predicates.SelectMany(x => x.Parameters); }
         }
 
         public IEnumerable<IPredicate> Predicates

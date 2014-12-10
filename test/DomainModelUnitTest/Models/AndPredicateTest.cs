@@ -29,6 +29,20 @@
             Assert.Equal(expected, actual);
         }
 
+        [Test]
+        public void ParametersIsCorrect(
+            [Frozen] IEnumerable<IPredicate> predicates,
+            IEnumerable<IParameter>[] parameterValues,
+            [FavorEnumerables] AndPredicate sut)
+        {
+            predicates.Select((p, i) => p.Of(x => x.Parameters == parameterValues[i])).ToArray();
+            var expected = parameterValues.SelectMany(x => x);
+
+            var actual = sut.Parameters;
+
+            Assert.Equal(expected, actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.SqlText);
