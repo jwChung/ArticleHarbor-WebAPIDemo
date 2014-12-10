@@ -1,5 +1,6 @@
 ﻿namespace ArticleHarbor.EFDataAccess
 {
+    using System;
     using System.Data.Entity;
     using System.Data.Entity.ModelConfiguration.Conventions;
     using Microsoft.AspNet.Identity.EntityFramework;
@@ -42,6 +43,9 @@
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            if (modelBuilder == null)
+                throw new ArgumentNullException("modelBuilder");
+
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
