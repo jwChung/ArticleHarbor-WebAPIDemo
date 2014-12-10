@@ -14,7 +14,7 @@
         [Test]
         public void SutIsModelCommand(DeleteKeywordsCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
+            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
         }
 
         [Test]
@@ -29,7 +29,7 @@
             
             var actual = sut.ExecuteAsync(article).Result;
 
-            ////Assert.Equal(sut, actual);
+            Assert.Empty(actual);
             sut.Repositories.Keywords.ToMock().Verify(
                 x => x.ExecuteDeleteCommandAsync(It.Is<IPredicate>(p => likeness.Equals(p))));
         }
