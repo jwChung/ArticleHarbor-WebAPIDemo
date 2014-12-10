@@ -35,8 +35,8 @@
             ArticleHarborAuthProvider sut,
             OAuthGrantResourceOwnerCredentialsContext context)
         {
-            sut.AuthServiceFactory().Of(
-                x => x.FindUserAsync(context.UserName, context.Password)
+            sut.UserManagerFactory().Of(
+                x => x.FindAsync(context.UserName, context.Password)
                     == Task.FromResult<User>(null));
 
             await sut.GrantResourceOwnerCredentials(context);
@@ -54,8 +54,8 @@
         {
             fixture.Inject(Role.Author);
             var user = fixture.Create<User>();
-            sut.AuthServiceFactory().Of(
-                x => x.FindUserAsync(context.UserName, context.Password)
+            sut.UserManagerFactory().Of(
+                x => x.FindAsync(context.UserName, context.Password)
                     == Task.FromResult<User>(user));
 
             await sut.GrantResourceOwnerCredentials(context);
@@ -73,7 +73,7 @@
             OAuthGrantResourceOwnerCredentialsContext context)
         {
             await sut.GrantResourceOwnerCredentials(context);
-            sut.AuthServiceFactory().ToMock().Verify(x => x.Dispose());
+            sut.UserManagerFactory().ToMock().Verify(x => x.Dispose());
         }
 
         [Test]
@@ -81,8 +81,8 @@
             ArticleHarborAuthProvider sut,
             OAuthGrantResourceOwnerCredentialsContext context)
         {
-            sut.AuthServiceFactory().ToMock().Setup(
-                x => x.FindUserAsync(context.UserName, context.Password))
+            sut.UserManagerFactory().ToMock().Setup(
+                x => x.FindAsync(context.UserName, context.Password))
                 .Throws<Exception>();
             try
             {
@@ -92,7 +92,7 @@
             {
             }
 
-            sut.AuthServiceFactory().ToMock().Verify(x => x.Dispose());
+            sut.UserManagerFactory().ToMock().Verify(x => x.Dispose());
         }
     }
 }
