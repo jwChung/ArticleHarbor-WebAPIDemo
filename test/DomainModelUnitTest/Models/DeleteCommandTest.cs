@@ -11,7 +11,7 @@
         [Test]
         public void SutIsModelCommand(DeleteCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
+            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
         }
 
         [Test]
@@ -19,10 +19,10 @@
             DeleteCommand sut,
             User user)
         {
-            ////var actual = sut.ExecuteAsync(user).Result;
+            var actual = sut.ExecuteAsync(user).Result;
 
-            ////Assert.Equal(actual, sut);
-            ////sut.Repositories.Users.ToMock().Verify(x => x.DeleteAsync(new Keys<string>(user.Id)));
+            Assert.Empty(actual);
+            sut.Repositories.Users.ToMock().Verify(x => x.DeleteAsync(new Keys<string>(user.Id)));
         }
 
         [Test]
@@ -30,11 +30,11 @@
             DeleteCommand sut,
             Article article)
         {
-            ////var actual = sut.ExecuteAsync(article).Result;
+            var actual = sut.ExecuteAsync(article).Result;
 
-            ////Assert.Equal(actual, sut);
-            ////sut.Repositories.Articles.ToMock().Verify(
-            ////    x => x.DeleteAsync(new Keys<int>(article.Id)));
+            Assert.Empty(actual);
+            sut.Repositories.Articles.ToMock().Verify(
+                x => x.DeleteAsync(new Keys<int>(article.Id)));
         }
 
         [Test]
@@ -42,11 +42,11 @@
             DeleteCommand sut,
             Keyword keyword)
         {
-            ////var actual = sut.ExecuteAsync(keyword).Result;
+            var actual = sut.ExecuteAsync(keyword).Result;
 
-            ////Assert.Equal(actual, sut);
-            ////sut.Repositories.Keywords.ToMock().Verify(
-            ////    x => x.DeleteAsync((Keys<int, string>)keyword.GetKeys()));
+            Assert.Empty(actual);
+            sut.Repositories.Keywords.ToMock().Verify(
+                x => x.DeleteAsync((Keys<int, string>)keyword.GetKeys()));
         }
 
         [Test]
@@ -54,11 +54,11 @@
             DeleteCommand sut,
             Bookmark bookmark)
         {
-            ////var actual = sut.ExecuteAsync(bookmark).Result;
+            var actual = sut.ExecuteAsync(bookmark).Result;
 
-            ////Assert.Equal(actual, sut);
-            ////sut.Repositories.Bookmarks.ToMock().Verify(
-            ////    x => x.DeleteAsync((Keys<string, int>)bookmark.GetKeys()));
+            Assert.Empty(actual);
+            sut.Repositories.Bookmarks.ToMock().Verify(
+                x => x.DeleteAsync((Keys<string, int>)bookmark.GetKeys()));
         }
     }
 }

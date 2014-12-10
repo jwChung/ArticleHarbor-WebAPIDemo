@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Repositories;
 
@@ -24,68 +25,60 @@
 
         public override Task<IEnumerable<IModel>> ExecuteAsync(User user)
         {
-            ////if (user == null)
-            ////    throw new ArgumentNullException("user");
+            if (user == null)
+                throw new ArgumentNullException("user");
 
-            ////return this.ExecuteAsyncWith(user);
-            return null;
+            return this.ExecuteAsyncWith(user);
         }
 
         public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
         {
-            ////if (article == null)
-            ////    throw new ArgumentNullException("article");
+            if (article == null)
+                throw new ArgumentNullException("article");
 
-            ////return this.ExecuteAsyncWith(article);
-            return null;
+            return this.ExecuteAsyncWith(article);
         }
 
         public override Task<IEnumerable<IModel>> ExecuteAsync(Keyword keyword)
         {
-            ////if (keyword == null)
-            ////    throw new ArgumentNullException("keyword");
+            if (keyword == null)
+                throw new ArgumentNullException("keyword");
 
-            ////return this.ExecuteAsyncWith(keyword);
-            return null;
+            return this.ExecuteAsyncWith(keyword);
         }
 
         public override Task<IEnumerable<IModel>> ExecuteAsync(Bookmark bookmark)
         {
-            ////if (bookmark == null)
-            ////    throw new ArgumentNullException("bookmark");
+            if (bookmark == null)
+                throw new ArgumentNullException("bookmark");
 
-            ////return this.ExecuteAsyncWith(bookmark);
-            return null;
+            return this.ExecuteAsyncWith(bookmark);
         }
 
-        private Task<IEnumerable<IModel>> ExecuteAsyncWith(Article article)
+        private async Task<IEnumerable<IModel>> ExecuteAsyncWith(User user)
         {
-            ////await this.Repositories.Articles.DeleteAsync(new Keys<int>(article.Id));
-            ////return this;
-            return null;
+            await this.Repositories.Users.DeleteAsync(new Keys<string>(user.Id));
+            return Enumerable.Empty<IModel>();
         }
 
-        private Task<IEnumerable<IModel>> ExecuteAsyncWith(User user)
+        private async Task<IEnumerable<IModel>> ExecuteAsyncWith(Article article)
         {
-            ////await this.Repositories.Users.DeleteAsync(new Keys<string>(user.Id));
-            ////return this;
-            return null;
+            await this.Repositories.Articles.DeleteAsync(new Keys<int>(article.Id));
+            return Enumerable.Empty<IModel>();
         }
 
-        private Task<IEnumerable<IModel>> ExecuteAsyncWith(Keyword keyword)
+        private async Task<IEnumerable<IModel>> ExecuteAsyncWith(Keyword keyword)
         {
-            ////await this.Repositories.Keywords.DeleteAsync(
-            ////    new Keys<int, string>(keyword.ArticleId, keyword.Word));
-            ////return this;
-            return null;
+            await this.Repositories.Keywords.DeleteAsync(
+                new Keys<int, string>(keyword.ArticleId, keyword.Word));
+            return Enumerable.Empty<IModel>();
         }
 
-        private Task<IEnumerable<IModel>> ExecuteAsyncWith(Bookmark bookmark)
+        private async Task<IEnumerable<IModel>> ExecuteAsyncWith(Bookmark bookmark)
         {
-            ////await this.Repositories.Bookmarks.DeleteAsync(
-            ////    new Keys<string, int>(bookmark.UserId, bookmark.ArticleId));
-            ////return this;
-            return null;
+            await this.Repositories.Bookmarks.DeleteAsync(
+                new Keys<string, int>(bookmark.UserId, bookmark.ArticleId));
+            return Enumerable.Empty<IModel>();
         }
     }
 }
