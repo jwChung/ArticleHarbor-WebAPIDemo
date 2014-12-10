@@ -12,94 +12,67 @@
         [Test]
         public void SutIsModelCommand(InsertCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
-        }
-
-        [Test]
-        public void BaseValueIsCorrect(
-            [Frozen] IEnumerable<IModel> baseValue,
-             IEnumerable<IModel> innerCommandValue,
-            InsertCommand sut)
-        {
-            ////sut.InnerCommand.Of(x => x.Value == innerCommandValue);
-            ////var actual = sut.BaseValue;
-            ////Assert.Equal(baseValue, actual);
+            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
         }
 
         [Test]
         public void ExecuteAsyncUserCorrectlyInsertsUser(
-            [Frozen] IEnumerable<IModel> baseValue,
             InsertCommand sut,
             User user,
             User newUser,
-            IModelCommand<IEnumerable<IModel>> newInnerCommand)
+            IEnumerable<IModel> value)
         {
             sut.Repositories.Users.Of(x => x.InsertAsync(user) == Task.FromResult(newUser));
-            ////sut.InnerCommand.Of(x => x.ExecuteAsync(newUser) == Task.FromResult(newInnerCommand));
-            var expected = baseValue.Concat(new IModel[] { newUser });
-
+            sut.InnerCommand.Of(x => x.ExecuteAsync(newUser) == Task.FromResult(value));
+            
             var actual = sut.ExecuteAsync(user).Result;
 
-            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
-            Assert.Equal(newInnerCommand, command.InnerCommand);
-            Assert.True(expected.SequenceEqual(command.BaseValue));
+            Assert.Equal(new IModel[] { newUser }.Concat(value), actual);
         }
 
         [Test]
         public void ExecuteAsyncArticleCorrectlyInsertsArticle(
-            [Frozen] IEnumerable<IModel> baseValue,
             InsertCommand sut,
             Article article,
             Article newArticle,
-            IModelCommand<IEnumerable<IModel>> newInnerCommand)
+            IEnumerable<IModel> value)
         {
             sut.Repositories.Articles.Of(x => x.InsertAsync(article) == Task.FromResult(newArticle));
-            ////sut.InnerCommand.Of(x => x.ExecuteAsync(newArticle) == Task.FromResult(newInnerCommand));
-            var expected = baseValue.Concat(new IModel[] { newArticle });
+            sut.InnerCommand.Of(x => x.ExecuteAsync(newArticle) == Task.FromResult(value));
 
             var actual = sut.ExecuteAsync(article).Result;
 
-            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
-            Assert.Equal(newInnerCommand, command.InnerCommand);
-            Assert.True(expected.SequenceEqual(command.BaseValue));
+            Assert.Equal(new IModel[] { newArticle }.Concat(value), actual);
         }
 
         [Test]
         public void ExecuteAsyncKeywordCorrectlyInsertsKeyword(
-            [Frozen] IEnumerable<IModel> baseValue,
             InsertCommand sut,
             Keyword keyword,
             Keyword newKeyword,
-            IModelCommand<IEnumerable<IModel>> newInnerCommand)
+            IEnumerable<IModel> value)
         {
             sut.Repositories.Keywords.Of(x => x.InsertAsync(keyword) == Task.FromResult(newKeyword));
-            ////sut.InnerCommand.Of(x => x.ExecuteAsync(newKeyword) == Task.FromResult(newInnerCommand));
-            var expected = baseValue.Concat(new IModel[] { newKeyword });
+            sut.InnerCommand.Of(x => x.ExecuteAsync(newKeyword) == Task.FromResult(value));
 
             var actual = sut.ExecuteAsync(keyword).Result;
 
-            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
-            Assert.Equal(newInnerCommand, command.InnerCommand);
-            Assert.True(expected.SequenceEqual(command.BaseValue));
+            Assert.Equal(new IModel[] { newKeyword }.Concat(value), actual);
         }
 
         [Test]
         public void ExecuteAsyncBookmarkCorrectlyInsertsBookmark(
-            [Frozen] IEnumerable<IModel> baseValue,
             InsertCommand sut,
             Bookmark bookmark,
             Bookmark newBookmark,
-            IModelCommand<IEnumerable<IModel>> newInnerCommand)
+            IEnumerable<IModel> value)
         {
             sut.Repositories.Bookmarks.Of(x => x.InsertAsync(bookmark) == Task.FromResult(newBookmark));
-            ////sut.InnerCommand.Of(x => x.ExecuteAsync(newBookmark) == Task.FromResult(newInnerCommand));
-            var expected = baseValue.Concat(new IModel[] { newBookmark });
+            sut.InnerCommand.Of(x => x.ExecuteAsync(newBookmark) == Task.FromResult(value));
 
             var actual = sut.ExecuteAsync(bookmark).Result;
 
-            var command = Assert.IsAssignableFrom<InsertCommand>(actual);
-            Assert.Equal(newInnerCommand, command.InnerCommand);
-            Assert.True(expected.SequenceEqual(command.BaseValue));
+            Assert.Equal(new IModel[] { newBookmark }.Concat(value), actual);
         }
     }
 }
