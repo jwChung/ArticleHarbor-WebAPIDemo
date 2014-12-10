@@ -22,6 +22,23 @@
         }
 
         [Test]
+        public void ExecuteAsyncUsereDeletesBookmarksRelatedWithUser(
+            DeleteBookmarksCommand sut,
+            User user)
+        {
+            var likeness = new EqualPredicate("UserId", user.Id).AsSource()
+                .OfLikeness<EqualPredicate>()
+                .Without(x => x.SqlText)
+                .Without(x => x.Parameters);
+
+            var actual = sut.ExecuteAsync(user).Result;
+
+            Assert.Equal(sut, actual);
+            sut.Repositories.Bookmarks.ToMock().Verify(
+                x => x.ExecuteDeleteCommandAsync(It.Is<IPredicate>(p => likeness.Equals(p))));
+        }
+
+        [Test]
         public void ExecuteAsyncArticleDeletesBookmarksRelatedWithArticle(
             DeleteBookmarksCommand sut,
             Article article)

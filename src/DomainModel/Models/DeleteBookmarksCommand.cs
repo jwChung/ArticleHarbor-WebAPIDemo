@@ -27,12 +27,28 @@
             get { return this.repositories; }
         }
 
+        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(User user)
+        {
+            if (user == null)
+                throw new ArgumentNullException("user");
+
+            return this.ExecuteAsyncWith(user);
+        }
+
         public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
 
             return this.ExecuteAsyncWith(article);
+        }
+
+        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(User user)
+        {
+            await this.repositories.Bookmarks.ExecuteDeleteCommandAsync(
+                new EqualPredicate("UserId", user.Id));
+
+            return this;
         }
 
         private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Article article)
