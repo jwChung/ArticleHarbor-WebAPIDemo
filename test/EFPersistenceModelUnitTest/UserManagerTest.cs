@@ -39,9 +39,22 @@
             Assert.Null(actual);
         }
 
-        protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
+        [Test]
+        public void DisposeDiposesContext(UserManager sut)
         {
-            yield break;
+            sut.Dispose();
+
+            var e = Assert.Throws<AggregateException>(
+                () => sut.Context.UserManager.FindAsync("test", "test").Wait());
+            Assert.Contains("disposed", e.InnerException.Message);
+        }
+        
+        [Test]
+        public void DisposeDoesNotThrowWhenCalledManyTime(UserManager sut)
+        {
+            sut.Dispose();
+            sut.Dispose();
+            sut.Dispose();
         }
     }
 }

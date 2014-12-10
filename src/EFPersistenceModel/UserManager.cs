@@ -8,7 +8,7 @@
     using EFDataAccess;
     using User = DomainModel.Models.User;
 
-    public class UserManager : IUserManager
+    public sealed class UserManager : IUserManager
     {
         private readonly ArticleHarborDbContext context;
 
@@ -38,6 +38,7 @@
 
         public void Dispose()
         {
+            this.context.Dispose();
         }
 
         private async Task<User> FindAsyncWith(string id, string password)
