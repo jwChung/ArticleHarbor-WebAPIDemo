@@ -119,7 +119,6 @@
     <Compile Include="Models\TrueConditionTest.cs" />
     <Compile Include="Models\ModelCommandTest.cs" />
     <Compile Include="Models\InsertCommandTest.cs" />
-    <Compile Include="Models\NullCommandTest.cs" />
     <Compile Include="Models\ParameterTest.cs" />
     <Compile Include="Models\RelayKeywordsCommandTest.cs" />
     <Compile Include="Models\UpdateCommandTest.cs" />
