@@ -123,6 +123,11 @@ namespace ArticleHarbor.Website
                 .ReusedWithinContainer();
 
             container.Register(
+                c => new DeleteBookmarksCommand(
+                    c.Resolve<IRepositories>()))
+                .ReusedWithinContainer();
+
+            container.Register(
                c => new UpdateCommand(
                    c.Resolve<IRepositories>()))
                .ReusedWithinContainer();
@@ -162,6 +167,8 @@ namespace ArticleHarbor.Website
                                     KoreanNounExtractor.Execute)))),
                     new CompositeEnumerableCommand<IModel>(
                         c.Resolve<DeleteConfirmableCommand>(),
+                        c.Resolve<DeleteKeywordsCommand>(),
+                        c.Resolve<DeleteBookmarksCommand>(),
                         c.Resolve<DeleteCommand>())))
                 .ReusedWithinContainer();
 
