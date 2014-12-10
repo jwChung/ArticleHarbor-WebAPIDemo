@@ -12,7 +12,7 @@
         [Test]
         public void SutIsModelCommand(UpdateConfirmableCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
+            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
         }
 
         [Test]
@@ -38,7 +38,7 @@
         {
             sut.Principal.Of(x => x.IsInRole("Administrator") == true);
             var actual = sut.ExecuteAsync(article).Result;
-            ////Assert.Equal(sut, actual);
+            Assert.Empty(actual);
         }
 
         [Test]
@@ -51,7 +51,7 @@
 
             var actual = sut.ExecuteAsync(article).Result;
 
-            ////Assert.Equal(sut, actual);
+            Assert.Empty(actual);
         }
 
         [Test]
@@ -73,7 +73,7 @@
 
             var actual = sut.ExecuteAsync(article).Result;
 
-            ////Assert.Equal(sut, actual);
+            Assert.Empty(actual);
         }
 
         [Test]
@@ -90,7 +90,7 @@
             var actual = sut.ExecuteAsync(keyword).Result;
 
             mock.Verify(x => x.ExecuteAsync(article));
-            ////Assert.Equal(sut, actual);
+            Assert.Empty(actual);
         }
 
         [Test]
