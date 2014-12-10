@@ -13,6 +13,7 @@ namespace ArticleHarbor.Website
     using Microsoft.Owin;
     using Microsoft.Owin.Security.OAuth;
     using Owin;
+    using UserManager = EFPersistenceModel.UserManager;
 
     public class IdentityConfig
     {
@@ -28,7 +29,11 @@ namespace ArticleHarbor.Website
 
             app.UseOAuthBearerTokens(new OAuthAuthorizationServerOptions
             {
-                Provider = new ArticleHarborAuthProvider(authServiceFactory),
+                Provider = new ArticleHarborAuthProvider(
+                    authServiceFactory,
+                    () => new UserManager(
+                        new ArticleHarborDbContext(
+                            new ArticleHarborDbContextTestInitializer()))),
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/Authenticate")
             });

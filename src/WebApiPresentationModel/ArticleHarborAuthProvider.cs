@@ -5,24 +5,37 @@
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
     using DomainModel.Models;
+    using DomainModel.Repositories;
     using DomainModel.Services;
     using Microsoft.Owin.Security.OAuth;
 
     public class ArticleHarborAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly Func<IAuthService> authServiceFactory;
+        private readonly Func<IUserManager> userManagerFactory;
 
-        public ArticleHarborAuthProvider(Func<IAuthService> authServiceFactory)
+        public ArticleHarborAuthProvider(
+            Func<IAuthService> authServiceFactory,
+            Func<IUserManager> userManagerFactory)
         {
             if (authServiceFactory == null)
                 throw new ArgumentNullException("authServiceFactory");
 
+            if (userManagerFactory == null)
+                throw new ArgumentNullException("userManagerFactory");
+
             this.authServiceFactory = authServiceFactory;
+            this.userManagerFactory = userManagerFactory;
         }
 
         public Func<IAuthService> AuthServiceFactory
         {
             get { return this.authServiceFactory; }
+        }
+
+        public Func<IUserManager> UserManagerFactory
+        {
+            get { return this.userManagerFactory; }
         }
 
         public override Task ValidateClientAuthentication(
