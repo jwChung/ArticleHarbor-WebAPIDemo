@@ -10,10 +10,10 @@
     using Ploeh.AutoFixture;
     using Xunit;
 
-    public abstract class CompositeModelCommandTest<TReturn> : IdiomaticTest<CompositeModelCommand<TReturn>>
+    public abstract class CompositeCommandTest<TReturn> : IdiomaticTest<CompositeCommand<TReturn>>
     {
         [Test]
-        public void SutIsModelCommand(CompositeModelCommand<TReturn> sut)
+        public void SutIsModelCommand(CompositeCommand<TReturn> sut)
         {
             Assert.IsAssignableFrom<IModelCommand<TReturn>>(sut);
         }
@@ -22,28 +22,28 @@
         public IEnumerable<ITestCase> ExecuteAsyncReturnsCorrectResult(
             IEnumerable<TReturn>[] values)
         {
-            yield return TestCase.WithAuto<CompositeModelCommand<TReturn>, User>().Create((sut, model) =>
+            yield return TestCase.WithAuto<CompositeCommand<TReturn>, User>().Create((sut, model) =>
             {
                 sut.Commands.Select((c, i) => 
                     c.Of(x => x.ExecuteAsync(model) == Task.FromResult(values[i]))).ToArray();
                 var actual = sut.ExecuteAsync(model).Result;
                 Assert.Equal(values.SelectMany(x => x), actual);
             });
-            yield return TestCase.WithAuto<CompositeModelCommand<TReturn>, Article>().Create((sut, model) =>
+            yield return TestCase.WithAuto<CompositeCommand<TReturn>, Article>().Create((sut, model) =>
             {
                 sut.Commands.Select((c, i) =>
                     c.Of(x => x.ExecuteAsync(model) == Task.FromResult(values[i]))).ToArray();
                 var actual = sut.ExecuteAsync(model).Result;
                 Assert.Equal(values.SelectMany(x => x), actual);
             });
-            yield return TestCase.WithAuto<CompositeModelCommand<TReturn>, Keyword>().Create((sut, model) =>
+            yield return TestCase.WithAuto<CompositeCommand<TReturn>, Keyword>().Create((sut, model) =>
             {
                 sut.Commands.Select((c, i) =>
                     c.Of(x => x.ExecuteAsync(model) == Task.FromResult(values[i]))).ToArray();
                 var actual = sut.ExecuteAsync(model).Result;
                 Assert.Equal(values.SelectMany(x => x), actual);
             });
-            yield return TestCase.WithAuto<CompositeModelCommand<TReturn>, Bookmark>().Create((sut, model) =>
+            yield return TestCase.WithAuto<CompositeCommand<TReturn>, Bookmark>().Create((sut, model) =>
             {
                 sut.Commands.Select((c, i) =>
                     c.Of(x => x.ExecuteAsync(model) == Task.FromResult(values[i]))).ToArray();
@@ -61,15 +61,15 @@
         }
     }
 
-    public class CompositeModelCommandOfObjectTest : CompositeModelCommandTest<object>
+    public class CompositeCommandOfObjectTest : CompositeCommandTest<object>
     {
     }
 
-    public class CompositeModelCommandOfInt32Test : CompositeModelCommandTest<int>
+    public class CompositeCommandOfInt32Test : CompositeCommandTest<int>
     {
     }
 
-    public class CompositeModelCommandOfStringTest : CompositeModelCommandTest<string>
+    public class CompositeCommandOfStringTest : CompositeCommandTest<string>
     {
     }
 }

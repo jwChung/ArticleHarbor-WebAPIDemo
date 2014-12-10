@@ -5,16 +5,16 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class CompositeModelCommand<TReturn> : IModelCommand<TReturn>
+    public class CompositeCommand<TReturn> : IModelCommand<TReturn>
     {
         private readonly IEnumerable<IModelCommand<TReturn>> commands;
 
-        public CompositeModelCommand(params IModelCommand<TReturn>[] commands)
+        public CompositeCommand(params IModelCommand<TReturn>[] commands)
             : this((IEnumerable<IModelCommand<TReturn>>)commands)
         {
         }
 
-        public CompositeModelCommand(IEnumerable<IModelCommand<TReturn>> commands)
+        public CompositeCommand(IEnumerable<IModelCommand<TReturn>> commands)
         {
             if (commands == null)
                 throw new ArgumentNullException("commands");
