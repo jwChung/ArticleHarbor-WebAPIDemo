@@ -22,7 +22,7 @@
         }
 
         [Test]
-        public void ExecuteAsyncUsereDeletesBookmarksRelatedWithUser(
+        public void ExecuteAsyncUserDeletesBookmarksRelatedWithUser(
             DeleteBookmarksCommand sut,
             User user)
         {
