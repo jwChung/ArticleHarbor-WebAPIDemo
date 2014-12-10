@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using Repositories;
 
-    public class UpdateCommand : ModelCommand<IEnumerable<IModel>>
+    public class UpdateCommand : ModelCommand<IModel>
     {
         private readonly IRepositories repositories;
 
@@ -17,38 +17,37 @@
             this.repositories = repositories;
         }
 
-        public override IEnumerable<IModel> Value
-        {
-            get { yield break; }
-        }
-
         public IRepositories Repositories
         {
             get { return this.repositories; }
         }
 
-        public async override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(User user)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(User user)
         {
-            await this.repositories.Users.UpdateAsync(user);
-            return this;
+            ////await this.repositories.Users.UpdateAsync(user);
+            ////return this;
+            return null;
         }
 
-        public async override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
         {
-            await this.repositories.Articles.UpdateAsync(article);
-            return this;
+            ////await this.repositories.Articles.UpdateAsync(article);
+            ////return this;
+            return null;
         }
 
-        public async override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Keyword keyword)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(Keyword keyword)
         {
-            await this.repositories.Keywords.UpdateAsync(keyword);
-            return this;
+            ////await this.repositories.Keywords.UpdateAsync(keyword);
+            ////return this;
+            return null;
         }
 
-        public async override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Bookmark bookmark)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(Bookmark bookmark)
         {
-            await this.repositories.Bookmarks.UpdateAsync(bookmark);
-            return this;
+            ////await this.repositories.Bookmarks.UpdateAsync(bookmark);
+            ////return this;
+            return null;
         }
     }
 }

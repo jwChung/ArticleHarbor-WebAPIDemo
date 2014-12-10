@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public class Bookmark : IModel
@@ -35,12 +36,13 @@
             return new Keys<string, int>(this.userId, this.articleId);
         }
 
-        public Task<IModelCommand<TValue>> ExecuteAsync<TValue>(IModelCommand<TValue> command)
+        public Task<IEnumerable<TReturn>> ExecuteAsync<TReturn>(IModelCommand<TReturn> command)
         {
-            if (command == null)
-                throw new ArgumentNullException("command");
+            ////if (command == null)
+            ////    throw new ArgumentNullException("command");
 
-            return command.ExecuteAsync(this);
+            ////return command.ExecuteAsync(this);
+            return null;
         }
     }
 }

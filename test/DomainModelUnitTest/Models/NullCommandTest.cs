@@ -11,16 +11,5 @@
         {
             Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
         }
-
-        [Test]
-        public void ValueIsEmpty(NullCommand sut)
-        {
-            Assert.Empty(sut.Value);
-        }
-
-        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
-        {
-            yield return this.Properties.Select(x => x.Value);
-        }
     }
 }

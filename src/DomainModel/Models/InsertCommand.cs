@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using Repositories;
 
-    public class InsertCommand : ModelCommand<IEnumerable<IModel>>
+    public class InsertCommand : ModelCommand<IModel>
     {
         private readonly IRepositories repositories;
         private readonly IModelCommand<IEnumerable<IModel>> innerCommand;
@@ -31,14 +31,6 @@
             this.baseValue = baseValue;
         }
 
-        public override IEnumerable<IModel> Value
-        {
-            get
-            {
-                return this.baseValue.Concat(this.innerCommand.Value);
-            }
-        }
-
         public IEnumerable<IModel> BaseValue
         {
             get { return this.baseValue; }
@@ -54,7 +46,7 @@
             get { return this.repositories; }
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(User user)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(User user)
         {
             if (user == null)
                 throw new ArgumentNullException("user");
@@ -62,7 +54,7 @@
             return this.ExecuteAsyncWith(user);
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
@@ -70,7 +62,7 @@
             return this.ExecuteAsyncWith(article);
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Keyword keyword)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(Keyword keyword)
         {
             if (keyword == null)
                 throw new ArgumentNullException("keyword");
@@ -78,7 +70,7 @@
             return this.ExecuteAsyncWith(keyword);
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Bookmark bookmark)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(Bookmark bookmark)
         {
             if (bookmark == null)
                 throw new ArgumentNullException("bookmark");
@@ -86,48 +78,52 @@
             return this.ExecuteAsyncWith(bookmark);
         }
 
-        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(User user)
+        private Task<IEnumerable<IModel>> ExecuteAsyncWith(User user)
         {
-            var newUser = await this.repositories.Users.InsertAsync(user);
-            var newInnerCommand = await this.innerCommand.ExecuteAsync(newUser);
+            ////var newUser = await this.repositories.Users.InsertAsync(user);
+            ////var newInnerCommand = await this.innerCommand.ExecuteAsync(newUser);
 
-            return new InsertCommand(
-                this.repositories,
-                newInnerCommand,
-                this.baseValue.Concat(new IModel[] { newUser }));
+            ////return new InsertCommand(
+            ////    this.repositories,
+            ////    newInnerCommand,
+            ////    this.baseValue.Concat(new IModel[] { newUser }));
+            return null;
         }
 
-        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Article article)
+        private Task<IEnumerable<IModel>> ExecuteAsyncWith(Article article)
         {
-            var newArticle = await this.repositories.Articles.InsertAsync(article);
-            var newInnerCommand = await this.innerCommand.ExecuteAsync(newArticle);
+            ////var newArticle = await this.repositories.Articles.InsertAsync(article);
+            ////var newInnerCommand = await this.innerCommand.ExecuteAsync(newArticle);
 
-            return new InsertCommand(
-                this.repositories,
-                newInnerCommand,
-                this.baseValue.Concat(new IModel[] { newArticle }));
+            ////return new InsertCommand(
+            ////    this.repositories,
+            ////    newInnerCommand,
+            ////    this.baseValue.Concat(new IModel[] { newArticle }));
+            return null;
         }
 
-        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Keyword keyword)
+        private Task<IEnumerable<IModel>> ExecuteAsyncWith(Keyword keyword)
         {
-            var newKeyword = await this.repositories.Keywords.InsertAsync(keyword);
-            var newInnerCommand = await this.innerCommand.ExecuteAsync(newKeyword);
+            ////var newKeyword = await this.repositories.Keywords.InsertAsync(keyword);
+            ////var newInnerCommand = await this.innerCommand.ExecuteAsync(newKeyword);
 
-            return new InsertCommand(
-                this.repositories,
-                newInnerCommand,
-                this.baseValue.Concat(new IModel[] { newKeyword }));
+            ////return new InsertCommand(
+            ////    this.repositories,
+            ////    newInnerCommand,
+            ////    this.baseValue.Concat(new IModel[] { newKeyword }));
+            return null;
         }
 
-        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Bookmark bookmark)
+        private Task<IEnumerable<IModel>> ExecuteAsyncWith(Bookmark bookmark)
         {
-            var newBookmark = await this.repositories.Bookmarks.InsertAsync(bookmark);
-            var newInnerCommand = await this.innerCommand.ExecuteAsync(newBookmark);
+            ////var newBookmark = await this.repositories.Bookmarks.InsertAsync(bookmark);
+            ////var newInnerCommand = await this.innerCommand.ExecuteAsync(newBookmark);
 
-            return new InsertCommand(
-                this.repositories,
-                newInnerCommand,
-                this.baseValue.Concat(new IModel[] { newBookmark }));
+            ////return new InsertCommand(
+            ////    this.repositories,
+            ////    newInnerCommand,
+            ////    this.baseValue.Concat(new IModel[] { newBookmark }));
+            return null;
         }
     }
 }

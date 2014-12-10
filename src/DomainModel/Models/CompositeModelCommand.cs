@@ -4,24 +4,24 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public class CompositeModelCommand<TValue> : IModelCommand<TValue>
+    public class CompositeModelCommand<TReturn> : IModelCommand<TReturn>
     {
-        private readonly TValue value;
-        private readonly Func<TValue, TValue, TValue> concat;
-        private readonly IEnumerable<IModelCommand<TValue>> commands;
+        private readonly TReturn value;
+        private readonly Func<TReturn, TReturn, TReturn> concat;
+        private readonly IEnumerable<IModelCommand<TReturn>> commands;
 
         public CompositeModelCommand(
-            TValue value,
-            Func<TValue, TValue, TValue> concat,
-            params IModelCommand<TValue>[] commands)
-            : this(value, concat, (IEnumerable<IModelCommand<TValue>>)commands)
+            TReturn value,
+            Func<TReturn, TReturn, TReturn> concat,
+            params IModelCommand<TReturn>[] commands)
+            : this(value, concat, (IEnumerable<IModelCommand<TReturn>>)commands)
         {
         }
 
         public CompositeModelCommand(
-            TValue value,
-            Func<TValue, TValue, TValue> concat,
-            IEnumerable<IModelCommand<TValue>> commands)
+            TReturn value,
+            Func<TReturn, TReturn, TReturn> concat,
+            IEnumerable<IModelCommand<TReturn>> commands)
         {
             if (value == null)
                 throw new ArgumentNullException("value");
@@ -37,91 +37,54 @@
             this.commands = commands;
         }
 
-        public virtual TValue Value
-        {
-            get { return this.value; }
-        }
-
-        public Func<TValue, TValue, TValue> Concat
+        public Func<TReturn, TReturn, TReturn> Concat
         {
             get { return this.concat; }
         }
 
-        public IEnumerable<IModelCommand<TValue>> Commands
+        public IEnumerable<IModelCommand<TReturn>> Commands
         {
             get { return this.commands; }
         }
 
-        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<User> users)
+        public virtual Task<IEnumerable<TReturn>> ExecuteAsync(User user)
         {
-            TValue value = this.value;
-            foreach (var command in this.commands)
-                value = this.concat(value, (await command.ExecuteAsync(users)).Value);
+            ////TReturn value = this.value;
+            ////foreach (var command in this.commands)
+            ////    value = this.concat(value, (await command.ExecuteAsync(user)).Value);
 
-            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
+            ////return new CompositeModelCommand<TReturn>(value, this.concat, this.commands);
+            return null;
         }
 
-        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(User user)
+        public virtual Task<IEnumerable<TReturn>> ExecuteAsync(Article article)
         {
-            TValue value = this.value;
-            foreach (var command in this.commands)
-                value = this.concat(value, (await command.ExecuteAsync(user)).Value);
+            ////TReturn value = this.value;
+            ////foreach (var command in this.commands)
+            ////    value = this.concat(value, (await command.ExecuteAsync(article)).Value);
 
-            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
+            ////return new CompositeModelCommand<TReturn>(value, this.concat, this.commands);
+            return null;
         }
 
-        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Article> articles)
+        public virtual Task<IEnumerable<TReturn>> ExecuteAsync(Keyword keyword)
         {
-            TValue value = this.value;
-            foreach (var command in this.commands)
-                value = this.concat(value, (await command.ExecuteAsync(articles)).Value);
+            ////TReturn value = this.value;
+            ////foreach (var command in this.commands)
+            ////    value = this.concat(value, (await command.ExecuteAsync(keyword)).Value);
 
-            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
+            ////return new CompositeModelCommand<TReturn>(value, this.concat, this.commands);
+            return null;
         }
 
-        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(Article article)
+        public virtual Task<IEnumerable<TReturn>> ExecuteAsync(Bookmark bookmark)
         {
-            TValue value = this.value;
-            foreach (var command in this.commands)
-                value = this.concat(value, (await command.ExecuteAsync(article)).Value);
+            ////TReturn value = this.value;
+            ////foreach (var command in this.commands)
+            ////    value = this.concat(value, (await command.ExecuteAsync(bookmark)).Value);
 
-            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
-        }
-
-        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Keyword> keywords)
-        {
-            TValue value = this.value;
-            foreach (var command in this.commands)
-                value = this.concat(value, (await command.ExecuteAsync(keywords)).Value);
-
-            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
-        }
-
-        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(Keyword keyword)
-        {
-            TValue value = this.value;
-            foreach (var command in this.commands)
-                value = this.concat(value, (await command.ExecuteAsync(keyword)).Value);
-
-            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
-        }
-
-        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(IEnumerable<Bookmark> bookmarks)
-        {
-            TValue value = this.value;
-            foreach (var command in this.commands)
-                value = this.concat(value, (await command.ExecuteAsync(bookmarks)).Value);
-
-            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
-        }
-
-        public virtual async Task<IModelCommand<TValue>> ExecuteAsync(Bookmark bookmark)
-        {
-            TValue value = this.value;
-            foreach (var command in this.commands)
-                value = this.concat(value, (await command.ExecuteAsync(bookmark)).Value);
-
-            return new CompositeModelCommand<TValue>(value, this.concat, this.commands);
+            ////return new CompositeModelCommand<TReturn>(value, this.concat, this.commands);
+            return null;
         }
     }
 }

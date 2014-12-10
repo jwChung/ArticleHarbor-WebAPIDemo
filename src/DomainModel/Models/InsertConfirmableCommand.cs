@@ -6,7 +6,7 @@
     using System.Security.Principal;
     using System.Threading.Tasks;
 
-    public class InsertConfirmableCommand : ModelCommand<IEnumerable<IModel>>
+    public class InsertConfirmableCommand : ModelCommand<IModel>
     {
         private readonly IPrincipal principal;
 
@@ -18,34 +18,29 @@
             this.principal = principal;
         }
 
-        public override IEnumerable<IModel> Value
-        {
-            get { yield break; }
-        }
-
         public IPrincipal Principal
         {
             get { return this.principal; }
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(User user)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(User user)
         {
             throw new NotSupportedException();
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
         {
             this.ConfirmCanCreate("Administrator", "Author");
             return base.ExecuteAsync(article);
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Bookmark bookmark)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(Bookmark bookmark)
         {
             this.ConfirmCanCreate("Administrator", "Author", "User");
             return base.ExecuteAsync(bookmark);
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Keyword keyword)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(Keyword keyword)
         {
             this.ConfirmCanCreate("Administrator", "Author");
             return base.ExecuteAsync(keyword);

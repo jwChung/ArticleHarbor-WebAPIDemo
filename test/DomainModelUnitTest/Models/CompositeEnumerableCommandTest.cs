@@ -15,22 +15,6 @@
         }
 
         [Test]
-        public void ValueIsEmptyWhenInitializedWithArray(
-            [FavorArrays] CompositeEnumerableCommand<TValueElement> sut)
-        {
-            var actual = sut.Value;
-            Assert.Empty(actual);
-        }
-
-        [Test]
-        public void ValueIsEmptyWhenInitializedWithEnumerable(
-            [FavorEnumerables] CompositeEnumerableCommand<TValueElement> sut)
-        {
-            var actual = sut.Value;
-            Assert.Empty(actual);
-        }
-
-        [Test]
         public void ConcatIsCorrectWhenInitializedWithArray(
             [FavorArrays] CompositeEnumerableCommand<TValueElement> sut,
             IEnumerable<TValueElement> value1,

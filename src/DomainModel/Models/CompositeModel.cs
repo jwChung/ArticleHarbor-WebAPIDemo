@@ -27,21 +27,23 @@
             return new Keys(this.models.SelectMany(m => m.GetKeys()));
         }
 
-        public Task<IModelCommand<TValue>> ExecuteAsync<TValue>(IModelCommand<TValue> command)
+        public Task<IEnumerable<TReturn>> ExecuteAsync<TReturn>(IModelCommand<TReturn> command)
         {
-            if (command == null)
-                throw new ArgumentNullException("command");
+            ////if (command == null)
+            ////    throw new ArgumentNullException("command");
 
-            return this.ExecuteAsyncWith(command);
+            ////return this.ExecuteAsyncWith(command);
+            return null;
         }
 
-        private async Task<IModelCommand<TValue>> ExecuteAsyncWith<TValue>(
-            IModelCommand<TValue> command)
+        private Task<IEnumerable<TReturn>> ExecuteAsyncWith<TReturn>(
+            IModelCommand<TReturn> command)
         {
-            foreach (var model in this.Models)
-                command = await model.ExecuteAsync(command);
+            ////foreach (var model in this.Models)
+            ////    command = await model.ExecuteAsync(command);
 
-            return command;
+            ////return command;
+            return null;
         }
     }
 }

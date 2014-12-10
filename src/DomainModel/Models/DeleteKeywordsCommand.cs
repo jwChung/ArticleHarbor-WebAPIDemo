@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using Repositories;
 
-    public class DeleteKeywordsCommand : ModelCommand<IEnumerable<IModel>>
+    public class DeleteKeywordsCommand : ModelCommand<IModel>
     {
         private readonly IRepositories repositories;
 
@@ -17,30 +17,27 @@
             this.repositories = repositories;
         }
 
-        public override IEnumerable<IModel> Value
-        {
-            get { yield break; }
-        }
-
         public IRepositories Repositories
         {
             get { return this.repositories; }
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
         {
-            if (article == null)
-                throw new ArgumentNullException("article");
+            ////if (article == null)
+            ////    throw new ArgumentNullException("article");
 
-            return this.ExecuteAsyncWith(article);
+            ////return this.ExecuteAsyncWith(article);
+            return null;
         }
 
-        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Article article)
+        private Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Article article)
         {
-            await this.repositories.Keywords.ExecuteDeleteCommandAsync(
-                new EqualPredicate("ArticleId", article.Id));
+            ////await this.repositories.Keywords.ExecuteDeleteCommandAsync(
+            ////    new EqualPredicate("ArticleId", article.Id));
 
-            return this;
+            ////return this;
+            return null;
         }
     }
 }

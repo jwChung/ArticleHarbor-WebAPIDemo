@@ -20,11 +20,6 @@
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
-            yield return this.Methods.Select(x => x.ExecuteAsync(default(IEnumerable<User>)));
-            yield return this.Methods.Select(x => x.ExecuteAsync(default(IEnumerable<Article>)));
-            yield return this.Methods.Select(x => x.ExecuteAsync(default(IEnumerable<Keyword>)));
-            yield return this.Methods.Select(x => x.ExecuteAsync(default(IEnumerable<Bookmark>)));
-
             yield return this.Methods.Select(x => x.ExecuteAsync(default(User)));
             yield return this.Methods.Select(x => x.ExecuteAsync(default(Article)));
             yield return this.Methods.Select(x => x.ExecuteAsync(default(Keyword)));
@@ -34,35 +29,6 @@
 
     public class CompositeModelCommandOfEnumerableObjectTest : CompositeModelCommandTest<IEnumerable<object>>
     {
-        [Test]
-        public void ExecuteAsyncUsersReturnsCorrectResult(
-            IEnumerable<User> users,
-            IEnumerable<object>[] values,
-            IFixture fixture)
-        {
-            // Fixture setup
-            fixture.Inject<Func<IEnumerable<object>, IEnumerable<object>, IEnumerable<object>>>(
-                (x, y) => x.Concat(y));
-            var sut = fixture.Create<CompositeModelCommand<IEnumerable<object>>>();
-
-            sut.Commands.Select((c, i) => c.Of(
-                x => x.ExecuteAsync(users) == Task.FromResult(
-                    Mock.Of<IModelCommand<IEnumerable<object>>>(m => m.Value == values[i]))))
-                .ToArray();
-
-            var expected = sut.Value.Concat(
-                sut.Commands.SelectMany(c => c.ExecuteAsync(users).Result.Value));
-
-            // Exercise system
-            var actual = sut.ExecuteAsync(users).Result;
-
-            // Verify outcome
-            var compositeModelCommand = Assert
-                .IsAssignableFrom<CompositeModelCommand<IEnumerable<object>>>(actual);
-            Assert.Equal(sut.Commands, compositeModelCommand.Commands);
-            Assert.Equal(expected.Count(), compositeModelCommand.Value.Count());
-            Assert.Empty(expected.Except(compositeModelCommand.Value));
-        }
     }
 
     public class CompositeModelCommandOfInt32Test : CompositeModelCommandTest<int>
@@ -72,99 +38,55 @@
             int[] values,
             IFixture fixture)
         {
-            fixture.Inject<Func<int, int, int>>((x, y) => x + y);
-            var sut = fixture.Create<CompositeModelCommand<int>>();
-            var expected = sut.Value + values.Sum();
+            ////fixture.Inject<Func<int, int, int>>((x, y) => x + y);
+            ////var sut = fixture.Create<CompositeModelCommand<int>>();
+            ////var expected = sut.Value + values.Sum();
 
-            yield return TestCase.WithAuto<IEnumerable<User>>().Create(model =>
-            {
-                sut.Commands.Select((c, i) => c.Of(
-                    x => x.ExecuteAsync(model) == Task.FromResult(
-                        Mock.Of<IModelCommand<int>>(m => m.Value == values[i]))))
-                    .ToArray();
+            ////yield return TestCase.WithAuto<User>().Create(model =>
+            ////{
+            ////    sut.Commands.Select((c, i) => c.Of(
+            ////        x => x.ExecuteAsync(model) == Task.FromResult(
+            ////            Mock.Of<IModelCommand<int>>(m => m.Value == values[i]))))
+            ////        .ToArray();
 
-                var actual = sut.ExecuteAsync(model).Result;
+            ////    var actual = sut.ExecuteAsync(model).Result;
 
-                VerifyCompositeModelCommand(sut, expected, actual);
-            });
-            yield return TestCase.WithAuto<IEnumerable<Article>>().Create(model =>
-            {
-                sut.Commands.Select((c, i) => c.Of(
-                    x => x.ExecuteAsync(model) == Task.FromResult(
-                        Mock.Of<IModelCommand<int>>(m => m.Value == values[i]))))
-                    .ToArray();
+            ////    VerifyCompositeModelCommand(sut, expected, actual);
+            ////});
+            ////yield return TestCase.WithAuto<Article>().Create(model =>
+            ////{
+            ////    sut.Commands.Select((c, i) => c.Of(
+            ////        x => x.ExecuteAsync(model) == Task.FromResult(
+            ////            Mock.Of<IModelCommand<int>>(m => m.Value == values[i]))))
+            ////        .ToArray();
 
-                var actual = sut.ExecuteAsync(model).Result;
+            ////    var actual = sut.ExecuteAsync(model).Result;
 
-                VerifyCompositeModelCommand(sut, expected, actual);
-            });
-            yield return TestCase.WithAuto<IEnumerable<Keyword>>().Create(model =>
-            {
-                sut.Commands.Select((c, i) => c.Of(
-                    x => x.ExecuteAsync(model) == Task.FromResult(
-                        Mock.Of<IModelCommand<int>>(m => m.Value == values[i]))))
-                    .ToArray();
+            ////    VerifyCompositeModelCommand(sut, expected, actual);
+            ////});
+            ////yield return TestCase.WithAuto<Keyword>().Create(model =>
+            ////{
+            ////    sut.Commands.Select((c, i) => c.Of(
+            ////        x => x.ExecuteAsync(model) == Task.FromResult(
+            ////            Mock.Of<IModelCommand<int>>(m => m.Value == values[i]))))
+            ////        .ToArray();
 
-                var actual = sut.ExecuteAsync(model).Result;
+            ////    var actual = sut.ExecuteAsync(model).Result;
 
-                VerifyCompositeModelCommand(sut, expected, actual);
-            });
-            yield return TestCase.WithAuto<IEnumerable<Bookmark>>().Create(model =>
-            {
-                sut.Commands.Select((c, i) => c.Of(
-                    x => x.ExecuteAsync(model) == Task.FromResult(
-                        Mock.Of<IModelCommand<int>>(m => m.Value == values[i]))))
-                    .ToArray();
+            ////    VerifyCompositeModelCommand(sut, expected, actual);
+            ////});
+            ////yield return TestCase.WithAuto<Bookmark>().Create(model =>
+            ////{
+            ////    sut.Commands.Select((c, i) => c.Of(
+            ////        x => x.ExecuteAsync(model) == Task.FromResult(
+            ////            Mock.Of<IModelCommand<int>>(m => m.Value == values[i]))))
+            ////        .ToArray();
 
-                var actual = sut.ExecuteAsync(model).Result;
+            ////    var actual = sut.ExecuteAsync(model).Result;
 
-                VerifyCompositeModelCommand(sut, expected, actual);
-            });
-
-            yield return TestCase.WithAuto<User>().Create(model =>
-            {
-                sut.Commands.Select((c, i) => c.Of(
-                    x => x.ExecuteAsync(model) == Task.FromResult(
-                        Mock.Of<IModelCommand<int>>(m => m.Value == values[i]))))
-                    .ToArray();
-
-                var actual = sut.ExecuteAsync(model).Result;
-
-                VerifyCompositeModelCommand(sut, expected, actual);
-            });
-            yield return TestCase.WithAuto<Article>().Create(model =>
-            {
-                sut.Commands.Select((c, i) => c.Of(
-                    x => x.ExecuteAsync(model) == Task.FromResult(
-                        Mock.Of<IModelCommand<int>>(m => m.Value == values[i]))))
-                    .ToArray();
-
-                var actual = sut.ExecuteAsync(model).Result;
-
-                VerifyCompositeModelCommand(sut, expected, actual);
-            });
-            yield return TestCase.WithAuto<Keyword>().Create(model =>
-            {
-                sut.Commands.Select((c, i) => c.Of(
-                    x => x.ExecuteAsync(model) == Task.FromResult(
-                        Mock.Of<IModelCommand<int>>(m => m.Value == values[i]))))
-                    .ToArray();
-
-                var actual = sut.ExecuteAsync(model).Result;
-
-                VerifyCompositeModelCommand(sut, expected, actual);
-            });
-            yield return TestCase.WithAuto<Bookmark>().Create(model =>
-            {
-                sut.Commands.Select((c, i) => c.Of(
-                    x => x.ExecuteAsync(model) == Task.FromResult(
-                        Mock.Of<IModelCommand<int>>(m => m.Value == values[i]))))
-                    .ToArray();
-
-                var actual = sut.ExecuteAsync(model).Result;
-
-                VerifyCompositeModelCommand(sut, expected, actual);
-            });
+            ////    VerifyCompositeModelCommand(sut, expected, actual);
+            ////});
+            return null;
         }
 
         private static void VerifyCompositeModelCommand(
@@ -172,10 +94,10 @@
             int expected,
             IModelCommand<int> actual)
         {
-            var compositeModelCommand = Assert
-                .IsAssignableFrom<CompositeModelCommand<int>>(actual);
-            Assert.Equal(sut.Commands, compositeModelCommand.Commands);
-            Assert.Equal(expected, compositeModelCommand.Value);
+            ////var compositeModelCommand = Assert
+            ////    .IsAssignableFrom<CompositeModelCommand<int>>(actual);
+            ////Assert.Equal(sut.Commands, compositeModelCommand.Commands);
+            ////Assert.Equal(expected, compositeModelCommand.Value);
         }
     }
 }

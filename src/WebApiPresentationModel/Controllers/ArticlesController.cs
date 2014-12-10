@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Http;
     using DomainModel;
@@ -96,22 +95,23 @@
             await this.deleteCommand.ExecuteAsync(article);
         }
 
-        private async Task<ArticleDetailViewModel> PostAsyncWith(PostArticleViewModel postArticle)
+        private Task<ArticleDetailViewModel> PostAsyncWith(PostArticleViewModel postArticle)
         {
-            var article = new Article(
-                -1,
-                postArticle.Provider,
-                postArticle.Guid,
-                postArticle.Subject,
-                postArticle.Body,
-                postArticle.Date,
-                postArticle.Url,
-                this.User.Identity.Name);
+            ////var article = new Article(
+            ////    -1,
+            ////    postArticle.Provider,
+            ////    postArticle.Guid,
+            ////    postArticle.Subject,
+            ////    postArticle.Body,
+            ////    postArticle.Date,
+            ////    postArticle.Url,
+            ////    this.User.Identity.Name);
 
-            var models = (await article.ExecuteAsync(this.insertCommand)).Value;
+            ////var models = (await article.ExecuteAsync(this.insertCommand)).Value;
 
-            return new ArticleDetailViewModel(
-                models.OfType<Article>().Single(), models.OfType<Keyword>());
+            ////return new ArticleDetailViewModel(
+            ////    models.OfType<Article>().Single(), models.OfType<Keyword>());
+            return null;
         }
 
         private async Task PutAsyncWith(PutArticleViewModel putArticle)

@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class RelayKeywordsCommand : ModelCommand<IEnumerable<IModel>>
+    public class RelayKeywordsCommand : ModelCommand<IModel>
     {
         private readonly IModelCommand<IEnumerable<IModel>> innerCommand;
         private readonly Func<string, IEnumerable<string>> nounExtractor;
@@ -24,11 +24,6 @@
             this.nounExtractor = nounExtractor;
         }
 
-        public override IEnumerable<IModel> Value
-        {
-            get { return this.innerCommand.Value; }
-        }
-
         public IModelCommand<IEnumerable<IModel>> InnerCommand
         {
             get { return this.innerCommand; }
@@ -39,7 +34,7 @@
             get { return this.nounExtractor; }
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
@@ -47,14 +42,15 @@
             return this.ExecuteAsyncWith(article);
         }
 
-        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Article article)
+        private Task<IEnumerable<IModel>> ExecuteAsyncWith(Article article)
         {
-            var keywords = this.nounExtractor(article.Subject)
-                .Select(w => new Keyword(article.Id, w));
+            ////var keywords = this.nounExtractor(article.Subject)
+            ////    .Select(w => new Keyword(article.Id, w));
 
-            var newInnerComand = await this.innerCommand.ExecuteAsync(keywords);
+            ////var newInnerComand = await this.innerCommand.ExecuteAsync(keywords);
 
-            return new RelayKeywordsCommand(newInnerComand, this.nounExtractor);
+            ////return new RelayKeywordsCommand(newInnerComand, this.nounExtractor);
+            return null;
         }
     }
 }

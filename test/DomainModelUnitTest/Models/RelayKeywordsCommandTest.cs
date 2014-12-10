@@ -18,14 +18,6 @@
         }
 
         [Test]
-        public void ValueIsFromInnerCommand(RelayKeywordsCommand sut)
-        {
-            var expected = sut.InnerCommand.Value;
-            var actual = sut.Value;
-            Assert.Equal(expected, actual);
-        }
-
-        [Test]
         public void ExecuteAsyncArticleCorrectlyRelaysKeywords(
             Article article,
             IEnumerable<string> words,
@@ -44,7 +36,7 @@
             var keywords = words.Select(
                 w => new Keyword(article.Id, w).AsSource().OfLikeness<Keyword>().CreateProxy());
 
-            sut.InnerCommand.Of(x => x.ExecuteAsync(keywords) == Task.FromResult(newInnerCommand));
+            ////sut.InnerCommand.Of(x => x.ExecuteAsync(keywords) == Task.FromResult(newInnerCommand));
 
             // Exercise system
             var actual = sut.ExecuteAsync(article).Result;
@@ -52,11 +44,6 @@
             // Verify outcome
             var relayKeywordCommand = Assert.IsAssignableFrom<RelayKeywordsCommand>(actual);
             Assert.Equal(newInnerCommand, relayKeywordCommand.InnerCommand);
-        }
-
-        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
-        {
-            yield return this.Properties.Select(x => x.Value);
         }
     }
 }

@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using Repositories;
 
-    public class UpdateConfirmableCommand : ModelCommand<IEnumerable<IModel>>
+    public class UpdateConfirmableCommand : ModelCommand<IModel>
     {
         private readonly IRepositories repositories;
         private readonly IPrincipal principal;
@@ -23,11 +23,6 @@
             this.principal = principal;
         }
 
-        public override IEnumerable<IModel> Value
-        {
-            get { yield break; }
-        }
-
         public IPrincipal Principal
         {
             get { return this.principal; }
@@ -38,12 +33,12 @@
             get { return this.repositories; }
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(User user)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(User user)
         {
             throw new NotSupportedException();
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Article article)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
         {
             if (article == null)
                 throw new ArgumentNullException("article");
@@ -58,7 +53,7 @@
             throw new UnauthorizedException();
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Keyword keyword)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(Keyword keyword)
         {
             if (keyword == null)
                 throw new ArgumentNullException("keyword");
@@ -66,12 +61,12 @@
             return this.ExecuteAsyncWith(keyword);
         }
 
-        public override Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsync(Bookmark bookmark)
+        public override Task<IEnumerable<IModel>> ExecuteAsync(Bookmark bookmark)
         {
             throw new NotSupportedException();
         }
 
-        private async Task<IModelCommand<IEnumerable<IModel>>> ExecuteAsyncWith(Keyword keyword)
+        private async Task<IEnumerable<IModel>> ExecuteAsyncWith(Keyword keyword)
         {
             var article = await this.repositories.Articles.FindAsync(new Keys<int>(keyword.ArticleId));
             return await this.ExecuteAsync(article);

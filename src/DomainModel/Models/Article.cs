@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Threading.Tasks;
 
@@ -176,12 +177,13 @@
             return new Keys<int>(this.id);
         }
 
-        public Task<IModelCommand<TValue>> ExecuteAsync<TValue>(IModelCommand<TValue> command)
+        public Task<IEnumerable<TReturn>> ExecuteAsync<TReturn>(IModelCommand<TReturn> command)
         {
-            if (command == null)
-                throw new ArgumentNullException("command");
+            ////if (command == null)
+            ////    throw new ArgumentNullException("command");
 
-            return command.ExecuteAsync(this);
+            ////return command.ExecuteAsync(this);
+            return null;
         }
     }
 }

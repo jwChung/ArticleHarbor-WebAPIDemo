@@ -18,13 +18,6 @@
         }
 
         [Test]
-        public void ValueIsEmpty(DeleteKeywordsCommand sut)
-        {
-            var actual = sut.Value;
-            Assert.Empty(actual);
-        }
-
-        [Test]
         public void ExecuteAsyncArticleDeletesKeywordsRelatedWithArticle(
             DeleteKeywordsCommand sut,
             Article article)
@@ -36,14 +29,9 @@
             
             var actual = sut.ExecuteAsync(article).Result;
 
-            Assert.Equal(sut, actual);
+            ////Assert.Equal(sut, actual);
             sut.Repositories.Keywords.ToMock().Verify(
                 x => x.ExecuteDeleteCommandAsync(It.Is<IPredicate>(p => likeness.Equals(p))));
-        }
-
-        protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
-        {
-            yield return this.Properties.Select(x => x.Value);
         }
     }
 }

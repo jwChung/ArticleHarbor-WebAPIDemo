@@ -1,16 +1,17 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public class ConditionalCommand<TValue> : ModelCommand<TValue>
+    public class ConditionalCommand<TReturn> : ModelCommand<TReturn>
     {
         private readonly IModelCondition condition;
-        private readonly IModelCommand<TValue> innerCommand;
+        private readonly IModelCommand<TReturn> innerCommand;
 
         public ConditionalCommand(
             IModelCondition condition,
-            IModelCommand<TValue> innerCommand)
+            IModelCommand<TReturn> innerCommand)
         {
             if (condition == null)
                 throw new ArgumentNullException("condition");
@@ -27,82 +28,85 @@
             get { return this.condition; }
         }
 
-        public IModelCommand<TValue> InnerCommand
+        public IModelCommand<TReturn> InnerCommand
         {
             get { return this.innerCommand; }
         }
 
-        public override TValue Value
+        public override Task<IEnumerable<TReturn>> ExecuteAsync(User user)
         {
-            get { return this.innerCommand.Value; }
+            ////if (user == null)
+            ////    throw new ArgumentNullException("user");
+
+            ////return this.ExecuteAsyncWith(user);
+            return null;
         }
 
-        public override Task<IModelCommand<TValue>> ExecuteAsync(User user)
+        public override Task<IEnumerable<TReturn>> ExecuteAsync(Article article)
         {
-            if (user == null)
-                throw new ArgumentNullException("user");
+            ////if (article == null)
+            ////    throw new ArgumentNullException("article");
 
-            return this.ExecuteAsyncWith(user);
+            ////return this.ExecuteAsyncWith(article);
+            return null;
         }
 
-        public override Task<IModelCommand<TValue>> ExecuteAsync(Article article)
+        public override Task<IEnumerable<TReturn>> ExecuteAsync(Keyword keyword)
         {
-            if (article == null)
-                throw new ArgumentNullException("article");
+            ////if (keyword == null)
+            ////    throw new ArgumentNullException("keyword");
 
-            return this.ExecuteAsyncWith(article);
+            ////return this.ExecuteAsyncWith(keyword);
+            return null;
         }
 
-        public override Task<IModelCommand<TValue>> ExecuteAsync(Keyword keyword)
+        public override Task<IEnumerable<TReturn>> ExecuteAsync(Bookmark bookmark)
         {
-            if (keyword == null)
-                throw new ArgumentNullException("keyword");
+            ////if (bookmark == null)
+            ////    throw new ArgumentNullException("bookmark");
 
-            return this.ExecuteAsyncWith(keyword);
+            ////return this.ExecuteAsyncWith(bookmark);
+            return null;
         }
 
-        public override Task<IModelCommand<TValue>> ExecuteAsync(Bookmark bookmark)
+        private Task<IEnumerable<TReturn>> ExecuteAsyncWith(User user)
         {
-            if (bookmark == null)
-                throw new ArgumentNullException("bookmark");
+            ////if (!await this.condition.CanExecuteAsync(user))
+            ////    return this;
 
-            return this.ExecuteAsyncWith(bookmark);
+            ////var newInnerCommand = await this.innerCommand.ExecuteAsync(user);
+            ////return new ConditionalCommand<TReturn>(this.condition, newInnerCommand);
+            return null;
         }
 
-        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(User user)
+        private Task<IEnumerable<TReturn>> ExecuteAsyncWith(Article article)
         {
-            if (!await this.condition.CanExecuteAsync(user))
-                return this;
+            ////if (!await this.condition.CanExecuteAsync(article))
+            ////    return this;
 
-            var newInnerCommand = await this.innerCommand.ExecuteAsync(user);
-            return new ConditionalCommand<TValue>(this.condition, newInnerCommand);
+            ////var newInnerCommand = await this.innerCommand.ExecuteAsync(article);
+            ////return new ConditionalCommand<TReturn>(this.condition, newInnerCommand);
+            return null;
         }
 
-        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(Article article)
+        private Task<IEnumerable<TReturn>> ExecuteAsyncWith(Keyword keyword)
         {
-            if (!await this.condition.CanExecuteAsync(article))
-                return this;
+            ////if (!await this.condition.CanExecuteAsync(keyword))
+            ////    return this;
 
-            var newInnerCommand = await this.innerCommand.ExecuteAsync(article);
-            return new ConditionalCommand<TValue>(this.condition, newInnerCommand);
+            ////var newInnerCommand = await this.innerCommand.ExecuteAsync(keyword);
+            ////return new ConditionalCommand<TReturn>(this.condition, newInnerCommand);
+            return null;
         }
 
-        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(Keyword keyword)
+        private Task<IEnumerable<TReturn>> ExecuteAsyncWith(Bookmark bookmark)
         {
-            if (!await this.condition.CanExecuteAsync(keyword))
-                return this;
+            ////if (!await this.condition.CanExecuteAsync(bookmark))
+            ////    return this;
 
-            var newInnerCommand = await this.innerCommand.ExecuteAsync(keyword);
-            return new ConditionalCommand<TValue>(this.condition, newInnerCommand);
-        }
-
-        private async Task<IModelCommand<TValue>> ExecuteAsyncWith(Bookmark bookmark)
-        {
-            if (!await this.condition.CanExecuteAsync(bookmark))
-                return this;
-
-            var newInnerCommand = await this.innerCommand.ExecuteAsync(bookmark);
-            return new ConditionalCommand<TValue>(this.condition, newInnerCommand);
+            ////var newInnerCommand = await this.innerCommand.ExecuteAsync(bookmark);
+            ////return new ConditionalCommand<TReturn>(this.condition, newInnerCommand);
+            return null;
         }
     }
 }
