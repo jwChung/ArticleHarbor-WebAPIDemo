@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Repositories;
 
@@ -22,32 +23,28 @@
             get { return this.repositories; }
         }
 
-        public override Task<IEnumerable<IModel>> ExecuteAsync(User user)
+        public async override Task<IEnumerable<IModel>> ExecuteAsync(User user)
         {
-            ////await this.repositories.Users.UpdateAsync(user);
-            ////return this;
-            return null;
+            await this.repositories.Users.UpdateAsync(user);
+            return Enumerable.Empty<IModel>();
         }
 
-        public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
+        public async override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
         {
-            ////await this.repositories.Articles.UpdateAsync(article);
-            ////return this;
-            return null;
+            await this.repositories.Articles.UpdateAsync(article);
+            return Enumerable.Empty<IModel>();
         }
 
-        public override Task<IEnumerable<IModel>> ExecuteAsync(Keyword keyword)
+        public async override Task<IEnumerable<IModel>> ExecuteAsync(Keyword keyword)
         {
-            ////await this.repositories.Keywords.UpdateAsync(keyword);
-            ////return this;
-            return null;
+            await this.repositories.Keywords.UpdateAsync(keyword);
+            return Enumerable.Empty<IModel>();
         }
 
-        public override Task<IEnumerable<IModel>> ExecuteAsync(Bookmark bookmark)
+        public async override Task<IEnumerable<IModel>> ExecuteAsync(Bookmark bookmark)
         {
-            ////await this.repositories.Bookmarks.UpdateAsync(bookmark);
-            ////return this;
-            return null;
+            await this.repositories.Bookmarks.UpdateAsync(bookmark);
+            return Enumerable.Empty<IModel>();
         }
     }
 }

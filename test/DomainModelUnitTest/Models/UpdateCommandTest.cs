@@ -11,7 +11,7 @@
         [Test]
         public void SutIsModelCommand(UpdateCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IEnumerable<IModel>>>(sut);
+            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
         }
 
         [Test]
@@ -19,9 +19,9 @@
             UpdateCommand sut,
             User user)
         {
-            ////var actual = sut.ExecuteAsync(user).Result;
-            ////Assert.Equal(sut, actual);
-            ////sut.Repositories.Users.ToMock().Verify(x => x.UpdateAsync(user));
+            var actual = sut.ExecuteAsync(user).Result;
+            Assert.Empty(actual);
+            sut.Repositories.Users.ToMock().Verify(x => x.UpdateAsync(user));
         }
 
         [Test]
@@ -29,9 +29,9 @@
             UpdateCommand sut,
             Article article)
         {
-            ////var actual = sut.ExecuteAsync(article).Result;
-            ////Assert.Equal(sut, actual);
-            ////sut.Repositories.Articles.ToMock().Verify(x => x.UpdateAsync(article));
+            var actual = sut.ExecuteAsync(article).Result;
+            Assert.Empty(actual);
+            sut.Repositories.Articles.ToMock().Verify(x => x.UpdateAsync(article));
         }
 
         [Test]
@@ -39,9 +39,9 @@
             UpdateCommand sut,
             Keyword keyword)
         {
-            ////var actual = sut.ExecuteAsync(keyword).Result;
-            ////Assert.Equal(sut, actual);
-            ////sut.Repositories.Keywords.ToMock().Verify(x => x.UpdateAsync(keyword));
+            var actual = sut.ExecuteAsync(keyword).Result;
+            Assert.Empty(actual);
+            sut.Repositories.Keywords.ToMock().Verify(x => x.UpdateAsync(keyword));
         }
 
         [Test]
@@ -49,9 +49,9 @@
             UpdateCommand sut,
             Bookmark bookmark)
         {
-            ////var actual = sut.ExecuteAsync(bookmark).Result;
-            ////Assert.Equal(sut, actual);
-            ////sut.Repositories.Bookmarks.ToMock().Verify(x => x.UpdateAsync(bookmark));
+            var actual = sut.ExecuteAsync(bookmark).Result;
+            Assert.Empty(actual);
+            sut.Repositories.Bookmarks.ToMock().Verify(x => x.UpdateAsync(bookmark));
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
