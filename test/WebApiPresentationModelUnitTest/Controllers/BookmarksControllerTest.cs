@@ -54,7 +54,7 @@
 
             sut.PostAsync(articleId).Wait();
 
-            sut.BookmarkService.ToMock().Verify(x => x.AddAsync(bookmark));
+            sut.InsertCommand.ToMock().Verify(x => x.ExecuteAsync(bookmark));
         }
 
         [Test]

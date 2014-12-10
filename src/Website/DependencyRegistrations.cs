@@ -175,7 +175,9 @@ namespace ArticleHarbor.Website
                     c.Resolve<IBookmarkService>(),
                     c.Resolve<IRepositories>(),
                     c.Resolve<SelectBookmarkedArticlesCommand>(),
-                    new ModelCommand<IModel>(),
+                    new InsertCommand(
+                        c.Resolve<IRepositories>(),
+                        new ModelCommand<IModel>()),
                     new ModelCommand<IModel>()))
                 .ReusedWithinContainer();
 

@@ -81,11 +81,10 @@
             return (await user.ExecuteAsync(this.selectArticlesCommand)).Cast<Article>();
         }
 
-        public Task PostAsync(int id)
+        public async Task PostAsync(int id)
         {
-            var actor = this.User.Identity.Name;
-            var bookmark = new Bookmark(actor, id);
-            return this.bookmarkService.AddAsync(bookmark);
+            var userId = this.User.Identity.Name;
+            await new Bookmark(userId, id).ExecuteAsync(this.insertCommand);
         }
 
         public Task DeleteAsync(int id)
