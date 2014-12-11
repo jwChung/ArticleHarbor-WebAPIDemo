@@ -43,6 +43,21 @@
             Assert.Equal(expected, actual);
         }
 
+        [Test]
+        public void ExecuteAsyncKeywordReturnsCorrectResult(
+            TransformableCommand<TReturn> sut,
+            Keyword keyword,
+            Keyword newKeyword,
+            IEnumerable<TReturn> expected)
+        {
+            sut.Transformer.Of(x => x.TransformAsync(keyword) == Task.FromResult(newKeyword));
+            sut.InnerCommand.Of(x => x.ExecuteAsync(newKeyword) == Task.FromResult(expected));
+
+            var actual = sut.ExecuteAsync(keyword).Result;
+
+            Assert.Equal(expected, actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
             yield return this.Methods.Select(x => x.ExecuteAsync(default(User)));

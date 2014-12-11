@@ -44,9 +44,10 @@
              return await this.innerCommand.ExecuteAsync(newArticle);
         }
 
-        public Task<IEnumerable<TReturn>> ExecuteAsync(Keyword keyword)
+        public async Task<IEnumerable<TReturn>> ExecuteAsync(Keyword keyword)
         {
-            throw new NotImplementedException();
+            var newKeyword = await this.transformer.TransformAsync(keyword);
+             return await this.innerCommand.ExecuteAsync(newKeyword);
         }
 
         public Task<IEnumerable<TReturn>> ExecuteAsync(Bookmark bookmark)
