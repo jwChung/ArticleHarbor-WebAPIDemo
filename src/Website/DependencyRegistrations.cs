@@ -147,10 +147,10 @@ namespace ArticleHarbor.Website
                         new InsertCommand(
                             c.Resolve<IRepositories>(),
                             new RelayKeywordsCommand(
+                                KoreanNounExtractor.Execute,
                                 new InsertCommand(
                                     c.Resolve<IRepositories>(),
-                                    new ModelCommand<IModel>()),
-                                KoreanNounExtractor.Execute))),
+                                    new ModelCommand<IModel>())))),
                     new CompositeCommand<IModel>(
                         c.Resolve<UpdateConfirmableCommand>(),
                         c.Resolve<UpdateCommand>(),
@@ -159,10 +159,10 @@ namespace ArticleHarbor.Website
                             new CompositeCommand<IModel>(
                                 c.Resolve<DeleteKeywordsCommand>(),
                                 new RelayKeywordsCommand(
+                                    KoreanNounExtractor.Execute,
                                     new InsertCommand(
                                         c.Resolve<IRepositories>(),
-                                        new ModelCommand<IModel>()),
-                                    KoreanNounExtractor.Execute)))),
+                                        new ModelCommand<IModel>()))))),
                     new CompositeCommand<IModel>(
                         c.Resolve<DeleteConfirmableCommand>(),
                         c.Resolve<DeleteKeywordsCommand>(),

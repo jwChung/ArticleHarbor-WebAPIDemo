@@ -7,31 +7,31 @@
 
     public class RelayKeywordsCommand : ModelCommand<IModel>
     {
-        private readonly IModelCommand<IModel> innerCommand;
         private readonly Func<string, IEnumerable<string>> nounExtractor;
+        private readonly IModelCommand<IModel> innerCommand;
 
         public RelayKeywordsCommand(
-            IModelCommand<IModel> innerCommand,
-            Func<string, IEnumerable<string>> nounExtractor)
+            Func<string, IEnumerable<string>> nounExtractor,
+            IModelCommand<IModel> innerCommand)
         {
-            if (innerCommand == null)
-                throw new ArgumentNullException("innerCommand");
-
             if (nounExtractor == null)
                 throw new ArgumentNullException("nounExtractor");
+
+            if (innerCommand == null)
+                throw new ArgumentNullException("innerCommand");
 
             this.innerCommand = innerCommand;
             this.nounExtractor = nounExtractor;
         }
 
-        public IModelCommand<IModel> InnerCommand
-        {
-            get { return this.innerCommand; }
-        }
-
         public Func<string, IEnumerable<string>> NounExtractor
         {
             get { return this.nounExtractor; }
+        }
+
+        public IModelCommand<IModel> InnerCommand
+        {
+            get { return this.innerCommand; }
         }
 
         public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
