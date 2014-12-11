@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
     public class SubjectFromBodyTransformer : ModelTransformer
@@ -23,9 +24,10 @@
                 throw new ArgumentNullException("article");
 
             var min = Math.Min(this.length, article.Body.Length);
-            var newArticle = article.WithSubject(article.Body.Substring(0, min));
+            var newSubject = Regex.Replace(
+                article.Body.Substring(0, min), "[\r\n]+", " ");
 
-            return Task.FromResult(newArticle);
+            return Task.FromResult(article.WithSubject(newSubject));
         }
     }
 }

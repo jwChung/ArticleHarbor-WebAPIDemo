@@ -48,5 +48,25 @@
                 .EqualsWhen((a, b) => a.Body == b.Subject)
                 .ShouldEqual(actual);
         }
+
+        [Test]
+        [InlineData("word\r\nword\nword\rword", "word word word word")]
+        [InlineData("word\r\n\nword", "word word")]
+        [InlineData("word\r\n\n\rword\r\rword", "word word word")]
+        public void TransformAsyncArticleReplacesNewLineWithBlank(
+            string body,
+            string expected,
+            Article article,
+            IFixture fixture)
+        {
+            int length = 100;
+            fixture.Inject(length);
+            article = article.WithBody(body);
+            var sut = fixture.Create<SubjectFromBodyTransformer>();
+
+            var actual = sut.TransformAsync(article).Result;
+
+            Assert.Equal(expected, actual.Subject);
+        }
     }
 }
