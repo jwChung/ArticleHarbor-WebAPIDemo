@@ -48,7 +48,7 @@
         {
             var actual = sut.Users;
 
-            var articles = Assert.IsAssignableFrom<UserRepository2>(actual);
+            var articles = Assert.IsAssignableFrom<UserRepository>(actual);
             Assert.Equal(sut.Context, articles.Context);
             Assert.Equal(sut.Context.Users, articles.DbSet);
         }

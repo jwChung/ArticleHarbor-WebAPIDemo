@@ -46,7 +46,7 @@
         {
             get
             {
-                return new UserRepository2(
+                return new UserRepository(
                     this.context,
                     (DbSet<EFDataAccess.User>)this.context.Users);
             }

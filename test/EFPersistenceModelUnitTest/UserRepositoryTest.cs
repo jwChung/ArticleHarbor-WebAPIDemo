@@ -8,10 +8,10 @@
     using Xunit;
     using User = DomainModel.Models.User;
 
-    public class UserRepository2Test : IdiomaticTest<UserRepository2>
+    public class UserRepositoryTest : IdiomaticTest<UserRepository>
     {
         [Test]
-        public void SutIsRepository(UserRepository2 sut)
+        public void SutIsRepository(UserRepository sut)
         {
             Assert.IsAssignableFrom<Repository<Keys<string>, User, EFDataAccess.User>>(sut);
         }
@@ -19,7 +19,7 @@
         [Test]
         public void ConvertToModelAsyncReturnsCorrectResult(
             ArticleHarborDbContext context,
-            UserRepository2 sut)
+            UserRepository sut)
         {
             EFDataAccess.User persistence = context.UserManager.FindByIdAsync("user2").Result;
 
@@ -33,7 +33,7 @@
         [Test(Skip = "NotImplementedException")]
         public void ConvertToPersistenceAsyncReturnsCorrectResult(
             ArticleHarborDbContext context,
-            UserRepository2 sut)
+            UserRepository sut)
         {
             var user = new User(
                 "user1", Role.Administrator, Guid.Parse("692c7798206844b88ba9a660e3374eef"));
@@ -47,14 +47,14 @@
         }
 
         [Test]
-        public void SelectAsyncReturnsCorrectResult(UserRepository2 sut)
+        public void SelectAsyncReturnsCorrectResult(UserRepository sut)
         {
             var actual = sut.SelectAsync().Result;
             Assert.Equal(3, actual.Count());
         }
 
         [Test]
-        public void ExecuteSelectCommandAsyncReturnsCorrectResult(UserRepository2 sut)
+        public void ExecuteSelectCommandAsyncReturnsCorrectResult(UserRepository sut)
         {
             var predicate = new EqualPredicate("id", "user1");
             var actual = sut.ExecuteSelectCommandAsync(predicate).Result;
@@ -62,7 +62,7 @@
         }
 
         [Test]
-        public void FindAsyncReturnsCorrectUser(UserRepository2 sut)
+        public void FindAsyncReturnsCorrectUser(UserRepository sut)
         {
             var actual = sut.FindAsync(new Keys<string>("User1")).Result;
             Assert.Equal("user1", actual.Id);

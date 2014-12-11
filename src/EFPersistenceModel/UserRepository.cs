@@ -9,11 +9,11 @@
     using EFDataAccess;
     using User = DomainModel.Models.User;
 
-    public class UserRepository2 : Repository<Keys<string>, User, EFDataAccess.User>
+    public class UserRepository : Repository<Keys<string>, User, EFDataAccess.User>
     {
         private readonly ArticleHarborDbContext context;
 
-        public UserRepository2(ArticleHarborDbContext context, DbSet<EFDataAccess.User> dbSet)
+        public UserRepository(ArticleHarborDbContext context, DbSet<EFDataAccess.User> dbSet)
             : base(context, dbSet)
         {
             this.context = context;
