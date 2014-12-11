@@ -20,7 +20,7 @@
         }
 
         [Test]
-        public async Task OnActionExecutedAsyncCommitsTransactionWhenUnitOfWorkWasConstructedInActionMethod(
+        public async Task OnActionExecutedAsyncCommitsTransactionWhenUnitOfWorkWasConstructed(
             CommitTransactionAttribute sut,
             HttpActionExecutedContext actionExecutedContext,
             IDependencyScope dependencyScope,
@@ -37,7 +37,7 @@
         }
 
         [Test]
-        public async Task OnActionExecutedAsyncDoesNotCommitTransactionWhenUnitOfWorkWasNotConstructedInActionMethod(
+        public async Task OnActionExecutedAsyncDoesNotCommitTransactionWhenUnitOfWorkWasNotConstructed(
             CommitTransactionAttribute sut,
             HttpActionExecutedContext actionExecutedContext,
             IDependencyScope dependencyScope,
