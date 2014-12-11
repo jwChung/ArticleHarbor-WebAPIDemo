@@ -62,10 +62,6 @@ namespace ArticleHarbor.Website
                 c => new UserRepository(c.Resolve<ArticleHarborDbContext>()))
                 .ReusedWithinContainer();
 
-            container.Register<IBookmarkRepository>(
-                c => new BookmarkRepository(c.Resolve<ArticleHarborDbContext>()))
-                .ReusedWithinContainer();
-
             container.Register<IRepositories>(
                 c =>
                 {
