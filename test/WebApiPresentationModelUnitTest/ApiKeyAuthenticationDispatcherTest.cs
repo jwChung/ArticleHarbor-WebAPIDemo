@@ -8,7 +8,6 @@
     using System.Web.Http.Controllers;
     using System.Web.Http.Hosting;
     using DomainModel;
-    using DomainModel.Models;
     using Moq;
     using Moq.Protected;
     using Ploeh.AutoFixture;

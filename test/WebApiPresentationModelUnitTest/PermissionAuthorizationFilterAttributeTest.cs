@@ -8,7 +8,6 @@
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
     using DomainModel;
-    using DomainModel.Models;
     using Jwc.Experiment.Xunit;
     using Ploeh.AutoFixture;
     using Xunit;

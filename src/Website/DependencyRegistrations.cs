@@ -7,10 +7,10 @@ namespace ArticleHarbor.Website
     using System.Security.Principal;
     using System.Web;
     using ArticleHarbor.DomainModel;
-    using ArticleHarbor.DomainModel.Models;
     using ArticleHarbor.EFDataAccess;
     using ArticleHarbor.EFPersistenceModel;
     using ArticleHarbor.WebApiPresentationModel;
+    using DomainModel.Commands;
     using DomainModel.Repositories;
     using Jwc.Funz;
     using WebApiPresentationModel.Controllers;

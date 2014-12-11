@@ -5,7 +5,6 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
-    using DomainModel.Models;
     using Microsoft.Owin.Security.OAuth;
     using Moq;
     using Ploeh.AutoFixture;

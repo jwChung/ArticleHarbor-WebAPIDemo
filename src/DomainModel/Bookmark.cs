@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Models;
+    using Commands;
     using Queries;
 
     public class Bookmark : IModel

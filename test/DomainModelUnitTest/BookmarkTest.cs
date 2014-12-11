@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Reflection;
     using System.Threading.Tasks;
-    using Models;
+    using Commands;
     using Ploeh.AutoFixture;
     using Queries;
     using Xunit;

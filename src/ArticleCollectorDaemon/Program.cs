@@ -9,7 +9,7 @@
     using ArticleHarbor.DomainModel.Collectors;
     using ArticleHarbor.EFDataAccess;
     using ArticleHarbor.EFPersistenceModel;
-    using DomainModel.Models;
+    using DomainModel.Commands;
     using Article = DomainModel.Article;
 
     internal class Program

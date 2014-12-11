@@ -2,7 +2,6 @@
 {
     using System;
     using System.Data.Entity;
-    using DomainModel.Models;
     using DomainModel.Queries;
     using DomainModel.Repositories;
     using EFDataAccess;

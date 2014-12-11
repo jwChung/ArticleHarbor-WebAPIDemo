@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Reflection;
     using DomainModel;
-    using DomainModel.Models;
     using DomainModel.Repositories;
     using Xunit;
 

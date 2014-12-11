@@ -5,8 +5,8 @@
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
+    using Commands;
     using Jwc.Experiment.Xunit;
-    using Models;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Kernel;
     using Ploeh.SemanticComparison.Fluent;

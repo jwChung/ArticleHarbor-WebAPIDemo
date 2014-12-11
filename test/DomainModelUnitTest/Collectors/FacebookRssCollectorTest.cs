@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-    using Models;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 
