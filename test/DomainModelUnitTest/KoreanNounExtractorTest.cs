@@ -41,6 +41,14 @@
             Assert.Throws<ArgumentNullException>(() => KoreanNounExtractor.Execute(null).ToArray());
         }
 
+        [Test]
+        public void ExecuteReturnsOnlyUniqueWords(string word)
+        {
+            var document = word + " " + word + " " + word;
+            var actual = KoreanNounExtractor.Execute(document);
+            Assert.Equal(word, actual.Single());
+        }
+
         [Test(RunOn.CI)]
         public void SutShouldBeThreadSafe()
         {
