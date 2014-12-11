@@ -1,9 +1,6 @@
-﻿namespace ArticleHarbor.DomainModel.Models
+﻿namespace ArticleHarbor.DomainModel.Queries
 {
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
-    using Ploeh.Albedo;
     using Xunit;
 
     public class KeysTest : IdiomaticTest<Keys>

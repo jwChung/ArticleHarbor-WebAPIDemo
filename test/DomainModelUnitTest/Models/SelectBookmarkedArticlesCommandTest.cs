@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using Moq;
     using Ploeh.SemanticComparison.Fluent;
+    using Queries;
     using Xunit;
 
     public class SelectBookmarkedArticlesCommandTest

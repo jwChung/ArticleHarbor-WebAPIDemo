@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
     using Moq;
     using Ploeh.SemanticComparison.Fluent;
+    using Queries;
     using Xunit;
 
     public class DeleteKeywordsCommandTest : IdiomaticTest<DeleteKeywordsCommand>

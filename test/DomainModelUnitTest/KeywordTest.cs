@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Models;
+    using Queries;
     using Xunit;
 
     public class KeywordTest : IdiomaticTest<Keyword>

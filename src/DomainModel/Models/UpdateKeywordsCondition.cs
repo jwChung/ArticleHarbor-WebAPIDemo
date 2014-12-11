@@ -2,6 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
+    using Queries;
     using Repositories;
 
     public class UpdateKeywordsCondition : CommandCondition

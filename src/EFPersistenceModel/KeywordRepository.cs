@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using DomainModel;
     using DomainModel.Models;
+    using DomainModel.Queries;
 
     public class KeywordRepository : Repository<Keys<int, string>, Keyword, EFDataAccess.Keyword>
     {

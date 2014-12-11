@@ -4,6 +4,7 @@
     using System.Linq;
     using DomainModel;
     using DomainModel.Models;
+    using DomainModel.Queries;
     using EFDataAccess;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;

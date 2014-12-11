@@ -10,6 +10,7 @@
     using System.Threading.Tasks;
     using DomainModel;
     using DomainModel.Models;
+    using DomainModel.Queries;
     using DomainModel.Repositories;
     using EFDataAccess;
     using Jwc.Experiment.Xunit;

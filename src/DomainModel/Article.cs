@@ -5,6 +5,7 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Threading.Tasks;
     using Models;
+    using Queries;
 
     public class Article : IModel
     {

@@ -6,6 +6,7 @@
     using System.Reflection;
     using DomainModel;
     using DomainModel.Models;
+    using DomainModel.Queries;
     using Jwc.Experiment;
     using Jwc.Experiment.AutoFixture;
     using Jwc.Experiment.Xunit;

@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System.Threading.Tasks;
+    using Queries;
     using Xunit;
 
     public class UpdateKeywordsConditionTest : IdiomaticTest<UpdateKeywordsCondition>

@@ -10,6 +10,7 @@
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Kernel;
     using Ploeh.SemanticComparison.Fluent;
+    using Queries;
     using Xunit;
 
     public class ArticleTest : IdiomaticTest<Article>

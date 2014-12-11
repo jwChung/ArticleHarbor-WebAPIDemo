@@ -5,6 +5,7 @@
     using System.Reflection;
     using System.Threading.Tasks;
     using Moq;
+    using Queries;
     using Xunit;
 
     public class DeleteConfirmableCommandTest : IdiomaticTest<DeleteConfirmableCommand>

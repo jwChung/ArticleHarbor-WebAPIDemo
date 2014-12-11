@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Ploeh.AutoFixture;
+    using Queries;
     using Xunit;
 
     public class CompositeModelTest : IdiomaticTest<CompositeModel>

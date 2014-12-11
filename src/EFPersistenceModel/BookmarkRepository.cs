@@ -4,6 +4,7 @@
     using System.Data.Entity;
     using System.Threading.Tasks;
     using DomainModel.Models;
+    using DomainModel.Queries;
     using EFDataAccess;
     using Bookmark = DomainModel.Bookmark;
 

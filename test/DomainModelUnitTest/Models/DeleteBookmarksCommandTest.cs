@@ -4,6 +4,7 @@
     using System.Reflection;
     using Moq;
     using Ploeh.SemanticComparison.Fluent;
+    using Queries;
     using Xunit;
 
     public class DeleteBookmarksCommandTest : IdiomaticTest<DeleteBookmarksCommand>

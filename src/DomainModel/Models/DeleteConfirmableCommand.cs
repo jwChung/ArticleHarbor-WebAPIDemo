@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Security.Principal;
     using System.Threading.Tasks;
+    using Queries;
     using Repositories;
 
     public class DeleteConfirmableCommand : ModelCommand<IModel>

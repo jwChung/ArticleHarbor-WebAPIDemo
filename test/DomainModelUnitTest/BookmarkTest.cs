@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using Models;
     using Ploeh.AutoFixture;
+    using Queries;
     using Xunit;
 
     public class BookmarkTest : IdiomaticTest<Bookmark>

@@ -99,7 +99,7 @@
     <Compile Include="Collectors\CompositeCollectorTest.cs" />
     <Compile Include="Collectors\FacebookRssCollectorTest.cs" />
     <Compile Include="Collectors\HaniRssCollectorTest.cs" />
-    <Compile Include="Models\AndPredicateTest.cs" />
+    <Compile Include="Queries\AndPredicateTest.cs" />
     <Compile Include="BookmarkTest.cs" />
     <Compile Include="Models\CompositeCommandTest.cs" />
     <Compile Include="Models\ConditionalCommandTest.cs" />
@@ -107,11 +107,11 @@
     <Compile Include="Models\DeleteCommandTest.cs" />
     <Compile Include="Models\DeleteConfirmableCommandTest.cs" />
     <Compile Include="Models\DeleteKeywordsCommandTest.cs" />
-    <Compile Include="Models\InClausePredicateTest.cs" />
+    <Compile Include="Queries\InClausePredicateTest.cs" />
     <Compile Include="Models\InsertConfirmableCommandTest.cs" />
     <Compile Include="Models\CompositeModelTest.cs" />
-    <Compile Include="Models\EqualPredicateTest.cs" />
-    <Compile Include="Models\KeysTest.cs" />
+    <Compile Include="Queries\EqualPredicateTest.cs" />
+    <Compile Include="Queries\KeysTest.cs" />
     <Compile Include="Models\ModelTransformerTest.cs" />
     <Compile Include="Models\SelectBookmarkedArticlesCommandTest.cs" />
     <Compile Include="Models\SubjectFromBodyTransformerTest.cs" />
@@ -119,7 +119,7 @@
     <Compile Include="Models\CommandConditionTest.cs" />
     <Compile Include="Models\ModelCommandTest.cs" />
     <Compile Include="Models\InsertCommandTest.cs" />
-    <Compile Include="Models\ParameterTest.cs" />
+    <Compile Include="Queries\ParameterTest.cs" />
     <Compile Include="Models\RelayKeywordsCommandTest.cs" />
     <Compile Include="Models\UpdateCommandTest.cs" />
     <Compile Include="Models\UpdateConfirmableCommandTest.cs" />
