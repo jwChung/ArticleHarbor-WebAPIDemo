@@ -99,7 +99,6 @@
     <Compile Include="Collectors\CompositeCollectorTest.cs" />
     <Compile Include="Collectors\FacebookRssCollectorTest.cs" />
     <Compile Include="Collectors\HaniRssCollectorTest.cs" />
-    <Compile Include="Collectors\SubjectFromBodyTransformationTest.cs" />
     <Compile Include="Models\AndPredicateTest.cs" />
     <Compile Include="Models\BookmarkTest.cs" />
     <Compile Include="Models\CompositeCommandTest.cs" />
