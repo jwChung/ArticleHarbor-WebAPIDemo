@@ -128,7 +128,7 @@
     <Compile Include="Models\KeywordTest.cs" />
     <Compile Include="AssemblyTest.cs" />
     <Compile Include="FakeRepositoryBase.cs" />
-    <Compile Include="KoreanNounExtractorTest.cs" />
+    <Compile Include="Models\KoreanNounExtractorTest.cs" />
     <Compile Include="Mocked.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadWritablePropertyAssertion.cs" />

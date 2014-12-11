@@ -90,7 +90,7 @@
     <Compile Include="Repositories\IUserManager.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Repositories\IUnitOfWork.cs" />
-    <Compile Include="KoreanNounExtractor.cs" />
+    <Compile Include="Models\KoreanNounExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Permissions.cs" />
