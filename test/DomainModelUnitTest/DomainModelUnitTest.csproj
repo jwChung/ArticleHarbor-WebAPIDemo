@@ -97,7 +97,6 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Collectors\CompositeCollectorTest.cs" />
-    <Compile Include="Collectors\DelegateTransformationTest.cs" />
     <Compile Include="Collectors\FacebookRssCollectorTest.cs" />
     <Compile Include="Collectors\HaniRssCollectorTest.cs" />
     <Compile Include="Collectors\SubjectFromBodyTransformationTest.cs" />
