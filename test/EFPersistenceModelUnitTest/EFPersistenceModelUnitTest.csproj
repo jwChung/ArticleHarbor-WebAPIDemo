@@ -121,7 +121,6 @@
     <Compile Include="ArticleRepository2Test.cs" />
     <Compile Include="BookmarkRepository2Test.cs" />
     <Compile Include="KeywordRepository2Test.cs" />
-    <Compile Include="KeywordRepositoryTest.cs" />
     <Compile Include="AssemblyTest.cs" />
     <Compile Include="RepositoriesTest.cs" />
     <Compile Include="RepositoryTest.cs" />

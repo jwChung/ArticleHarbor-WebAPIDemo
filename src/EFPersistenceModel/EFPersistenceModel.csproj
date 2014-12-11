@@ -62,7 +62,6 @@
     <Compile Include="ArticleRepository2.cs" />
     <Compile Include="BookmarkRepository2.cs" />
     <Compile Include="EntityConversionExtensions.cs" />
-    <Compile Include="KeywordRepository.cs" />
     <Compile Include="KeywordRepository2.cs" />
     <Compile Include="Repositories.cs" />
     <Compile Include="Repository.cs" />
