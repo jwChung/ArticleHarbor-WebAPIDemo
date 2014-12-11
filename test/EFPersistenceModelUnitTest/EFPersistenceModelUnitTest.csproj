@@ -118,20 +118,16 @@
     <Compile Include="..\DomainModelUnitTest\RunOn.cs">
       <Link>RunOn.cs</Link>
     </Compile>
-    <Compile Include="ArticleRepository2Test.cs" />
     <Compile Include="ArticleRepositoryTest.cs" />
-    <Compile Include="BookmarkRepository2Test.cs" />
-    <Compile Include="KeywordRepository2Test.cs" />
+    <Compile Include="BookmarkRepositoryTest.cs" />
     <Compile Include="KeywordRepositoryTest.cs" />
     <Compile Include="AssemblyTest.cs" />
-    <Compile Include="BookmarkRepositoryTest.cs" />
     <Compile Include="RepositoriesTest.cs" />
     <Compile Include="RepositoryTest.cs" />
     <Compile Include="UnitOfWorkTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestAttribute.cs" />
     <Compile Include="UserManagerTest.cs" />
-    <Compile Include="UserRepository2Test.cs" />
     <Compile Include="UserRepositoryTest.cs" />
   </ItemGroup>
   <ItemGroup>

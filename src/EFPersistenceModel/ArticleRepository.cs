@@ -1,108 +1,66 @@
 ﻿namespace ArticleHarbor.EFPersistenceModel
 {
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
-    using System.Linq;
     using System.Threading.Tasks;
-    using DomainModel;
-    using DomainModel.Repositories;
+    using DomainModel.Models;
     using EFDataAccess;
-    using DomainArticle = DomainModel.Models.Article;
-    using DomainUser = DomainModel.Models.User;
-    using PersistenceArticle = EFDataAccess.Article;
-    using PersistenceUser = EFDataAccess.User;
+    using Article = DomainModel.Models.Article;
 
-    public class ArticleRepository : IArticleRepository
+    public class ArticleRepository : Repository<Keys<int>, Article, EFDataAccess.Article>
     {
-        private readonly ArticleHarborDbContext context;
-
-        public ArticleRepository(ArticleHarborDbContext context)
+        public ArticleRepository(
+            ArticleHarborDbContext context, DbSet<EFDataAccess.Article> dbSet)
+            : base(context, dbSet)
         {
-            if (context == null)
-                throw new ArgumentNullException("context");
-
-            this.context = context;
         }
 
-        public ArticleHarborDbContext Context
+        public override Task<Article> ConvertToModelAsync(EFDataAccess.Article persistence)
         {
-            get { return this.context; }
+            if (persistence == null)
+                throw new ArgumentNullException("persistence");
+
+            return ConvertToModelAsyncWith(persistence);
         }
 
-        public async Task<IEnumerable<DomainArticle>> SelectAsync()
+        public override Task<EFDataAccess.Article> ConvertToPersistenceAsync(Article model)
         {
-            var articles = await this.context.Articles.Take(50).ToArrayAsync();
-            return articles.Select(x => x.ToDomain());
+            if (model == null)
+                throw new ArgumentNullException("model");
+
+            return ConvertToPersistenceAsyncWith(model);
         }
 
-        public Task<IEnumerable<DomainArticle>> SelectAsync(params int[] ids)
+        private static Task<Article> ConvertToModelAsyncWith(EFDataAccess.Article persistence)
         {
-            if (ids == null)
-                throw new ArgumentNullException("ids");
+            var article = new Article(
+                persistence.Id,
+                persistence.Provider,
+                persistence.Guid,
+                persistence.Subject,
+                persistence.Body,
+                persistence.Date,
+                persistence.Url,
+                persistence.UserId);
 
-            return this.SelectAsyncWith(ids);
+            return Task.FromResult(article);
         }
 
-        public Task<DomainArticle> InsertAsync(DomainArticle article)
+        private static Task<EFDataAccess.Article> ConvertToPersistenceAsyncWith(Article model)
         {
-            if (article == null)
-                throw new ArgumentNullException("article");
-
-            return this.InsertAsyncImpl(article);
-        }
-
-        public Task UpdateAsync(DomainArticle article)
-        {
-            if (article == null)
-                throw new ArgumentNullException("article");
-
-            var persistenceArticle = this.context.Articles.Find(article.Id);
-            if (persistenceArticle != null)
+            var article = new EFDataAccess.Article
             {
-                ((IObjectContextAdapter)this.context).ObjectContext.Detach(persistenceArticle);
-                this.context.Entry(article.ToPersistence()).State
-                    = EntityState.Modified;
-            }
+                Id = model.Id,
+                Provider = model.Provider,
+                Guid = model.Guid,
+                Subject = model.Subject,
+                Body = model.Body,
+                Date = model.Date,
+                Url = model.Url,
+                UserId = model.UserId
+            };
 
-            return Task.FromResult<object>(null);
-        }
-
-        public Task DeleteAsync(int id)
-        {
-            var article = this.context.Articles.Find(id);
-            if (article != null)
-                this.context.Articles.Remove(article);
-
-            return Task.FromResult<object>(null);
-        }
-
-        public Task<DomainArticle> FindAsync(int id)
-        {
-            var article = this.context.Articles.Find(id);
-            return Task.FromResult(
-                article == null ? null : article.ToDomain());
-        }
-
-        private async Task<IEnumerable<DomainArticle>> SelectAsyncWith(int[] ids)
-        {
-            var query = from article in this.context.Articles
-                        where ids.Contains(article.Id)
-                        select article;
-            await query.LoadAsync();
-            return this.context.Articles.Local.Select(x => x.ToDomain());
-        }
-
-        private async Task<DomainArticle> InsertAsyncImpl(DomainArticle item)
-        {
-            if ((await this.FindAsync(item.Id)) != null)
-                return item;
-
-            var persistenceArticle = item.ToPersistence();
-            var newPersistenceArticle = this.context.Articles.Add(persistenceArticle);
-            await this.context.SaveChangesAsync();
-            return newPersistenceArticle.ToDomain();
+            return Task.FromResult(article);
         }
     }
 }

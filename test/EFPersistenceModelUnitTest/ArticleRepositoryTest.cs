@@ -1,195 +1,36 @@
 ﻿namespace ArticleHarbor.EFPersistenceModel
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using ArticleHarbor.DomainModel;
-    using DomainModel.Models;
-    using DomainModel.Repositories;
-    using Ploeh.AutoFixture;
+    using ArticleHarbor.DomainModel.Models;
+    using EFDataAccess;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
+    using Article = DomainModel.Models.Article;
 
     public class ArticleRepositoryTest : IdiomaticTest<ArticleRepository>
     {
         [Test]
-        public void SutIsArticleRepository(ArticleRepository sut)
+        public void SutIsRepository(ArticleRepository sut)
         {
-            Assert.IsAssignableFrom<IArticleRepository>(sut);
+            Assert.IsAssignableFrom<Repository<Keys<int>, Article, EFDataAccess.Article>>(sut);
         }
 
         [Test]
-        public async Task InsertAsyncCorrectlyInsertsArticle(
-            DbContextTransaction transaction,
+        public void ConvertToModelAsyncReturnsCorrectModel(
+            ArticleHarborDbContext context,
+            ArticleRepository sut)
+        {
+            var article = context.Articles.Find(1);
+            var actual = sut.ConvertToModelAsync(article).Result;
+            article.AsSource().OfLikeness<Article>().ShouldEqual(actual);
+        }
+
+        [Test]
+        public void ConvertToPersistenceAsyncReturnsCorrectPersistence(
             ArticleRepository sut,
             Article article)
         {
-            try
-            {
-                var newArticle = await sut.InsertAsync(article.WithUserId("user1"));
-                var expected = await sut.FindAsync(newArticle.Id);
-                newArticle.AsSource().OfLikeness<Article>().ShouldEqual(expected);
-            }
-            finally
-            {
-                transaction.Rollback();
-                transaction.Dispose();
-            }
-        }
-
-        [Test]
-        public async Task InsertAsyncDuplicateArticleDoesNotInsert(
-            DbContextTransaction transaction,
-            ArticleRepository sut,
-            Article article)
-        {
-            try
-            {
-                var persistence = sut.Context.Articles.First();
-                article = article.WithId(persistence.Id);
-
-                var actual = await sut.InsertAsync(article);
-
-                actual.AsSource().OfLikeness<Article>().ShouldEqual(article);
-                Assert.Equal(3, sut.Context.Articles.Count());
-            }
-            finally
-            {
-                transaction.Rollback();
-                transaction.Dispose();
-            }
-        }
-        
-        [Test]
-        public void InsertAsyncArticleWithInvalidUserIdThrows(
-            ArticleRepository sut,
-            Article article,
-            string userId)
-        {
-            var e = Assert.Throws<AggregateException>(() => sut.InsertAsync(article.WithUserId(userId)).Wait());
-            Assert.IsType<DbUpdateException>(e.InnerException);
-        }
-
-        [Test]
-        public async Task SelectAsyncReturnsCorrectResult(
-            DbContextTransaction transaction,
-            ArticleRepository sut,
-            Generator<Article> articles)
-        {
-            try
-            {
-                foreach (var article in articles.Take(60))
-                    await sut.InsertAsync(article.WithUserId("user2"));
-
-                var actual = await sut.SelectAsync();
-
-                Assert.Equal(50, actual.Count());
-            }
-            finally
-            {
-                transaction.Rollback();
-                transaction.Dispose();
-            }
-        }
-
-        [Test]
-        public void SelectAsyncWithIdsReturnsCorrectResult(
-             ArticleRepository sut)
-        {
-            int[] ids = new[] { 1, 3 };
-
-            var actual = sut.SelectAsync(ids).Result;
-
-            int[] result = actual.Select(x => x.Id).ToArray();
-            Assert.Equal(ids, result);
-        }
-
-        [Test]
-        public async Task UpdateAsyncCorrectlyUpdatesArticle(
-            DbContextTransaction transaction,
-            ArticleRepository sut,
-            Article article1,
-            Article article2)
-        {
-            try
-            {
-                var insertedArticle = await sut.InsertAsync(article1.WithUserId("user2"));
-                var modifiedArticle = article2.WithId(insertedArticle.Id).WithUserId("user2");
-
-                await sut.UpdateAsync(modifiedArticle);
-
-                sut.Context.SaveChanges();
-                var actual = await sut.FindAsync(insertedArticle.Id);
-                actual.AsSource().OfLikeness<Article>().ShouldEqual(modifiedArticle);
-            }
-            finally
-            {
-                transaction.Rollback();
-                transaction.Dispose();
-            }
-        }
-
-        [Test]
-        public void UpdateAsyncDoesNotThrowWhenThereIsNoArticleWithGivenId(
-            DbContextTransaction transaction,
-            ArticleRepository sut,
-            Article article)
-        {
-            try
-            {
-                Assert.DoesNotThrow(() =>
-                {
-                    sut.UpdateAsync(article).Wait();
-                    sut.Context.SaveChanges();
-                });
-            }
-            finally
-            {
-                transaction.Rollback();
-                transaction.Dispose();
-            }
-        }
-
-        [Test]
-        public async Task DeleteAsyncCorrectlyDeletesWhenThereIsArticleWithGivenId(
-            DbContextTransaction transaction,
-            ArticleRepository sut,
-            Article article)
-        {
-            try
-            {
-                article = await sut.InsertAsync(article.WithUserId("user1"));
-                Assert.NotNull(await sut.FindAsync(article.Id));
-
-                await sut.DeleteAsync(article.Id);
-
-                await sut.Context.SaveChangesAsync();
-                Assert.Null(await sut.FindAsync(article.Id));
-            }
-            finally
-            {
-                transaction.Rollback();
-                transaction.Dispose();
-            }
-        }
-
-        [Test]
-        public void DeleteAsyncDoesNotThrowWhenThereIsNoArticleWithGivenId(
-            ArticleRepository sut,
-            Article article)
-        {
-            Assert.DoesNotThrow(() => sut.DeleteAsync(article.Id).Wait());
-        }
-
-        [Test]
-        public async Task FineAsyncWithIdReturnsNullWhenThereIsNoArticleWithGivenId(
-            ArticleRepository sut,
-            int id)
-        {
-            var actual = await sut.FindAsync(id);
-            Assert.Null(actual);
+            var actual = sut.ConvertToPersistenceAsync(article).Result;
+            actual.AsSource().OfLikeness<Article>().ShouldEqual(article);
         }
     }
 }

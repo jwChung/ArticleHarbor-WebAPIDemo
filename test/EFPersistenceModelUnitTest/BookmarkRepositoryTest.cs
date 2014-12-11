@@ -1,70 +1,37 @@
 ﻿namespace ArticleHarbor.EFPersistenceModel
 {
-    using System.Data.Entity;
     using System.Linq;
     using DomainModel.Models;
-    using DomainModel.Repositories;
+    using EFDataAccess;
+    using Ploeh.SemanticComparison.Fluent;
     using Xunit;
+    using Bookmark = DomainModel.Models.Bookmark;
 
     public class BookmarkRepositoryTest : IdiomaticTest<BookmarkRepository>
     {
         [Test]
-        public void SutIsBookmarkRepository(BookmarkRepository sut)
+        public void SutIsRepository(BookmarkRepository sut)
         {
-            Assert.IsAssignableFrom<IBookmarkRepository>(sut);
+            Assert.IsAssignableFrom<Repository<Keys<string, int>, Bookmark, EFDataAccess.Bookmark>>(sut);
         }
 
         [Test]
-        public void SelectWithUserIdAsyncReturnsCorrectResult(
+        public void ConvertToModelAsyncReturnsCorrectModel(
+            ArticleHarborDbContext context,
             BookmarkRepository sut)
         {
-            var expected = new[] { 1, 2 };
-            var actual = sut.SelectAsync("user1").Result;
-            Assert.Equal(expected, actual.Select(x => x.ArticleId));
+            var persistence = context.Bookmarks.AsNoTracking().Single(x => x.ArticleId == 1);
+            var actual = sut.ConvertToModelAsync(persistence).Result;
+            persistence.AsSource().OfLikeness<Bookmark>().ShouldEqual(actual);
         }
 
         [Test]
-        public void InsertAsyncAddsBookmark(
-            DbContextTransaction transaction,
+        public void ConvertToPersistenceAsyncReturnsCorrectPersistence(
             BookmarkRepository sut)
         {
-            try
-            {
-                var bookmark = new Bookmark("user3", 1);
-
-                sut.InsertAsync(bookmark).Wait();
-
-                sut.Context.SaveChanges();
-                var count = sut.Context.Bookmarks.Count();
-                Assert.Equal(4, count);
-            }
-            finally
-            {
-                transaction.Rollback();
-                transaction.Dispose();
-            }
-        }
-
-        [Test]
-        public void DeleteAsyncRemovesBookmark(
-            DbContextTransaction transaction,
-            BookmarkRepository sut)
-        {
-            try
-            {
-                var bookmark = new Bookmark("user1", 1);
-
-                sut.DeleteAsync(bookmark).Wait();
-
-                sut.Context.SaveChanges();
-                var count = sut.Context.Bookmarks.Count();
-                Assert.Equal(2, count);
-            }
-            finally
-            {
-                transaction.Rollback();
-                transaction.Dispose();
-            }
+            var bookmark = new Bookmark("user1", 1);
+            var actual = sut.ConvertToPersistenceAsync(bookmark).Result;
+            actual.AsSource().OfLikeness<Bookmark>().ShouldEqual(bookmark);
         }
     }
 }

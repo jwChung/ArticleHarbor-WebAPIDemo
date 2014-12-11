@@ -1,80 +1,71 @@
 ﻿namespace ArticleHarbor.EFPersistenceModel
 {
     using System;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using System.Threading.Tasks;
-    using DomainModel;
+    using System.Linq;
     using DomainModel.Models;
-    using DomainModel.Repositories;
+    using EFDataAccess;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
+    using User = DomainModel.Models.User;
 
     public class UserRepositoryTest : IdiomaticTest<UserRepository>
     {
         [Test]
-        public void SutIsUserRepository(
-            UserRepository sut)
+        public void SutIsRepository(UserRepository sut)
         {
-            Assert.IsAssignableFrom<IUserRepository>(sut);
+            Assert.IsAssignableFrom<Repository<Keys<string>, User, EFDataAccess.User>>(sut);
         }
 
         [Test]
-        public async Task FindAsyncReturnsCorrectUser(
+        public void ConvertToModelAsyncReturnsCorrectResult(
+            ArticleHarborDbContext context,
             UserRepository sut)
         {
-            var actual = await sut.FindAsync("user2", "password2");
+            EFDataAccess.User persistence = context.UserManager.FindByIdAsync("user2").Result;
+
+            var actual = sut.ConvertToModelAsync(persistence).Result;
 
             Assert.Equal("user2", actual.Id);
+            Assert.Equal(Guid.Parse("232494f5670943dfac807226449fe795"), actual.ApiKey);
             Assert.Equal(Role.Author, actual.Role);
         }
 
-        [Test]
-        public async Task FindAsyncWithIncorrectIdOrPasswordReturnsNullUser(
+        [Test(Skip = "NotImplementedException")]
+        public void ConvertToPersistenceAsyncReturnsCorrectResult(
+            ArticleHarborDbContext context,
             UserRepository sut)
         {
-            var actual = await sut.FindAsync("user2", "password");
-            Assert.Null(actual);
+            var user = new User(
+                "user1", Role.Administrator, Guid.Parse("692c7798206844b88ba9a660e3374eef"));
+
+            var actual = sut.ConvertToPersistenceAsync(user).Result;
+
+            actual.AsSource().OfLikeness<User>()
+                .With(x => x.Id).EqualsWhen((a, b) => a.UserName == b.Id)
+                .With(x => x.Role).EqualsWhen((a, b) => Role.Administrator == b.Role)
+                .ShouldEqual(user);
         }
 
         [Test]
-        public async Task FindAsyncWithApiKeyReturnsCorrectUser(
-            UserRepository sut)
+        public void SelectAsyncReturnsCorrectResult(UserRepository sut)
         {
-            var actual = await sut.FindAsync(Guid.Parse("232494f5670943dfac807226449fe795"));
-            Assert.Equal("user2", actual.Id);
+            var actual = sut.SelectAsync().Result;
+            Assert.Equal(3, actual.Count());
         }
 
         [Test]
-        public async Task FindAsyncWithIncorrectApiKeyReturnsNullUser(
-            UserRepository sut,
-            Guid apiKey)
+        public void ExecuteSelectCommandAsyncReturnsCorrectResult(UserRepository sut)
         {
-            var actual = await sut.FindAsync(apiKey);
-            Assert.Null(actual);
+            var predicate = new EqualPredicate("id", "user1");
+            var actual = sut.ExecuteSelectCommandAsync(predicate).Result;
+            Assert.Equal("user1", actual.Single().Id);
         }
 
         [Test]
-        public async Task FindAsyncWithUserIdReturnsCorrectUser(
-             UserRepository sut)
+        public void FindAsyncReturnsCorrectUser(UserRepository sut)
         {
-            var id = "user1";
-            var actual = await sut.FindAsync(id);
-            Assert.Equal(id, actual.Id);
-        }
-
-        [Test]
-        public async Task FindAsyncWithIncorrectUserIdReturnsNullUser(
-            UserRepository sut,
-            string id)
-        {
-            var actual = await sut.FindAsync(id);
-            Assert.Null(actual);
-        }
-
-        protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
-        {
-            yield return this.Methods.Select(x => x.FindAsync(Guid.Empty));
+            var actual = sut.FindAsync(new Keys<string>("User1")).Result;
+            Assert.Equal("user1", actual.Id);
         }
     }
 }

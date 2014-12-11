@@ -1,78 +1,41 @@
 ﻿namespace ArticleHarbor.EFPersistenceModel
 {
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
-    using System.Linq;
     using System.Threading.Tasks;
-    using DomainModel.Repositories;
+    using DomainModel.Models;
     using EFDataAccess;
-    using DomainBookmark = DomainModel.Models.Bookmark;
+    using Bookmark = DomainModel.Models.Bookmark;
 
-    public class BookmarkRepository : IBookmarkRepository
+    public class BookmarkRepository : Repository<Keys<string, int>, Bookmark, EFDataAccess.Bookmark>
     {
-        private readonly ArticleHarborDbContext context;
-
-        public BookmarkRepository(ArticleHarborDbContext context)
+        public BookmarkRepository(
+            ArticleHarborDbContext context,
+            DbSet<EFDataAccess.Bookmark> dbSet)
+            : base(context, dbSet)
         {
-            if (context == null)
-                throw new ArgumentNullException("context");
-
-            this.context = context;
         }
 
-        public ArticleHarborDbContext Context
+        public override Task<Bookmark> ConvertToModelAsync(EFDataAccess.Bookmark persistence)
         {
-            get { return this.context; }
+            if (persistence == null)
+                throw new ArgumentNullException("persistence");
+
+            var bookmark = new Bookmark(persistence.UserId, persistence.ArticleId);
+            return Task.FromResult(bookmark);
         }
 
-        public Task<IEnumerable<DomainBookmark>> SelectAsync(string userId)
+        public override Task<EFDataAccess.Bookmark> ConvertToPersistenceAsync(Bookmark model)
         {
-            if (userId == null)
-                throw new ArgumentNullException("userId");
+            if (model == null)
+                throw new ArgumentNullException("model");
 
-            return this.SelectAsyncWith(userId);
-        }
-
-        public Task InsertAsync(DomainBookmark bookmark)
-        {
-            if (bookmark == null)
-                throw new ArgumentNullException("bookmark");
-
-            return this.InsertAsyncWith(bookmark);
-        }
-
-        public Task DeleteAsync(DomainBookmark bookmark)
-        {
-            if (bookmark == null)
-                throw new ArgumentNullException("bookmark");
-
-            return this.DeleteAsyncWith(bookmark);
-        }
-
-        private async Task<IEnumerable<DomainBookmark>> SelectAsyncWith(string userId)
-        {
-            var user = await this.context.UserManager.FindByIdAsync(userId);
-
-            var query = from bookmark in this.context.Bookmarks
-                        where bookmark.UserId == user.Id
-                        select bookmark;
-            await query.LoadAsync();
-
-            return this.context.Bookmarks.Local.Select(x => x.ToDomain());
-        }
-
-        private async Task InsertAsyncWith(DomainBookmark bookmark)
-        {
-            var user = await this.context.UserManager.FindByIdAsync(bookmark.UserId);
-            this.context.Bookmarks.Add(bookmark.ToPersistence());
-        }
-
-        private async Task DeleteAsyncWith(DomainBookmark bookmark)
-        {
-            var user = await this.context.UserManager.FindByIdAsync(bookmark.UserId);
-            var persistenceBookmark = this.context.Bookmarks.Find(user.Id, bookmark.ArticleId);
-            this.context.Bookmarks.Remove(persistenceBookmark);
+            var bookmark = new EFDataAccess.Bookmark
+            {
+                ArticleId = model.ArticleId,
+                UserId = model.UserId
+            };
+            return Task.FromResult(bookmark);
         }
     }
 }

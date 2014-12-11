@@ -18,7 +18,7 @@
         {
             var actual = sut.Articles;
 
-            var articles = Assert.IsAssignableFrom<ArticleRepository2>(actual);
+            var articles = Assert.IsAssignableFrom<ArticleRepository>(actual);
             Assert.Equal(sut.Context, articles.Context);
             Assert.Equal(sut.Context.Articles, articles.DbSet);
         }
@@ -28,7 +28,7 @@
         {
             var actual = sut.Keywords;
 
-            var articles = Assert.IsAssignableFrom<KeywordRepository2>(actual);
+            var articles = Assert.IsAssignableFrom<KeywordRepository>(actual);
             Assert.Equal(sut.Context, articles.Context);
             Assert.Equal(sut.Context.Keywords, articles.DbSet);
         }
@@ -38,7 +38,7 @@
         {
             var actual = sut.Bookmarks;
 
-            var articles = Assert.IsAssignableFrom<BookmarkRepository2>(actual);
+            var articles = Assert.IsAssignableFrom<BookmarkRepository>(actual);
             Assert.Equal(sut.Context, articles.Context);
             Assert.Equal(sut.Context.Bookmarks, articles.DbSet);
         }
@@ -48,7 +48,7 @@
         {
             var actual = sut.Users;
 
-            var articles = Assert.IsAssignableFrom<UserRepository2>(actual);
+            var articles = Assert.IsAssignableFrom<UserRepository>(actual);
             Assert.Equal(sut.Context, articles.Context);
             Assert.Equal(sut.Context.Users, articles.DbSet);
         }

@@ -29,24 +29,24 @@
 
         public IRepository<Keys<int>, Article> Articles
         {
-            get { return new ArticleRepository2(this.context, this.context.Articles); }
+            get { return new ArticleRepository(this.context, this.context.Articles); }
         }
 
         public IRepository<Keys<int, string>, Keyword> Keywords
         {
-            get { return new KeywordRepository2(this.context, this.context.Keywords); }
+            get { return new KeywordRepository(this.context, this.context.Keywords); }
         }
 
         public IRepository<Keys<string, int>, Bookmark> Bookmarks
         {
-            get { return new BookmarkRepository2(this.context, this.context.Bookmarks); }
+            get { return new BookmarkRepository(this.context, this.context.Bookmarks); }
         }
 
         public IRepository<Keys<string>, User> Users
         {
             get
             {
-                return new UserRepository2(
+                return new UserRepository(
                     this.context,
                     (DbSet<EFDataAccess.User>)this.context.Users);
             }
