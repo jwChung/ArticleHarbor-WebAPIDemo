@@ -10,18 +10,18 @@
     using Moq;
     using Xunit;
 
-    public class SaveUnitOfWorkAttributeTest : IdiomaticTest<SaveUnitOfWorkAttribute>
+    public class CommitTransactionAttributeTest : IdiomaticTest<CommitTransactionAttribute>
     {
         [Test]
         public void SutIsActionFilterAttribute(
-            SaveUnitOfWorkAttribute sut)
+            CommitTransactionAttribute sut)
         {
             Assert.IsAssignableFrom<ActionFilterAttribute>(sut);
         }
 
         [Test]
         public async Task OnActionExecutedAsyncSavesUnitOfWorkWhenUnitOfWorkWasConstructedInActionMethod(
-            SaveUnitOfWorkAttribute sut,
+            CommitTransactionAttribute sut,
             HttpActionExecutedContext actionExecutedContext,
             IDependencyScope dependencyScope,
             Lazy<IUnitOfWork> lazyUnitOfWork)
@@ -38,7 +38,7 @@
 
         [Test]
         public async Task OnActionExecutedAsyncDoesNotSaveUnitOfWorkWhenUnitOfWorkWasNotConstructedInActionMethod(
-            SaveUnitOfWorkAttribute sut,
+            CommitTransactionAttribute sut,
             HttpActionExecutedContext actionExecutedContext,
             IDependencyScope dependencyScope,
             Lazy<IUnitOfWork> layUnitOfWork)

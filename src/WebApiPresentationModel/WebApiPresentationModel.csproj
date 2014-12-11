@@ -92,7 +92,7 @@
     <Compile Include="PrincipalValueProvider.cs" />
     <Compile Include="PrincipalValueProviderFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SaveUnitOfWorkAttribute.cs" />
+    <Compile Include="CommitTransactionAttribute.cs" />
     <Compile Include="UnhandledExceptionLogger.cs" />
   </ItemGroup>
   <ItemGroup>

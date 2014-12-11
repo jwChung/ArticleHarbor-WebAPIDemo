@@ -154,7 +154,7 @@
     <Compile Include="PrincipalValueProviderFactoryTest.cs" />
     <Compile Include="PrincipalValueProviderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SaveUnitOfWorkAttributeTest.cs" />
+    <Compile Include="CommitTransactionAttributeTest.cs" />
     <Compile Include="TestAttribute.cs" />
     <Compile Include="UnhandledExceptionLoggerTest.cs" />
   </ItemGroup>

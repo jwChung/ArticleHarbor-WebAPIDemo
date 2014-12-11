@@ -8,7 +8,7 @@
     using DomainModel.Repositories;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public sealed class SaveUnitOfWorkAttribute : ActionFilterAttribute
+    public sealed class CommitTransactionAttribute : ActionFilterAttribute
     {
         public override Task OnActionExecutedAsync(
             HttpActionExecutedContext actionExecutedContext,
