@@ -7,7 +7,6 @@
     using System.Web.Http;
     using DomainModel.Models;
     using DomainModel.Repositories;
-    using DomainModel.Services;
 
     [Authorize]
     public class BookmarksController : ApiController

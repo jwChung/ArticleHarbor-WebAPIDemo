@@ -12,7 +12,6 @@ namespace ArticleHarbor.Website
     using ArticleHarbor.EFPersistenceModel;
     using ArticleHarbor.WebApiPresentationModel;
     using DomainModel.Repositories;
-    using DomainModel.Services;
     using Jwc.Funz;
     using WebApiPresentationModel.Controllers;
     using Keyword = DomainModel.Models.Keyword;

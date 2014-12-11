@@ -6,7 +6,6 @@
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.DomainModel.Collectors;
-    using ArticleHarbor.DomainModel.Services;
     using ArticleHarbor.EFDataAccess;
     using ArticleHarbor.EFPersistenceModel;
     using DomainModel.Models;

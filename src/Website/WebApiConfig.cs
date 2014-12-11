@@ -7,7 +7,6 @@
     using System.Web.Http.ExceptionHandling;
     using ArticleHarbor.WebApiPresentationModel;
     using DomainModel;
-    using DomainModel.Services;
     using EFDataAccess;
     using EFPersistenceModel;
     using Jwc.Funz;
