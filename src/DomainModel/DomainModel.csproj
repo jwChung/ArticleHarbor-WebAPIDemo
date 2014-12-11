@@ -90,6 +90,7 @@
     <Compile Include="Repositories\IBookmarkRepository.cs" />
     <Compile Include="Repositories\IRepositories.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\IUserManager.cs" />
     <Compile Include="Services\KeywordService.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="EmptyDisposable.cs" />

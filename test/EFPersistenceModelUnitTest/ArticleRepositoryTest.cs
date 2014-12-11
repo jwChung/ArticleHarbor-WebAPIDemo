@@ -2,6 +2,7 @@
 {
     using System;
     using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
@@ -68,7 +69,7 @@
             string userId)
         {
             var e = Assert.Throws<AggregateException>(() => sut.InsertAsync(article.WithUserId(userId)).Wait());
-            Assert.IsType<ArgumentException>(e.InnerException);
+            Assert.IsType<DbUpdateException>(e.InnerException);
         }
 
         [Test]

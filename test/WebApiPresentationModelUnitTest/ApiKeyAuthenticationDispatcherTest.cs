@@ -33,7 +33,7 @@
             request.Headers.Authorization = new AuthenticationHeaderValue(
                 "apikey", apiKey.ToString("N"));
             request.Properties[HttpPropertyKeys.RequestContextKey] = requestContext;
-            sut.AuthServiceFactory().Of(x => x.FindUserAsync(apiKey) == Task.FromResult(user));
+            sut.UserManagerFactory().Of(x => x.FindAsync(apiKey) == Task.FromResult(user));
 
             await sut.ExecuteAsync(request, CancellationToken.None);
 
@@ -83,8 +83,8 @@
             request.Headers.Authorization = new AuthenticationHeaderValue(
                 "apikey", apiKey.ToString("N"));
             request.Properties[HttpPropertyKeys.RequestContextKey] = requestContext;
-            sut.AuthServiceFactory().Of(
-                x => x.FindUserAsync(It.IsAny<Guid>()) == Task.FromResult<User>(null));
+            sut.UserManagerFactory().Of(
+                x => x.FindAsync(It.IsAny<Guid>()) == Task.FromResult<User>(null));
             var expected = requestContext.Principal;
 
             await sut.ExecuteAsync(request, CancellationToken.None);
@@ -103,12 +103,12 @@
             request.Headers.Authorization = new AuthenticationHeaderValue(
                 "apikey", apiKey.ToString("N"));
             request.Properties[HttpPropertyKeys.RequestContextKey] = requestContext;
-            sut.AuthServiceFactory().Of(
-                x => x.FindUserAsync(It.IsAny<Guid>()) == Task.FromResult(user));
+            sut.UserManagerFactory().Of(
+                x => x.FindAsync(It.IsAny<Guid>()) == Task.FromResult(user));
 
             await sut.ExecuteAsync(request, CancellationToken.None);
 
-            sut.AuthServiceFactory().ToMock().Verify(x => x.Dispose());
+            sut.UserManagerFactory().ToMock().Verify(x => x.Dispose());
         }
 
         [Test]
@@ -119,7 +119,7 @@
         {
             request.Headers.Authorization = new AuthenticationHeaderValue(
                 "apikey", apiKey.ToString("N"));
-            sut.AuthServiceFactory().ToMock().Setup(x => x.FindUserAsync(Guid.Empty))
+            sut.UserManagerFactory().ToMock().Setup(x => x.FindAsync(Guid.Empty))
                 .Throws<Exception>();
             try
             {
@@ -129,7 +129,7 @@
             {
             }
 
-            sut.AuthServiceFactory().ToMock().Verify(x => x.Dispose());
+            sut.UserManagerFactory().ToMock().Verify(x => x.Dispose());
         }
 
         [Test]
@@ -141,8 +141,8 @@
         {
             request.Headers.Authorization = new AuthenticationHeaderValue(
                 "apikey", apiKey);
-            sut.AuthServiceFactory().Of(
-                x => x.FindUserAsync(It.IsAny<Guid>()) == Task.FromResult(user));
+            sut.UserManagerFactory().Of(
+                x => x.FindAsync(It.IsAny<Guid>()) == Task.FromResult(user));
 
             var e = Assert.Throws<AggregateException>(
                 () => sut.ExecuteAsync(request, CancellationToken.None).Wait());
