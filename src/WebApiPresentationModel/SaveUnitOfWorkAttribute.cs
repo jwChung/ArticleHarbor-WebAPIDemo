@@ -17,11 +17,12 @@
             if (actionExecutedContext == null)
                 throw new ArgumentNullException("actionExecutedContext");
 
-            return this.OnActionExecutedAsyncImpl(actionExecutedContext, cancellationToken);
+            return this.OnActionExecutedAsyncWith(actionExecutedContext, cancellationToken);
         }
 
-        private async Task OnActionExecutedAsyncImpl(
-            HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
+        private async Task OnActionExecutedAsyncWith(
+            HttpActionExecutedContext actionExecutedContext,
+            CancellationToken cancellationToken)
         {
             var dependencyScope = actionExecutedContext.Request.GetDependencyScope();
             var lazyUnitOfWork = (Lazy<IUnitOfWork>)dependencyScope
