@@ -28,13 +28,13 @@
             return new ArticleCollectingExecutor(
                 collector: new CompositeCollector(
                     new HaniRssCollector("user1"),
+                    new ArticleTransformationCollector(
                         new ArticleTransformationCollector(
-                            new ArticleTransformationCollector(
-                                new CompositeCollector(
-                                    new FacebookRssCollector("user2", "177323639028540"), // ASP.NET Korea group
-                                    new FacebookRssCollector("user2", "200708093411111")), // C# study group
-                                new DelegateTransformation(RemoveUnnecessaryContent)),
-                            new SubjectFromBodyTransformation(50))),
+                            new CompositeCollector(
+                                new FacebookRssCollector("user2", "177323639028540"), // ASP.NET Korea group
+                                new FacebookRssCollector("user2", "200708093411111")), // C# study group
+                            new DelegateTransformation(RemoveUnnecessaryContent)),
+                        new SubjectFromBodyTransformation(50))),
                 service: new ArticleService(
                     new ArticleRepository(context),
                     new KeywordService(
