@@ -48,5 +48,13 @@
                 () => sut.Context.Articles.Find(new object()));
             Assert.Contains("disposed", e.Message);
         }
+
+        [Test]
+        public void DisposeCorrectlyDisposesTransaction(UnitOfWork sut)
+        {
+            sut.Dispose();
+
+            Assert.Null(sut.Transaction.UnderlyingTransaction.Connection);
+        }
     }
 }

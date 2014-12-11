@@ -62,6 +62,7 @@
 
             if (disposing)
             {
+                this.Transaction.Dispose();
                 this.context.Dispose();
             }
 
