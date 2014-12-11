@@ -10,7 +10,7 @@
         [Test]
         public void SutIsModelCondition(TrueCondition sut)
         {
-            Assert.IsAssignableFrom<IModelCondition>(sut);
+            Assert.IsAssignableFrom<ICommandCondition>(sut);
         }
 
         [Test]

@@ -65,7 +65,7 @@
     <Compile Include="Models\DeleteCommand.cs" />
     <Compile Include="Models\DeleteConfirmableCommand.cs" />
     <Compile Include="Models\DeleteKeywordsCommand.cs" />
-    <Compile Include="Models\IModelCondition.cs" />
+    <Compile Include="Models\ICommandCondition.cs" />
     <Compile Include="Models\InClausePredicate.cs" />
     <Compile Include="Models\InsertConfirmableCommand.cs" />
     <Compile Include="Models\CompositeModel.cs" />
