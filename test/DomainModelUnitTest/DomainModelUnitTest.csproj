@@ -115,6 +115,7 @@
     <Compile Include="Models\KeysTest.cs" />
     <Compile Include="Models\ModelTransformerTest.cs" />
     <Compile Include="Models\SelectBookmarkedArticlesCommandTest.cs" />
+    <Compile Include="Models\SubjectFromBodyTransformerTest.cs" />
     <Compile Include="Models\TransformableCommandTest.cs" />
     <Compile Include="Models\CommandConditionTest.cs" />
     <Compile Include="Models\ModelCommandTest.cs" />
