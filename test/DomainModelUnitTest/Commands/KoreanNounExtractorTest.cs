@@ -49,6 +49,14 @@
             Assert.Equal(word, actual.Single());
         }
 
+        [Test]
+        public void ExecuteReturnsCaseInsensitiveWords(string word)
+        {
+            var document = word + " " + word.ToUpper() + " " + word;
+            var actual = KoreanNounExtractor.Execute(document);
+            Assert.Equal(word, actual.Single());
+        }
+
         [Test(RunOn.CI)]
         public void SutShouldBeThreadSafe()
         {
