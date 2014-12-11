@@ -5,9 +5,10 @@
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
+    using DomainModel;
     using DomainModel.Models;
     using EFDataAccess;
-    using User = DomainModel.Models.User;
+    using User = DomainModel.User;
 
     public class UserRepository : Repository<Keys<string>, User, EFDataAccess.User>
     {

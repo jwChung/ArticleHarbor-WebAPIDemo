@@ -4,6 +4,7 @@
     using System.Reflection;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using DomainModel;
     using DomainModel.Models;
     using Moq;
     using Ploeh.SemanticComparison.Fluent;

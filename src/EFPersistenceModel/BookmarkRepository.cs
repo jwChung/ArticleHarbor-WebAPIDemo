@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using DomainModel.Models;
     using EFDataAccess;
-    using Bookmark = DomainModel.Models.Bookmark;
+    using Bookmark = DomainModel.Bookmark;
 
     public class BookmarkRepository : Repository<Keys<string, int>, Bookmark, EFDataAccess.Bookmark>
     {

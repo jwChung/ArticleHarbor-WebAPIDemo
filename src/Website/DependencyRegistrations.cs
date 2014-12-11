@@ -14,7 +14,7 @@ namespace ArticleHarbor.Website
     using DomainModel.Repositories;
     using Jwc.Funz;
     using WebApiPresentationModel.Controllers;
-    using Keyword = DomainModel.Models.Keyword;
+    using Keyword = DomainModel.Keyword;
 
     public class DependencyRegistrations : IContainerVisitor<object>
     {

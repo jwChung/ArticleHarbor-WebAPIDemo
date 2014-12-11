@@ -100,7 +100,7 @@
     <Compile Include="Collectors\FacebookRssCollectorTest.cs" />
     <Compile Include="Collectors\HaniRssCollectorTest.cs" />
     <Compile Include="Models\AndPredicateTest.cs" />
-    <Compile Include="Models\BookmarkTest.cs" />
+    <Compile Include="BookmarkTest.cs" />
     <Compile Include="Models\CompositeCommandTest.cs" />
     <Compile Include="Models\ConditionalCommandTest.cs" />
     <Compile Include="Models\DeleteBookmarksCommandTest.cs" />
@@ -124,8 +124,8 @@
     <Compile Include="Models\UpdateCommandTest.cs" />
     <Compile Include="Models\UpdateConfirmableCommandTest.cs" />
     <Compile Include="Models\UpdateKeywordsConditionTest.cs" />
-    <Compile Include="Models\ArticleTest.cs" />
-    <Compile Include="Models\KeywordTest.cs" />
+    <Compile Include="ArticleTest.cs" />
+    <Compile Include="KeywordTest.cs" />
     <Compile Include="AssemblyTest.cs" />
     <Compile Include="FakeRepositoryBase.cs" />
     <Compile Include="Models\KoreanNounExtractorTest.cs" />
@@ -135,7 +135,7 @@
     <Compile Include="RunOn.cs" />
     <Compile Include="TestAttribute.cs" />
     <Compile Include="IdiomaticTest.cs" />
-    <Compile Include="Models\UserTest.cs" />
+    <Compile Include="UserTest.cs" />
     <Compile Include="TypeFavoringConstructorQuery.cs" />
   </ItemGroup>
   <ItemGroup>

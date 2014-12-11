@@ -2,11 +2,12 @@
 {
     using System;
     using System.Linq;
+    using DomainModel;
     using DomainModel.Models;
     using EFDataAccess;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
-    using User = DomainModel.Models.User;
+    using User = DomainModel.User;
 
     public class UserRepositoryTest : IdiomaticTest<UserRepository>
     {

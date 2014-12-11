@@ -10,7 +10,7 @@
     using ArticleHarbor.EFDataAccess;
     using ArticleHarbor.EFPersistenceModel;
     using DomainModel.Models;
-    using Article = DomainModel.Models.Article;
+    using Article = DomainModel.Article;
 
     internal class Program
     {

@@ -1,4 +1,4 @@
-﻿namespace ArticleHarbor.DomainModel.Models
+﻿namespace ArticleHarbor.DomainModel
 {
     using System;
     using System.Collections.Generic;
@@ -6,6 +6,7 @@
     using System.Reflection;
     using System.Threading.Tasks;
     using Jwc.Experiment.Xunit;
+    using Models;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Kernel;
     using Ploeh.SemanticComparison.Fluent;

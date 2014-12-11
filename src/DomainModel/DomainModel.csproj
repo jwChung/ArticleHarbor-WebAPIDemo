@@ -52,7 +52,7 @@
     <Compile Include="Collectors\HaniRssCollector.cs" />
     <Compile Include="Collectors\IArticleCollector.cs" />
     <Compile Include="Models\AndPredicate.cs" />
-    <Compile Include="Models\Article.cs" />
+    <Compile Include="Article.cs" />
     <Compile Include="Models\CompositeCommand.cs" />
     <Compile Include="Models\ConditionalCommand.cs" />
     <Compile Include="Models\DeleteBookmarksCommand.cs" />
@@ -70,9 +70,9 @@
     <Compile Include="Models\Keys.cs" />
     <Compile Include="Models\IParameter.cs" />
     <Compile Include="Models\IPredicate.cs" />
-    <Compile Include="Models\IModel.cs" />
-    <Compile Include="Models\Keyword.cs" />
-    <Compile Include="Models\Bookmark.cs" />
+    <Compile Include="IModel.cs" />
+    <Compile Include="Keyword.cs" />
+    <Compile Include="Bookmark.cs" />
     <Compile Include="Models\ModelTransformer.cs" />
     <Compile Include="Models\SelectBookmarkedArticlesCommand.cs" />
     <Compile Include="Models\SubjectFromBodyTransformer.cs" />
@@ -92,10 +92,10 @@
     <Compile Include="Repositories\IUnitOfWork.cs" />
     <Compile Include="Models\KoreanNounExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\Permissions.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="Permissions.cs" />
     <Compile Include="UnauthorizedException.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,7 +1,8 @@
-﻿namespace ArticleHarbor.DomainModel.Models
+﻿namespace ArticleHarbor.DomainModel
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Models;
 
     public interface IModel
     {

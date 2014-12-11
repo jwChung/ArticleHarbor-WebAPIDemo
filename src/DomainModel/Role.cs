@@ -1,4 +1,4 @@
-﻿namespace ArticleHarbor.DomainModel.Models
+﻿namespace ArticleHarbor.DomainModel
 {
     public enum Role
     {

@@ -1,9 +1,10 @@
-﻿namespace ArticleHarbor.DomainModel.Models
+﻿namespace ArticleHarbor.DomainModel
 {
     using System;
     using System.Collections.Generic;
     using System.Reflection;
     using System.Threading.Tasks;
+    using Models;
     using Ploeh.AutoFixture;
     using Xunit;
 

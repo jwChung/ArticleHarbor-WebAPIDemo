@@ -4,7 +4,7 @@
     using EFDataAccess;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
-    using Article = DomainModel.Models.Article;
+    using Article = DomainModel.Article;
 
     public class ArticleRepositoryTest : IdiomaticTest<ArticleRepository>
     {

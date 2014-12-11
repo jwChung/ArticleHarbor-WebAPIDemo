@@ -4,10 +4,11 @@
     using System.Data.Entity;
     using System.Linq;
     using System.Threading.Tasks;
+    using DomainModel;
     using DomainModel.Models;
     using DomainModel.Repositories;
     using EFDataAccess;
-    using User = DomainModel.Models.User;
+    using User = DomainModel.User;
 
     public sealed class UserManager : IUserManager
     {
