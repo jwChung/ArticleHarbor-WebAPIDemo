@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Reflection;
+    using System.Threading.Tasks;
     using Xunit;
 
     public abstract class TransformableCommandTest<TReturn> : IdiomaticTest<TransformableCommand<TReturn>>
@@ -10,6 +11,21 @@
         public void SutIsModelCommand(TransformableCommand<TReturn> sut)
         {
             Assert.IsAssignableFrom<IModelCommand<TReturn>>(sut);
+        }
+
+        [Test]
+        public void ExecuteAsyncUserReturnsCorrectResult(
+            TransformableCommand<TReturn> sut,
+            User user,
+            User newUser,
+            IEnumerable<TReturn> expected)
+        {
+            sut.Transformer.Of(x => x.TransformAsync(user) == Task.FromResult(newUser));
+            sut.InnerCommand.Of(x => x.ExecuteAsync(newUser) == Task.FromResult(expected));
+
+            var actual = sut.ExecuteAsync(user).Result;
+
+            Assert.Equal(expected, actual);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()

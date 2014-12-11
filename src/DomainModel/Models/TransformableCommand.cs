@@ -32,9 +32,10 @@
             get { return this.innerCommand; }
         }
 
-        public Task<IEnumerable<TReturn>> ExecuteAsync(User user)
+        public async Task<IEnumerable<TReturn>> ExecuteAsync(User user)
         {
-            throw new NotImplementedException();
+            var newUser = await this.transformer.TransformAsync(user);
+            return await this.innerCommand.ExecuteAsync(newUser);
         }
 
         public Task<IEnumerable<TReturn>> ExecuteAsync(Article article)
