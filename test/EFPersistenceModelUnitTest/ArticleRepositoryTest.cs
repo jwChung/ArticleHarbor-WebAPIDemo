@@ -6,10 +6,10 @@
     using Xunit;
     using Article = DomainModel.Models.Article;
 
-    public class ArticleRepository2Test : IdiomaticTest<ArticleRepository2>
+    public class ArticleRepositoryTest : IdiomaticTest<ArticleRepository>
     {
         [Test]
-        public void SutIsRepository(ArticleRepository2 sut)
+        public void SutIsRepository(ArticleRepository sut)
         {
             Assert.IsAssignableFrom<Repository<Keys<int>, Article, EFDataAccess.Article>>(sut);
         }
@@ -17,7 +17,7 @@
         [Test]
         public void ConvertToModelAsyncReturnsCorrectModel(
             ArticleHarborDbContext context,
-            ArticleRepository2 sut)
+            ArticleRepository sut)
         {
             var article = context.Articles.Find(1);
             var actual = sut.ConvertToModelAsync(article).Result;
@@ -26,7 +26,7 @@
 
         [Test]
         public void ConvertToPersistenceAsyncReturnsCorrectPersistence(
-            ArticleRepository2 sut,
+            ArticleRepository sut,
             Article article)
         {
             var actual = sut.ConvertToPersistenceAsync(article).Result;

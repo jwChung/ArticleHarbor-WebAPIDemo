@@ -7,9 +7,9 @@
     using EFDataAccess;
     using Article = DomainModel.Models.Article;
 
-    public class ArticleRepository2 : Repository<Keys<int>, Article, EFDataAccess.Article>
+    public class ArticleRepository : Repository<Keys<int>, Article, EFDataAccess.Article>
     {
-        public ArticleRepository2(
+        public ArticleRepository(
             ArticleHarborDbContext context, DbSet<EFDataAccess.Article> dbSet)
             : base(context, dbSet)
         {

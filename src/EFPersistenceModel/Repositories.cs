@@ -29,7 +29,7 @@
 
         public IRepository<Keys<int>, Article> Articles
         {
-            get { return new ArticleRepository2(this.context, this.context.Articles); }
+            get { return new ArticleRepository(this.context, this.context.Articles); }
         }
 
         public IRepository<Keys<int, string>, Keyword> Keywords
