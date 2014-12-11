@@ -58,6 +58,21 @@
             Assert.Equal(expected, actual);
         }
 
+        [Test]
+        public void ExecuteAsyncBookmarkReturnsCorrectResult(
+            TransformableCommand<TReturn> sut,
+            Bookmark bookmark,
+            Bookmark newBookmark,
+            IEnumerable<TReturn> expected)
+        {
+            sut.Transformer.Of(x => x.TransformAsync(bookmark) == Task.FromResult(newBookmark));
+            sut.InnerCommand.Of(x => x.ExecuteAsync(newBookmark) == Task.FromResult(expected));
+
+            var actual = sut.ExecuteAsync(bookmark).Result;
+
+            Assert.Equal(expected, actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
             yield return this.Methods.Select(x => x.ExecuteAsync(default(User)));
