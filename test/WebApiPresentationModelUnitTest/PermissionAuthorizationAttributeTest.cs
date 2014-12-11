@@ -13,19 +13,18 @@
     using Ploeh.AutoFixture;
     using Xunit;
 
-    public class PermissionAuthorizationFilterAttributeTest
-        : IdiomaticTest<PermissionAuthorizationFilterAttribute>
+    public class PermissionAuthorizationAttributeTest : IdiomaticTest<PermissionAuthorizationAttribute>
     {
         [Test]
         public void SutIsAuthorizationAttribute(
-            PermissionAuthorizationFilterAttribute sut)
+            PermissionAuthorizationAttribute sut)
         {
             Assert.IsAssignableFrom<AuthorizationFilterAttribute>(sut);
         }
 
         [Test]
         public async Task OnAuthorizationAsyncWithNullPrincipalRepliesWithUnauthorized(
-            PermissionAuthorizationFilterAttribute sut,
+            PermissionAuthorizationAttribute sut,
             HttpActionContext context)
         {
             context.RequestContext.Principal = null;
@@ -38,7 +37,7 @@
 
         [Test]
         public async Task OnAuthorizationAsyncWithUnauthenticatedRepliesWithUnauthorized(
-            PermissionAuthorizationFilterAttribute sut,
+            PermissionAuthorizationAttribute sut,
             HttpActionContext context)
         {
             context.RequestContext.Principal.Identity.Of(x => x.IsAuthenticated == false);
@@ -74,7 +73,7 @@
                     context.RequestContext.Principal.Of(x => x.IsInRole(d.RoleName));
                     context.Response = null;
                     context.RequestContext.Principal.Identity.Of(x => x.IsAuthenticated == true);
-                    var sut = fixture.Create<PermissionAuthorizationFilterAttribute>();
+                    var sut = fixture.Create<PermissionAuthorizationAttribute>();
 
                     sut.OnAuthorizationAsync(context, CancellationToken.None).Wait();
 
@@ -130,7 +129,7 @@
                     context.RequestContext.Principal.Of(x => x.IsInRole(d.RoleName));
                     context.Response = null;
                     context.RequestContext.Principal.Identity.Of(x => x.IsAuthenticated == true);
-                    var sut = fixture.Create<PermissionAuthorizationFilterAttribute>();
+                    var sut = fixture.Create<PermissionAuthorizationAttribute>();
 
                     sut.OnAuthorizationAsync(context, CancellationToken.None).Wait();
 
@@ -140,7 +139,7 @@
 
         [Test]
         public void OnAuthorizationAsyncThrowsWhenUserRoleIsInvalid(
-            PermissionAuthorizationFilterAttribute sut,
+            PermissionAuthorizationAttribute sut,
             HttpActionContext context,
             string roleName)
         {

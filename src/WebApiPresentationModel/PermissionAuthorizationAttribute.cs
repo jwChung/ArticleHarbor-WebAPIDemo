@@ -12,11 +12,11 @@
     using DomainModel.Models;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public sealed class PermissionAuthorizationFilterAttribute : AuthorizationFilterAttribute
+    public sealed class PermissionAuthorizationAttribute : AuthorizationFilterAttribute
     {
         private readonly Permissions permissions;
 
-        public PermissionAuthorizationFilterAttribute(Permissions permissions)
+        public PermissionAuthorizationAttribute(Permissions permissions)
         {
             this.permissions = permissions;
         }
