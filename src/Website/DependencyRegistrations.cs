@@ -12,7 +12,6 @@ namespace ArticleHarbor.Website
     using ArticleHarbor.EFPersistenceModel;
     using ArticleHarbor.WebApiPresentationModel;
     using DomainModel.Repositories;
-    using DomainModel.Services;
     using Jwc.Funz;
     using WebApiPresentationModel.Controllers;
     using Keyword = DomainModel.Models.Keyword;
@@ -81,13 +80,6 @@ namespace ArticleHarbor.Website
 
             container.Register(
                 c => c.Resolve<IRepositories>().Articles)
-                .ReusedWithinContainer();
-
-            // Domain services
-            container.Register<IBookmarkService>(
-                c => new BookmarkService(
-                    c.Resolve<IBookmarkRepository>(),
-                    c.Resolve<IArticleRepository>()))
                 .ReusedWithinContainer();
 
             // Commands

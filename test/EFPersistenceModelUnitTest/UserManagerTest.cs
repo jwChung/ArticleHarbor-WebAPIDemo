@@ -26,14 +26,14 @@
         }
 
         [Test]
-        public void FindAsyncWithIncorectIdReturnsNullUser(UserManager sut)
+        public void FindAsyncWithIncorrectIdReturnsNullUser(UserManager sut)
         {
             var actual = sut.FindAsync("user", "password1").Result;
             Assert.Null(actual);
         }
 
         [Test]
-        public void FindAsyncWithIncorectPasswordReturnsNullUser(UserManager sut)
+        public void FindAsyncWithIncorrectPasswordReturnsNullUser(UserManager sut)
         {
             var actual = sut.FindAsync("user1", "password").Result;
             Assert.Null(actual);
@@ -59,7 +59,7 @@
         }
 
         [Test]
-        public void DisposeDiposesContext(UserManager sut)
+        public void DisposeCorrectlyDisposesContext(UserManager sut)
         {
             sut.Dispose();
 

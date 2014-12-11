@@ -7,7 +7,6 @@
     using DomainModel;
     using DomainModel.Models;
     using DomainModel.Repositories;
-    using DomainModel.Services;
 
     public class ApiKeyAuthenticationDispatcher : DelegatingHandler
     {

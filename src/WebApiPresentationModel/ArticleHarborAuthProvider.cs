@@ -6,7 +6,6 @@
     using ArticleHarbor.DomainModel;
     using DomainModel.Models;
     using DomainModel.Repositories;
-    using DomainModel.Services;
     using Microsoft.Owin.Security.OAuth;
 
     public class ArticleHarborAuthProvider : OAuthAuthorizationServerProvider

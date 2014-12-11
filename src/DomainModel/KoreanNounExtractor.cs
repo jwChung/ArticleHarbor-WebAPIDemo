@@ -25,7 +25,7 @@
                     workflow.analyze(document);
                     var sentence = workflow.getResultOfSentence(new Sentence(0, 0, false));
 
-                    return sentence.Eojeols.SelectMany(e => e.Morphemes);
+                    return sentence.Eojeols.SelectMany(e => e.Morphemes).Distinct();
                 }
                 finally
                 {
