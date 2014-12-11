@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
@@ -37,6 +38,47 @@
             await sut.SaveAsync();
 
             context.Verify(x => x.SaveChangesAsync());
+        }
+
+        [Test]
+        public void RollbackTransactionAsyncCorrectlyRollbacksTransaction(
+            UnitOfWork sut,
+            EFDataAccess.Article article)
+        {
+            article.UserId = "user3";
+            sut.Context.Articles.Add(article);
+            sut.Context.SaveChanges();
+            Assert.Equal(4, sut.Context.Articles.Count());
+
+            sut.RollbackTransactionAsync().Wait();
+
+            Assert.Equal(3, sut.Context.Articles.Count());
+        }
+
+        [Test]
+        public void CommitTransactionAsyncCorrectlyCommitsTransaction(
+            UnitOfWork sut,
+            EFDataAccess.Article article)
+        {
+            // Fixture setup
+            article.UserId = "user3";
+            sut.Context.Articles.Add(article);
+            
+            // Exercise system
+            sut.CommitTransactionAsync().Wait();
+
+            using (var context = new ArticleHarborDbContext(
+                new ArticleHarborDbContextTestInitializer()))
+            {
+                // Verify outcome
+                Assert.Equal(4, sut.Context.Articles.Count());
+
+                // Teardown
+                article = context.Articles.Find(article.Id);
+                context.Articles.Remove(article);
+                context.SaveChanges();
+                Assert.Equal(3, sut.Context.Articles.Count());
+            }
         }
 
         [Test]

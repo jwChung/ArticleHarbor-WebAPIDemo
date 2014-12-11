@@ -39,14 +39,16 @@
             return this.context.SaveChangesAsync();
         }
 
-        public Task CommitTransactionAsync()
+        public async Task CommitTransactionAsync()
         {
-            throw new NotImplementedException();
+            await this.context.SaveChangesAsync();
+            this.transaction.Commit();
         }
 
         public Task RollbackTransactionAsync()
         {
-            throw new NotImplementedException();
+            this.transaction.Rollback();
+            return Task.FromResult<object>(null);
         }
 
         public void Dispose()
