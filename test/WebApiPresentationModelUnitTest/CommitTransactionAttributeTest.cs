@@ -10,18 +10,18 @@
     using Moq;
     using Xunit;
 
-    public class SaveUnitOfWorkAttributeTest : IdiomaticTest<SaveUnitOfWorkAttribute>
+    public class CommitTransactionAttributeTest : IdiomaticTest<CommitTransactionAttribute>
     {
         [Test]
         public void SutIsActionFilterAttribute(
-            SaveUnitOfWorkAttribute sut)
+            CommitTransactionAttribute sut)
         {
             Assert.IsAssignableFrom<ActionFilterAttribute>(sut);
         }
 
         [Test]
-        public async Task OnActionExecutedAsyncSavesUnitOfWorkWhenUnitOfWorkWasConstructedInActionMethod(
-            SaveUnitOfWorkAttribute sut,
+        public async Task OnActionExecutedAsyncCommitsTransactionWhenUnitOfWorkWasConstructed(
+            CommitTransactionAttribute sut,
             HttpActionExecutedContext actionExecutedContext,
             IDependencyScope dependencyScope,
             Lazy<IUnitOfWork> lazyUnitOfWork)
@@ -33,12 +33,12 @@
 
             await sut.OnActionExecutedAsync(actionExecutedContext, CancellationToken.None);
 
-            unitOfWork.ToMock().Verify(x => x.SaveAsync());
+            unitOfWork.ToMock().Verify(x => x.CommitTransactionAsync());
         }
 
         [Test]
-        public async Task OnActionExecutedAsyncDoesNotSaveUnitOfWorkWhenUnitOfWorkWasNotConstructedInActionMethod(
-            SaveUnitOfWorkAttribute sut,
+        public async Task OnActionExecutedAsyncDoesNotCommitTransactionWhenUnitOfWorkWasNotConstructed(
+            CommitTransactionAttribute sut,
             HttpActionExecutedContext actionExecutedContext,
             IDependencyScope dependencyScope,
             Lazy<IUnitOfWork> layUnitOfWork)
@@ -49,7 +49,7 @@
 
             await sut.OnActionExecutedAsync(actionExecutedContext, CancellationToken.None);
 
-            layUnitOfWork.Value.ToMock().Verify(x => x.SaveAsync(), Times.Never());
+            layUnitOfWork.Value.ToMock().Verify(x => x.CommitTransactionAsync(), Times.Never());
         }
     }
 }

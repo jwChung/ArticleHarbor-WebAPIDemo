@@ -48,7 +48,9 @@ namespace ArticleHarbor.Website
 
             container.Register(
                 c => new Lazy<IUnitOfWork>(
-                    () => new UnitOfWork(c.Resolve<ArticleHarborDbContext>())))
+                    () => new UnitOfWork(
+                        c.Resolve<ArticleHarborDbContext>(),
+                        c.Resolve<ArticleHarborDbContext>().Database.BeginTransaction())))
                 .ReusedWithinContainer();
 
             container.Register<IUnitOfWork>(

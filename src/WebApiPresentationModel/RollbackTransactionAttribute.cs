@@ -8,19 +8,19 @@
     using DomainModel.Repositories;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public sealed class SaveUnitOfWorkAttribute : ActionFilterAttribute
+    public sealed class RollbackTransactionAttribute : ExceptionFilterAttribute
     {
-        public override Task OnActionExecutedAsync(
+        public override Task OnExceptionAsync(
             HttpActionExecutedContext actionExecutedContext,
             CancellationToken cancellationToken)
         {
             if (actionExecutedContext == null)
                 throw new ArgumentNullException("actionExecutedContext");
 
-            return this.OnActionExecutedAsyncWith(actionExecutedContext, cancellationToken);
+            return this.OnExceptionAsyncWith(actionExecutedContext, cancellationToken);
         }
 
-        private async Task OnActionExecutedAsyncWith(
+        private async Task OnExceptionAsyncWith(
             HttpActionExecutedContext actionExecutedContext,
             CancellationToken cancellationToken)
         {
@@ -29,9 +29,9 @@
                 .GetService(typeof(Lazy<IUnitOfWork>));
 
             if (lazyUnitOfWork.IsValueCreated)
-                await lazyUnitOfWork.Value.SaveAsync();
+                await lazyUnitOfWork.Value.RollbackTransactionAsync();
 
-            await base.OnActionExecutedAsync(actionExecutedContext, cancellationToken);
+            await base.OnExceptionAsync(actionExecutedContext, cancellationToken);
         }
     }
 }

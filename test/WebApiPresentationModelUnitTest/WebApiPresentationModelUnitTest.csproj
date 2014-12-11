@@ -150,11 +150,12 @@
     <Compile Include="Models\PutArticleViewModelTest.cs" />
     <Compile Include="Models\PostArticleViewModelTest.cs" />
     <Compile Include="PermissionAuthorizationAttributeTest.cs" />
+    <Compile Include="RollbackTransactionAttributeTest.cs" />
     <Compile Include="SimplePrincipalTest.cs" />
     <Compile Include="PrincipalValueProviderFactoryTest.cs" />
     <Compile Include="PrincipalValueProviderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SaveUnitOfWorkAttributeTest.cs" />
+    <Compile Include="CommitTransactionAttributeTest.cs" />
     <Compile Include="TestAttribute.cs" />
     <Compile Include="UnhandledExceptionLoggerTest.cs" />
   </ItemGroup>
