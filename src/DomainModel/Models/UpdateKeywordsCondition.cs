@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
     using Repositories;
 
-    public class UpdateKeywordsCondition : TrueCondition
+    public class UpdateKeywordsCondition : CommandCondition
     {
         private readonly IRepositories repositories;
 

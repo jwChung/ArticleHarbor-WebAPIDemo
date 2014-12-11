@@ -65,7 +65,8 @@
     <Compile Include="Models\DeleteCommand.cs" />
     <Compile Include="Models\DeleteConfirmableCommand.cs" />
     <Compile Include="Models\DeleteKeywordsCommand.cs" />
-    <Compile Include="Models\IModelCondition.cs" />
+    <Compile Include="Models\ICommandCondition.cs" />
+    <Compile Include="Models\IModelTransformer.cs" />
     <Compile Include="Models\InClausePredicate.cs" />
     <Compile Include="Models\InsertConfirmableCommand.cs" />
     <Compile Include="Models\CompositeModel.cs" />
@@ -78,8 +79,10 @@
     <Compile Include="Models\IModel.cs" />
     <Compile Include="Models\Keyword.cs" />
     <Compile Include="Models\Bookmark.cs" />
+    <Compile Include="Models\ModelTransformer.cs" />
     <Compile Include="Models\SelectBookmarkedArticlesCommand.cs" />
-    <Compile Include="Models\TrueCondition.cs" />
+    <Compile Include="Models\TransformableCommand.cs" />
+    <Compile Include="Models\CommandCondition.cs" />
     <Compile Include="Models\ModelCommand.cs" />
     <Compile Include="Models\InsertCommand.cs" />
     <Compile Include="Models\Parameter.cs" />

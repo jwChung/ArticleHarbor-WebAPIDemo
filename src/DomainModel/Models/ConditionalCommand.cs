@@ -7,11 +7,11 @@
 
     public class ConditionalCommand<TReturn> : ModelCommand<TReturn>
     {
-        private readonly IModelCondition condition;
+        private readonly ICommandCondition condition;
         private readonly IModelCommand<TReturn> innerCommand;
 
         public ConditionalCommand(
-            IModelCondition condition,
+            ICommandCondition condition,
             IModelCommand<TReturn> innerCommand)
         {
             if (condition == null)
@@ -24,7 +24,7 @@
             this.innerCommand = innerCommand;
         }
 
-        public IModelCondition Condition
+        public ICommandCondition Condition
         {
             get { return this.condition; }
         }

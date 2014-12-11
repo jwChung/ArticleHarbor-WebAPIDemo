@@ -116,8 +116,10 @@
     <Compile Include="Models\CompositeModelTest.cs" />
     <Compile Include="Models\EqualPredicateTest.cs" />
     <Compile Include="Models\KeysTest.cs" />
+    <Compile Include="Models\ModelTransformerTest.cs" />
     <Compile Include="Models\SelectBookmarkedArticlesCommandTest.cs" />
-    <Compile Include="Models\TrueConditionTest.cs" />
+    <Compile Include="Models\TransformableCommandTest.cs" />
+    <Compile Include="Models\CommandConditionTest.cs" />
     <Compile Include="Models\ModelCommandTest.cs" />
     <Compile Include="Models\InsertCommandTest.cs" />
     <Compile Include="Models\ParameterTest.cs" />

@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    public interface IModelCondition
+    public interface ICommandCondition
     {
         Task<bool> CanExecuteAsync(User user);
 
