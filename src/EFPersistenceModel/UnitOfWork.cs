@@ -5,9 +5,10 @@
     using ArticleHarbor.EFDataAccess;
     using DomainModel.Repositories;
 
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly ArticleHarborDbContext context;
+        private bool disposed;
 
         public UnitOfWork(ArticleHarborDbContext context)
         {
@@ -24,7 +25,26 @@
 
         public Task SaveAsync()
         {
-            return this.Context.SaveChangesAsync();
+            return this.context.SaveChangesAsync();
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.disposed)
+                return;
+
+            if (disposing)
+            {
+                this.context.Dispose();
+            }
+
+            this.disposed = true;
         }
     }
 }
