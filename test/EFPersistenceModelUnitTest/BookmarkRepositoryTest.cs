@@ -7,10 +7,10 @@
     using Xunit;
     using Bookmark = DomainModel.Models.Bookmark;
 
-    public class BookmarkRepository2Test : IdiomaticTest<BookmarkRepository2>
+    public class BookmarkRepositoryTest : IdiomaticTest<BookmarkRepository>
     {
         [Test]
-        public void SutIsRepository(BookmarkRepository2 sut)
+        public void SutIsRepository(BookmarkRepository sut)
         {
             Assert.IsAssignableFrom<Repository<Keys<string, int>, Bookmark, EFDataAccess.Bookmark>>(sut);
         }
@@ -18,7 +18,7 @@
         [Test]
         public void ConvertToModelAsyncReturnsCorrectModel(
             ArticleHarborDbContext context,
-            BookmarkRepository2 sut)
+            BookmarkRepository sut)
         {
             var persistence = context.Bookmarks.AsNoTracking().Single(x => x.ArticleId == 1);
             var actual = sut.ConvertToModelAsync(persistence).Result;
@@ -27,7 +27,7 @@
 
         [Test]
         public void ConvertToPersistenceAsyncReturnsCorrectPersistence(
-            BookmarkRepository2 sut)
+            BookmarkRepository sut)
         {
             var bookmark = new Bookmark("user1", 1);
             var actual = sut.ConvertToPersistenceAsync(bookmark).Result;

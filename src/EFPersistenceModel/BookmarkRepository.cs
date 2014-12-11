@@ -7,9 +7,9 @@
     using EFDataAccess;
     using Bookmark = DomainModel.Models.Bookmark;
 
-    public class BookmarkRepository2 : Repository<Keys<string, int>, Bookmark, EFDataAccess.Bookmark>
+    public class BookmarkRepository : Repository<Keys<string, int>, Bookmark, EFDataAccess.Bookmark>
     {
-        public BookmarkRepository2(
+        public BookmarkRepository(
             ArticleHarborDbContext context,
             DbSet<EFDataAccess.Bookmark> dbSet)
             : base(context, dbSet)

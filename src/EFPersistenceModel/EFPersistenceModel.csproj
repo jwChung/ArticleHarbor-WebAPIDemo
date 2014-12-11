@@ -60,7 +60,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="ArticleRepository.cs" />
-    <Compile Include="BookmarkRepository2.cs" />
+    <Compile Include="BookmarkRepository.cs" />
     <Compile Include="KeywordRepository2.cs" />
     <Compile Include="Repositories.cs" />
     <Compile Include="Repository.cs" />

@@ -119,7 +119,7 @@
       <Link>RunOn.cs</Link>
     </Compile>
     <Compile Include="ArticleRepositoryTest.cs" />
-    <Compile Include="BookmarkRepository2Test.cs" />
+    <Compile Include="BookmarkRepositoryTest.cs" />
     <Compile Include="KeywordRepository2Test.cs" />
     <Compile Include="AssemblyTest.cs" />
     <Compile Include="RepositoriesTest.cs" />

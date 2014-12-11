@@ -38,7 +38,7 @@
         {
             var actual = sut.Bookmarks;
 
-            var articles = Assert.IsAssignableFrom<BookmarkRepository2>(actual);
+            var articles = Assert.IsAssignableFrom<BookmarkRepository>(actual);
             Assert.Equal(sut.Context, articles.Context);
             Assert.Equal(sut.Context.Bookmarks, articles.DbSet);
         }

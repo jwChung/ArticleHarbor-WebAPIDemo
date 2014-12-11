@@ -39,7 +39,7 @@
 
         public IRepository<Keys<string, int>, Bookmark> Bookmarks
         {
-            get { return new BookmarkRepository2(this.context, this.context.Bookmarks); }
+            get { return new BookmarkRepository(this.context, this.context.Bookmarks); }
         }
 
         public IRepository<Keys<string>, User> Users
