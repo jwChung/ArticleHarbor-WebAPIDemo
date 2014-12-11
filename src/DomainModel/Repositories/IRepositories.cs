@@ -1,5 +1,6 @@
 ﻿namespace ArticleHarbor.DomainModel.Repositories
 {
+    using Models;
     using Queries;
 
     public interface IRepositories

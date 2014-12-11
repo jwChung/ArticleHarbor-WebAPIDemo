@@ -4,6 +4,7 @@
     using System.Reflection;
     using System.Security.Principal;
     using DomainModel;
+    using DomainModel.Models;
     using Ploeh.AutoFixture.Xunit;
     using Xunit;
     using IIdentity = System.Security.Principal.IIdentity;

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Security.Principal;
     using System.Threading.Tasks;
+    using Models;
     using Queries;
     using Repositories;
 

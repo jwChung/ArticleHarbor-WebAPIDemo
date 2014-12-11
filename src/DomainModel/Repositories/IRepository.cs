@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Models;
     using Queries;
 
     public interface IRepository<TModel>

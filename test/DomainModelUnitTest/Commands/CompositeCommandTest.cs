@@ -5,6 +5,7 @@
     using System.Reflection;
     using System.Threading.Tasks;
     using Jwc.Experiment.Xunit;
+    using Models;
     using Xunit;
 
     public abstract class CompositeCommandTest<TReturn> : IdiomaticTest<CompositeCommand<TReturn>>

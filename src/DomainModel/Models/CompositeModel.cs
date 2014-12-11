@@ -1,9 +1,10 @@
-﻿namespace ArticleHarbor.DomainModel.Commands
+﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Commands;
     using Queries;
 
     public class CompositeModel : IModel

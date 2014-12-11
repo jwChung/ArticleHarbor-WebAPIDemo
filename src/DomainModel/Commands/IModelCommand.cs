@@ -2,6 +2,7 @@ namespace ArticleHarbor.DomainModel.Commands
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Models;
 
     public interface IModelCommand<TReturn>
     {

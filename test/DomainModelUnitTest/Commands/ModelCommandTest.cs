@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Reflection;
     using Jwc.Experiment.Xunit;
+    using Models;
     using Xunit;
 
     public class ModelCommandTest : IdiomaticTest<ModelCommand<object>>

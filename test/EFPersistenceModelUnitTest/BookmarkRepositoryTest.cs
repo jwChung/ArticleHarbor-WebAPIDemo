@@ -5,7 +5,7 @@
     using EFDataAccess;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
-    using Bookmark = DomainModel.Bookmark;
+    using Bookmark = DomainModel.Models.Bookmark;
 
     public class BookmarkRepositoryTest : IdiomaticTest<BookmarkRepository>
     {

@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel.Commands
 {
     using System.Threading.Tasks;
+    using Models;
 
     public class CommandCondition : ICommandCondition
     {

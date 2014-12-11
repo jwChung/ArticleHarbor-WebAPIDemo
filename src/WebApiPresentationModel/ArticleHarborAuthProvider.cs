@@ -4,6 +4,7 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
+    using DomainModel.Models;
     using DomainModel.Repositories;
     using Microsoft.Owin.Security.OAuth;
 

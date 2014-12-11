@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Models;
     using Xunit;
 
     public class ConditionalCommandTest : IdiomaticTest<ConditionalCommand<object>>

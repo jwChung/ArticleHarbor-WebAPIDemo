@@ -11,6 +11,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using DomainModel;
+    using DomainModel.Models;
     using DomainModel.Queries;
     using DomainModel.Repositories;
 

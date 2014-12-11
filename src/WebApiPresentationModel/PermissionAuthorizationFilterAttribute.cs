@@ -9,6 +9,7 @@
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
     using DomainModel;
+    using DomainModel.Models;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public sealed class PermissionAuthorizationFilterAttribute : AuthorizationFilterAttribute

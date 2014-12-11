@@ -1,5 +1,6 @@
 ﻿namespace ArticleHarbor.DomainModel.Commands
 {
+    using Models;
     using Ploeh.AutoFixture;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;

@@ -5,6 +5,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using DomainModel;
+    using DomainModel.Models;
     using DomainModel.Repositories;
 
     public class ApiKeyAuthenticationDispatcher : DelegatingHandler

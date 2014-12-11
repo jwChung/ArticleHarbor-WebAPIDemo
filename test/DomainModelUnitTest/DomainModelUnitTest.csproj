@@ -100,7 +100,7 @@
     <Compile Include="Collectors\FacebookRssCollectorTest.cs" />
     <Compile Include="Collectors\HaniRssCollectorTest.cs" />
     <Compile Include="Queries\AndPredicateTest.cs" />
-    <Compile Include="BookmarkTest.cs" />
+    <Compile Include="Models\BookmarkTest.cs" />
     <Compile Include="Commands\CompositeCommandTest.cs" />
     <Compile Include="Commands\ConditionalCommandTest.cs" />
     <Compile Include="Commands\DeleteBookmarksCommandTest.cs" />
@@ -109,7 +109,7 @@
     <Compile Include="Commands\DeleteKeywordsCommandTest.cs" />
     <Compile Include="Queries\InClausePredicateTest.cs" />
     <Compile Include="Commands\InsertConfirmableCommandTest.cs" />
-    <Compile Include="Commands\CompositeModelTest.cs" />
+    <Compile Include="Models\CompositeModelTest.cs" />
     <Compile Include="Queries\EqualPredicateTest.cs" />
     <Compile Include="Queries\KeysTest.cs" />
     <Compile Include="Commands\ModelTransformerTest.cs" />
@@ -124,8 +124,8 @@
     <Compile Include="Commands\UpdateCommandTest.cs" />
     <Compile Include="Commands\UpdateConfirmableCommandTest.cs" />
     <Compile Include="Commands\UpdateKeywordsConditionTest.cs" />
-    <Compile Include="ArticleTest.cs" />
-    <Compile Include="KeywordTest.cs" />
+    <Compile Include="Models\ArticleTest.cs" />
+    <Compile Include="Models\KeywordTest.cs" />
     <Compile Include="AssemblyTest.cs" />
     <Compile Include="FakeRepositoryBase.cs" />
     <Compile Include="Commands\KoreanNounExtractorTest.cs" />
@@ -135,7 +135,7 @@
     <Compile Include="RunOn.cs" />
     <Compile Include="TestAttribute.cs" />
     <Compile Include="IdiomaticTest.cs" />
-    <Compile Include="UserTest.cs" />
+    <Compile Include="Models\UserTest.cs" />
     <Compile Include="TypeFavoringConstructorQuery.cs" />
   </ItemGroup>
   <ItemGroup>

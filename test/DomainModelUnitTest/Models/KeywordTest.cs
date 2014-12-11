@@ -1,4 +1,4 @@
-﻿namespace ArticleHarbor.DomainModel
+﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -6,17 +6,17 @@
     using Queries;
     using Xunit;
 
-    public class UserTest : IdiomaticTest<User>
+    public class KeywordTest : IdiomaticTest<Keyword>
     {
         [Test]
-        public void SutIsModel(User sut)
+        public void SutIsModel(Keyword sut)
         {
             Assert.IsAssignableFrom<IModel>(sut);
         }
 
         [Test]
         public void ExecuteAsyncReturnsCorrectResult(
-            User sut,
+            Keyword sut,
             IModelCommand<object> command,
             IEnumerable<object> expected)
         {
@@ -26,9 +26,9 @@
         }
 
         [Test]
-        public void GetKeysReturnsCorrectKeys(User sut)
+        public void GetKeysReturnsCorrectKeys(Keyword sut)
         {
-            var expected = new Keys<string>(sut.Id);
+            var expected = new Keys<int, string>(sut.ArticleId, sut.Word);
             var actual = sut.GetKeys();
             Assert.Equal(expected, actual);
         }

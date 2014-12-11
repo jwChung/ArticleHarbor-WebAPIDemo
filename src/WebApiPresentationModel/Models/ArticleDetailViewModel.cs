@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using DomainModel;
+    using DomainModel.Models;
     using Newtonsoft.Json;
 
     public class ArticleDetailViewModel

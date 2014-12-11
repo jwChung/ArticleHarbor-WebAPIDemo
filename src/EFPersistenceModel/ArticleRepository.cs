@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using DomainModel.Queries;
     using EFDataAccess;
-    using Article = DomainModel.Article;
+    using Article = DomainModel.Models.Article;
 
     public class ArticleRepository : Repository<Keys<int>, Article, EFDataAccess.Article>
     {

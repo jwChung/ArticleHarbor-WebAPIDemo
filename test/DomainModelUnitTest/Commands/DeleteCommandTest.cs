@@ -1,5 +1,6 @@
 ﻿namespace ArticleHarbor.DomainModel.Commands
 {
+    using Models;
     using Queries;
     using Xunit;
 

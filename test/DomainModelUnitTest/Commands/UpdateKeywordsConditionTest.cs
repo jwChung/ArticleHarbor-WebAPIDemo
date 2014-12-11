@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel.Commands
 {
     using System.Threading.Tasks;
+    using Models;
     using Queries;
     using Xunit;
 

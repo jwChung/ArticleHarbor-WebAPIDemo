@@ -9,6 +9,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using System.Xml.Linq;
+    using Models;
 
     /// <summary>
     /// 한겨레 신문 뉴스 피드 수집기

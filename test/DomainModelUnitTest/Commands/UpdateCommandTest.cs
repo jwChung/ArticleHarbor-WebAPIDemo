@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Reflection;
+    using Models;
     using Xunit;
 
     public class UpdateCommandTest : IdiomaticTest<UpdateCommand>

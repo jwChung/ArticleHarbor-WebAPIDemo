@@ -3,6 +3,7 @@
     using System;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
+    using Models;
 
     public class SubjectFromBodyTransformer : ModelTransformer
     {

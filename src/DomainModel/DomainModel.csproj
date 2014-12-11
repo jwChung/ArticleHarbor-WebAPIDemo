@@ -52,7 +52,7 @@
     <Compile Include="Collectors\HaniRssCollector.cs" />
     <Compile Include="Collectors\IArticleCollector.cs" />
     <Compile Include="Queries\AndPredicate.cs" />
-    <Compile Include="Article.cs" />
+    <Compile Include="Models\Article.cs" />
     <Compile Include="Commands\CompositeCommand.cs" />
     <Compile Include="Commands\ConditionalCommand.cs" />
     <Compile Include="Commands\DeleteBookmarksCommand.cs" />
@@ -63,16 +63,16 @@
     <Compile Include="Commands\IModelTransformer.cs" />
     <Compile Include="Queries\InClausePredicate.cs" />
     <Compile Include="Commands\InsertConfirmableCommand.cs" />
-    <Compile Include="Commands\CompositeModel.cs" />
+    <Compile Include="Models\CompositeModel.cs" />
     <Compile Include="Queries\EqualPredicate.cs" />
     <Compile Include="Queries\IKeys.cs" />
     <Compile Include="Commands\IModelCommand.cs" />
     <Compile Include="Queries\Keys.cs" />
     <Compile Include="Queries\IParameter.cs" />
     <Compile Include="Queries\IPredicate.cs" />
-    <Compile Include="IModel.cs" />
-    <Compile Include="Keyword.cs" />
-    <Compile Include="Bookmark.cs" />
+    <Compile Include="Models\IModel.cs" />
+    <Compile Include="Models\Keyword.cs" />
+    <Compile Include="Models\Bookmark.cs" />
     <Compile Include="Commands\ModelTransformer.cs" />
     <Compile Include="Commands\SelectBookmarkedArticlesCommand.cs" />
     <Compile Include="Commands\SubjectFromBodyTransformer.cs" />
@@ -92,10 +92,10 @@
     <Compile Include="Repositories\IUnitOfWork.cs" />
     <Compile Include="Commands\KoreanNounExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Role.cs" />
-    <Compile Include="Permissions.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Permissions.cs" />
     <Compile Include="UnauthorizedException.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Models\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

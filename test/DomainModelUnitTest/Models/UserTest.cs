@@ -1,34 +1,22 @@
-﻿namespace ArticleHarbor.DomainModel
+﻿namespace ArticleHarbor.DomainModel.Models
 {
-    using System;
     using System.Collections.Generic;
-    using System.Reflection;
     using System.Threading.Tasks;
     using Commands;
-    using Ploeh.AutoFixture;
     using Queries;
     using Xunit;
 
-    public class BookmarkTest : IdiomaticTest<Bookmark>
+    public class UserTest : IdiomaticTest<User>
     {
         [Test]
-        public void SutIsModel(Bookmark sut)
+        public void SutIsModel(User sut)
         {
             Assert.IsAssignableFrom<IModel>(sut);
         }
 
         [Test]
-        public void InitializeWithEmptyStringValuesThrows(
-            IFixture fixture)
-        {
-            fixture.Inject(string.Empty);
-            var e = Assert.Throws<TargetInvocationException>(() => fixture.Create<Bookmark>());
-            Assert.IsType<ArgumentException>(e.InnerException);
-        }
-
-        [Test]
         public void ExecuteAsyncReturnsCorrectResult(
-            Bookmark sut,
+            User sut,
             IModelCommand<object> command,
             IEnumerable<object> expected)
         {
@@ -38,9 +26,9 @@
         }
 
         [Test]
-        public void GetKeysReturnsCorrectKeys(Bookmark sut)
+        public void GetKeysReturnsCorrectKeys(User sut)
         {
-            var expected = new Keys<string, int>(sut.UserId, sut.ArticleId);
+            var expected = new Keys<string>(sut.Id);
             var actual = sut.GetKeys();
             Assert.Equal(expected, actual);
         }

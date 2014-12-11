@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Reflection;
     using System.Threading.Tasks;
+    using Models;
     using Xunit;
 
     public abstract class TransformableCommandTest<TReturn> : IdiomaticTest<TransformableCommand<TReturn>>

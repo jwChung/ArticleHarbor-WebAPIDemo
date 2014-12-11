@@ -11,10 +11,11 @@ namespace ArticleHarbor.Website
     using ArticleHarbor.EFPersistenceModel;
     using ArticleHarbor.WebApiPresentationModel;
     using DomainModel.Commands;
+    using DomainModel.Models;
     using DomainModel.Repositories;
     using Jwc.Funz;
     using WebApiPresentationModel.Controllers;
-    using Keyword = DomainModel.Keyword;
+    using Keyword = DomainModel.Models.Keyword;
 
     public class DependencyRegistrations : IContainerVisitor<object>
     {

@@ -9,6 +9,7 @@
     using System.Reflection;
     using System.Threading.Tasks;
     using DomainModel;
+    using DomainModel.Models;
     using DomainModel.Queries;
     using DomainModel.Repositories;
     using EFDataAccess;
@@ -17,8 +18,8 @@
     using Ploeh.AutoFixture.Xunit;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
-    using Article = DomainModel.Article;
-    using Keyword = DomainModel.Keyword;
+    using Article = DomainModel.Models.Article;
+    using Keyword = DomainModel.Models.Keyword;
 
     public abstract class RepositoryTest<TKeys, TModel, TPersistence>
         : IdiomaticTest<Repository<TKeys, TModel, TPersistence>>

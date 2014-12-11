@@ -1,4 +1,4 @@
-﻿namespace ArticleHarbor.DomainModel
+﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

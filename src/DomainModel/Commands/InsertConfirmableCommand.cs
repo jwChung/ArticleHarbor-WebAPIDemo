@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Security.Principal;
     using System.Threading.Tasks;
+    using Models;
 
     public class InsertConfirmableCommand : ModelCommand<IModel>
     {

@@ -5,10 +5,10 @@
     using DomainModel.Queries;
     using DomainModel.Repositories;
     using EFDataAccess;
-    using Article = DomainModel.Article;
-    using Bookmark = DomainModel.Bookmark;
-    using Keyword = DomainModel.Keyword;
-    using User = DomainModel.User;
+    using Article = DomainModel.Models.Article;
+    using Bookmark = DomainModel.Models.Bookmark;
+    using Keyword = DomainModel.Models.Keyword;
+    using User = DomainModel.Models.User;
 
     public class Repositories : IRepositories
     {
