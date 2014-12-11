@@ -128,7 +128,6 @@
     <Compile Include="Models\ArticleTest.cs" />
     <Compile Include="Models\KeywordTest.cs" />
     <Compile Include="AssemblyTest.cs" />
-    <Compile Include="Services\AuthServiceTest.cs" />
     <Compile Include="EmptyDisposableTest.cs" />
     <Compile Include="FakeRepositoryBase.cs" />
     <Compile Include="KoreanNounExtractorTest.cs" />
