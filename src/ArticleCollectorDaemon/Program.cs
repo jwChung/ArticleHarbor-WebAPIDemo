@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using System.Globalization;
     using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.DomainModel.Collectors;
@@ -76,6 +77,9 @@
         {
             public override Task<Article> TransformAsync(Article article)
             {
+                if (article == null)
+                    throw new ArgumentNullException("article");
+
                 var index = article.Body.IndexOf(':');
                 var newBody = article.Body.Remove(0, index + 2);
                 return Task.FromResult(article.WithBody(newBody));
@@ -91,9 +95,18 @@
                 this.name = name;
             }
 
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String)", Justification = "This can be suppressed as the message is simple.")]
             public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
             {
-                Console.WriteLine(string.Format("{0} (Adding): {1}", this.name.PadLeft(10), article.Subject));
+                if (article == null)
+                    throw new ArgumentNullException("article");
+
+                Console.WriteLine(string.Format(
+                    CultureInfo.CurrentCulture,
+                    "{0} (Adding): {1}",
+                    this.name.PadLeft(10),
+                    article.Subject));
+
                 return base.ExecuteAsync(article);
             }
         }
@@ -107,9 +120,18 @@
                 this.name = name;
             }
 
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String)", Justification = "This can be suppressed as the message is simple.")]
             public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
             {
-                Console.WriteLine(string.Format("{0}  (Added): {1}", this.name.PadLeft(10), article.Subject));
+                if (article == null)
+                    throw new ArgumentNullException("article");
+
+                Console.WriteLine(string.Format(
+                    CultureInfo.CurrentCulture,
+                    "{0}  (Added): {1}",
+                    this.name.PadLeft(10),
+                    article.Subject));
+
                 return base.ExecuteAsync(article);
             }
         }
