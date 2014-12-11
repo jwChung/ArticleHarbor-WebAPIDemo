@@ -4,12 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using System.Threading.Tasks;
     using ArticleHarbor.DomainModel;
     using ArticleHarbor.EFDataAccess;
     using DomainModel.Repositories;
-    using Moq;
-    using Ploeh.AutoFixture;
     using Xunit;
 
     public class UnitOfWorkTest : IdiomaticTest<UnitOfWork>
@@ -24,20 +21,6 @@
         public void SutIsDisposable(UnitOfWork sut)
         {
             Assert.IsAssignableFrom<IDisposable>(sut);
-        }
-
-        [Test]
-        public async Task SaveAsyncCorrectlySaves(
-            Mock<ArticleHarborDbContext> context,
-            IFixture fixture)
-        {
-            context.CallBase = false;
-            fixture.Inject(context.Object);
-            var sut = fixture.Create<UnitOfWork>();
-
-            await sut.SaveAsync();
-
-            context.Verify(x => x.SaveChangesAsync());
         }
 
         [Test]

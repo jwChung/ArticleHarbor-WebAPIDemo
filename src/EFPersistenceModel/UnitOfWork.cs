@@ -34,11 +34,6 @@
             get { return this.transaction; }
         }
 
-        public Task SaveAsync()
-        {
-            return this.context.SaveChangesAsync();
-        }
-
         public async Task CommitTransactionAsync()
         {
             await this.context.SaveChangesAsync();
