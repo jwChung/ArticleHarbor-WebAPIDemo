@@ -88,6 +88,7 @@
     <Compile Include="Models\PostArticleViewModel.cs" />
     <Compile Include="Models\PutArticleViewModel.cs" />
     <Compile Include="PermissionAuthorizationAttribute.cs" />
+    <Compile Include="RollbackTransactionAttribute.cs" />
     <Compile Include="SimplePrincipal.cs" />
     <Compile Include="PrincipalValueProvider.cs" />
     <Compile Include="PrincipalValueProviderFactory.cs" />
