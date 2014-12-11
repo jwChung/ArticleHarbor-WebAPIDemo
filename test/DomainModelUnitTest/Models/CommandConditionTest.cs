@@ -5,10 +5,10 @@
     using Jwc.Experiment.Xunit;
     using Xunit;
 
-    public class TrueConditionTest : IdiomaticTest<TrueCondition>
+    public class CommandConditionTest : IdiomaticTest<CommandCondition>
     {
         [Test]
-        public void SutIsModelCondition(TrueCondition sut)
+        public void SutIsModelCondition(CommandCondition sut)
         {
             Assert.IsAssignableFrom<ICommandCondition>(sut);
         }
@@ -16,16 +16,16 @@
         [Test]
         public IEnumerable<ITestCase> CanExecuteAsyncReturnsTrue()
         {
-            yield return TestCase.WithAuto<TrueCondition, User>().Create(
+            yield return TestCase.WithAuto<CommandCondition, User>().Create(
                 (sut, user) => Assert.True(sut.CanExecuteAsync(user).Result));
 
-            yield return TestCase.WithAuto<TrueCondition, Article>().Create(
+            yield return TestCase.WithAuto<CommandCondition, Article>().Create(
                 (sut, article) => Assert.True(sut.CanExecuteAsync(article).Result));
 
-            yield return TestCase.WithAuto<TrueCondition, Bookmark>().Create(
+            yield return TestCase.WithAuto<CommandCondition, Bookmark>().Create(
                 (sut, bookmark) => Assert.True(sut.CanExecuteAsync(bookmark).Result));
 
-            yield return TestCase.WithAuto<TrueCondition, Keyword>().Create(
+            yield return TestCase.WithAuto<CommandCondition, Keyword>().Create(
                 (sut, keyword) => Assert.True(sut.CanExecuteAsync(keyword).Result));
         }
 

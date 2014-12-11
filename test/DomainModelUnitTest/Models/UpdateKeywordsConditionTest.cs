@@ -8,7 +8,7 @@
         [Test]
         public void SutIsTrueCondition(UpdateKeywordsCondition sut)
         {
-            Assert.IsAssignableFrom<TrueCondition>(sut);
+            Assert.IsAssignableFrom<CommandCondition>(sut);
         }
 
         [Test]
