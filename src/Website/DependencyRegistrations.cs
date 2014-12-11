@@ -54,10 +54,6 @@ namespace ArticleHarbor.Website
                 c => c.Resolve<Lazy<IUnitOfWork>>().Value)
                 .ReusedWithinContainer();
 
-            container.Register<IArticleRepository>(
-                c => new ArticleRepository(c.Resolve<ArticleHarborDbContext>()))
-                .ReusedWithinContainer();
-
             container.Register<IKeywordRepository>(
                 c => new KeywordRepository(c.Resolve<ArticleHarborDbContext>()))
                 .ReusedWithinContainer();
