@@ -83,13 +83,6 @@ namespace ArticleHarbor.Website
                 c => c.Resolve<IRepositories>().Articles)
                 .ReusedWithinContainer();
 
-            // Domain services
-            container.Register<IBookmarkService>(
-                c => new BookmarkService(
-                    c.Resolve<IBookmarkRepository>(),
-                    c.Resolve<IArticleRepository>()))
-                .ReusedWithinContainer();
-
             // Commands
             container.Register(
                 c => new InsertConfirmableCommand(
