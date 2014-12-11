@@ -38,9 +38,10 @@
             return await this.innerCommand.ExecuteAsync(newUser);
         }
 
-        public Task<IEnumerable<TReturn>> ExecuteAsync(Article article)
+        public async Task<IEnumerable<TReturn>> ExecuteAsync(Article article)
         {
-            throw new NotImplementedException();
+             var newArticle = await this.transformer.TransformAsync(article);
+             return await this.innerCommand.ExecuteAsync(newArticle);
         }
 
         public Task<IEnumerable<TReturn>> ExecuteAsync(Keyword keyword)

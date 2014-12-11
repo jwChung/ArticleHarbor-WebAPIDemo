@@ -28,6 +28,21 @@
             Assert.Equal(expected, actual);
         }
 
+        [Test]
+        public void ExecuteAsyncArticleReturnsCorrectResult(
+            TransformableCommand<TReturn> sut,
+            Article article,
+            Article newArticle,
+            IEnumerable<TReturn> expected)
+        {
+            sut.Transformer.Of(x => x.TransformAsync(article) == Task.FromResult(newArticle));
+            sut.InnerCommand.Of(x => x.ExecuteAsync(newArticle) == Task.FromResult(expected));
+
+            var actual = sut.ExecuteAsync(article).Result;
+
+            Assert.Equal(expected, actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
             yield return this.Methods.Select(x => x.ExecuteAsync(default(User)));
