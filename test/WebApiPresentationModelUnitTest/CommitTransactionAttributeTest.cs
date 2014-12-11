@@ -20,7 +20,7 @@
         }
 
         [Test]
-        public async Task OnActionExecutedAsyncSavesUnitOfWorkWhenUnitOfWorkWasConstructedInActionMethod(
+        public async Task OnActionExecutedAsyncCommitsTransactionWhenUnitOfWorkWasConstructedInActionMethod(
             CommitTransactionAttribute sut,
             HttpActionExecutedContext actionExecutedContext,
             IDependencyScope dependencyScope,
@@ -33,11 +33,11 @@
 
             await sut.OnActionExecutedAsync(actionExecutedContext, CancellationToken.None);
 
-            unitOfWork.ToMock().Verify(x => x.SaveAsync());
+            unitOfWork.ToMock().Verify(x => x.CommitTransactionAsync());
         }
 
         [Test]
-        public async Task OnActionExecutedAsyncDoesNotSaveUnitOfWorkWhenUnitOfWorkWasNotConstructedInActionMethod(
+        public async Task OnActionExecutedAsyncDoesNotCommitTransactionWhenUnitOfWorkWasNotConstructedInActionMethod(
             CommitTransactionAttribute sut,
             HttpActionExecutedContext actionExecutedContext,
             IDependencyScope dependencyScope,
@@ -49,7 +49,7 @@
 
             await sut.OnActionExecutedAsync(actionExecutedContext, CancellationToken.None);
 
-            layUnitOfWork.Value.ToMock().Verify(x => x.SaveAsync(), Times.Never());
+            layUnitOfWork.Value.ToMock().Verify(x => x.CommitTransactionAsync(), Times.Never());
         }
     }
 }

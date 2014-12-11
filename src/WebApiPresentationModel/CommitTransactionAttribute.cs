@@ -29,7 +29,7 @@
                 .GetService(typeof(Lazy<IUnitOfWork>));
 
             if (lazyUnitOfWork.IsValueCreated)
-                await lazyUnitOfWork.Value.SaveAsync();
+                await lazyUnitOfWork.Value.CommitTransactionAsync();
 
             await base.OnActionExecutedAsync(actionExecutedContext, cancellationToken);
         }
