@@ -41,7 +41,7 @@
                 typeof(IExceptionLogger),
                 new UnhandledExceptionLogger(new FileLogger(Environment.CurrentDirectory)));
 
-            config.Filters.Add(new SaveUnitOfWorkActionFilterAttribute());
+            config.Filters.Add(new SaveUnitOfWorkAttribute());
 
             config.MessageHandlers.Add(
                 new ApiKeyAuthenticationDispatcher(
