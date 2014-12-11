@@ -96,7 +96,6 @@
     <Compile Include="..\..\build\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="Collectors\ArticleCollectingExecutorTest.cs" />
     <Compile Include="Collectors\CompositeCollectorTest.cs" />
     <Compile Include="Collectors\DelegateTransformationTest.cs" />
     <Compile Include="Collectors\FacebookRssCollectorTest.cs" />

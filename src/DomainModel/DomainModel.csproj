@@ -47,7 +47,6 @@
     <Compile Include="..\..\build\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="Collectors\ArticleCollectingExecutor.cs" />
     <Compile Include="Collectors\CompositeCollector.cs" />
     <Compile Include="Collectors\DelegateTransformation.cs" />
     <Compile Include="Collectors\FacebookRssCollector.cs" />
