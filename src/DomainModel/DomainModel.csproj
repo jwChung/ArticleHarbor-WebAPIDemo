@@ -79,6 +79,7 @@
     <Compile Include="Models\IModel.cs" />
     <Compile Include="Models\Keyword.cs" />
     <Compile Include="Models\Bookmark.cs" />
+    <Compile Include="Models\ModelTransformer.cs" />
     <Compile Include="Models\SelectBookmarkedArticlesCommand.cs" />
     <Compile Include="Models\TransformableCommand.cs" />
     <Compile Include="Models\TrueCondition.cs" />
