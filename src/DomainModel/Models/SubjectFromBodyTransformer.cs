@@ -1,5 +1,8 @@
 ﻿namespace ArticleHarbor.DomainModel.Models
 {
+    using System;
+    using System.Threading.Tasks;
+
     public class SubjectFromBodyTransformer : ModelTransformer
     {
         private readonly int length;
@@ -12,6 +15,17 @@
         public int Length
         {
             get { return this.length; }
+        }
+
+        public override Task<Article> TransformAsync(Article article)
+        {
+            if (article == null)
+                throw new ArgumentNullException("article");
+
+            var min = Math.Min(this.length, article.Subject.Length);
+            var newArticle = article.WithSubject(article.Subject.Substring(0, min));
+
+            return Task.FromResult(newArticle);
         }
     }
 }
