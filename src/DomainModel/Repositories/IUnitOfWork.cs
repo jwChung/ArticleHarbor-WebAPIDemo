@@ -5,5 +5,9 @@
     public interface IUnitOfWork
     {
         Task SaveAsync();
+
+        Task CommitTransactionAsync();
+
+        Task RollbackTransactionAsync();
     }
 }

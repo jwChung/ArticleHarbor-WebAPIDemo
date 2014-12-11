@@ -28,6 +28,16 @@
             return this.context.SaveChangesAsync();
         }
 
+        public Task CommitTransactionAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RollbackTransactionAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Dispose()
         {
             this.Dispose(true);
