@@ -5,7 +5,10 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using DomainModel;
+    using DomainModel.Commands;
     using DomainModel.Models;
+    using DomainModel.Queries;
     using DomainModel.Repositories;
 
     [Authorize]

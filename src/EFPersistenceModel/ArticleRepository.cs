@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity;
     using System.Threading.Tasks;
-    using DomainModel.Models;
+    using DomainModel.Queries;
     using EFDataAccess;
     using Article = DomainModel.Models.Article;
 

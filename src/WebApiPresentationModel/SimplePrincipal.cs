@@ -2,7 +2,6 @@
 {
     using System;
     using System.Security.Principal;
-    using DomainModel;
     using DomainModel.Models;
     using IIdentity = System.Security.Principal.IIdentity;
 

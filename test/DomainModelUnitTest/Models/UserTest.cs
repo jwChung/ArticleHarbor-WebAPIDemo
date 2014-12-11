@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Commands;
+    using Queries;
     using Xunit;
 
     public class UserTest : IdiomaticTest<User>

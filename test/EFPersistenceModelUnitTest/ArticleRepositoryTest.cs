@@ -1,6 +1,6 @@
 ﻿namespace ArticleHarbor.EFPersistenceModel
 {
-    using ArticleHarbor.DomainModel.Models;
+    using DomainModel.Queries;
     using EFDataAccess;
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;

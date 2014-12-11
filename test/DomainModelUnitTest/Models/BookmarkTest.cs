@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.Reflection;
     using System.Threading.Tasks;
+    using Commands;
     using Ploeh.AutoFixture;
+    using Queries;
     using Xunit;
 
     public class BookmarkTest : IdiomaticTest<Bookmark>

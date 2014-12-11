@@ -10,7 +10,9 @@
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
+    using DomainModel;
     using DomainModel.Models;
+    using DomainModel.Queries;
     using DomainModel.Repositories;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1005:AvoidExcessiveParametersOnGenericTypes", Justification = "This is suppressed by the design.")]

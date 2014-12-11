@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Commands;
+    using Queries;
 
     public class Keyword : IModel
     {

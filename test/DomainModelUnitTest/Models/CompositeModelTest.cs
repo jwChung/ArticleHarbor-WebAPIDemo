@@ -3,7 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Commands;
     using Ploeh.AutoFixture;
+    using Queries;
     using Xunit;
 
     public class CompositeModelTest : IdiomaticTest<CompositeModel>
