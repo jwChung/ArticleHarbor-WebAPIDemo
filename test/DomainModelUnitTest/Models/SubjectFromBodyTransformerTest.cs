@@ -28,7 +28,7 @@
 
             article.AsSource().OfLikeness<Article>()
                 .With(x => x.Subject)
-                .EqualsWhen((a, b) => a.Subject.Substring(0, length) == b.Subject)
+                .EqualsWhen((a, b) => a.Body.Substring(0, length) == b.Subject)
                 .ShouldEqual(actual);
         }
 
@@ -44,6 +44,8 @@
             var actual = sut.TransformAsync(article).Result;
 
             article.AsSource().OfLikeness<Article>()
+                .With(x => x.Subject)
+                .EqualsWhen((a, b) => a.Body == b.Subject)
                 .ShouldEqual(actual);
         }
     }

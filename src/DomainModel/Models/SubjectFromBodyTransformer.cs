@@ -22,8 +22,8 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            var min = Math.Min(this.length, article.Subject.Length);
-            var newArticle = article.WithSubject(article.Subject.Substring(0, min));
+            var min = Math.Min(this.length, article.Body.Length);
+            var newArticle = article.WithSubject(article.Body.Substring(0, min));
 
             return Task.FromResult(newArticle);
         }
