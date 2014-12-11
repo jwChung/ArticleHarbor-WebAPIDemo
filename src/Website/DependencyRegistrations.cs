@@ -40,11 +40,11 @@ namespace ArticleHarbor.Website
             container.Register(
                 c => new ArticleHarborDbContext(
                     c.Resolve<IDatabaseInitializer<ArticleHarborDbContext>>()))
-                .ReusedWithinContainer();
+                .ReusedWithinContainer().OwnedByExternal();
 
             container.Register(
                 c => c.Resolve<ArticleHarborDbContext>().Articles)
-                .ReusedWithinContainer();
+                .OwnedByExternal();
 
             container.Register(
                 c => new Lazy<IUnitOfWork>(
