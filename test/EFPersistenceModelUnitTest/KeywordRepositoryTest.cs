@@ -4,17 +4,17 @@
     using Ploeh.SemanticComparison.Fluent;
     using Xunit;
 
-    public class KeywordRepository2Test : IdiomaticTest<KeywordRepository2>
+    public class KeywordRepositoryTest : IdiomaticTest<KeywordRepository>
     {
         [Test]
-        public void SutIsRepository(KeywordRepository2 sut)
+        public void SutIsRepository(KeywordRepository sut)
         {
             Assert.IsAssignableFrom<Repository<Keys<int, string>, Keyword, EFDataAccess.Keyword>>(sut);
         }
 
         [Test]
         public void ConvertToModelAsyncReturnsCorrectResult(
-            KeywordRepository2 sut,
+            KeywordRepository sut,
             EFDataAccess.Keyword keyword)
         {
             var actual = sut.ConvertToModelAsync(keyword).Result;
@@ -23,7 +23,7 @@
 
         [Test]
         public void ConvertToPersistenceAsyncReturnsCorrectResult(
-            KeywordRepository2 sut,
+            KeywordRepository sut,
             Keyword keyword)
         {
             var actual = sut.ConvertToPersistenceAsync(keyword).Result;

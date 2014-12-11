@@ -34,7 +34,7 @@
 
         public IRepository<Keys<int, string>, Keyword> Keywords
         {
-            get { return new KeywordRepository2(this.context, this.context.Keywords); }
+            get { return new KeywordRepository(this.context, this.context.Keywords); }
         }
 
         public IRepository<Keys<string, int>, Bookmark> Bookmarks

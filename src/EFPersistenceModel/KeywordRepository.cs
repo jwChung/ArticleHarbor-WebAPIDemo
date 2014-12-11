@@ -5,9 +5,9 @@
     using System.Threading.Tasks;
     using DomainModel.Models;
 
-    public class KeywordRepository2 : Repository<Keys<int, string>, Keyword, EFDataAccess.Keyword>
+    public class KeywordRepository : Repository<Keys<int, string>, Keyword, EFDataAccess.Keyword>
     {
-        public KeywordRepository2(DbContext context, DbSet<EFDataAccess.Keyword> dbSet)
+        public KeywordRepository(DbContext context, DbSet<EFDataAccess.Keyword> dbSet)
             : base(context, dbSet)
         {
         }

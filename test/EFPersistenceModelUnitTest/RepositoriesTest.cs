@@ -28,7 +28,7 @@
         {
             var actual = sut.Keywords;
 
-            var articles = Assert.IsAssignableFrom<KeywordRepository2>(actual);
+            var articles = Assert.IsAssignableFrom<KeywordRepository>(actual);
             Assert.Equal(sut.Context, articles.Context);
             Assert.Equal(sut.Context.Keywords, articles.DbSet);
         }
