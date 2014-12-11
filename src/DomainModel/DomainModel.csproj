@@ -90,7 +90,6 @@
     <Compile Include="Repositories\IRepositories.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IUserManager.cs" />
-    <Compile Include="EmptyDisposable.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Repositories\IArticleRepository.cs" />
     <Compile Include="Repositories\IKeywordRepository.cs" />
