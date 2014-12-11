@@ -42,6 +42,7 @@
                 new UnhandledExceptionLogger(new FileLogger(Environment.CurrentDirectory)));
 
             config.Filters.Add(new CommitTransactionAttribute());
+            config.Filters.Add(new RollbackTransactionAttribute());
 
             config.MessageHandlers.Add(
                 new ApiKeyAuthenticationDispatcher(
