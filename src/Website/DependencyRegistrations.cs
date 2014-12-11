@@ -31,7 +31,7 @@ namespace ArticleHarbor.Website
             if (container == null)
                 throw new ArgumentNullException("container");
 
-            // IUnitOfWork & Repository interfaces
+            // Repositories
             container.Register<IDatabaseInitializer<ArticleHarborDbContext>>(
                 c => new ArticleHarborDbContextTestInitializer())
                 .ReusedWithinContainer();
@@ -114,7 +114,7 @@ namespace ArticleHarbor.Website
                    c.Resolve<IRepositories>()))
                .ReusedWithinContainer();
 
-           // Presentation controllers
+           // Controllers
             container.Register(
                 c => new ArticlesController(
                     c.Resolve<IRepositories>(),
