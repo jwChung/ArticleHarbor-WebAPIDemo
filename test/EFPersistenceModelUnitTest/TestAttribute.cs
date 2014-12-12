@@ -59,13 +59,13 @@
         protected virtual IEnumerable<ICustomization> GetCustomizations(ITestMethodContext context)
         {
             yield return new AutoMoqCustomization();
-            yield return new PersistanceModelCustomization();
+            yield return new PersistenceModelCustomization();
             yield return new DbContextCustomization();
             yield return new TestParametersCustomization(
                 context.ActualMethod.GetParameters());
         }
 
-        private class PersistanceModelCustomization : ICustomization
+        private class PersistenceModelCustomization : ICustomization
         {
             public void Customize(IFixture fixture)
             {
