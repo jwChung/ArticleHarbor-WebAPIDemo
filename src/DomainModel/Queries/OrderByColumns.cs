@@ -7,6 +7,7 @@
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "The main responsibility of this class isn't to be a 'collection' (which, by the way, it isn't - it's just an Iterator).")]
     public class OrderByColumns : IOrderByColumns
     {
+        public static readonly IOrderByColumns None = new OrderByColumns();
         private readonly IEnumerable<IOrderByColumn> columns;
 
         public OrderByColumns(params IOrderByColumn[] columns)

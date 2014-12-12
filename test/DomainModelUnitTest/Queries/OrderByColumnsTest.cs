@@ -12,6 +12,20 @@
         }
 
         [Test]
+        public void NoneReturnsEmptyColumns()
+        {
+            var actual = OrderByColumns.None;
+            Assert.Empty(actual);
+        }
+
+        [Test]
+        public void NoneAlwaysReturnsSameInstance()
+        {
+            var actual = OrderByColumns.None;
+            Assert.Same(OrderByColumns.None, actual);
+        }
+
+        [Test]
         public void GetEnumeratorReturnsCorrectResult(OrderByColumns sut)
         {
             var actual = sut.ToArray();
