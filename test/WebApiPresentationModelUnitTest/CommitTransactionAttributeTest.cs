@@ -30,6 +30,7 @@
             dependencyScope.Of(x => x.GetService(typeof(Lazy<IUnitOfWork>)) == lazyUnitOfWork);
             actionExecutedContext.Request.Properties[HttpPropertyKeys.DependencyScope]
                 = dependencyScope;
+            actionExecutedContext.Exception = null;
 
             await sut.OnActionExecutedAsync(actionExecutedContext, CancellationToken.None);
 
@@ -41,15 +42,33 @@
             CommitTransactionAttribute sut,
             HttpActionExecutedContext actionExecutedContext,
             IDependencyScope dependencyScope,
-            Lazy<IUnitOfWork> layUnitOfWork)
+            Lazy<IUnitOfWork> lazyUnitOfWork)
         {
-            dependencyScope.Of(x => x.GetService(typeof(Lazy<IUnitOfWork>)) == layUnitOfWork);
+            dependencyScope.Of(x => x.GetService(typeof(Lazy<IUnitOfWork>)) == lazyUnitOfWork);
+            actionExecutedContext.Request.Properties[HttpPropertyKeys.DependencyScope]
+                = dependencyScope;
+            actionExecutedContext.Exception = null;
+
+            await sut.OnActionExecutedAsync(actionExecutedContext, CancellationToken.None);
+
+            lazyUnitOfWork.Value.ToMock().Verify(x => x.CommitTransactionAsync(), Times.Never());
+        }
+
+        [Test]
+        public async Task OnActionExecutedAsyncDoesNotCommitTransactionWhenAnyExceptionWasThrown(
+            CommitTransactionAttribute sut,
+            HttpActionExecutedContext actionExecutedContext,
+            IDependencyScope dependencyScope,
+            Lazy<IUnitOfWork> lazyUnitOfWork)
+        {
+            var unitOfWork = lazyUnitOfWork.Value;
+            dependencyScope.Of(x => x.GetService(typeof(Lazy<IUnitOfWork>)) == lazyUnitOfWork);
             actionExecutedContext.Request.Properties[HttpPropertyKeys.DependencyScope]
                 = dependencyScope;
 
             await sut.OnActionExecutedAsync(actionExecutedContext, CancellationToken.None);
 
-            layUnitOfWork.Value.ToMock().Verify(x => x.CommitTransactionAsync(), Times.Never());
+            unitOfWork.ToMock().Verify(x => x.CommitTransactionAsync(), Times.Never());
         }
     }
 }

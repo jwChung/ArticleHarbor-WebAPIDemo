@@ -28,7 +28,7 @@
             var lazyUnitOfWork = (Lazy<IUnitOfWork>)dependencyScope
                 .GetService(typeof(Lazy<IUnitOfWork>));
 
-            if (lazyUnitOfWork.IsValueCreated)
+            if (lazyUnitOfWork.IsValueCreated && actionExecutedContext.Exception == null)
                 await lazyUnitOfWork.Value.CommitTransactionAsync();
 
             await base.OnActionExecutedAsync(actionExecutedContext, cancellationToken);
