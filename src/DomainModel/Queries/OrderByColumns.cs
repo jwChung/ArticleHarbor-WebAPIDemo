@@ -29,12 +29,12 @@
 
         public IEnumerator<IOrderByColumn> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return this.columns.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return this.GetEnumerator();
         }
     }
 }
