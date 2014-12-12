@@ -17,21 +17,24 @@
         [Test(RunOn.CI)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "string", Justification = "To represent dummy value of string.")]
         public void CollectAsyncCollectsArticles(
-            string actor,
+            string author,
+            string facebookName,
             string dummyString,
             DateTime dummyDate)
         {
-            FacebookRssCollector sut = new FacebookRssCollector(actor, "177323639028540"); // ASP.NET Korea group
             // Fixture setup
+            var sut = new FacebookRssCollector(
+                author, "177323639028540", facebookName); // ASP.NET Korea group
+
             var article = new Article(
                 id: -1,
-                provider: "페이스북",
+                provider: facebookName,
                 guid: dummyString,
                 subject: dummyString,
                 body: dummyString,
                 date: dummyDate,
                 url: dummyString,
-                userId: actor);
+                userId: author);
 
             var likeness = article.AsSource().OfLikeness<Article>()
                 .Without(x => x.Guid)

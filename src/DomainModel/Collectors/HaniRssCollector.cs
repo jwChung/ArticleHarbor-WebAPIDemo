@@ -16,19 +16,19 @@
     /// </summary>
     public class HaniRssCollector : IArticleCollector
     {
-        private readonly string actor;
+        private readonly string author;
         
-        public HaniRssCollector(string actor)
+        public HaniRssCollector(string author)
         {
-            if (actor == null)
-                throw new ArgumentNullException("actor");
+            if (author == null)
+                throw new ArgumentNullException("author");
 
-            this.actor = actor;
+            this.author = author;
             }
 
-        public string Actor
+        public string Author
         {
-            get { return this.actor; }
+            get { return this.author; }
         }
 
         public async Task<IEnumerable<Article>> CollectAsync()
@@ -60,7 +60,7 @@
                 body: item.Element("description").Value,
                 date: DateTime.Parse(item.Element("pubDate").Value, CultureInfo.CurrentCulture),
                 url: item.Element("link").Value,
-                userId: this.actor);
+                userId: this.author);
         }
     }
 }

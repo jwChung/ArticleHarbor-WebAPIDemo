@@ -13,29 +13,39 @@
 
     public class FacebookRssCollector : IArticleCollector
     {
-        private readonly string actor;
+        private readonly string author;
         private readonly string facebookId;
+        private readonly string facebookName;
 
-        public FacebookRssCollector(string actor, string facebookId)
+        public FacebookRssCollector(string author, string facebookId, string facebookName)
         {
-            if (actor == null)
-                throw new ArgumentNullException("actor");
+            if (author == null)
+                throw new ArgumentNullException("author");
 
             if (facebookId == null)
                 throw new ArgumentNullException("facebookId");
 
-            this.actor = actor;
+            if (facebookName == null)
+                throw new ArgumentNullException("facebookName");
+
+            this.author = author;
             this.facebookId = facebookId;
+            this.facebookName = facebookName;
         }
 
-        public string Actor
+        public string Author
         {
-            get { return this.actor; }
+            get { return this.author; }
         }
 
         public string FacebookId
         {
             get { return this.facebookId; }
+        }
+
+        public string FacebookName
+        {
+            get { return this.facebookName; }
         }
 
         public async Task<IEnumerable<Article>> CollectAsync()
@@ -61,13 +71,13 @@
         {
             return new Article(
                 id: -1,
-                provider: "페이스북",
+                provider: this.facebookName,
                 guid: item.Element("guid").Value,
                 subject: item.Element("title").Value,
                 body: item.Element("description").Value,
                 date: DateTime.Parse(item.Element("pubDate").Value, CultureInfo.CurrentCulture),
                 url: item.Element("link").Value,
-                userId: this.actor);
+                userId: this.author);
         }
     }
 }
