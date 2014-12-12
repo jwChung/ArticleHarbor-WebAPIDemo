@@ -13,24 +13,24 @@
 
     public class FacebookRssCollector : IArticleCollector
     {
-        private readonly string actor;
+        private readonly string author;
         private readonly string facebookId;
 
-        public FacebookRssCollector(string actor, string facebookId)
+        public FacebookRssCollector(string author, string facebookId)
         {
-            if (actor == null)
-                throw new ArgumentNullException("actor");
+            if (author == null)
+                throw new ArgumentNullException("author");
 
             if (facebookId == null)
                 throw new ArgumentNullException("facebookId");
 
-            this.actor = actor;
+            this.author = author;
             this.facebookId = facebookId;
         }
 
-        public string Actor
+        public string Author
         {
-            get { return this.actor; }
+            get { return this.author; }
         }
 
         public string FacebookId
@@ -67,7 +67,7 @@
                 body: item.Element("description").Value,
                 date: DateTime.Parse(item.Element("pubDate").Value, CultureInfo.CurrentCulture),
                 url: item.Element("link").Value,
-                userId: this.actor);
+                userId: this.author);
         }
     }
 }

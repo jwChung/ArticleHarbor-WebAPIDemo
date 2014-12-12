@@ -31,7 +31,7 @@
                 body: dummyString,
                 date: dummyDate,
                 url: dummyString,
-                userId: sut.Actor);
+                userId: sut.Author);
 
             var likeness = article.AsSource().OfLikeness<Article>()
                 .Without(x => x.Guid)
