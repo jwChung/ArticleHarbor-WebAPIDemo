@@ -21,7 +21,7 @@
             string dummyString,
             DateTime dummyDate)
         {
-            FacebookRssCollector sut = new FacebookRssCollector(actor, "177323639028540"); // ASP.NET Korea group
+            FacebookRssCollector sut = new FacebookRssCollector(actor, "177323639028540", null); // ASP.NET Korea group
             // Fixture setup
             var article = new Article(
                 id: -1,

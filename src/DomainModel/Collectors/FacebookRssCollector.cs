@@ -15,8 +15,9 @@
     {
         private readonly string author;
         private readonly string facebookId;
+        private readonly string facebookName;
 
-        public FacebookRssCollector(string author, string facebookId)
+        public FacebookRssCollector(string author, string facebookId, string facebookName)
         {
             if (author == null)
                 throw new ArgumentNullException("author");
@@ -24,8 +25,12 @@
             if (facebookId == null)
                 throw new ArgumentNullException("facebookId");
 
+            if (facebookName == null)
+                throw new ArgumentNullException("facebookName");
+
             this.author = author;
             this.facebookId = facebookId;
+            this.facebookName = facebookName;
         }
 
         public string Author
@@ -36,6 +41,11 @@
         public string FacebookId
         {
             get { return this.facebookId; }
+        }
+
+        public string FacebookName
+        {
+            get { return this.facebookName; }
         }
 
         public async Task<IEnumerable<Article>> CollectAsync()

@@ -39,7 +39,7 @@
             using (var context = CreateDbContext())
             {
                 var repositories = new Repositories(context);
-                var articles = await new FacebookRssCollector(author, facebookId).CollectAsync();
+                var articles = await new FacebookRssCollector(author, facebookId, null).CollectAsync();
                 await new CompositeModel(articles).ExecuteAsync(CreateFacebookCommand(header, repositories));
                 context.SaveChanges();
             }
