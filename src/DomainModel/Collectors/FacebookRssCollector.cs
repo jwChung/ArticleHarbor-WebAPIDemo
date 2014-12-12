@@ -71,7 +71,7 @@
         {
             return new Article(
                 id: -1,
-                provider: "페이스북",
+                provider: this.facebookName,
                 guid: item.Element("guid").Value,
                 subject: item.Element("title").Value,
                 body: item.Element("description").Value,
