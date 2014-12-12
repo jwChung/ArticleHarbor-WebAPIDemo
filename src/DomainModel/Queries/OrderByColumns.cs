@@ -9,6 +9,11 @@
     {
         private readonly IEnumerable<IOrderByColumn> columns;
 
+        public OrderByColumns(params IOrderByColumn[] columns)
+            : this((IEnumerable<IOrderByColumn>)columns)
+        {
+        }
+
         public OrderByColumns(IEnumerable<IOrderByColumn> columns)
         {
             if (columns == null)
