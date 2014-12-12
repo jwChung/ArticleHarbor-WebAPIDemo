@@ -35,13 +35,13 @@
                 });
         }
 
-        [Test]
+        [Test(RunOn.CI)]
         public void ExecuteWithNullDocumentThrows()
         {
             Assert.Throws<ArgumentNullException>(() => KoreanNounExtractor.Execute(null).ToArray());
         }
 
-        [Test]
+        [Test(RunOn.CI)]
         public void ExecuteReturnsOnlyUniqueWords(string word)
         {
             var document = word + " " + word + " " + word;
@@ -49,7 +49,7 @@
             Assert.Equal(word, actual.Single());
         }
 
-        [Test]
+        [Test(RunOn.CI)]
         public void ExecuteReturnsCaseInsensitiveWords(string word)
         {
             var document = word + " " + word.ToUpper() + " " + word;
