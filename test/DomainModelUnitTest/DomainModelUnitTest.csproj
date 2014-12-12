@@ -119,6 +119,7 @@
     <Compile Include="Commands\CommandConditionTest.cs" />
     <Compile Include="Commands\ModelCommandTest.cs" />
     <Compile Include="Commands\InsertCommandTest.cs" />
+    <Compile Include="Queries\OrderByColumnTest.cs" />
     <Compile Include="Queries\ParameterTest.cs" />
     <Compile Include="Commands\RelayKeywordsCommandTest.cs" />
     <Compile Include="Commands\UpdateCommandTest.cs" />

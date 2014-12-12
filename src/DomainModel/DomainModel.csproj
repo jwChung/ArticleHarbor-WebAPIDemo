@@ -85,6 +85,7 @@
     <Compile Include="Queries\ISqlQueriable.cs" />
     <Compile Include="Queries\ISqlQuery.cs" />
     <Compile Include="Queries\ITop.cs" />
+    <Compile Include="Queries\OrderByColumn.cs" />
     <Compile Include="Queries\OrderDirection.cs" />
     <Compile Include="Queries\Parameter.cs" />
     <Compile Include="Commands\RelayKeywordsCommand.cs" />
