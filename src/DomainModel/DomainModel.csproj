@@ -65,9 +65,9 @@
     <Compile Include="Commands\InsertConfirmableCommand.cs" />
     <Compile Include="Models\CompositeModel.cs" />
     <Compile Include="Queries\EqualPredicate.cs" />
-    <Compile Include="Queries\IKeys.cs" />
+    <Compile Include="Models\IKeys.cs" />
     <Compile Include="Commands\IModelCommand.cs" />
-    <Compile Include="Queries\Keys.cs" />
+    <Compile Include="Models\Keys.cs" />
     <Compile Include="Queries\IParameter.cs" />
     <Compile Include="Queries\IPredicate.cs" />
     <Compile Include="Models\IModel.cs" />

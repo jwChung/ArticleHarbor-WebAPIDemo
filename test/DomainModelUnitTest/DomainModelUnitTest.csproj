@@ -111,7 +111,7 @@
     <Compile Include="Commands\InsertConfirmableCommandTest.cs" />
     <Compile Include="Models\CompositeModelTest.cs" />
     <Compile Include="Queries\EqualPredicateTest.cs" />
-    <Compile Include="Queries\KeysTest.cs" />
+    <Compile Include="Models\KeysTest.cs" />
     <Compile Include="Commands\ModelTransformerTest.cs" />
     <Compile Include="Commands\SelectBookmarkedArticlesCommandTest.cs" />
     <Compile Include="Commands\SubjectFromBodyTransformerTest.cs" />

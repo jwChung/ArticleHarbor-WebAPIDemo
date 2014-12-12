@@ -1,4 +1,4 @@
-﻿namespace ArticleHarbor.DomainModel.Queries
+﻿namespace ArticleHarbor.DomainModel.Models
 {
     using System;
     using System.Collections;
