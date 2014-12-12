@@ -82,7 +82,7 @@
     <Compile Include="Commands\CommandCondition.cs" />
     <Compile Include="Commands\ModelCommand.cs" />
     <Compile Include="Commands\InsertCommand.cs" />
-    <Compile Include="Queries\ISqlQueriable.cs" />
+    <Compile Include="Queries\ISqlQueryable.cs" />
     <Compile Include="Queries\ISqlQuery.cs" />
     <Compile Include="Queries\ITop.cs" />
     <Compile Include="Queries\OrderByColumn.cs" />

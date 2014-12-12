@@ -1,6 +1,6 @@
 namespace ArticleHarbor.DomainModel.Queries
 {
-    public interface ISqlQueriable
+    public interface ISqlQueryable
     {
         ISqlQuery ProvideQuery();
     }

@@ -1,7 +1,10 @@
 ﻿namespace ArticleHarbor.DomainModel.Queries
 {
+    using System;
+
     public class Top : ITop
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "This can be suppressed as the 'None' value is immutable.")]
         public static readonly ITop None = new Top(int.MinValue);
         private readonly int count;
 
@@ -33,6 +36,9 @@
 
         protected bool Equals(Top other)
         {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
             return this.count == other.count;
         }
     }

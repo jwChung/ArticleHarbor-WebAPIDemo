@@ -19,7 +19,7 @@
         }
 
         [Test]
-        public void NoneAlwasReturnsSameInstance()
+        public void NoneAlwaysReturnsSameInstance()
         {
             var actual = Top.None;
             Assert.Same(Top.None, actual);

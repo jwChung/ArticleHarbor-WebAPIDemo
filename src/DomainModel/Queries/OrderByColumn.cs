@@ -47,6 +47,9 @@
 
         protected bool Equals(OrderByColumn other)
         {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
             return string.Equals(this.name, other.name, StringComparison.CurrentCultureIgnoreCase)
                 && this.direction == other.direction;
         }
