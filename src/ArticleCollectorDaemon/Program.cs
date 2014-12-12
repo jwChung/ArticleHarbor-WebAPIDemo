@@ -18,7 +18,7 @@
         private static void Main()
         {
             Task.WaitAll(
-                    CollectHaniArticles("user1"),
+                CollectHaniArticles("user1"),
                 CollectFacebookArticles("user2", "177323639028540", "ASP.NET Korea Group"),
                 CollectFacebookArticles("user2", "200708093411111", "C# Study Group"));
         }
@@ -99,7 +99,7 @@
 
                 Console.WriteLine(string.Format(
                     CultureInfo.CurrentCulture,
-                    "{0} (adding): {1}...",
+                    "'{0}' is adding {1}...",
                     article.Provider,
                     article.Subject));
 
@@ -117,7 +117,7 @@
 
                 Console.WriteLine(string.Format(
                     CultureInfo.CurrentCulture,
-                    "{0}  (added): {1}",
+                    "'{0}' added {1}",
                     article.Provider,
                     article.Subject));
 
