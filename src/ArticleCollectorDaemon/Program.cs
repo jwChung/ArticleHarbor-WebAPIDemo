@@ -18,46 +18,48 @@
         private static void Main()
         {
             Task.WaitAll(
-                    CollectHaniArticles("             한겨레", "user1"),
-                CollectFacebookArticles("ASP.NET Korea Group", "user2", "177323639028540"),
-                CollectFacebookArticles("     C# Study Group", "user2", "200708093411111"));
+                    CollectHaniArticles("user1"),
+                CollectFacebookArticles("user2", "177323639028540", "ASP.NET Korea Group"),
+                CollectFacebookArticles("user2", "200708093411111", "C# Study Group"));
         }
 
-        private static async Task CollectHaniArticles(string header, string author)
+        private static async Task CollectHaniArticles(string author)
         {
             using (var context = CreateDbContext())
             {
                 var repositories = new Repositories(context);
                 var articles = await new HaniRssCollector(author).CollectAsync();
-                await new CompositeModel(articles).ExecuteAsync(CreateCommand(header, repositories));
+                await new CompositeModel(articles).ExecuteAsync(CreateCommand(repositories));
                 context.SaveChanges();
             }
         }
 
-        private static async Task CollectFacebookArticles(string header, string author, string facebookId)
+        private static async Task CollectFacebookArticles(
+            string author, string facebookId, string facebookName)
         {
             using (var context = CreateDbContext())
             {
                 var repositories = new Repositories(context);
-                var articles = await new FacebookRssCollector(author, facebookId, null).CollectAsync();
-                await new CompositeModel(articles).ExecuteAsync(CreateFacebookCommand(header, repositories));
+                var articles = await new FacebookRssCollector(author, facebookId, facebookName)
+                    .CollectAsync();
+                await new CompositeModel(articles).ExecuteAsync(CreateFacebookCommand(repositories));
                 context.SaveChanges();
             }
         }
 
-        private static IModelCommand<IModel> CreateFacebookCommand(string header, Repositories repositories)
+        private static IModelCommand<IModel> CreateFacebookCommand(Repositories repositories)
         {
             return new TransformableCommand<IModel>(
                 new RemoveUnnecessaryContentTransformer(),
                 new TransformableCommand<IModel>(
                     new SubjectFromBodyTransformer(50),
-                    CreateCommand(header, repositories)));
+                    CreateCommand(repositories)));
         }
 
-        private static IModelCommand<IModel> CreateCommand(string header, Repositories repositories)
+        private static IModelCommand<IModel> CreateCommand(Repositories repositories)
         {
             return new CompositeCommand<IModel>(
-                new BeforeLogCommand(header),
+                new BeforeLogCommand(),
                 new InsertCommand(
                     repositories,
                     new RelayKeywordsCommand(
@@ -65,7 +67,7 @@
                         new InsertCommand(
                             repositories,
                             new ModelCommand<IModel>()))),
-                new AfterLogCommand(header));
+                new AfterLogCommand());
         }
 
         private static ArticleHarborDbContext CreateDbContext()
@@ -89,13 +91,6 @@
         
         private class BeforeLogCommand : ModelCommand<IModel>
         {
-            private string header;
-
-            public BeforeLogCommand(string header)
-            {
-                this.header = header;
-            }
-
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String)", Justification = "This can be suppressed as the message is simple.")]
             public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
             {
@@ -104,8 +99,8 @@
 
                 Console.WriteLine(string.Format(
                     CultureInfo.CurrentCulture,
-                    "{0} [Adding]: {1}",
-                    this.header,
+                    "{0} (adding): {1}...",
+                    article.Provider,
                     article.Subject));
 
                 return base.ExecuteAsync(article);
@@ -114,13 +109,6 @@
 
         private class AfterLogCommand : ModelCommand<IModel>
         {
-            private string header;
-
-            public AfterLogCommand(string header)
-            {
-                this.header = header;
-            }
-
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String)", Justification = "This can be suppressed as the message is simple.")]
             public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
             {
@@ -129,8 +117,8 @@
 
                 Console.WriteLine(string.Format(
                     CultureInfo.CurrentCulture,
-                    "{0} [ Added]: {1}",
-                    this.header,
+                    "{0}  (added): {1}",
+                    article.Provider,
                     article.Subject));
 
                 return base.ExecuteAsync(article);
