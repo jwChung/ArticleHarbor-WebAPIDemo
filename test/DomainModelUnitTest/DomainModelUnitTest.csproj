@@ -133,6 +133,7 @@
     <Compile Include="Commands\KoreanNounExtractorTest.cs" />
     <Compile Include="Mocked.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\SqlQueryTest.cs" />
     <Compile Include="Queries\TopTest.cs" />
     <Compile Include="ReadWritablePropertyAssertion.cs" />
     <Compile Include="RunOn.cs" />

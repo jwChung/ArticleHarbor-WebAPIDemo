@@ -93,6 +93,7 @@
     <Compile Include="Commands\UpdateCommand.cs" />
     <Compile Include="Commands\UpdateConfirmableCommand.cs" />
     <Compile Include="Commands\UpdateKeywordsCondition.cs" />
+    <Compile Include="Queries\SqlQuery.cs" />
     <Compile Include="Queries\Top.cs" />
     <Compile Include="Repositories\IRepositories.cs" />
     <Compile Include="Repositories\IRepository.cs" />
