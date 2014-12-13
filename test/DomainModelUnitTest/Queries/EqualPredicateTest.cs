@@ -16,6 +16,12 @@
         }
 
         [Test]
+        public void SutIsOperablePredicate(EqualPredicate sut)
+        {
+            Assert.IsAssignableFrom<OperablePredicate>(sut);
+        }
+
+        [Test]
         public void InitializeWithEmptyNameThrows(IFixture fixture, object value)
         {
             Assert.Throws<ArgumentException>(() => new EqualPredicate(string.Empty, value));
