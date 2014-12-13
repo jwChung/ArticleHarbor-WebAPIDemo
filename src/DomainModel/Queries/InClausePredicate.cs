@@ -12,7 +12,7 @@
         private readonly IEnumerable<IParameter> parameters;
 
         public InClausePredicate(string columnName, params object[] parameterValues)
-            : this(columnName, parameterValues.AsEnumerable())
+            : this(columnName, (IEnumerable<object>)parameterValues)
         {
         }
 
@@ -56,6 +56,35 @@
         public IEnumerable<object> ParameterValues
         {
             get { return this.parameterValues; }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != this.GetType())
+                return false;
+            return this.Equals((InClausePredicate)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (this.columnName.GetHashCode() * 397) ^ this.parameterValues.GetHashCode();
+            }
+        }
+
+        protected bool Equals(InClausePredicate other)
+        {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
+            return string.Equals(
+                this.columnName, other.columnName, StringComparison.CurrentCultureIgnoreCase)
+                && this.parameterValues.SequenceEqual(other.parameterValues);
         }
     }
 }

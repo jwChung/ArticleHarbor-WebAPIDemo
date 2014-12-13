@@ -43,6 +43,23 @@
             Assert.Equal(expected, actual);
         }
 
+        [Test]
+        public void EqualsDoesNotEqualOtherWithDifferentValues(
+            AndPredicate sut,
+            AndPredicate other)
+        {
+            var actual = sut.Equals(other);
+            Assert.False(actual);
+        }
+
+        [Test]
+        public void EqualsEqualsOtherWithSameValues(AndPredicate sut)
+        {
+            var other = new AndPredicate(sut.Predicates.ToArray());
+            var actual = sut.Equals(other);
+            Assert.True(actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.SqlText);

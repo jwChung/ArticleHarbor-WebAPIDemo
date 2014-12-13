@@ -35,5 +35,29 @@
         {
             get { return this.predicates; }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != this.GetType())
+                return false;
+            return this.Equals((AndPredicate)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.predicates.GetHashCode();
+        }
+
+        protected bool Equals(AndPredicate other)
+        {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
+            return this.predicates.SequenceEqual(other.predicates);
+        }
     }
 }
