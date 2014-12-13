@@ -25,7 +25,7 @@
             var properties = new Properties<ArticleQueryViewModel>();
             var testData = new[]
             {
-                properties.Select(x => x.PreviousEndId),
+                properties.Select(x => x.PreviousId),
             };
 
             return TestCases.WithArgs(testData).WithAuto<ReadWritablePropertyAssertion>()
@@ -60,9 +60,33 @@
             Assert.Equal(new Top(count), actual.Top);
         }
 
+        [Test]
+        public void ProvideQueryReturnsResultHavingCorrectPreviousEndIdPredicate(
+            ArticleQueryViewModel sut,
+            int previousEndId)
+        {
+            sut.PreviousId = previousEndId;
+
+            var actual = sut.ProvideQuery();
+
+            var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
+            Assert.Contains(Predicate.GreatThan("Id", previousEndId), andPredicate.Predicates);
+        }
+
+        [Test]
+        public void ProvideQueryWithNullPreviousEndIdReturnsResultNotHavingPreviousEndIdPredicate(
+            ArticleQueryViewModel sut)
+        {
+            var actual = sut.ProvideQuery();
+
+            var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
+            Assert.False(andPredicate.Predicates.OfType<OperablePredicate>().Any(
+                x => x.OperatorName.Equals("Id", StringComparison.CurrentCultureIgnoreCase)));
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
-            yield return this.Properties.Select(x => x.PreviousEndId);
+            yield return this.Properties.Select(x => x.PreviousId);
             yield return this.Properties.Select(x => x.Count);
         }
     }

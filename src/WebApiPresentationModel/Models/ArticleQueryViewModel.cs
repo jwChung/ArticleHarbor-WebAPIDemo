@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.WebApiPresentationModel.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using DomainModel.Queries;
 
@@ -9,7 +10,7 @@
         private const int MaxCount = 50;
         private int count = MaxCount;
 
-        public int? PreviousEndId { get; set; }
+        public int? PreviousId { get; set; }
 
         public int Count
         {
@@ -33,7 +34,15 @@
 
         public ISqlQuery ProvideQuery()
         {
-            return new SqlQuery(new Top(this.count), OrderByColumns.None, Predicate.None);
+            var predicates = new List<IPredicate>();
+            
+            if (this.PreviousId != null)
+                predicates.Add(Predicate.GreatThan("Id", this.PreviousId));
+            
+            return new SqlQuery(
+                new Top(this.count),
+                OrderByColumns.None,
+                Predicate.And(predicates.ToArray()));
         }
     }
 }
