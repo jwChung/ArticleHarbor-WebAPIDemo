@@ -203,8 +203,9 @@
             public string BuildSelect(ISqlQuery sqlQuery)
             {
                 return string.Format(
+                    CultureInfo.CurrentCulture,
                     "SELECT {0} * FROM {1} {2} {3};",
-                    this.BuildTopClause(sqlQuery.Top),
+                    BuildTopClause(sqlQuery.Top),
                     this.GetTableName(),
                     this.BuildWhereClause(sqlQuery.Predicate),
                     this.BuildOrderByClause(sqlQuery.OrderByColumns));
@@ -213,21 +214,38 @@
             public string BuildDelete(IPredicate predicate)
             {
                 return string.Format(
+                    CultureInfo.CurrentCulture,
                     "DELETE FROM {0} {1};",
                     this.GetTableName(),
                     this.BuildWhereClause(predicate));
             }
 
-            private string BuildTopClause(ITop top)
+            private static string BuildTopClause(ITop top)
             {
                 return top.Equals(Top.None) ? string.Empty : "TOP " + top.Count;
+            }
+
+            private static string GetOrderDirectionName(OrderDirection direction)
+            {
+                switch (direction)
+                {
+                    case OrderDirection.Ascending:
+                        return "ASC";
+                    case OrderDirection.Descending:
+                        return "DESC";
+                    default:
+                        throw new ArgumentException("Out of range.", "direction");
+                }
             }
 
             private string BuildWhereClause(IPredicate predicate)
             {
                 return predicate.Equals(Predicate.None)
                     ? string.Empty
-                    : string.Format("WHERE {1}", this.dbSet, predicate.SqlText);
+                    : string.Format(
+                        CultureInfo.CurrentCulture,
+                        "WHERE {0}",
+                        predicate.SqlText);
             }
 
             private string BuildOrderByClause(IOrderByColumns columns)
@@ -238,22 +256,10 @@
                 return "ORDER BY " + string.Join(
                     ", ",
                     columns.Select(c => string.Format(
+                        CultureInfo.CurrentCulture,
                         "{0} {1}",
                         c.Name,
-                        this.GetOrderDirectionName(c.OrderDirection))));
-            }
-
-            private string GetOrderDirectionName(OrderDirection direction)
-            {
-                switch (direction)
-                {
-                    case OrderDirection.Ascending:
-                        return "ASC";
-                    case OrderDirection.Descending:
-                        return "DESC";
-                    default:
-                        throw new ArgumentException();
-                }
+                        GetOrderDirectionName(c.OrderDirection))));
             }
 
             private string GetTableName()
