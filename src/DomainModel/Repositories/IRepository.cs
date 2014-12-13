@@ -14,6 +14,8 @@
 
         Task UpdateAsync(TModel model);
 
+        Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(ISqlQuery sqlQuery);
+
         Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(IPredicate predicate);
 
         Task ExecuteDeleteCommandAsync(IPredicate predicate);

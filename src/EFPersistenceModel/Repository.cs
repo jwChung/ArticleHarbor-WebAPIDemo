@@ -85,6 +85,11 @@
             return this.DeleteAsyncWith(keys);
         }
 
+        public virtual Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(ISqlQuery sqlQuery)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(IPredicate predicate)
         {
             if (predicate == null)

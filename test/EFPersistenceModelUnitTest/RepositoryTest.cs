@@ -74,6 +74,11 @@
             yield return this.Properties.Select(x => x.Context);
             yield return this.Properties.Select(x => x.DbSet);
         }
+
+        protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
+        {
+            yield return this.Methods.Select(x => x.ExecuteSelectCommandAsync(default(ISqlQuery)));
+        }
     }
 
     public class RepositoryOfArticleTest : RepositoryTest<Keys<int>, Article, EFDataAccess.Article>
