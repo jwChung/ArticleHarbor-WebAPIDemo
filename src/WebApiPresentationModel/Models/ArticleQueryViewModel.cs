@@ -10,8 +10,6 @@
         private const int MaxCount = 50;
         private int count = MaxCount;
 
-        public int? PreviousId { get; set; }
-
         public int Count
         {
             get
@@ -31,6 +29,10 @@
                 this.count = value;
             }
         }
+
+        public int? PreviousId { get; set; }
+
+        public string Subject { get; set; }
 
         public ISqlQuery ProvideQuery()
         {
