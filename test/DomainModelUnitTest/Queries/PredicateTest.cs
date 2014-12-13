@@ -3,7 +3,7 @@
     using System.Linq;
     using Xunit;
 
-    public class PredicateTest : IdiomaticTest<Predicate>
+    public class PredicateTest
     {
         [Test]
         public void EqualReturnsCorrectResult(string columnName, object value)

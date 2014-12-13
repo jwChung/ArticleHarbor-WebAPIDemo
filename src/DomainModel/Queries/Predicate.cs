@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public class Predicate
+    public static class Predicate
     {
         public static IPredicate Equal(string columnName, object value)
         {
