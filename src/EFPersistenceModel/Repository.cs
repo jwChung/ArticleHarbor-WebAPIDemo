@@ -207,8 +207,8 @@
                     "SELECT {0} * FROM {1} {2} {3};",
                     BuildTopClause(sqlQuery.Top),
                     this.GetTableName(),
-                    this.BuildWhereClause(sqlQuery.Predicate),
-                    this.BuildOrderByClause(sqlQuery.OrderByColumns));
+                    BuildWhereClause(sqlQuery.Predicate),
+                    BuildOrderByClause(sqlQuery.OrderByColumns));
             }
 
             public string BuildDelete(IPredicate predicate)
@@ -217,7 +217,7 @@
                     CultureInfo.CurrentCulture,
                     "DELETE FROM {0} {1};",
                     this.GetTableName(),
-                    this.BuildWhereClause(predicate));
+                    BuildWhereClause(predicate));
             }
 
             private static string BuildTopClause(ITop top)
@@ -238,7 +238,7 @@
                 }
             }
 
-            private string BuildWhereClause(IPredicate predicate)
+            private static string BuildWhereClause(IPredicate predicate)
             {
                 return predicate.Equals(Predicate.None)
                     ? string.Empty
@@ -248,7 +248,7 @@
                         predicate.SqlText);
             }
 
-            private string BuildOrderByClause(IOrderByColumns columns)
+            private static string BuildOrderByClause(IOrderByColumns columns)
             {
                 if (columns.Equals(OrderByColumns.None))
                     return string.Empty;
