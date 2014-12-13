@@ -53,6 +53,50 @@
             Assert.Equal(expected, actual);
         }
 
+        [Test]
+        public void EqualsDoesNotEqualOtherWithDifferentValues(
+            OperablePredicate sut,
+            OperablePredicate other)
+        {
+            var actual = sut.Equals(other);
+            Assert.False(actual);
+        }
+
+        [Test]
+        public void EqualsEqualsOtherWithSameValues(OperablePredicate sut)
+        {
+            var other = new OperablePredicate(sut.ColumnName, sut.OperatorName, sut.Value);
+            var actual = sut.Equals(other);
+            Assert.True(actual);
+        }
+
+        [Test]
+        public void EqualsIgnoresCaseOfColumnName(OperablePredicate sut)
+        {
+            var other = new OperablePredicate(
+                sut.ColumnName.ToUpper(), sut.OperatorName, sut.Value);
+            var actual = sut.Equals(other);
+            Assert.True(actual);
+        }
+
+        [Test]
+        public void EqualsIgnoresCaseOfOperatorName(OperablePredicate sut)
+        {
+            var other = new OperablePredicate(
+                sut.ColumnName, sut.OperatorName.ToUpper(), sut.Value);
+            var actual = sut.Equals(other);
+            Assert.True(actual);
+        }
+
+        [Test]
+        public void GetHasCodeReturnsCorrectResult(OperablePredicate sut)
+        {
+            var other = new OperablePredicate(
+                sut.ColumnName.ToUpper(), sut.OperatorName.ToUpper(), sut.Value);
+            var actual = sut.GetHashCode();
+            Assert.Equal(other.GetHashCode(), actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.SqlText);

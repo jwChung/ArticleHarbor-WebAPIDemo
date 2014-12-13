@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
 
     public class OperablePredicate : IPredicate
@@ -67,6 +68,45 @@
         public object Value
         {
             get { return this.value; }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != this.GetType())
+                return false;
+            return this.Equals((OperablePredicate)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = this.columnName.ToUpper(CultureInfo.CurrentCulture).GetHashCode();
+                hashCode = (hashCode * 397) ^ this.operatorName
+                    .ToUpper(CultureInfo.CurrentCulture).GetHashCode();
+                hashCode = (hashCode * 397) ^ this.value.GetHashCode();
+                return hashCode;
+            }
+        }
+
+        protected bool Equals(OperablePredicate other)
+        {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
+            return string.Equals(
+                this.columnName,
+                other.columnName,
+                StringComparison.CurrentCultureIgnoreCase)
+                && string.Equals(
+                    this.operatorName,
+                    other.operatorName,
+                    StringComparison.CurrentCultureIgnoreCase)
+                && this.value.Equals(other.value);
         }
     }
 }
