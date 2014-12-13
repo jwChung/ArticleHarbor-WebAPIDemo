@@ -119,6 +119,7 @@
     <Compile Include="Commands\ModelCommandTest.cs" />
     <Compile Include="Commands\InsertCommandTest.cs" />
     <Compile Include="Queries\NoOrderByColumnsTest.cs" />
+    <Compile Include="Queries\NoTopTest.cs" />
     <Compile Include="Queries\OrderByColumnsTest.cs" />
     <Compile Include="Queries\OrderByColumnTest.cs" />
     <Compile Include="Queries\ParameterTest.cs" />

@@ -85,6 +85,7 @@
     <Compile Include="Queries\ISqlQuery.cs" />
     <Compile Include="Queries\ITop.cs" />
     <Compile Include="Queries\NoOrderByColumns.cs" />
+    <Compile Include="Queries\NoTop.cs" />
     <Compile Include="Queries\OrderByColumn.cs" />
     <Compile Include="Queries\OrderByColumns.cs" />
     <Compile Include="Queries\OrderDirection.cs" />
