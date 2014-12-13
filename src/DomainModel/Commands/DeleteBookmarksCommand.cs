@@ -44,7 +44,7 @@
         private async Task<IEnumerable<IModel>> ExecuteAsyncWith(User user)
         {
             await this.repositories.Bookmarks.ExecuteDeleteCommandAsync(
-                new EqualPredicate("UserId", user.Id));
+                Predicate.Equal("UserId", user.Id));
 
             return Enumerable.Empty<IModel>();
         }
@@ -52,7 +52,7 @@
         private async Task<IEnumerable<IModel>> ExecuteAsyncWith(Article article)
         {
             await this.repositories.Bookmarks.ExecuteDeleteCommandAsync(
-                new EqualPredicate("ArticleId", article.Id));
+                Predicate.Equal("ArticleId", article.Id));
 
             return Enumerable.Empty<IModel>();
         }
