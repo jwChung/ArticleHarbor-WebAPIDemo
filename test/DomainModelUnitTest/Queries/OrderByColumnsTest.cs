@@ -24,14 +24,7 @@
             var actual = OrderByColumns.None;
             Assert.IsType<NoOrderByColumns>(actual);
         }
-
-        [Test]
-        public void NoneAlwaysReturnsSameInstance()
-        {
-            var actual = OrderByColumns.None;
-            Assert.Same(OrderByColumns.None, actual);
-        }
-
+        
         [Test]
         public void GetEnumeratorReturnsCorrectResult(OrderByColumns sut)
         {

@@ -26,13 +26,6 @@
         }
 
         [Test]
-        public void NoneAlwaysReturnsSameInstance()
-        {
-            var actual = Top.None;
-            Assert.Same(Top.None, actual);
-        }
-
-        [Test]
         public void EqualsEqualsWithSameCount(Top sut)
         {
             var other = new Top(sut.Count);
