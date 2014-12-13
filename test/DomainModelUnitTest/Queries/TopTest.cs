@@ -11,14 +11,6 @@
         }
 
         [Test]
-        public void NoneIsCorrect()
-        {
-            var actual = Top.None;
-            var top = Assert.IsAssignableFrom<ITop>(actual);
-            Assert.Equal(int.MinValue, top.Count);
-        }
-
-        [Test]
         public void NoneIsNoTop()
         {
             var actual = Top.None;
