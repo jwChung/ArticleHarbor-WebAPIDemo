@@ -64,7 +64,6 @@
     <Compile Include="Queries\InClausePredicate.cs" />
     <Compile Include="Commands\InsertConfirmableCommand.cs" />
     <Compile Include="Models\CompositeModel.cs" />
-    <Compile Include="Queries\EqualPredicate.cs" />
     <Compile Include="Models\IKeys.cs" />
     <Compile Include="Commands\IModelCommand.cs" />
     <Compile Include="Models\Keys.cs" />
@@ -94,6 +93,7 @@
     <Compile Include="Commands\UpdateConfirmableCommand.cs" />
     <Compile Include="Commands\UpdateKeywordsCondition.cs" />
     <Compile Include="Queries\OperablePredicate.cs" />
+    <Compile Include="Queries\Predicate.cs" />
     <Compile Include="Queries\SqlQuery.cs" />
     <Compile Include="Queries\Top.cs" />
     <Compile Include="Repositories\IRepositories.cs" />

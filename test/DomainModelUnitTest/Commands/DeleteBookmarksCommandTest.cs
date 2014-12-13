@@ -19,16 +19,11 @@
             DeleteBookmarksCommand sut,
             User user)
         {
-            var likeness = new EqualPredicate("UserId", user.Id).AsSource()
-                .OfLikeness<EqualPredicate>()
-                .Without(x => x.SqlText)
-                .Without(x => x.Parameters);
-
             var actual = sut.ExecuteAsync(user).Result;
 
             Assert.Empty(actual);
             sut.Repositories.Bookmarks.ToMock().Verify(
-                x => x.ExecuteDeleteCommandAsync(It.Is<IPredicate>(p => likeness.Equals(p))));
+                x => x.ExecuteDeleteCommandAsync(Predicate.Equal("UserId", user.Id)));
         }
 
         [Test]
@@ -36,16 +31,11 @@
             DeleteBookmarksCommand sut,
             Article article)
         {
-            var likeness = new EqualPredicate("ArticleId", article.Id).AsSource()
-                .OfLikeness<EqualPredicate>()
-                .Without(x => x.SqlText)
-                .Without(x => x.Parameters);
-
             var actual = sut.ExecuteAsync(article).Result;
 
             Assert.Empty(actual);
             sut.Repositories.Bookmarks.ToMock().Verify(
-                x => x.ExecuteDeleteCommandAsync(It.Is<IPredicate>(p => likeness.Equals(p))));
+                x => x.ExecuteDeleteCommandAsync(Predicate.Equal("ArticleId", article.Id)));
         }
     }
 }
