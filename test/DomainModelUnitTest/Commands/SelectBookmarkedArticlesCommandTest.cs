@@ -39,8 +39,8 @@
                 "Id", bookmarks.Select(b => b.ArticleId).Cast<object>())
                 .AsSource()
                 .OfLikeness<InClausePredicate>()
-                .With(x => x.ParameterValues)
-                .EqualsWhen((a, b) => a.ParameterValues.SequenceEqual(b.ParameterValues))
+                .With(x => x.Values)
+                .EqualsWhen((a, b) => a.Values.SequenceEqual(b.Values))
                 .Without(x => x.SqlText)
                 .Without(x => x.Parameters);
 

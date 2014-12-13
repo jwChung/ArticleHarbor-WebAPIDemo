@@ -30,7 +30,7 @@
         public void ParameterValuesIsCorrect(InClausePredicate sut)
         {
             var expected = sut.Parameters.Select(x => x.Value);
-            var actual = sut.ParameterValues;
+            var actual = sut.Values;
             Assert.Equal(expected, actual);
         }
 
@@ -40,7 +40,7 @@
         {
             var actual = sut.Parameters;
 
-            Assert.Equal(sut.ParameterValues, actual.Select(x => x.Value));
+            Assert.Equal(sut.Values, actual.Select(x => x.Value));
             Assert.DoesNotThrow(() => actual.Select(x =>
             {
                 Assert.True(x.Name.StartsWith("@" + sut.ColumnName));
@@ -54,7 +54,7 @@
         {
             var actual = sut.Parameters;
 
-            Assert.Equal(sut.ParameterValues, actual.Select(x => x.Value));
+            Assert.Equal(sut.Values, actual.Select(x => x.Value));
             Assert.DoesNotThrow(() => actual.Select(x =>
             {
                 Assert.True(x.Name.StartsWith("@" + sut.ColumnName));
@@ -90,7 +90,7 @@
         [Test]
         public void EqualsEqualsOtherWithSameValues(InClausePredicate sut)
         {
-            var other = new InClausePredicate(sut.ColumnName, sut.ParameterValues.ToArray());
+            var other = new InClausePredicate(sut.ColumnName, sut.Values.ToArray());
             var actual = sut.Equals(other);
             Assert.True(actual);
         }
@@ -98,7 +98,7 @@
         [Test]
         public void EqualsIsCaseInsensitiveForColumnName(InClausePredicate sut)
         {
-            var other = new InClausePredicate(sut.ColumnName.ToUpper(), sut.ParameterValues);
+            var other = new InClausePredicate(sut.ColumnName.ToUpper(), sut.Values);
             var actual = sut.Equals(other);
             Assert.True(actual);
         }
@@ -108,7 +108,7 @@
         {
             var other = new InClausePredicate(
                 sut.ColumnName.ToUpper(),
-                sut.ParameterValues.ToArray());
+                sut.Values.ToArray());
             var actual = sut.GetHashCode();
             Assert.Equal(other.GetHashCode(), actual);
         }

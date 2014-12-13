@@ -8,25 +8,25 @@
     public class InClausePredicate : IPredicate
     {
         private readonly string columnName;
-        private readonly IEnumerable<object> parameterValues;
+        private readonly IEnumerable<object> values;
         private readonly IEnumerable<IParameter> parameters;
 
-        public InClausePredicate(string columnName, params object[] parameterValues)
-            : this(columnName, (IEnumerable<object>)parameterValues)
+        public InClausePredicate(string columnName, params object[] values)
+            : this(columnName, (IEnumerable<object>)values)
         {
         }
 
-        public InClausePredicate(string columnName, IEnumerable<object> parameterValues)
+        public InClausePredicate(string columnName, IEnumerable<object> values)
         {
             if (columnName == null)
                 throw new ArgumentNullException("columnName");
 
-            if (parameterValues == null)
-                throw new ArgumentNullException("parameterValues");
+            if (values == null)
+                throw new ArgumentNullException("values");
 
             this.columnName = columnName;
-            this.parameterValues = parameterValues;
-            this.parameters = this.parameterValues.Select(v =>
+            this.values = values;
+            this.parameters = this.values.Select(v =>
                 new Parameter("@" + this.columnName + Guid.NewGuid().ToString("N"), v))
                 .ToArray();
         }
@@ -53,9 +53,9 @@
             get { return this.parameters; }
         }
 
-        public IEnumerable<object> ParameterValues
+        public IEnumerable<object> Values
         {
-            get { return this.parameterValues; }
+            get { return this.values; }
         }
 
         public override bool Equals(object obj)
@@ -73,7 +73,7 @@
         {
             unchecked
             {
-                return this.parameterValues.Aggregate(
+                return this.values.Aggregate(
                     this.columnName.ToUpper(CultureInfo.CurrentCulture).GetHashCode(),
                     (h, p) => (h * 397) ^ p.GetHashCode());    
             }
@@ -86,7 +86,7 @@
 
             return string.Equals(
                 this.columnName, other.columnName, StringComparison.CurrentCultureIgnoreCase)
-                && this.parameterValues.SequenceEqual(other.parameterValues);
+                && this.values.SequenceEqual(other.values);
         }
     }
 }
