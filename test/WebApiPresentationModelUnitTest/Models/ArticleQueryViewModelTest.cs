@@ -10,6 +10,7 @@
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.Xunit;
     using Xunit;
+    using Xunit.Extensions;
 
     public class ArticleQueryViewModelTest : IdiomaticTest<ArticleQueryViewModel>
     {
@@ -38,14 +39,15 @@
             ArticleQueryViewModel sut)
         {
             var actual = sut.Count;
-            Assert.Equal(50, actual);
+            Assert.Equal(ArticleQueryViewModel.MaxCount, actual);
         }
 
         [Test]
-        public void CountThrowsWhenValueIsGreatThan50(
+        public void CountThrowsWhenValueIsGreatThanMaxCount(
             ArticleQueryViewModel sut)
         {
-            Assert.Throws<ArgumentException>(() => sut.Count = 51);
+            Assert.Throws<ArgumentException>(
+                () => sut.Count = ArticleQueryViewModel.MaxCount + 1);
         }
 
         [Test]
@@ -62,27 +64,56 @@
         }
 
         [Test]
-        public void ProvideQueryReturnsResultHavingCorrectPreviousEndIdPredicate(
+        public void ProvideQueryReturnsResultHavingCorrectPreviousIdPredicate(
             ArticleQueryViewModel sut,
-            int previousEndId)
+            int previousId)
         {
-            sut.PreviousId = previousEndId;
+            sut.PreviousId = previousId;
 
             var actual = sut.ProvideQuery();
 
             var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
-            Assert.Contains(Predicate.GreatThan("Id", previousEndId), andPredicate.Predicates);
+            Assert.Contains(Predicate.GreatThan("Id", previousId), andPredicate.Predicates);
         }
 
         [Test]
-        public void ProvideQueryWithNullPreviousEndIdReturnsResultNotHavingPreviousEndIdPredicate(
+        public void ProvideQueryWithNullPreviousEndIdReturnsResultNotHavingPreviousIdPredicate(
             ArticleQueryViewModel sut)
         {
             var actual = sut.ProvideQuery();
 
             var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
             Assert.False(andPredicate.Predicates.OfType<OperablePredicate>().Any(
-                x => x.OperatorName.Equals("Id", StringComparison.CurrentCultureIgnoreCase)));
+                x => x.ColumnName.Equals("Id", StringComparison.CurrentCultureIgnoreCase)));
+        }
+
+        [Test]
+        public void ProvideQueryReturnsResultHavingCorrectSubjectPredicate(
+            ArticleQueryViewModel sut,
+            string subject)
+        {
+            sut.Subject = subject;
+
+            var actual = sut.ProvideQuery();
+
+            var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
+            Assert.Contains(Predicate.Like("Subject", "%" + subject + "%"), andPredicate.Predicates);
+        }
+
+        [Test]
+        [InlineData(null)]
+        [InlineData("")]
+        public void ProvideQueryWithNullOrEmptySubjectReturnsResultNotHavingSubjectPredicate(
+            string subject,
+            ArticleQueryViewModel sut)
+        {
+            sut.Subject = subject;
+
+            var actual = sut.ProvideQuery();
+
+            var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
+            Assert.False(andPredicate.Predicates.OfType<OperablePredicate>().Any(
+                x => x.ColumnName.Equals("Subject", StringComparison.CurrentCultureIgnoreCase)));
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
