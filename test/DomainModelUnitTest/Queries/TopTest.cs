@@ -19,6 +19,13 @@
         }
 
         [Test]
+        public void NoneIsNoTop()
+        {
+            var actual = Top.None;
+            Assert.IsType<NoTop>(actual);
+        }
+
+        [Test]
         public void NoneAlwaysReturnsSameInstance()
         {
             var actual = Top.None;
