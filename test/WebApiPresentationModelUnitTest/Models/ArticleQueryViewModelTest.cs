@@ -98,7 +98,7 @@
             var actual = sut.ProvideQuery();
 
             var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
-            Assert.Contains(Predicate.Like("Subject", "%" + subject + "%"), andPredicate.Predicates);
+            Assert.Contains(Predicate.Contains("Subject", subject), andPredicate.Predicates);
         }
 
         [Test]
@@ -127,7 +127,7 @@
             var actual = sut.ProvideQuery();
 
             var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
-            Assert.Contains(Predicate.Like("Body", "%" + body + "%"), andPredicate.Predicates);
+            Assert.Contains(Predicate.Contains("Body", body), andPredicate.Predicates);
         }
 
         [Test]
