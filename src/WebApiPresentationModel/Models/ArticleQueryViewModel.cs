@@ -7,7 +7,7 @@
 
     public class ArticleQueryViewModel : ISqlQueryable
     {
-        private const int MaxCount = 50;
+        public const int MaxCount = 100;
         private int count = MaxCount;
 
         public int Count
@@ -40,6 +40,9 @@
             
             if (this.PreviousId != null)
                 predicates.Add(Predicate.GreatThan("Id", this.PreviousId));
+
+            if (!string.IsNullOrEmpty(this.Subject))
+                predicates.Add(Predicate.Like("Subject", "%" + this.Subject + "%"));
             
             return new SqlQuery(
                 new Top(this.count),
