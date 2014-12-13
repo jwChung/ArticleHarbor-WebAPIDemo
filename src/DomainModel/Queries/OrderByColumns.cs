@@ -52,7 +52,12 @@
 
         public override int GetHashCode()
         {
-            return this.columns.GetHashCode();
+            unchecked
+            {
+                return this.columns.Skip(1).Aggregate(
+                    this.columns.First().GetHashCode(),
+                    (h, p) => (h * 397) ^ p.GetHashCode());
+            }
         }
 
         protected bool Equals(OrderByColumns other)

@@ -33,6 +33,12 @@
         }
 
         [Test]
+        public void ExplicitGetEnumeratorReturnsCorrectResult(OrderByColumns sut)
+        {
+            Assert.Equal(sut.Columns, sut);
+        }
+
+        [Test]
         public void EqualsDoesNotEqualOtherWithDifferentValues(
             OrderByColumns sut,
             OrderByColumns other)
@@ -50,9 +56,11 @@
         }
 
         [Test]
-        public void ExplicitGetEnumeratorReturnsCorrectResult(OrderByColumns sut)
+        public void GetHasCodeReturnsCorrectResult(OrderByColumns sut)
         {
-            Assert.Equal(sut.Columns, sut);
+            var other = new OrderByColumns(sut.Columns.ToArray());
+            var actual = sut.GetHashCode();
+            Assert.Equal(other.GetHashCode(), actual);
         }
     }
 }
