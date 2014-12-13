@@ -73,7 +73,9 @@
         {
             unchecked
             {
-                return (this.columnName.GetHashCode() * 397) ^ this.parameterValues.GetHashCode();
+                return this.parameterValues.Aggregate(
+                    this.columnName.ToUpper().GetHashCode(),
+                    (h, p) => (h * 397) ^ p.GetHashCode());    
             }
         }
 
