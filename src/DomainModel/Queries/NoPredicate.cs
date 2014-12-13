@@ -3,16 +3,26 @@
     using System;
     using System.Collections.Generic;
 
-    public class NoPredicate : IPredicate
+    public sealed class NoPredicate : IPredicate
     {
         public string SqlText
         {
-            get { throw new NotImplementedException(); }
+            get { return string.Empty; }
         }
 
         public IEnumerable<IParameter> Parameters
         {
-            get { throw new NotImplementedException(); }
+            get { yield break; }
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj != null && obj.GetType() == this.GetType();
+        }
+
+        public override int GetHashCode()
+        {
+            return 0;
         }
     }
 }
