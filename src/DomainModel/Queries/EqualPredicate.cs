@@ -63,7 +63,8 @@
         {
             unchecked
             {
-                return (this.columnName.GetHashCode() * 397) ^ this.value.GetHashCode();
+                return (this.columnName.ToUpper().GetHashCode() * 397)
+                    ^ this.value.GetHashCode();
             }
         }
 
