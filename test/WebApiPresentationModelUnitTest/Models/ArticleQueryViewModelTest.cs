@@ -20,6 +20,19 @@
         }
 
         [Test]
+        public IEnumerable<ITestCase> PropertiesAreReadWritable()
+        {
+            var properties = new Properties<ArticleQueryViewModel>();
+            var testData = new[]
+            {
+                properties.Select(x => x.PreviousEndId),
+            };
+
+            return TestCases.WithArgs(testData).WithAuto<ReadWritablePropertyAssertion>()
+                .Create((p, a) => a.Verify(p));
+        }
+
+        [Test]
         public void CountIsCorrect(
             ArticleQueryViewModel sut)
         {
@@ -49,6 +62,7 @@
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
+            yield return this.Properties.Select(x => x.PreviousEndId);
             yield return this.Properties.Select(x => x.Count);
         }
     }

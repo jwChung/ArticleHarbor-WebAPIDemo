@@ -8,7 +8,9 @@
     {
         private const int MaxCount = 50;
         private int count = MaxCount;
-        
+
+        public int? PreviousEndId { get; set; }
+
         public int Count
         {
             get
