@@ -145,12 +145,7 @@
 
         private async Task<IEnumerable<TModel>> ExecuteSelectCommandAsyncWith(ISqlQuery sqlQuery)
         {
-            string sql = string.Format(
-                "SELECT {0} * FROM {1} {2} {3};",
-                this.BuildTopClause(sqlQuery.Top),
-                this.GetTableName(),
-                this.BuildWhereClause(sqlQuery.Predicate),
-                this.BuildOrderByClause(sqlQuery.OrderByColumns));
+            string sql = new SqlQueryBuilder(this.dbSet).BuildSelect(sqlQuery);
 
             var sqlParameters = sqlQuery.Predicate.Parameters
                .Select(x => new SqlParameter(x.Name, x.Value))
@@ -163,10 +158,7 @@
 
         private async Task ExecuteDeleteCommandAsyncWith(IPredicate predicate)
         {
-            string sql = string.Format(
-                "DELETE FROM {0} {1};",
-                this.GetTableName(),
-                this.BuildWhereClause(predicate));
+            string sql = new SqlQueryBuilder(this.dbSet).BuildDelete(predicate);
 
             var sqlParameters = predicate.Parameters
                 .Select(x => new SqlParameter(x.Name, x.Value))
@@ -190,14 +182,6 @@
             return entity;
         }
 
-        private string GetTableName()
-        {
-            string selectSql = this.dbSet.ToString();
-            var start = selectSql.IndexOf("FROM", StringComparison.CurrentCulture) + 5;
-            var end = selectSql.LastIndexOf("AS", StringComparison.CurrentCulture);
-            return selectSql.Substring(start, end - start - 1);
-        }
-
         private async Task<IEnumerable<TModel>> ConvertToModels(TPersistence[] persistences)
         {
             var models = new TModel[persistences.Length];
@@ -207,41 +191,77 @@
             return models;
         }
 
-        private string BuildTopClause(ITop top)
+        private class SqlQueryBuilder
         {
-            return top.Equals(Top.None) ? string.Empty : "TOP " + top.Count;
-        }
-
-        private string BuildWhereClause(IPredicate predicate)
-        {
-            return predicate.Equals(Predicate.None)
-                ? string.Empty
-                : string.Format("WHERE {1}", this.dbSet, predicate.SqlText);
-        }
-
-        private string BuildOrderByClause(IOrderByColumns columns)
-        {
-            if (columns.Equals(OrderByColumns.None))
-                return string.Empty;
-
-            return "ORDER BY " + string.Join(
-                ", ",
-                columns.Select(c => string.Format(
-                    "{0} {1}",
-                    c.Name,
-                    this.GetOrderDirectionName(c.OrderDirection))));
-        }
-
-        private string GetOrderDirectionName(OrderDirection direction)
-        {
-            switch (direction)
+            private readonly DbSet<TPersistence> dbSet;
+            
+            public SqlQueryBuilder(DbSet<TPersistence> dbSet)
             {
-                case OrderDirection.Ascending:
-                    return "ASC";
-                case OrderDirection.Descending:
-                    return "DESC";
-                default:
-                    throw new ArgumentException();
+                this.dbSet = dbSet;
+            }
+
+            public string BuildSelect(ISqlQuery sqlQuery)
+            {
+                return string.Format(
+                    "SELECT {0} * FROM {1} {2} {3};",
+                    this.BuildTopClause(sqlQuery.Top),
+                    this.GetTableName(),
+                    this.BuildWhereClause(sqlQuery.Predicate),
+                    this.BuildOrderByClause(sqlQuery.OrderByColumns));
+            }
+
+            public string BuildDelete(IPredicate predicate)
+            {
+                return string.Format(
+                    "DELETE FROM {0} {1};",
+                    this.GetTableName(),
+                    this.BuildWhereClause(predicate));
+            }
+
+            private string BuildTopClause(ITop top)
+            {
+                return top.Equals(Top.None) ? string.Empty : "TOP " + top.Count;
+            }
+
+            private string BuildWhereClause(IPredicate predicate)
+            {
+                return predicate.Equals(Predicate.None)
+                    ? string.Empty
+                    : string.Format("WHERE {1}", this.dbSet, predicate.SqlText);
+            }
+
+            private string BuildOrderByClause(IOrderByColumns columns)
+            {
+                if (columns.Equals(OrderByColumns.None))
+                    return string.Empty;
+
+                return "ORDER BY " + string.Join(
+                    ", ",
+                    columns.Select(c => string.Format(
+                        "{0} {1}",
+                        c.Name,
+                        this.GetOrderDirectionName(c.OrderDirection))));
+            }
+
+            private string GetOrderDirectionName(OrderDirection direction)
+            {
+                switch (direction)
+                {
+                    case OrderDirection.Ascending:
+                        return "ASC";
+                    case OrderDirection.Descending:
+                        return "DESC";
+                    default:
+                        throw new ArgumentException();
+                }
+            }
+
+            private string GetTableName()
+            {
+                string selectSql = this.dbSet.ToString();
+                var start = selectSql.IndexOf("FROM", StringComparison.CurrentCulture) + 5;
+                var end = selectSql.LastIndexOf("AS", StringComparison.CurrentCulture);
+                return selectSql.Substring(start, end - start - 1);
             }
         }
     }
