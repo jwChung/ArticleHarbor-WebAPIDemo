@@ -20,7 +20,7 @@
         }
 
         [Test]
-        public void EqualsDoesNotEqualOtherOfDiffrentType(
+        public void EqualsDoesNotEqualOtherOfDifferentType(
             NoTop sut,
             Top other)
         {

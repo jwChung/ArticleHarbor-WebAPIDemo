@@ -25,7 +25,7 @@
         }
         
         [Test]
-        public void EqualsDoesNotEqualOtherOfDiffrentType(
+        public void EqualsDoesNotEqualOtherOfDifferentType(
             NoPredicate sut,
             AndPredicate other)
         {

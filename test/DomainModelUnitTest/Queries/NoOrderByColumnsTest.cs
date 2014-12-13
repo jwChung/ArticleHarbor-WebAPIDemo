@@ -24,7 +24,7 @@
         }
 
         [Test]
-        public void EqualsDoesNotEqualOtherOfDiffrentType(
+        public void EqualsDoesNotEqualOtherOfDifferentType(
             NoOrderByColumns sut,
             OrderByColumns other)
         {
