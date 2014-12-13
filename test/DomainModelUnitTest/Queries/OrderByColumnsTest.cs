@@ -22,7 +22,7 @@
         public void NoneIsCorrect()
         {
             var actual = OrderByColumns.None;
-            Assert.IsType<NoneOrderByColumns>(actual);
+            Assert.IsType<NoOrderByColumns>(actual);
         }
 
         [Test]

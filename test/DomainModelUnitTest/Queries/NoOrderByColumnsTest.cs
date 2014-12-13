@@ -3,29 +3,29 @@
     using System.Linq;
     using Xunit;
 
-    public class NoneOrderByColumnsTest : IdiomaticTest<NoneOrderByColumns>
+    public class NoOrderByColumnsTest : IdiomaticTest<NoOrderByColumns>
     {
         [Test]
-        public void SutIsOrderByColumns(NoneOrderByColumns sut)
+        public void SutIsOrderByColumns(NoOrderByColumns sut)
         {
             Assert.IsAssignableFrom<IOrderByColumns>(sut);
         }
 
         [Test]
-        public void GetEnumeratorReturnsCorrectResult(NoneOrderByColumns sut)
+        public void GetEnumeratorReturnsCorrectResult(NoOrderByColumns sut)
         {
             Assert.Empty(sut.ToArray());
         }
 
         [Test]
-        public void ExplicitGetEnumeratorReturnsCorrectResult(NoneOrderByColumns sut)
+        public void ExplicitGetEnumeratorReturnsCorrectResult(NoOrderByColumns sut)
         {
             Assert.Empty(sut);
         }
 
         [Test]
         public void EqualsDoesNotEqualOtherOfDiffrentType(
-            NoneOrderByColumns sut,
+            NoOrderByColumns sut,
             OrderByColumns other)
         {
             var actual = sut.Equals(other);
@@ -34,8 +34,8 @@
 
         [Test]
         public void EqualsEqualsOtherOfSameType(
-            NoneOrderByColumns sut,
-            NoneOrderByColumns other)
+            NoOrderByColumns sut,
+            NoOrderByColumns other)
         {
             var actual = sut.Equals(other);
             Assert.True(actual);
@@ -43,14 +43,14 @@
 
         [Test]
         public void EqualsDoesNotEqualNull(
-            NoneOrderByColumns sut)
+            NoOrderByColumns sut)
         {
             var actual = sut.Equals(null);
             Assert.False(actual);
         }
 
         [Test]
-        public void GetHashCodeReturnsZero(NoneOrderByColumns sut)
+        public void GetHashCodeReturnsZero(NoOrderByColumns sut)
         {
             var actual = sut.GetHashCode();
             Assert.Equal(0, actual);
