@@ -16,7 +16,7 @@
         public void CountIsCorrect(NoTop sut)
         {
             var actual = sut.Count;
-            Assert.Equal(int.MinValue, actual);
+            Assert.Equal(0, actual);
         }
 
         [Test]

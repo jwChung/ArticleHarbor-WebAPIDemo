@@ -4,7 +4,7 @@
     {
         public int Count
         {
-            get { return int.MinValue; }
+            get { return 0; }
         }
 
         public override bool Equals(object obj)
