@@ -44,10 +44,10 @@
                 predicates.Add(Predicate.GreatThan("Id", this.PreviousId));
 
             if (!string.IsNullOrEmpty(this.Subject))
-                predicates.Add(Predicate.Like("Subject", "%" + this.Subject + "%"));
+                predicates.Add(Predicate.Contains("Subject", this.Subject));
 
             if (!string.IsNullOrEmpty(this.Body))
-                predicates.Add(Predicate.Like("Body", "%" + this.Body + "%"));
+                predicates.Add(Predicate.Contains("Body", this.Body));
             
             return new SqlQuery(
                 new Top(this.count),
