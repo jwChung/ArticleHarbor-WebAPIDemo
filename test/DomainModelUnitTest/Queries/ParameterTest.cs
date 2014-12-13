@@ -53,7 +53,7 @@
         [Test]
         public void GetHashCodeWithSameValuesReturnsSameCode(Parameter sut)
         {
-            var other = new Parameter(sut.Name, sut.Value);
+            var other = new Parameter(sut.Name.ToUpper(), sut.Value);
             var actual = sut.GetHashCode();
             Assert.Equal(other.GetHashCode(), actual);
         }

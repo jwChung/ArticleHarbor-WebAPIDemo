@@ -56,7 +56,7 @@
         {
             unchecked
             {
-                return (this.name.GetHashCode() * 397) ^ this.value.GetHashCode();
+                return (this.name.ToUpper().GetHashCode() * 397) ^ this.value.GetHashCode();
             }
         }
 
