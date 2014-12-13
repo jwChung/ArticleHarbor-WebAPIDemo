@@ -117,6 +117,35 @@
                 x => x.ColumnName.Equals("Subject", StringComparison.CurrentCultureIgnoreCase)));
         }
 
+        [Test]
+        public void ProvideQueryReturnsResultHavingCorrectBodyPredicate(
+            ArticleQueryViewModel sut,
+            string body)
+        {
+            sut.Body = body;
+
+            var actual = sut.ProvideQuery();
+
+            var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
+            Assert.Contains(Predicate.Like("Body", "%" + body + "%"), andPredicate.Predicates);
+        }
+
+        [Test]
+        [InlineData(null)]
+        [InlineData("")]
+        public void ProvideQueryWithNullOrEmptySubjectReturnsResultNotHavingBodyPredicate(
+            string body,
+            ArticleQueryViewModel sut)
+        {
+            sut.Body = body;
+
+            var actual = sut.ProvideQuery();
+
+            var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
+            Assert.False(andPredicate.Predicates.OfType<OperablePredicate>().Any(
+                x => x.ColumnName.Equals("Body", StringComparison.CurrentCultureIgnoreCase)));
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.PreviousId);

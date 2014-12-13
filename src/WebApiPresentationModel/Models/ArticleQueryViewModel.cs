@@ -45,6 +45,9 @@
 
             if (!string.IsNullOrEmpty(this.Subject))
                 predicates.Add(Predicate.Like("Subject", "%" + this.Subject + "%"));
+
+            if (!string.IsNullOrEmpty(this.Body))
+                predicates.Add(Predicate.Like("Body", "%" + this.Body + "%"));
             
             return new SqlQuery(
                 new Top(this.count),
