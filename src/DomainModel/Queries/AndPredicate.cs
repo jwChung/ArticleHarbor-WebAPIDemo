@@ -49,7 +49,12 @@
 
         public override int GetHashCode()
         {
-            return this.predicates.GetHashCode();
+            unchecked
+            {
+                return this.predicates.Skip(1).Aggregate(
+                    this.predicates.First().GetHashCode(),
+                    (h, p) => (h * 397) ^ p.GetHashCode());    
+            }
         }
 
         protected bool Equals(AndPredicate other)
