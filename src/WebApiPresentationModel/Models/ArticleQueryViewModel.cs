@@ -34,6 +34,8 @@
 
         public string Subject { get; set; }
 
+        public string Body { get; set; }
+
         public ISqlQuery ProvideQuery()
         {
             var predicates = new List<IPredicate>();

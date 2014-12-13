@@ -28,6 +28,7 @@
             {
                 properties.Select(x => x.PreviousId),
                 properties.Select(x => x.Subject),
+                properties.Select(x => x.Body),
             };
 
             return TestCases.WithArgs(testData).WithAuto<ReadWritablePropertyAssertion>()
@@ -121,11 +122,13 @@
             yield return this.Properties.Select(x => x.PreviousId);
             yield return this.Properties.Select(x => x.Count);
             yield return this.Properties.Select(x => x.Subject);
+            yield return this.Properties.Select(x => x.Body);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
             yield return this.Properties.Select(x => x.Subject);
+            yield return this.Properties.Select(x => x.Body);
         }
     }
 }
