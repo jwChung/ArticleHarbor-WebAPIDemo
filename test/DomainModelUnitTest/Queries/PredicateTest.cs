@@ -19,5 +19,12 @@
             var actual = Predicate.And(expected.Predicates.ToArray());
             Assert.Equal(expected, actual);
         }
+
+        [Test]
+        public void InClauseReturnsCorrectResult(InClausePredicate expected)
+        {
+            var actual = Predicate.InClause(expected.ColumnName, expected.Values.ToArray());
+            Assert.Equal(expected, actual);
+        }
     }
 }
