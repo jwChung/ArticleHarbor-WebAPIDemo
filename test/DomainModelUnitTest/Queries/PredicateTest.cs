@@ -34,5 +34,13 @@
             var actual = Predicate.NotEqual(columnName, value);
             Assert.Equal(expected, actual);
         }
+
+        [Test]
+        public void LikeReturnsCorrectResult(string columnName, object value)
+        {
+            var expected = new OperablePredicate(columnName, "LIKE", value);
+            var actual = Predicate.Like(columnName, value);
+            Assert.Equal(expected, actual);
+        }
     }
 }

@@ -24,5 +24,10 @@
         {
             return new OperablePredicate(columnName, "<>", value);
         }
+
+        public static IPredicate Like(string columnName, object value)
+        {
+            return new OperablePredicate(columnName, "LIKE", value);
+        }
     }
 }
