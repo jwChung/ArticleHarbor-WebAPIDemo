@@ -20,6 +20,14 @@
             if (value == null)
                 throw new ArgumentNullException("value");
 
+            if (columnName.Length == 0)
+                throw new ArgumentException(
+                    "The columnName should not be empty string.", "columnName");
+
+            if (operatorName.Length == 0)
+                throw new ArgumentException(
+                    "The operatorName should not be empty string.", "operatorName");
+
             this.columnName = columnName;
             this.operatorName = operatorName;
             this.value = value;
