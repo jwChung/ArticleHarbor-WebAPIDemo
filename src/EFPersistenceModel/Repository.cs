@@ -9,6 +9,7 @@
     using System.Data.SqlClient;
     using System.Globalization;
     using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
     using DomainModel;
     using DomainModel.Models;
@@ -87,15 +88,16 @@
 
         public virtual Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(ISqlQuery sqlQuery)
         {
-            throw new NotImplementedException();
+            if (sqlQuery == null)
+                throw new ArgumentNullException("sqlQuery");
+
+            return this.ExecuteSelectCommandAsyncWith(sqlQuery);
         }
 
         public virtual Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(IPredicate predicate)
         {
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
-
-            return this.ExecuteSelectCommandAsyncWith(predicate);
+            return this.ExecuteSelectCommandAsync(
+                  new SqlQuery(Top.None, OrderByColumns.None, predicate));
         }
 
         public virtual Task ExecuteDeleteCommandAsync(IPredicate predicate)
@@ -141,15 +143,18 @@
             this.dbSet.Remove(entity);
         }
 
-        private async Task<IEnumerable<TModel>> ExecuteSelectCommandAsyncWith(IPredicate predicate)
+        private async Task<IEnumerable<TModel>> ExecuteSelectCommandAsyncWith(ISqlQuery sqlQuery)
         {
-            string sql = predicate.Equals(Predicate.None)
-                ? this.dbSet.ToString()
-                : string.Format("{0} WHERE {1}", this.dbSet, predicate.SqlText);
-            
-            var sqlParameters = predicate.Parameters
-                .Select(x => new SqlParameter(x.Name, x.Value))
-                .ToArray();
+            string sql = string.Format(
+                "SELECT {0} * FROM {1} {2} {3};",
+                this.BuildTopClause(sqlQuery.Top),
+                this.GetTableName(),
+                this.BuildWhereClause(sqlQuery.Predicate),
+                this.BuildOrderByClause(sqlQuery.OrderByColumns));
+
+            var sqlParameters = sqlQuery.Predicate.Parameters
+               .Select(x => new SqlParameter(x.Name, x.Value))
+               .ToArray();
 
             var persistences = await this.dbSet.SqlQuery(sql, sqlParameters)
                 .AsNoTracking().ToArrayAsync();
@@ -158,9 +163,10 @@
 
         private async Task ExecuteDeleteCommandAsyncWith(IPredicate predicate)
         {
-            string sql = predicate.Equals(Predicate.None)
-                ? string.Format("DELETE FROM {0}", this.GetTableName())
-                : string.Format("DELETE FROM {0} WHERE {1}", this.GetTableName(), predicate.SqlText);
+            string sql = string.Format(
+                "DELETE FROM {0} {1};",
+                this.GetTableName(),
+                this.BuildWhereClause(predicate));
 
             var sqlParameters = predicate.Parameters
                 .Select(x => new SqlParameter(x.Name, x.Value))
@@ -199,6 +205,44 @@
                 models[i] = await this.ConvertToModelAsync(persistences[i]);
 
             return models;
+        }
+
+        private string BuildTopClause(ITop top)
+        {
+            return top.Equals(Top.None) ? string.Empty : "TOP " + top.Count;
+        }
+
+        private string BuildWhereClause(IPredicate predicate)
+        {
+            return predicate.Equals(Predicate.None)
+                ? string.Empty
+                : string.Format("WHERE {1}", this.dbSet, predicate.SqlText);
+        }
+
+        private string BuildOrderByClause(IOrderByColumns columns)
+        {
+            if (columns.Equals(OrderByColumns.None))
+                return string.Empty;
+
+            return "ORDER BY " + string.Join(
+                ", ",
+                columns.Select(c => string.Format(
+                    "{0} {1}",
+                    c.Name,
+                    this.GetOrderDirectionName(c.OrderDirection))));
+        }
+
+        private string GetOrderDirectionName(OrderDirection direction)
+        {
+            switch (direction)
+            {
+                case OrderDirection.Ascending:
+                    return "ASC";
+                case OrderDirection.Descending:
+                    return "DESC";
+                default:
+                    throw new ArgumentException();
+            }
         }
     }
 }
