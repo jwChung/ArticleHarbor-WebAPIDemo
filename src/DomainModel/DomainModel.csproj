@@ -61,6 +61,7 @@
     <Compile Include="Commands\DeleteKeywordsCommand.cs" />
     <Compile Include="Commands\ICommandCondition.cs" />
     <Compile Include="Commands\IModelTransformer.cs" />
+    <Compile Include="Queries\ContainsPredicate.cs" />
     <Compile Include="Queries\InClausePredicate.cs" />
     <Compile Include="Commands\InsertConfirmableCommand.cs" />
     <Compile Include="Models\CompositeModel.cs" />
