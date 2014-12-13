@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "The main responsibility of this class isn't to be a 'collection' (which, by the way, it isn't - it's just an Iterator).")]
     public class OrderByColumns : IOrderByColumns
@@ -36,6 +37,30 @@
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != this.GetType())
+                return false;
+            return this.Equals((OrderByColumns)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.columns.GetHashCode();
+        }
+
+        protected bool Equals(OrderByColumns other)
+        {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
+            return this.columns.SequenceEqual(other.columns);
         }
     }
 }

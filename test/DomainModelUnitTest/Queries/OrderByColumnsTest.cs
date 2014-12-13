@@ -33,6 +33,23 @@
         }
 
         [Test]
+        public void EqualsDoesNotEqualOtherWithDifferentValues(
+            OrderByColumns sut,
+            OrderByColumns other)
+        {
+            var actual = sut.Equals(other);
+            Assert.False(actual);
+        }
+
+        [Test]
+        public void EqualsEqualsOtherWithSameValues(OrderByColumns sut)
+        {
+            var other = new OrderByColumns(sut.Columns.ToArray());
+            var actual = sut.Equals(other);
+            Assert.True(actual);
+        }
+
+        [Test]
         public void ExplicitGetEnumeratorReturnsCorrectResult(OrderByColumns sut)
         {
             Assert.Equal(sut.Columns, sut);
