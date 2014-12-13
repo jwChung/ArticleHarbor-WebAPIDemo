@@ -30,7 +30,7 @@
             return new OperablePredicate(columnName, "<>", value);
         }
 
-        public static IPredicate Like(string columnName, object value)
+        public static IPredicate Like(string columnName, string value)
         {
             return new OperablePredicate(columnName, "LIKE", value);
         }

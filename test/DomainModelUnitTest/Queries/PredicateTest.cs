@@ -42,7 +42,7 @@
         }
 
         [Test]
-        public void LikeReturnsCorrectResult(string columnName, object value)
+        public void LikeReturnsCorrectResult(string columnName, string value)
         {
             var expected = new OperablePredicate(columnName, "LIKE", value);
             var actual = Predicate.Like(columnName, value);
