@@ -1,6 +1,7 @@
 ﻿namespace ArticleHarbor.DomainModel.Queries
 {
     using System;
+    using System.Globalization;
 
     public class OrderByColumn : IOrderByColumn
     {
@@ -41,7 +42,8 @@
         {
             unchecked
             {
-                return (this.name.ToUpper().GetHashCode() * 397) ^ (int)this.direction;
+                return (this.name.ToUpper(CultureInfo.CurrentCulture).GetHashCode() * 397)
+                    ^ (int)this.direction;
             }
         }
 
