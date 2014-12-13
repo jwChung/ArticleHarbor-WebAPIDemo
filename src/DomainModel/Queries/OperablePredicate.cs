@@ -2,12 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class OperablePredicate : IPredicate
     {
         private readonly string columnName;
         private readonly string operatorName;
         private readonly object value;
+        private readonly IEnumerable<IParameter> parameter;
 
         public OperablePredicate(string columnName, string operatorName, object value)
         {
@@ -31,16 +33,25 @@
             this.columnName = columnName;
             this.operatorName = operatorName;
             this.value = value;
+            this.parameter = new IParameter[]
+            {
+                new Parameter("@" + this.columnName + Guid.NewGuid().ToString("N"), this.value)
+            };
         }
 
         public string SqlText
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                return this.columnName
+                    + " " + this.operatorName
+                    + " " + this.parameter.Single().Name;
+            }
         }
 
         public IEnumerable<IParameter> Parameters
         {
-            get { throw new NotImplementedException(); }
+            get { return this.parameter; }
         }
 
         public string ColumnName
