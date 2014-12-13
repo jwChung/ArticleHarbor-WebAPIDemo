@@ -9,6 +9,7 @@
     using System.Data.SqlClient;
     using System.Globalization;
     using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
     using DomainModel;
     using DomainModel.Models;
@@ -85,12 +86,18 @@
             return this.DeleteAsyncWith(keys);
         }
 
+        public virtual Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(ISqlQuery sqlQuery)
+        {
+            if (sqlQuery == null)
+                throw new ArgumentNullException("sqlQuery");
+
+            return this.ExecuteSelectCommandAsyncWith(sqlQuery);
+        }
+
         public virtual Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(IPredicate predicate)
         {
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
-
-            return this.ExecuteSelectCommandAsyncWith(predicate);
+            return this.ExecuteSelectCommandAsync(
+                  new SqlQuery(Top.None, OrderByColumns.None, predicate));
         }
 
         public virtual Task ExecuteDeleteCommandAsync(IPredicate predicate)
@@ -136,15 +143,13 @@
             this.dbSet.Remove(entity);
         }
 
-        private async Task<IEnumerable<TModel>> ExecuteSelectCommandAsyncWith(IPredicate predicate)
+        private async Task<IEnumerable<TModel>> ExecuteSelectCommandAsyncWith(ISqlQuery sqlQuery)
         {
-            string sql = predicate.Equals(Predicate.None)
-                ? this.dbSet.ToString()
-                : string.Format("{0} WHERE {1}", this.dbSet, predicate.SqlText);
-            
-            var sqlParameters = predicate.Parameters
-                .Select(x => new SqlParameter(x.Name, x.Value))
-                .ToArray();
+            string sql = new SqlQueryBuilder(this.dbSet).BuildSelect(sqlQuery);
+
+            var sqlParameters = sqlQuery.Predicate.Parameters
+               .Select(x => new SqlParameter(x.Name, x.Value))
+               .ToArray();
 
             var persistences = await this.dbSet.SqlQuery(sql, sqlParameters)
                 .AsNoTracking().ToArrayAsync();
@@ -153,9 +158,7 @@
 
         private async Task ExecuteDeleteCommandAsyncWith(IPredicate predicate)
         {
-            string sql = predicate.Equals(Predicate.None)
-                ? string.Format("DELETE FROM {0}", this.GetTableName())
-                : string.Format("DELETE FROM {0} WHERE {1}", this.GetTableName(), predicate.SqlText);
+            string sql = new SqlQueryBuilder(this.dbSet).BuildDelete(predicate);
 
             var sqlParameters = predicate.Parameters
                 .Select(x => new SqlParameter(x.Name, x.Value))
@@ -179,14 +182,6 @@
             return entity;
         }
 
-        private string GetTableName()
-        {
-            string selectSql = this.dbSet.ToString();
-            var start = selectSql.IndexOf("FROM", StringComparison.CurrentCulture) + 5;
-            var end = selectSql.LastIndexOf("AS", StringComparison.CurrentCulture);
-            return selectSql.Substring(start, end - start - 1);
-        }
-
         private async Task<IEnumerable<TModel>> ConvertToModels(TPersistence[] persistences)
         {
             var models = new TModel[persistences.Length];
@@ -194,6 +189,86 @@
                 models[i] = await this.ConvertToModelAsync(persistences[i]);
 
             return models;
+        }
+
+        private class SqlQueryBuilder
+        {
+            private readonly DbSet<TPersistence> dbSet;
+            
+            public SqlQueryBuilder(DbSet<TPersistence> dbSet)
+            {
+                this.dbSet = dbSet;
+            }
+
+            public string BuildSelect(ISqlQuery sqlQuery)
+            {
+                return string.Format(
+                    CultureInfo.CurrentCulture,
+                    "SELECT {0} * FROM {1} {2} {3};",
+                    BuildTopClause(sqlQuery.Top),
+                    this.GetTableName(),
+                    this.BuildWhereClause(sqlQuery.Predicate),
+                    this.BuildOrderByClause(sqlQuery.OrderByColumns));
+            }
+
+            public string BuildDelete(IPredicate predicate)
+            {
+                return string.Format(
+                    CultureInfo.CurrentCulture,
+                    "DELETE FROM {0} {1};",
+                    this.GetTableName(),
+                    this.BuildWhereClause(predicate));
+            }
+
+            private static string BuildTopClause(ITop top)
+            {
+                return top.Equals(Top.None) ? string.Empty : "TOP " + top.Count;
+            }
+
+            private static string GetOrderDirectionName(OrderDirection direction)
+            {
+                switch (direction)
+                {
+                    case OrderDirection.Ascending:
+                        return "ASC";
+                    case OrderDirection.Descending:
+                        return "DESC";
+                    default:
+                        throw new ArgumentException("Out of range.", "direction");
+                }
+            }
+
+            private string BuildWhereClause(IPredicate predicate)
+            {
+                return predicate.Equals(Predicate.None)
+                    ? string.Empty
+                    : string.Format(
+                        CultureInfo.CurrentCulture,
+                        "WHERE {0}",
+                        predicate.SqlText);
+            }
+
+            private string BuildOrderByClause(IOrderByColumns columns)
+            {
+                if (columns.Equals(OrderByColumns.None))
+                    return string.Empty;
+
+                return "ORDER BY " + string.Join(
+                    ", ",
+                    columns.Select(c => string.Format(
+                        CultureInfo.CurrentCulture,
+                        "{0} {1}",
+                        c.Name,
+                        GetOrderDirectionName(c.OrderDirection))));
+            }
+
+            private string GetTableName()
+            {
+                string selectSql = this.dbSet.ToString();
+                var start = selectSql.IndexOf("FROM", StringComparison.CurrentCulture) + 5;
+                var end = selectSql.LastIndexOf("AS", StringComparison.CurrentCulture);
+                return selectSql.Substring(start, end - start - 1);
+            }
         }
     }
 }

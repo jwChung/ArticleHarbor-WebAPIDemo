@@ -74,6 +74,11 @@
             yield return this.Properties.Select(x => x.Context);
             yield return this.Properties.Select(x => x.DbSet);
         }
+
+        protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
+        {
+            yield break;
+        }
     }
 
     public class RepositoryOfArticleTest : RepositoryTest<Keys<int>, Article, EFDataAccess.Article>
@@ -195,7 +200,7 @@
         }
 
         [Test]
-        public IEnumerable<ITestCase> ExecuteSelectCommandAsyncReturnsCorrectResult()
+        public IEnumerable<ITestCase> ExecuteSelectCommandAsyncWithPredicateReturnsCorrectResult()
         {
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
@@ -229,6 +234,80 @@
             {
                 var actual = sut.ExecuteSelectCommandAsync(Predicate.None).Result;
                 Assert.Equal(3, actual.Count());
+            });
+        }
+
+        [Test]
+        public IEnumerable<ITestCase> ExecuteSelectCommandAsyncWithSqlQueryReturnsCorrectResult()
+        {
+            yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
+            {
+                var actual = sut.ExecuteSelectCommandAsync(
+                    new SqlQuery(new NoTop(), new NoOrderByColumns(), new NoPredicate())).Result;
+
+                Assert.Equal(3, actual.Count());
+                Assert.Empty(sut.DbSet.Local);
+            });
+            yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
+            {
+                var actual = sut.ExecuteSelectCommandAsync(
+                    new SqlQuery(new Top(2), new NoOrderByColumns(), new NoPredicate())).Result;
+
+                Assert.Equal(2, actual.Count());
+                Assert.Empty(sut.DbSet.Local);
+            });
+            yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
+            {
+                var actual = sut.ExecuteSelectCommandAsync(
+                    new SqlQuery(new NoTop(), new NoOrderByColumns(), Predicate.Equal("Id", 1))).Result;
+                Assert.Equal(1, actual.Single().Id);
+            });
+            yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
+            {
+                var actual = sut.ExecuteSelectCommandAsync(
+                    new SqlQuery(new Top(2), new NoOrderByColumns(), Predicate.Equal("UserId", "User2"))).Result;
+                Assert.Equal(2, actual.Count());
+            });
+            yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
+            {
+                var expected = new[] { "user2", "user2", "user1" };
+                var actual = sut.ExecuteSelectCommandAsync(new SqlQuery(
+                    Top.None,
+                    new OrderByColumns(
+                        new OrderByColumn("UserId", OrderDirection.Descending)),
+                    Predicate.None)).Result;
+                Assert.Equal(expected, actual.Select(x => x.UserId));
+            });
+            yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
+            {
+                var expected = new[] { "user1", "user2", "user2" };
+                var actual = sut.ExecuteSelectCommandAsync(new SqlQuery(
+                    Top.None,
+                    new OrderByColumns(
+                        new OrderByColumn("UserId", OrderDirection.Ascending)),
+                    Predicate.None)).Result;
+                Assert.Equal(expected, actual.Select(x => x.UserId));
+            });
+            yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
+            {
+                var actual = sut.ExecuteSelectCommandAsync(new SqlQuery(
+                    Top.None,
+                    new OrderByColumns(
+                        new OrderByColumn("UserId", OrderDirection.Descending),
+                        new OrderByColumn("Id", OrderDirection.Ascending)),
+                    Predicate.None)).Result;
+                Assert.Equal("2", actual.First().Guid);
+            });
+            yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
+            {
+                var actual = sut.ExecuteSelectCommandAsync(new SqlQuery(
+                    Top.None,
+                    new OrderByColumns(
+                        new OrderByColumn("UserId", OrderDirection.Ascending),
+                        new OrderByColumn("Id", OrderDirection.Descending)),
+                    Predicate.None)).Result;
+                Assert.Equal("1", actual.First().Guid);
+                Assert.Equal("3", actual.ElementAt(1).Guid);
             });
         }
     }
