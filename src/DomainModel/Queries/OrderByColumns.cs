@@ -9,7 +9,7 @@
     public class OrderByColumns : IOrderByColumns
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "This can be suppressed as the 'None' value is immutable.")]
-        public static readonly IOrderByColumns None = new OrderByColumns();
+        public static readonly IOrderByColumns None = new NoneOrderByColumns();
         private readonly IEnumerable<IOrderByColumn> columns;
 
         public OrderByColumns(params IOrderByColumn[] columns)

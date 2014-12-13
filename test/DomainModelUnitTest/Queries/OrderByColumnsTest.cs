@@ -19,6 +19,13 @@
         }
 
         [Test]
+        public void NoneIsCorrect()
+        {
+            var actual = OrderByColumns.None;
+            Assert.IsType<NoneOrderByColumns>(actual);
+        }
+
+        [Test]
         public void NoneAlwaysReturnsSameInstance()
         {
             var actual = OrderByColumns.None;
