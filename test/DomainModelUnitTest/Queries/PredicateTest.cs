@@ -1,5 +1,6 @@
 ﻿namespace ArticleHarbor.DomainModel.Queries
 {
+    using System.Linq;
     using Xunit;
 
     public class PredicateTest : IdiomaticTest<Predicate>
@@ -9,6 +10,13 @@
         {
             var expected = new OperablePredicate(columnName, "=", value);
             var actual = Predicate.Equal(columnName, value);
+            Assert.Equal(expected, actual);
+        }
+
+        [Test]
+        public void AndReturnsCorrectResult(AndPredicate expected)
+        {
+            var actual = Predicate.And(expected.Predicates.ToArray());
             Assert.Equal(expected, actual);
         }
     }
