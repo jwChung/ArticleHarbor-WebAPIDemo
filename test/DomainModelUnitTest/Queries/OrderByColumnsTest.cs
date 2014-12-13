@@ -19,12 +19,12 @@
         }
 
         [Test]
-        public void NoneAlwaysReturnsSameInstance()
+        public void NoneIsCorrect()
         {
             var actual = OrderByColumns.None;
-            Assert.Same(OrderByColumns.None, actual);
+            Assert.IsType<NoOrderByColumns>(actual);
         }
-
+        
         [Test]
         public void GetEnumeratorReturnsCorrectResult(OrderByColumns sut)
         {

@@ -4,15 +4,18 @@
 
     public class Top : ITop
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "This can be suppressed as the 'None' value is immutable.")]
-        public static readonly ITop None = new Top(int.MinValue);
         private readonly int count;
 
         public Top(int count)
         {
             this.count = count;
         }
-        
+
+        public static ITop None
+        {
+            get { return new NoTop(); }
+        }
+
         public int Count
         {
             get { return this.count; }

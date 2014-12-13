@@ -6,6 +6,12 @@
     public class PredicateTest
     {
         [Test]
+        public void NoneReturnsCorrectResult()
+        {
+            Assert.IsType<NoPredicate>(Predicate.None);
+        }
+
+        [Test]
         public void AndReturnsCorrectResult(AndPredicate expected)
         {
             var actual = Predicate.And(expected.Predicates.ToArray());

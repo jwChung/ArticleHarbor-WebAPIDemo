@@ -225,6 +225,11 @@
                 Assert.Equal(3, actual.Count());
                 Assert.Empty(sut.DbSet.Local);
             });
+            yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
+            {
+                var actual = sut.ExecuteSelectCommandAsync(Predicate.None).Result;
+                Assert.Equal(3, actual.Count());
+            });
         }
     }
 
@@ -328,6 +333,20 @@
                         sut.ExecuteDeleteCommandAsync(Predicate.Equal("Word", "worda1")).Wait();
                         Assert.Equal(2, sut.DbSet.AsNoTracking().Count());
                         Assert.Empty(sut.DbSet.Local);
+                    }
+                    finally
+                    {
+                        transaction.Rollback();
+                        transaction.Dispose();
+                    }
+                });
+            yield return TestCase.WithAuto<DbContextTransaction, TssKeywordRepository>().Create(
+                (transaction, sut) =>
+                {
+                    try
+                    {
+                        sut.ExecuteDeleteCommandAsync(Predicate.None).Wait();
+                        Assert.Equal(0, sut.DbSet.AsNoTracking().Count());
                     }
                     finally
                     {

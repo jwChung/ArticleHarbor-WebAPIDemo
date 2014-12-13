@@ -19,10 +19,10 @@
         }
 
         [Test]
-        public void NoneAlwaysReturnsSameInstance()
+        public void NoneIsNoTop()
         {
             var actual = Top.None;
-            Assert.Same(Top.None, actual);
+            Assert.IsType<NoTop>(actual);
         }
 
         [Test]

@@ -5,6 +5,11 @@
 
     public static class Predicate
     {
+        public static IPredicate None
+        {
+            get { return new NoPredicate(); }
+        }
+
         public static IPredicate And(params IPredicate[] predicates)
         {
             return new AndPredicate(predicates);
