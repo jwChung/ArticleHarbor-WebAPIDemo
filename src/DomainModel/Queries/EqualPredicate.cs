@@ -47,5 +47,34 @@
         {
             get { yield return this.parameter; }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != this.GetType())
+                return false;
+            return this.Equals((EqualPredicate)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (this.columnName.GetHashCode() * 397) ^ this.value.GetHashCode();
+            }
+        }
+
+        protected bool Equals(EqualPredicate other)
+        {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
+            return string.Equals(
+                this.columnName, other.columnName, StringComparison.CurrentCultureIgnoreCase)
+                && this.value.Equals(other.value);
+        }
     }
 }
