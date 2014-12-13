@@ -94,6 +94,7 @@
     <Compile Include="Commands\UpdateConfirmableCommand.cs" />
     <Compile Include="Commands\UpdateKeywordsCondition.cs" />
     <Compile Include="Queries\OperablePredicate.cs" />
+    <Compile Include="Queries\Predicate.cs" />
     <Compile Include="Queries\SqlQuery.cs" />
     <Compile Include="Queries\Top.cs" />
     <Compile Include="Repositories\IRepositories.cs" />
