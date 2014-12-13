@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
 
     public class EqualPredicate : IPredicate
     {
@@ -63,7 +64,8 @@
         {
             unchecked
             {
-                return (this.columnName.GetHashCode() * 397) ^ this.value.GetHashCode();
+                return (this.columnName.ToUpper(CultureInfo.CurrentCulture).GetHashCode() * 397)
+                    ^ this.value.GetHashCode();
             }
         }
 

@@ -103,6 +103,16 @@
             Assert.True(actual);
         }
 
+        [Test]
+        public void GetHasCodeReturnsCorrectResult(InClausePredicate sut)
+        {
+            var other = new InClausePredicate(
+                sut.ColumnName.ToUpper(),
+                sut.ParameterValues.ToArray());
+            var actual = sut.GetHashCode();
+            Assert.Equal(other.GetHashCode(), actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.SqlText);

@@ -3,32 +3,18 @@
     using System;
     using System.Globalization;
 
-    public class Parameter : IParameter
+    public class OrderByColumn : IOrderByColumn
     {
         private readonly string name;
-        private readonly object value;
+        private readonly OrderDirection direction;
 
-        public Parameter(string name, object value)
+        public OrderByColumn(string name, OrderDirection direction)
         {
             if (name == null)
                 throw new ArgumentNullException("name");
 
-            if (value == null)
-                throw new ArgumentNullException("value");
-
-            if (name.Length == 0)
-                throw new ArgumentException("The name should not be empty string.", "name");
-
-            if (name[0] != '@')
-                throw new ArgumentException(
-                    string.Format(
-                        CultureInfo.CurrentCulture,
-                        "The name '{0}' should start with '@'.",
-                        name),
-                    "name");
-
             this.name = name;
-            this.value = value;
+            this.direction = direction;
         }
 
         public string Name
@@ -36,9 +22,9 @@
             get { return this.name; }
         }
 
-        public object Value
+        public OrderDirection OrderDirection
         {
-            get { return this.value; }
+            get { return this.direction; }
         }
 
         public override bool Equals(object obj)
@@ -49,7 +35,7 @@
                 return true;
             if (obj.GetType() != this.GetType())
                 return false;
-            return this.Equals((Parameter)obj);
+            return this.Equals((OrderByColumn)obj);
         }
 
         public override int GetHashCode()
@@ -57,17 +43,17 @@
             unchecked
             {
                 return (this.name.ToUpper(CultureInfo.CurrentCulture).GetHashCode() * 397)
-                    ^ this.value.GetHashCode();
+                    ^ (int)this.direction;
             }
         }
 
-        protected bool Equals(Parameter other)
+        protected bool Equals(OrderByColumn other)
         {
             if (other == null)
                 throw new ArgumentNullException("other");
 
             return string.Equals(this.name, other.name, StringComparison.CurrentCultureIgnoreCase)
-                && this.value.Equals(other.value);
+                && this.direction == other.direction;
         }
     }
 }
