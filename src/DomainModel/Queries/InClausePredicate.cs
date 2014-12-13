@@ -12,7 +12,7 @@
         private readonly IEnumerable<IParameter> parameters;
 
         public InClausePredicate(string columnName, params object[] parameterValues)
-            : this(columnName, parameterValues.AsEnumerable())
+            : this(columnName, (IEnumerable<object>)parameterValues)
         {
         }
 
