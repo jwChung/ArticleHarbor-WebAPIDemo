@@ -78,6 +78,31 @@
             Assert.Equal(sut.Parameters, actual);
         }
 
+        [Test]
+        public void EqualsDoesNotEqualOtherWithDifferentValues(
+            InClausePredicate sut,
+            InClausePredicate other)
+        {
+            var actual = sut.Equals(other);
+            Assert.False(actual);
+        }
+
+        [Test]
+        public void EqualsEqualsOtherWithSameValues(InClausePredicate sut)
+        {
+            var other = new InClausePredicate(sut.ColumnName, sut.ParameterValues.ToArray());
+            var actual = sut.Equals(other);
+            Assert.True(actual);
+        }
+
+        [Test]
+        public void EqualsIsCaseInsensitiveForColumnName(InClausePredicate sut)
+        {
+            var other = new InClausePredicate(sut.ColumnName.ToUpper(), sut.ParameterValues);
+            var actual = sut.Equals(other);
+            Assert.True(actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.SqlText);
