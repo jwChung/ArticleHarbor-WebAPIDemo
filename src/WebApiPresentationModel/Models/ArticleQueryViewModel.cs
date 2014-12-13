@@ -21,8 +21,9 @@
                 if (value > MaxCount)
                     throw new ArgumentException(string.Format(
                         CultureInfo.CurrentCulture,
-                        "The count cannot exceed '{0}'.",
-                        MaxCount));
+                        "The count cannot exceed '{0}', but '{1}'.",
+                        MaxCount,
+                        value));
 
                 this.count = value;
             }
@@ -30,7 +31,7 @@
 
         public ISqlQuery ProvideQuery()
         {
-            throw new NotImplementedException();
+            return new SqlQuery(new Top(this.count), OrderByColumns.None, Predicate.None);
         }
     }
 }
