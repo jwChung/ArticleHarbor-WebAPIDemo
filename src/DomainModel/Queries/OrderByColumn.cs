@@ -41,7 +41,7 @@
         {
             unchecked
             {
-                return (this.name.GetHashCode() * 397) ^ (int)this.direction;
+                return (this.name.ToUpper().GetHashCode() * 397) ^ (int)this.direction;
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿namespace ArticleHarbor.DomainModel.Queries
 {
+    using System.Linq;
     using Xunit;
 
     public class OrderByColumnTest : IdiomaticTest<OrderByColumn>
@@ -33,6 +34,14 @@
             var other = new OrderByColumn(sut.Name.ToUpper(), sut.OrderDirection);
             var actual = sut.Equals(other);
             Assert.True(actual);
+        }
+
+        [Test]
+        public void GetHasCodeReturnsCorrectResult(OrderByColumn sut)
+        {
+            var other = new OrderByColumn(sut.Name.ToUpper(), sut.OrderDirection);
+            var actual = sut.GetHashCode();
+            Assert.Equal(other.GetHashCode(), actual);
         }
     }
 }
