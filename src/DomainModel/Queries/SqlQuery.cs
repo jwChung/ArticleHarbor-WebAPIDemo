@@ -38,5 +38,37 @@
         {
             get { return this.predicate; }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != this.GetType())
+                return false;
+            return this.Equals((SqlQuery)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = this.top.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.columns.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.predicate.GetHashCode();
+                return hashCode;
+            }
+        }
+
+        protected bool Equals(SqlQuery other)
+        {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
+            return this.top.Equals(other.top)
+                && this.columns.Equals(other.columns)
+                && this.predicate.Equals(other.predicate);
+        }
     }
 }
