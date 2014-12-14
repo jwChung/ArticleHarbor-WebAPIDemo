@@ -27,6 +27,7 @@
                 var actual = sut.ExecuteAsync(model).Result;
                 Assert.Equal(values.SelectMany(x => x), actual);
             });
+
             yield return TestCase.WithAuto<CompositeCommand<TReturn>, Article>().Create((sut, model) =>
             {
                 sut.Commands.Select((c, i) =>
@@ -34,6 +35,7 @@
                 var actual = sut.ExecuteAsync(model).Result;
                 Assert.Equal(values.SelectMany(x => x), actual);
             });
+
             yield return TestCase.WithAuto<CompositeCommand<TReturn>, Keyword>().Create((sut, model) =>
             {
                 sut.Commands.Select((c, i) =>
@@ -41,6 +43,7 @@
                 var actual = sut.ExecuteAsync(model).Result;
                 Assert.Equal(values.SelectMany(x => x), actual);
             });
+
             yield return TestCase.WithAuto<CompositeCommand<TReturn>, Bookmark>().Create((sut, model) =>
             {
                 sut.Commands.Select((c, i) =>
@@ -50,8 +53,54 @@
             });
         }
 
+        [Test]
+        public IEnumerable<ITestCase> ExecuteAsyncWithModelsReturnsCorrectResult(
+            IEnumerable<TReturn>[] values)
+        {
+            yield return TestCase.WithAuto<CompositeCommand<TReturn>, IEnumerable<User>>().Create(
+                (sut, models) =>
+                {
+                    sut.Commands.Select((c, i) =>
+                        c.Of(x => x.ExecuteAsync(models) == Task.FromResult(values[i]))).ToArray();
+                    var actual = sut.ExecuteAsync(models).Result;
+                    Assert.Equal(values.SelectMany(x => x), actual);
+                });
+
+            yield return TestCase.WithAuto<CompositeCommand<TReturn>, IEnumerable<Article>>().Create(
+                (sut, models) =>
+                {
+                    sut.Commands.Select((c, i) =>
+                        c.Of(x => x.ExecuteAsync(models) == Task.FromResult(values[i]))).ToArray();
+                    var actual = sut.ExecuteAsync(models).Result;
+                    Assert.Equal(values.SelectMany(x => x), actual);
+                });
+
+            yield return TestCase.WithAuto<CompositeCommand<TReturn>, IEnumerable<Keyword>>().Create(
+                (sut, models) =>
+                {
+                    sut.Commands.Select((c, i) =>
+                        c.Of(x => x.ExecuteAsync(models) == Task.FromResult(values[i]))).ToArray();
+                    var actual = sut.ExecuteAsync(models).Result;
+                    Assert.Equal(values.SelectMany(x => x), actual);
+                });
+
+            yield return TestCase.WithAuto<CompositeCommand<TReturn>, IEnumerable<Bookmark>>().Create(
+               (sut, models) =>
+               {
+                   sut.Commands.Select((c, i) =>
+                       c.Of(x => x.ExecuteAsync(models) == Task.FromResult(values[i]))).ToArray();
+                   var actual = sut.ExecuteAsync(models).Result;
+                   Assert.Equal(values.SelectMany(x => x), actual);
+               });
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(IEnumerable<User>)));
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(IEnumerable<Article>)));
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(IEnumerable<Keyword>)));
+            yield return this.Methods.Select(x => x.ExecuteAsync(default(IEnumerable<Bookmark>)));
+
             yield return this.Methods.Select(x => x.ExecuteAsync(default(User)));
             yield return this.Methods.Select(x => x.ExecuteAsync(default(Article)));
             yield return this.Methods.Select(x => x.ExecuteAsync(default(Keyword)));

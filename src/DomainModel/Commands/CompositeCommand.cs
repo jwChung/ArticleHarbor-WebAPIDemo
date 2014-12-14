@@ -28,24 +28,40 @@
             get { return this.commands; }
         }
 
-        public virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<User> users)
+        public async virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<User> users)
         {
-            throw new System.NotImplementedException();
+            var values = Enumerable.Empty<TReturn>();
+            foreach (var command in this.commands)
+                values = values.Concat(await command.ExecuteAsync(users));
+
+            return values;
         }
 
-        public virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<Article> articles)
+        public async virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<Article> articles)
         {
-            throw new System.NotImplementedException();
+            var values = Enumerable.Empty<TReturn>();
+            foreach (var command in this.commands)
+                values = values.Concat(await command.ExecuteAsync(articles));
+
+            return values;
         }
 
-        public virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<Keyword> keywords)
+        public async virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<Keyword> keywords)
         {
-            throw new System.NotImplementedException();
+            var values = Enumerable.Empty<TReturn>();
+            foreach (var command in this.commands)
+                values = values.Concat(await command.ExecuteAsync(keywords));
+
+            return values;
         }
 
-        public virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<Bookmark> bookmarks)
+        public async virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<Bookmark> bookmarks)
         {
-            throw new System.NotImplementedException();
+            var values = Enumerable.Empty<TReturn>();
+            foreach (var command in this.commands)
+                values = values.Concat(await command.ExecuteAsync(bookmarks));
+
+            return values;
         }
 
         public async virtual Task<IEnumerable<TReturn>> ExecuteAsync(User user)
