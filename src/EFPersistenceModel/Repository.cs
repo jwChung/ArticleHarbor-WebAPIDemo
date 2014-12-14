@@ -91,7 +91,7 @@
             if (sqlQuery == null)
                 throw new ArgumentNullException("sqlQuery");
 
-            return this.ExecuteSelectCommandAsyncWith(sqlQuery);
+            return this.SelectAsyncWith(sqlQuery);
         }
 
         public virtual Task<IEnumerable<TModel>> SelectAsync(IPredicate predicate)
@@ -105,7 +105,7 @@
             if (predicate == null)
                 throw new ArgumentNullException("predicate");
 
-            return this.ExecuteDeleteCommandAsyncWith(predicate);
+            return this.DeleteAsyncWith(predicate);
         }
 
         public abstract Task<TModel> ConvertToModelAsync(TPersistence persistence);
@@ -143,7 +143,7 @@
             this.dbSet.Remove(entity);
         }
 
-        private async Task<IEnumerable<TModel>> ExecuteSelectCommandAsyncWith(ISqlQuery sqlQuery)
+        private async Task<IEnumerable<TModel>> SelectAsyncWith(ISqlQuery sqlQuery)
         {
             string sql = new SqlQueryBuilder(this.dbSet).BuildSelect(sqlQuery);
 
@@ -156,7 +156,7 @@
             return await this.ConvertToModels(persistences);
         }
 
-        private async Task ExecuteDeleteCommandAsyncWith(IPredicate predicate)
+        private async Task DeleteAsyncWith(IPredicate predicate)
         {
             string sql = new SqlQueryBuilder(this.dbSet).BuildDelete(predicate);
 
