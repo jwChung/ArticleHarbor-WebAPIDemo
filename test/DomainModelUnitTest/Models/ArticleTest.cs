@@ -8,10 +8,8 @@
     using Commands;
     using Jwc.Experiment.Xunit;
     using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.Idioms;
     using Ploeh.AutoFixture.Kernel;
     using Ploeh.SemanticComparison.Fluent;
-    using Queries;
     using Xunit;
 
     public class ArticleTest : IdiomaticTest<Article>
