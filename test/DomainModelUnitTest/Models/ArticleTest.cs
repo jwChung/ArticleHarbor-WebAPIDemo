@@ -8,6 +8,7 @@
     using Commands;
     using Jwc.Experiment.Xunit;
     using Ploeh.AutoFixture;
+    using Ploeh.AutoFixture.Idioms;
     using Ploeh.AutoFixture.Kernel;
     using Ploeh.SemanticComparison.Fluent;
     using Queries;
@@ -20,7 +21,7 @@
         {
             Assert.IsAssignableFrom<IModel>(sut);
         }
-
+        
         [Test]
         public IEnumerable<ITestCase> InitializeWithAnyEmptyStringThrows(int id, string value, DateTime date)
         {
@@ -150,6 +151,61 @@
             var expected = new Keys<int>(sut.Id);
             var actual = sut.GetKeys();
             Assert.Equal(expected, actual);
+        }
+
+        [Test]
+        public void EqualsEqualsOtherWithDifferentValues(Article sut, Article other)
+        {
+            var actual = sut.Equals(other);
+            Assert.False(actual);
+        }
+
+        [Test]
+        public void EqualsEqualsOtherWithSameValues(Article sut)
+        {
+            var other = new Article(
+                sut.Id,
+                sut.Provider,
+                sut.Guid,
+                sut.Subject,
+                sut.Body,
+                sut.Date,
+                sut.Url,
+                sut.UserId);
+            var actual = sut.Equals(other);
+            Assert.True(actual);
+        }
+
+        [Test]
+        public void EqualsIgnoresCase(Article sut)
+        {
+            var other = new Article(
+                sut.Id,
+                sut.Provider.ToUpper(),
+                sut.Guid.ToUpper(),
+                sut.Subject.ToUpper(),
+                sut.Body.ToUpper(),
+                sut.Date,
+                sut.Url.ToUpper(),
+                sut.UserId.ToUpper());
+            var actual = sut.Equals(other);
+            Assert.True(actual);
+        }
+
+        [Test]
+        public void GetHashCodeReturnsCorrectResult(Article sut)
+        {
+            var other = new Article(
+                sut.Id,
+                sut.Provider.ToUpper(),
+                sut.Guid.ToUpper(),
+                sut.Subject.ToUpper(),
+                sut.Body.ToUpper(),
+                sut.Date,
+                sut.Url.ToUpper(),
+                sut.UserId.ToUpper());
+            var actual = sut.GetHashCode();
+            Assert.Equal(other.GetHashCode(), actual);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()

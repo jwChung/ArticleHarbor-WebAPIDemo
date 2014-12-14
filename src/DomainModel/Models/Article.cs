@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.Threading.Tasks;
     using Commands;
     using Queries;
@@ -185,6 +186,48 @@
                 throw new ArgumentNullException("command");
 
             return command.ExecuteAsync(this);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != this.GetType())
+                return false;
+            return this.Equals((Article)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = this.provider.ToUpper(CultureInfo.CurrentCulture).GetHashCode();
+                hashCode = (hashCode * 397) ^ this.guid.ToUpper(CultureInfo.CurrentCulture).GetHashCode();
+                hashCode = (hashCode * 397) ^ this.subject.ToUpper(CultureInfo.CurrentCulture).GetHashCode();
+                hashCode = (hashCode * 397) ^ this.body.ToUpper(CultureInfo.CurrentCulture).GetHashCode();
+                hashCode = (hashCode * 397) ^ this.date.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.url.ToUpper(CultureInfo.CurrentCulture).GetHashCode();
+                hashCode = (hashCode * 397) ^ this.id;
+                hashCode = (hashCode * 397) ^ this.userId.ToUpper(CultureInfo.CurrentCulture).GetHashCode();
+                return hashCode;
+            }
+        }
+
+        protected bool Equals(Article other)
+        {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
+            return string.Equals(this.provider, other.provider, StringComparison.CurrentCultureIgnoreCase)
+                && string.Equals(this.guid, other.guid, StringComparison.CurrentCultureIgnoreCase)
+                && string.Equals(this.subject, other.subject, StringComparison.CurrentCultureIgnoreCase)
+                && string.Equals(this.body, other.body, StringComparison.CurrentCultureIgnoreCase)
+                && this.date.Equals(other.date)
+                && string.Equals(this.url, other.url, StringComparison.CurrentCultureIgnoreCase)
+                && this.id == other.id
+                && string.Equals(this.userId, other.userId, StringComparison.CurrentCultureIgnoreCase);
         }
     }
 }
