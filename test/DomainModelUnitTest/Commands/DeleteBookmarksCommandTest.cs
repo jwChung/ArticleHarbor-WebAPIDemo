@@ -23,7 +23,7 @@
 
             Assert.Empty(actual);
             sut.Repositories.Bookmarks.ToMock().Verify(
-                x => x.ExecuteDeleteCommandAsync(Predicate.Equal("UserId", user.Id)));
+                x => x.DeleteAsync(Predicate.Equal("UserId", user.Id)));
         }
 
         [Test]
@@ -35,7 +35,7 @@
 
             Assert.Empty(actual);
             sut.Repositories.Bookmarks.ToMock().Verify(
-                x => x.ExecuteDeleteCommandAsync(Predicate.Equal("ArticleId", article.Id)));
+                x => x.DeleteAsync(Predicate.Equal("ArticleId", article.Id)));
         }
     }
 }

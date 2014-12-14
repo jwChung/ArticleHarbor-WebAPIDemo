@@ -100,7 +100,7 @@
                   new SqlQuery(Top.None, OrderByColumns.None, predicate));
         }
 
-        public virtual Task ExecuteDeleteCommandAsync(IPredicate predicate)
+        public virtual Task DeleteAsync(IPredicate predicate)
         {
             if (predicate == null)
                 throw new ArgumentNullException("predicate");

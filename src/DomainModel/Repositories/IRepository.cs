@@ -18,7 +18,7 @@
 
         Task UpdateAsync(TModel model);
 
-        Task ExecuteDeleteCommandAsync(IPredicate predicate);
+        Task DeleteAsync(IPredicate predicate);
     }
 
     public interface IRepository<TKeys, TModel> : IRepository<TModel>

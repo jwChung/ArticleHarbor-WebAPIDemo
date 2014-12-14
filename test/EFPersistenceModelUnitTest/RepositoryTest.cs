@@ -387,14 +387,14 @@
         }
 
         [Test]
-        public IEnumerable<ITestCase> ExecuteDeleteCommandAsyncCorrectlyDeletes()
+        public IEnumerable<ITestCase> DeleteAsyncWithPredicateCorrectlyDeletes()
         {
             yield return TestCase.WithAuto<DbContextTransaction, TssKeywordRepository>().Create(
                 (transaction, sut) =>
                 {
                     try
                     {
-                        sut.ExecuteDeleteCommandAsync(Predicate.Equal("ArticleId", 1)).Wait();
+                        sut.DeleteAsync(Predicate.Equal("ArticleId", 1)).Wait();
                         Assert.Equal(2, sut.DbSet.AsNoTracking().Count());
                         Assert.Empty(sut.DbSet.Local);
                     }
@@ -409,7 +409,7 @@
                 {
                     try
                     {
-                        sut.ExecuteDeleteCommandAsync(Predicate.Equal("Word", "worda1")).Wait();
+                        sut.DeleteAsync(Predicate.Equal("Word", "worda1")).Wait();
                         Assert.Equal(2, sut.DbSet.AsNoTracking().Count());
                         Assert.Empty(sut.DbSet.Local);
                     }
@@ -424,7 +424,7 @@
                 {
                     try
                     {
-                        sut.ExecuteDeleteCommandAsync(Predicate.None).Wait();
+                        sut.DeleteAsync(Predicate.None).Wait();
                         Assert.Equal(0, sut.DbSet.AsNoTracking().Count());
                     }
                     finally
