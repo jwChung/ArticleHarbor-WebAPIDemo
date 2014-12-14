@@ -49,7 +49,7 @@
                 .Select(w => new Keyword(article.Id, w));
 
             var values = Enumerable.Empty<IModel>();
-
+            
             foreach (var keyword in keywords)
                 values = values.Concat(await this.innerCommand.ExecuteAsync(keyword));
 
