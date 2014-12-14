@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using Models;
 
-    public class TransformableCommand<TReturn> : IModelCommand<TReturn>
+    public class TransformableCommand<TReturn> : ModelCommand<TReturn>
     {
         private readonly IModelTransformer transformer;
         private readonly IModelCommand<TReturn> innerCommand;
@@ -33,25 +33,25 @@
             get { return this.innerCommand; }
         }
 
-        public async Task<IEnumerable<TReturn>> ExecuteAsync(User user)
+        public override async Task<IEnumerable<TReturn>> ExecuteAsync(User user)
         {
             var newUser = await this.transformer.TransformAsync(user);
             return await this.innerCommand.ExecuteAsync(newUser);
         }
 
-        public async Task<IEnumerable<TReturn>> ExecuteAsync(Article article)
+        public override async Task<IEnumerable<TReturn>> ExecuteAsync(Article article)
         {
              var newArticle = await this.transformer.TransformAsync(article);
              return await this.innerCommand.ExecuteAsync(newArticle);
         }
 
-        public async Task<IEnumerable<TReturn>> ExecuteAsync(Keyword keyword)
+        public override async Task<IEnumerable<TReturn>> ExecuteAsync(Keyword keyword)
         {
             var newKeyword = await this.transformer.TransformAsync(keyword);
             return await this.innerCommand.ExecuteAsync(newKeyword);
         }
 
-        public async Task<IEnumerable<TReturn>> ExecuteAsync(Bookmark bookmark)
+        public override async Task<IEnumerable<TReturn>> ExecuteAsync(Bookmark bookmark)
         {
             var newBookmark = await this.transformer.TransformAsync(bookmark);
             return await this.innerCommand.ExecuteAsync(newBookmark);
