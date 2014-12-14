@@ -28,6 +28,26 @@
             get { return this.commands; }
         }
 
+        public virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<User> users)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<Article> articles)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<Keyword> keywords)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<Bookmark> bookmarks)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async virtual Task<IEnumerable<TReturn>> ExecuteAsync(User user)
         {
             var values = Enumerable.Empty<TReturn>();

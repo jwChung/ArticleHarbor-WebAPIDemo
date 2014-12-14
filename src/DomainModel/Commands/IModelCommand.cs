@@ -6,6 +6,14 @@ namespace ArticleHarbor.DomainModel.Commands
 
     public interface IModelCommand<TReturn>
     {
+        Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<User> users);
+
+        Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<Article> articles);
+
+        Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<Keyword> keywords);
+
+        Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<Bookmark> bookmarks);
+
         Task<IEnumerable<TReturn>> ExecuteAsync(User user);
 
         Task<IEnumerable<TReturn>> ExecuteAsync(Article article);
