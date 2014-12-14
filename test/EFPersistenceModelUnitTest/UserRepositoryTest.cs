@@ -56,9 +56,9 @@
         }
 
         [Test]
-        public void ExecuteSelectCommandAsyncReturnsCorrectResult(UserRepository sut)
+        public void SelectAsyncWithPredicateReturnsCorrectResult(UserRepository sut)
         {
-            var actual = sut.ExecuteSelectCommandAsync(Predicate.Equal("Id", "user1")).Result;
+            var actual = sut.SelectAsync(Predicate.Equal("Id", "user1")).Result;
             Assert.Equal("user1", actual.Single().Id);
         }
 
