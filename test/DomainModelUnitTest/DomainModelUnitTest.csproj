@@ -107,6 +107,7 @@
     <Compile Include="Commands\DeleteCommandTest.cs" />
     <Compile Include="Commands\DeleteConfirmableCommandTest.cs" />
     <Compile Include="Commands\DeleteKeywordsCommandTest.cs" />
+    <Compile Include="Queries\ContainsPredicateTest.cs" />
     <Compile Include="Queries\InClausePredicateTest.cs" />
     <Compile Include="Commands\InsertConfirmableCommandTest.cs" />
     <Compile Include="Models\CompositeModelTest.cs" />
