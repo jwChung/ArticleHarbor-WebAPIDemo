@@ -32,5 +32,45 @@
             var actual = sut.GetKeys();
             Assert.Equal(expected, actual);
         }
+
+        [Test]
+        public void EqualsEqualsOtherWithDifferentValues(User sut, User other)
+        {
+            var actual = sut.Equals(other);
+            Assert.False(actual);
+        }
+
+        [Test]
+        public void EqualsEqualsOtherWithSameValues(User sut)
+        {
+            var other = new User(
+                sut.Id,
+                sut.Role,
+                sut.ApiKey);
+            var actual = sut.Equals(other);
+            Assert.True(actual);
+        }
+
+        [Test]
+        public void EqualsIgnoresCase(User sut)
+        {
+            var other = new User(
+                sut.Id.ToUpper(),
+                sut.Role,
+                sut.ApiKey);
+            var actual = sut.Equals(other);
+            Assert.True(actual);
+        }
+
+        [Test]
+        public void GetHashCodeReturnsCorrectResult(User sut)
+        {
+            var other = new User(
+                 sut.Id.ToUpper(),
+                 sut.Role,
+                 sut.ApiKey);
+            var actual = sut.GetHashCode();
+            Assert.Equal(other.GetHashCode(), actual);
+        }
     }
 }
