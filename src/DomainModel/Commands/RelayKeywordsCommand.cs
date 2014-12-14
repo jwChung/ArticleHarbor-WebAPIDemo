@@ -40,20 +40,10 @@
             if (article == null)
                 throw new ArgumentNullException("article");
 
-            return this.ExecuteAsyncWith(article);
-        }
-
-        private async Task<IEnumerable<IModel>> ExecuteAsyncWith(Article article)
-        {
             var keywords = this.nounExtractor(article.Subject)
                 .Select(w => new Keyword(article.Id, w));
 
-            var values = Enumerable.Empty<IModel>();
-
-            foreach (var keyword in keywords)
-                values = values.Concat(await this.innerCommand.ExecuteAsync(keyword));
-
-            return values;
+            return this.innerCommand.ExecuteAsync(keywords);
         }
     }
 }

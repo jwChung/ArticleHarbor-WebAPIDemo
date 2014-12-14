@@ -200,23 +200,23 @@
         }
 
         [Test]
-        public IEnumerable<ITestCase> ExecuteSelectCommandAsyncWithPredicateReturnsCorrectResult()
+        public IEnumerable<ITestCase> SelectAsyncWithPredicateReturnsCorrectResult()
         {
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
-                var actual = sut.ExecuteSelectCommandAsync(Predicate.Equal("Id", 1)).Result;
+                var actual = sut.SelectAsync(Predicate.Equal("Id", 1)).Result;
                 Assert.Equal(1, actual.Single().Id);
                 Assert.Empty(sut.DbSet.Local);
             });
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
-                var actual = sut.ExecuteSelectCommandAsync(Predicate.Equal("Guid", "1")).Result;
+                var actual = sut.SelectAsync(Predicate.Equal("Guid", "1")).Result;
                 Assert.Equal(1, actual.Single().Id);
                 Assert.Empty(sut.DbSet.Local);
             });
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
-                var actual = sut.ExecuteSelectCommandAsync(Predicate.Equal("body", "Body 1")).Result;
+                var actual = sut.SelectAsync(Predicate.Equal("body", "Body 1")).Result;
                 Assert.Equal(1, actual.Single().Id);
                 Assert.Empty(sut.DbSet.Local);
             });
@@ -225,24 +225,24 @@
                 predicate.Of(x => x.SqlText == "id <> @id");
                 predicate.Of(x => x.Parameters == new IParameter[] { new Parameter("@id", -1) });
 
-                var actual = sut.ExecuteSelectCommandAsync(predicate).Result;
+                var actual = sut.SelectAsync(predicate).Result;
 
                 Assert.Equal(3, actual.Count());
                 Assert.Empty(sut.DbSet.Local);
             });
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
-                var actual = sut.ExecuteSelectCommandAsync(Predicate.None).Result;
+                var actual = sut.SelectAsync(Predicate.None).Result;
                 Assert.Equal(3, actual.Count());
             });
         }
 
         [Test]
-        public IEnumerable<ITestCase> ExecuteSelectCommandAsyncWithSqlQueryReturnsCorrectResult()
+        public IEnumerable<ITestCase> SelectAsyncWithSqlQueryReturnsCorrectResult()
         {
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
-                var actual = sut.ExecuteSelectCommandAsync(
+                var actual = sut.SelectAsync(
                     new SqlQuery(new NoTop(), new NoOrderByColumns(), new NoPredicate())).Result;
 
                 Assert.Equal(3, actual.Count());
@@ -250,7 +250,7 @@
             });
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
-                var actual = sut.ExecuteSelectCommandAsync(
+                var actual = sut.SelectAsync(
                     new SqlQuery(new Top(2), new NoOrderByColumns(), new NoPredicate())).Result;
 
                 Assert.Equal(2, actual.Count());
@@ -258,20 +258,20 @@
             });
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
-                var actual = sut.ExecuteSelectCommandAsync(
+                var actual = sut.SelectAsync(
                     new SqlQuery(new NoTop(), new NoOrderByColumns(), Predicate.Equal("Id", 1))).Result;
                 Assert.Equal(1, actual.Single().Id);
             });
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
-                var actual = sut.ExecuteSelectCommandAsync(
+                var actual = sut.SelectAsync(
                     new SqlQuery(new Top(2), new NoOrderByColumns(), Predicate.Equal("UserId", "User2"))).Result;
                 Assert.Equal(2, actual.Count());
             });
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
                 var expected = new[] { "user2", "user2", "user1" };
-                var actual = sut.ExecuteSelectCommandAsync(new SqlQuery(
+                var actual = sut.SelectAsync(new SqlQuery(
                     Top.None,
                     new OrderByColumns(
                         new OrderByColumn("UserId", OrderDirection.Descending)),
@@ -281,7 +281,7 @@
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
                 var expected = new[] { "user1", "user2", "user2" };
-                var actual = sut.ExecuteSelectCommandAsync(new SqlQuery(
+                var actual = sut.SelectAsync(new SqlQuery(
                     Top.None,
                     new OrderByColumns(
                         new OrderByColumn("UserId", OrderDirection.Ascending)),
@@ -290,7 +290,7 @@
             });
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
-                var actual = sut.ExecuteSelectCommandAsync(new SqlQuery(
+                var actual = sut.SelectAsync(new SqlQuery(
                     Top.None,
                     new OrderByColumns(
                         new OrderByColumn("UserId", OrderDirection.Descending),
@@ -300,7 +300,7 @@
             });
             yield return TestCase.WithAuto<TssArticleRepository>().Create(sut =>
             {
-                var actual = sut.ExecuteSelectCommandAsync(new SqlQuery(
+                var actual = sut.SelectAsync(new SqlQuery(
                     Top.None,
                     new OrderByColumns(
                         new OrderByColumn("UserId", OrderDirection.Ascending),
@@ -387,14 +387,14 @@
         }
 
         [Test]
-        public IEnumerable<ITestCase> ExecuteDeleteCommandAsyncCorrectlyDeletes()
+        public IEnumerable<ITestCase> DeleteAsyncWithPredicateCorrectlyDeletes()
         {
             yield return TestCase.WithAuto<DbContextTransaction, TssKeywordRepository>().Create(
                 (transaction, sut) =>
                 {
                     try
                     {
-                        sut.ExecuteDeleteCommandAsync(Predicate.Equal("ArticleId", 1)).Wait();
+                        sut.DeleteAsync(Predicate.Equal("ArticleId", 1)).Wait();
                         Assert.Equal(2, sut.DbSet.AsNoTracking().Count());
                         Assert.Empty(sut.DbSet.Local);
                     }
@@ -409,7 +409,7 @@
                 {
                     try
                     {
-                        sut.ExecuteDeleteCommandAsync(Predicate.Equal("Word", "worda1")).Wait();
+                        sut.DeleteAsync(Predicate.Equal("Word", "worda1")).Wait();
                         Assert.Equal(2, sut.DbSet.AsNoTracking().Count());
                         Assert.Empty(sut.DbSet.Local);
                     }
@@ -424,7 +424,7 @@
                 {
                     try
                     {
-                        sut.ExecuteDeleteCommandAsync(Predicate.None).Wait();
+                        sut.DeleteAsync(Predicate.None).Wait();
                         Assert.Equal(0, sut.DbSet.AsNoTracking().Count());
                     }
                     finally

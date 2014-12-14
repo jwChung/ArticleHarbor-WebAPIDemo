@@ -21,7 +21,7 @@
         public void ExecuteAsyncArticleCorrectlyRelaysKeywords(
             Article article,
             string[] words,
-            IEnumerable<IModel>[] values,
+            IEnumerable<IModel> values,
             IFixture fixture)
         {
             // Fixture setup
@@ -36,14 +36,13 @@
             var keywords = words.Select(
                 w => new Keyword(article.Id, w).AsSource().OfLikeness<Keyword>().CreateProxy());
 
-            keywords.Select((k, i) => sut.InnerCommand.Of(
-                x => x.ExecuteAsync(k) == Task.FromResult(values[i]))).ToArray();
+            sut.InnerCommand.Of(x => x.ExecuteAsync(keywords) == Task.FromResult(values));
 
             // Exercise system
             var actual = sut.ExecuteAsync(article).Result;
 
             // Verify outcome
-            Assert.Equal(values.SelectMany(x => x), actual);
+            Assert.Equal(values, actual);
         }
     }
 }

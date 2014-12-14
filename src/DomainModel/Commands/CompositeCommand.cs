@@ -28,6 +28,42 @@
             get { return this.commands; }
         }
 
+        public async virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<User> users)
+        {
+            var values = Enumerable.Empty<TReturn>();
+            foreach (var command in this.commands)
+                values = values.Concat(await command.ExecuteAsync(users));
+
+            return values;
+        }
+
+        public async virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<Article> articles)
+        {
+            var values = Enumerable.Empty<TReturn>();
+            foreach (var command in this.commands)
+                values = values.Concat(await command.ExecuteAsync(articles));
+
+            return values;
+        }
+
+        public async virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<Keyword> keywords)
+        {
+            var values = Enumerable.Empty<TReturn>();
+            foreach (var command in this.commands)
+                values = values.Concat(await command.ExecuteAsync(keywords));
+
+            return values;
+        }
+
+        public async virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<Bookmark> bookmarks)
+        {
+            var values = Enumerable.Empty<TReturn>();
+            foreach (var command in this.commands)
+                values = values.Concat(await command.ExecuteAsync(bookmarks));
+
+            return values;
+        }
+
         public async virtual Task<IEnumerable<TReturn>> ExecuteAsync(User user)
         {
             var values = Enumerable.Empty<TReturn>();

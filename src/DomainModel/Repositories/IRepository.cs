@@ -10,15 +10,15 @@
     {
         Task<IEnumerable<TModel>> SelectAsync();
 
+        Task<IEnumerable<TModel>> SelectAsync(ISqlQuery sqlQuery);
+
+        Task<IEnumerable<TModel>> SelectAsync(IPredicate predicate);
+
         Task<TModel> InsertAsync(TModel model);
 
         Task UpdateAsync(TModel model);
 
-        Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(ISqlQuery sqlQuery);
-
-        Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(IPredicate predicate);
-
-        Task ExecuteDeleteCommandAsync(IPredicate predicate);
+        Task DeleteAsync(IPredicate predicate);
     }
 
     public interface IRepository<TKeys, TModel> : IRepository<TModel>

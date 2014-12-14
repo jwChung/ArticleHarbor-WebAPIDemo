@@ -36,11 +36,11 @@
         private async Task<IEnumerable<IModel>> ExecuteAsyncWith(User user)
         {
             var bookmarks = await this.repositories.Bookmarks
-                .ExecuteSelectCommandAsync(Predicate.Equal("UserId", user.Id));
+                .SelectAsync(Predicate.Equal("UserId", user.Id));
 
             var parameterValues = bookmarks.Select(b => b.ArticleId).Cast<object>();
             return await this.repositories.Articles
-                .ExecuteSelectCommandAsync(new InClausePredicate("Id", parameterValues));
+                .SelectAsync(new InClausePredicate("Id", parameterValues));
         }
     }
 }

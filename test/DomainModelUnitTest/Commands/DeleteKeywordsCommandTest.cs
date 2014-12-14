@@ -23,7 +23,7 @@
 
             Assert.Empty(actual);
             sut.Repositories.Keywords.ToMock().Verify(
-                x => x.ExecuteDeleteCommandAsync(Predicate.Equal("ArticleId", article.Id)));
+                x => x.DeleteAsync(Predicate.Equal("ArticleId", article.Id)));
         }
     }
 }

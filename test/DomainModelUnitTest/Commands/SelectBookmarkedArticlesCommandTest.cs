@@ -26,7 +26,7 @@
             IEnumerable<Article> articles)
         {
             // Fixture setup
-            sut.Repositories.Bookmarks.Of(x => x.ExecuteSelectCommandAsync(
+            sut.Repositories.Bookmarks.Of(x => x.SelectAsync(
                 Predicate.Equal("UserId", user.Id)) == Task.FromResult(bookmarks));
 
             var inClausePredicateLikeness = new InClausePredicate(
@@ -38,7 +38,7 @@
                 .Without(x => x.SqlText)
                 .Without(x => x.Parameters);
 
-            sut.Repositories.Articles.Of(x => x.ExecuteSelectCommandAsync(
+            sut.Repositories.Articles.Of(x => x.SelectAsync(
                 It.Is<IPredicate>(p => inClausePredicateLikeness.Equals(p)))
                 == Task.FromResult(articles));
 

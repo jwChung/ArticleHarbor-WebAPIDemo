@@ -35,7 +35,7 @@
 
         private async Task<IEnumerable<IModel>> ExecuteAsyncWith(Article article)
         {
-            await this.repositories.Keywords.ExecuteDeleteCommandAsync(
+            await this.repositories.Keywords.DeleteAsync(
                 Predicate.Equal("ArticleId", article.Id));
 
             return Enumerable.Empty<IModel>();

@@ -86,7 +86,7 @@
             return this.DeleteAsyncWith(keys);
         }
 
-        public virtual Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(ISqlQuery sqlQuery)
+        public virtual Task<IEnumerable<TModel>> SelectAsync(ISqlQuery sqlQuery)
         {
             if (sqlQuery == null)
                 throw new ArgumentNullException("sqlQuery");
@@ -94,13 +94,13 @@
             return this.ExecuteSelectCommandAsyncWith(sqlQuery);
         }
 
-        public virtual Task<IEnumerable<TModel>> ExecuteSelectCommandAsync(IPredicate predicate)
+        public virtual Task<IEnumerable<TModel>> SelectAsync(IPredicate predicate)
         {
-            return this.ExecuteSelectCommandAsync(
+            return this.SelectAsync(
                   new SqlQuery(Top.None, OrderByColumns.None, predicate));
         }
 
-        public virtual Task ExecuteDeleteCommandAsync(IPredicate predicate)
+        public virtual Task DeleteAsync(IPredicate predicate)
         {
             if (predicate == null)
                 throw new ArgumentNullException("predicate");
