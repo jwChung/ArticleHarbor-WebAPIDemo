@@ -24,13 +24,25 @@
         }
 
         [Test]
-        public async Task GetAsyncReturnsCorrectResult(
+        public void GetAsyncWithArticleQueryReturnsCorrectResult(
             ArticlesController sut,
-            IEnumerable<Article> articles)
+            IEnumerable<Article> articles,
+            Mock<ArticleQueryViewModel> mock)
         {
-            sut.Repositories.Articles.Of(x => x.SelectAsync() == Task.FromResult(articles));
-            var actual = await sut.GetAsync();
+            var sqlQuery = mock.Object.ProvideQuery();
+            sut.Repositories.Articles.Of(x => x.SelectAsync(sqlQuery) == Task.FromResult(articles));
+            var actual = sut.GetAsync(mock.Object).Result;
             Assert.Equal(articles, actual);
+        }
+
+        [Test]
+        public void GetAsyncHasCorrectFromUriAttributeOnQueryParameter()
+        {
+            var method = this.Methods.Select(x => x.GetAsync(null));
+            var parameter = method.GetParameters().First();
+
+            Assert.Equal(typeof(ArticleQueryViewModel), parameter.ParameterType);
+            Assert.NotNull(parameter.GetCustomAttribute<FromUriAttribute>());
         }
 
         [Test]

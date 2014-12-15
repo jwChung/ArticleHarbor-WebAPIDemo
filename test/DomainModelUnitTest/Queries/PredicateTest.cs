@@ -48,5 +48,21 @@
             var actual = Predicate.Like(columnName, value);
             Assert.Equal(expected, actual);
         }
+        
+        [Test]
+        public void GreatThanReturnsCorrectResult(string columnName, object value)
+        {
+            var expected = new OperablePredicate(columnName, ">", value);
+            var actual = Predicate.GreatThan(columnName, value);
+            Assert.Equal(expected, actual);
+        }
+
+        [Test]
+        public void ContainsReturnsCorrectResult(string columnName, string word)
+        {
+            var expected = new ContainsPredicate(columnName, word);
+            var actual = Predicate.Contains(columnName, word);
+            Assert.Equal(expected, actual);
+        }
     }
 }

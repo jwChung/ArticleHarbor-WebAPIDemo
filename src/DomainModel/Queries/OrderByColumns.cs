@@ -58,9 +58,7 @@
         {
             unchecked
             {
-                return this.columns.Skip(1).Aggregate(
-                    this.columns.First().GetHashCode(),
-                    (h, p) => (h * 397) ^ p.GetHashCode());
+                return this.columns.Aggregate(0, (h, p) => (h * 397) ^ p.GetHashCode());
             }
         }
 

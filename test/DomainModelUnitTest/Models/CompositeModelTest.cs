@@ -66,5 +66,16 @@
             var actual = sut.GetHashCode();
             Assert.Equal(other.GetHashCode(), actual);
         }
+
+        [Test]
+        public void GetHasCodeWithEmptyModelsReturnsCorrectResult()
+        {
+            var sut = new CompositeModel(Enumerable.Empty<IModel>());
+            var other = new CompositeModel(Enumerable.Empty<IModel>());
+
+            var actual = sut.GetHashCode();
+
+            Assert.Equal(other.GetHashCode(), actual);
+        }
     }
 }

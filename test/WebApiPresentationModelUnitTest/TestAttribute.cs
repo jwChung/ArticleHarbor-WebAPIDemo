@@ -13,6 +13,7 @@
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.AutoMoq;
     using Ploeh.AutoFixture.Kernel;
+    using WebApiPresentationModel.Models;
 
     public class TestAttribute : TestBaseAttribute
     {
@@ -67,7 +68,9 @@
             public void Customize(IFixture fixture)
             {
                 fixture.Customizations.Add(
-                    new OmitAutoPropertiesBuilder(typeof(X509Certificate2)));
+                    new OmitAutoPropertiesBuilder(
+                        typeof(X509Certificate2),
+                        typeof(ArticleQueryViewModel)));
 
                 fixture.Register<Stream>(() => new MemoryStream());
 

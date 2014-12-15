@@ -10,7 +10,7 @@
         private readonly string columnName;
         private readonly string operatorName;
         private readonly object value;
-        private readonly IEnumerable<IParameter> parameter;
+        private readonly IEnumerable<IParameter> parameters;
 
         public OperablePredicate(string columnName, string operatorName, object value)
         {
@@ -34,7 +34,7 @@
             this.columnName = columnName;
             this.operatorName = operatorName;
             this.value = value;
-            this.parameter = new IParameter[]
+            this.parameters = new IParameter[]
             {
                 new Parameter("@" + this.columnName + Guid.NewGuid().ToString("N"), this.value)
             };
@@ -46,13 +46,13 @@
             {
                 return this.columnName
                     + " " + this.operatorName
-                    + " " + this.parameter.Single().Name;
+                    + " " + this.parameters.Single().Name;
             }
         }
 
         public IEnumerable<IParameter> Parameters
         {
-            get { return this.parameter; }
+            get { return this.parameters; }
         }
 
         public string ColumnName

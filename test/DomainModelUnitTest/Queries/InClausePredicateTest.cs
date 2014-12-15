@@ -113,6 +113,17 @@
             Assert.Equal(other.GetHashCode(), actual);
         }
 
+        [Test]
+        public void GetHasCodeWithEmptyValuesReturnsCorrectResult(string columnName)
+        {
+            var sut = new InClausePredicate(columnName.ToUpper());
+            var other = new InClausePredicate(columnName);
+
+            var actual = sut.GetHashCode();
+
+            Assert.Equal(other.GetHashCode(), actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.SqlText);

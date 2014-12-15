@@ -34,5 +34,15 @@
         {
             return new OperablePredicate(columnName, "LIKE", value);
         }
+
+        public static IPredicate GreatThan(string columnName, object value)
+        {
+            return new OperablePredicate(columnName, ">", value);
+        }
+
+        public static IPredicate Contains(string columnName, string word)
+        {
+            return new ContainsPredicate(columnName, word);
+        }
     }
 }

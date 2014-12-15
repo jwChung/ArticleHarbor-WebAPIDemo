@@ -50,8 +50,10 @@
 
         public override int GetHashCode()
         {
-            var hash = this.models.First().GetHashCode();
-            return this.models.Skip(1).Aggregate(hash, (h, m) => (h * 397) ^ m.GetHashCode());
+            unchecked
+            {
+                return this.models.Aggregate(0, (h, m) => (h * 397) ^ m.GetHashCode());    
+            }
         }
 
         protected bool Equals(CompositeModel other)
