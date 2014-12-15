@@ -47,6 +47,8 @@
 
         public string Provider { get; set; }
 
+        public string UserId { get; set; }
+
         public virtual ISqlQuery ProvideQuery()
         {
             var predicates = new List<IPredicate>();

@@ -32,6 +32,7 @@
                 properties.Select(x => x.Before),
                 properties.Select(x => x.Duration),
                 properties.Select(x => x.Provider),
+                properties.Select(x => x.UserId),
             };
 
             return TestCases.WithArgs(testData).WithAuto<ReadWritablePropertyAssertion>()
@@ -216,6 +217,7 @@
             yield return this.Properties.Select(x => x.Before);
             yield return this.Properties.Select(x => x.Duration);
             yield return this.Properties.Select(x => x.Provider);
+            yield return this.Properties.Select(x => x.UserId);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
@@ -223,6 +225,7 @@
             yield return this.Properties.Select(x => x.Subject);
             yield return this.Properties.Select(x => x.Body);
             yield return this.Properties.Select(x => x.Provider);
+            yield return this.Properties.Select(x => x.UserId);
         }
     }
 }
