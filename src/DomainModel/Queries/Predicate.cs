@@ -40,6 +40,16 @@
             return new OperablePredicate(columnName, ">", value);
         }
 
+        public static IPredicate GreatOrEqualThan(string columnName, object value)
+        {
+            return new OperablePredicate(columnName, ">=", value);
+        }
+
+        public static IPredicate LessOrEqualThan(string columnName, object value)
+        {
+            return new OperablePredicate(columnName, "<=", value);
+        }
+
         public static IPredicate Contains(string columnName, string word)
         {
             return new ContainsPredicate(columnName, word);

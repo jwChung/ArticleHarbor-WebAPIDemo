@@ -57,6 +57,12 @@
 
             if (!string.IsNullOrEmpty(this.Body))
                 predicates.Add(Predicate.Contains("Body", this.Body));
+
+            if (this.Duration != null)
+            {
+                predicates.Add(Predicate.GreatOrEqualThan("Date", this.Before - this.Duration));
+                predicates.Add(Predicate.LessOrEqualThan("Date", this.Before));
+            }
             
             return new SqlQuery(
                 new Top(this.count),

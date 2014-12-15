@@ -153,6 +153,33 @@
             var actual = sut.ProvideQuery();
             Assert.Equal(new NoPredicate(), actual.Predicate);
         }
+
+        [Test]
+        public void ProvideQueryWithNullDurationReturnsResultNotHavingDatePredicate(
+            string subject,
+            ArticleQueryViewModel sut)
+        {
+            sut.Duration = null;
+            var actual = sut.ProvideQuery();
+            Assert.Equal(new NoPredicate(), actual.Predicate);
+        }
+        
+        [Test]
+        public void ProvideQueryWithDurationReturnsResultHavingCorretDatePredicate(
+            string subject,
+            ArticleQueryViewModel sut,
+            DateTime now,
+            TimeSpan duration)
+        {
+            sut.Before = now;
+            sut.Duration = duration;
+
+            var actual = sut.ProvideQuery();
+
+            var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
+            Assert.Contains(Predicate.GreatOrEqualThan("Date", now - duration), andPredicate.Predicates);
+            Assert.Contains(Predicate.LessOrEqualThan("Date", now), andPredicate.Predicates);
+        }
         
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
