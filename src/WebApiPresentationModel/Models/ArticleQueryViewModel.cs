@@ -43,6 +43,8 @@
 
         public DateTime Before { get; set; }
 
+        public TimeSpan? Duration { get; set; }
+
         public virtual ISqlQuery ProvideQuery()
         {
             var predicates = new List<IPredicate>();

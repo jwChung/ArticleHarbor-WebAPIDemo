@@ -30,6 +30,7 @@
                 properties.Select(x => x.Subject),
                 properties.Select(x => x.Body),
                 properties.Select(x => x.Before),
+                properties.Select(x => x.Duration),
             };
 
             return TestCases.WithArgs(testData).WithAuto<ReadWritablePropertyAssertion>()
@@ -152,7 +153,7 @@
             var actual = sut.ProvideQuery();
             Assert.Equal(new NoPredicate(), actual.Predicate);
         }
-
+        
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.PreviousId);
@@ -160,6 +161,7 @@
             yield return this.Properties.Select(x => x.Subject);
             yield return this.Properties.Select(x => x.Body);
             yield return this.Properties.Select(x => x.Before);
+            yield return this.Properties.Select(x => x.Duration);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
