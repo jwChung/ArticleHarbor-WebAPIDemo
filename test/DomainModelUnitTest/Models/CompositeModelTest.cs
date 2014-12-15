@@ -43,5 +43,28 @@
             
             Assert.Equal(expected, actual);
         }
+        
+        [Test]
+        public void EqualsEqualsOtherWithDifferentValues(CompositeModel sut, CompositeModel other)
+        {
+            var actual = sut.Equals(other);
+            Assert.False(actual);
+        }
+
+        [Test]
+        public void EqualsEqualsOtherWithSameValues(CompositeModel sut)
+        {
+            var other = new CompositeModel(sut.Models.ToArray());
+            var actual = sut.Equals(other);
+            Assert.True(actual);
+        }
+
+        [Test]
+        public void GetHashCodeReturnsCorrectResult(CompositeModel sut)
+        {
+            var other = new CompositeModel(sut.Models.ToArray());
+            var actual = sut.GetHashCode();
+            Assert.Equal(other.GetHashCode(), actual);
+        }
     }
 }
