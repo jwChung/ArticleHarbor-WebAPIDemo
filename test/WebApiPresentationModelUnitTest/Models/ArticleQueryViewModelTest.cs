@@ -31,6 +31,7 @@
                 properties.Select(x => x.Body),
                 properties.Select(x => x.Before),
                 properties.Select(x => x.Duration),
+                properties.Select(x => x.Provider),
             };
 
             return TestCases.WithArgs(testData).WithAuto<ReadWritablePropertyAssertion>()
@@ -58,7 +59,7 @@
         {
             var actual = sut.Before;
             var gap = DateTime.Now - actual;
-            Assert.Equal(gap.Ticks, 0);
+            Assert.Equal(gap.Seconds, 0);
         }
 
         [Test]
@@ -180,6 +181,31 @@
             Assert.Contains(Predicate.GreatOrEqualThan("Date", now - duration), andPredicate.Predicates);
             Assert.Contains(Predicate.LessOrEqualThan("Date", now), andPredicate.Predicates);
         }
+
+        [Test]
+        [InlineData(null)]
+        [InlineData("")]
+        public void ProvideQueryWithNullOrEmptyProvierReturnsResultNotHavingProviderPredicate(
+            string provider,
+            ArticleQueryViewModel sut)
+        {
+            sut.Provider = provider;
+            var actual = sut.ProvideQuery();
+            Assert.Equal(new NoPredicate(), actual.Predicate);
+        }
+
+        [Test]
+        public void ProvideQueryWithProvierReturnsResultHavingCorrectProviderPredicate(
+            string provider,
+            ArticleQueryViewModel sut)
+        {
+            sut.Provider = provider;
+
+            var actual = sut.ProvideQuery();
+
+            var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
+            Assert.Contains(Predicate.Contains("Provider", provider), andPredicate.Predicates);
+        }
         
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
@@ -189,12 +215,14 @@
             yield return this.Properties.Select(x => x.Body);
             yield return this.Properties.Select(x => x.Before);
             yield return this.Properties.Select(x => x.Duration);
+            yield return this.Properties.Select(x => x.Provider);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
             yield return this.Properties.Select(x => x.Subject);
             yield return this.Properties.Select(x => x.Body);
+            yield return this.Properties.Select(x => x.Provider);
         }
     }
 }

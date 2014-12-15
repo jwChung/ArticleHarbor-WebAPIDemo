@@ -45,6 +45,8 @@
 
         public TimeSpan? Duration { get; set; }
 
+        public string Provider { get; set; }
+
         public virtual ISqlQuery ProvideQuery()
         {
             var predicates = new List<IPredicate>();
@@ -63,6 +65,9 @@
                 predicates.Add(Predicate.GreatOrEqualThan("Date", this.Before - this.Duration));
                 predicates.Add(Predicate.LessOrEqualThan("Date", this.Before));
             }
+
+            if (!string.IsNullOrEmpty(this.Provider))
+                predicates.Add(Predicate.Contains("Provider", this.Provider));
             
             return new SqlQuery(
                 new Top(this.count),
