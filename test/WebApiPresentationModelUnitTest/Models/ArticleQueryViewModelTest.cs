@@ -29,6 +29,7 @@
                 properties.Select(x => x.PreviousId),
                 properties.Select(x => x.Subject),
                 properties.Select(x => x.Body),
+                properties.Select(x => x.Before),
             };
 
             return TestCases.WithArgs(testData).WithAuto<ReadWritablePropertyAssertion>()
@@ -49,6 +50,14 @@
         {
             Assert.Throws<ArgumentException>(
                 () => sut.Count = ArticleQueryViewModel.MaxCount + 1);
+        }
+
+        [Test]
+        public void BeforeIsCorrect(ArticleQueryViewModel sut)
+        {
+            var actual = sut.Before;
+            var gap = DateTime.Now - actual;
+            Assert.Equal(gap.Ticks, 0);
         }
 
         [Test]
@@ -150,6 +159,7 @@
             yield return this.Properties.Select(x => x.Count);
             yield return this.Properties.Select(x => x.Subject);
             yield return this.Properties.Select(x => x.Body);
+            yield return this.Properties.Select(x => x.Before);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()

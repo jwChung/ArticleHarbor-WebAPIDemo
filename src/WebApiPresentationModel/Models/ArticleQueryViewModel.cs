@@ -10,6 +10,11 @@
         public const int MaxCount = 100;
         private int count = MaxCount;
 
+        public ArticleQueryViewModel()
+        {
+            this.Before = DateTime.Now;
+        }
+
         public int Count
         {
             get
@@ -35,6 +40,8 @@
         public string Subject { get; set; }
 
         public string Body { get; set; }
+
+        public DateTime Before { get; set; }
 
         public virtual ISqlQuery ProvideQuery()
         {
