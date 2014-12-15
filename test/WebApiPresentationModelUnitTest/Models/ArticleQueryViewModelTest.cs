@@ -197,15 +197,40 @@
 
         [Test]
         public void ProvideQueryWithProvierReturnsResultHavingCorrectProviderPredicate(
-            string provider,
+            string userId,
             ArticleQueryViewModel sut)
         {
-            sut.Provider = provider;
+            sut.Provider = userId;
 
             var actual = sut.ProvideQuery();
 
             var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
-            Assert.Contains(Predicate.Contains("Provider", provider), andPredicate.Predicates);
+            Assert.Contains(Predicate.Contains("Provider", userId), andPredicate.Predicates);
+        }
+
+        [Test]
+        [InlineData(null)]
+        [InlineData("")]
+        public void ProvideQueryWithNullOrEmptyUserIdReturnsResultNotHavingUserIdPredicate(
+            string userId,
+            ArticleQueryViewModel sut)
+        {
+            sut.UserId = userId;
+            var actual = sut.ProvideQuery();
+            Assert.Equal(new NoPredicate(), actual.Predicate);
+        }
+
+        [Test]
+        public void ProvideQueryWithUserIdReturnsResultHavingCorrectUserIdPredicate(
+            string userId,
+            ArticleQueryViewModel sut)
+        {
+            sut.UserId = userId;
+
+            var actual = sut.ProvideQuery();
+
+            var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
+            Assert.Contains(Predicate.Contains("UserId", userId), andPredicate.Predicates);
         }
         
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()

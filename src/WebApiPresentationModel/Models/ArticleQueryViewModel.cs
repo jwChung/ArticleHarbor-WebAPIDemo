@@ -70,6 +70,9 @@
 
             if (!string.IsNullOrEmpty(this.Provider))
                 predicates.Add(Predicate.Contains("Provider", this.Provider));
+
+            if (!string.IsNullOrEmpty(this.UserId))
+                predicates.Add(Predicate.Contains("UserId", this.UserId));
             
             return new SqlQuery(
                 new Top(this.count),
