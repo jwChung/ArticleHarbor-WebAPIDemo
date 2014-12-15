@@ -1,5 +1,6 @@
 ﻿namespace ArticleHarbor.DomainModel.Queries
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -12,6 +13,18 @@
         public void SutIsPredicate(AndPredicate sut)
         {
             Assert.IsAssignableFrom<IPredicate>(sut);
+        }
+
+        [Test]
+        public void InitializeWithEmptyArrayThrows()
+        {
+            Assert.Throws<ArgumentException>(() => new AndPredicate());
+        }
+
+        [Test]
+        public void InitializeWithEmptyEnumerableThrows()
+        {
+            Assert.Throws<ArgumentException>(() => new AndPredicate());
         }
 
         [Test]
@@ -69,10 +82,10 @@
         }
 
         [Test]
-        public void GetHasCodeWithEmptyPredicateReturnsCorrectResult()
+        public void GetHasCodeWithOnePredicateReturnsCorrectResult(IPredicate predicate)
         {
-            var sut = new AndPredicate();
-            var other = new AndPredicate();
+            var sut = new AndPredicate(predicate);
+            var other = new AndPredicate(predicate);
 
             var actual = sut.GetHashCode();
 

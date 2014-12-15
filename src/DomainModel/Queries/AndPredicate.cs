@@ -18,6 +18,9 @@
             if (predicates == null)
                 throw new ArgumentNullException("predicates");
 
+            if (!predicates.Any())
+                throw new ArgumentException("The predicates parameter should not be emtpy.", "predicates");
+
             this.predicates = predicates;
         }
 
