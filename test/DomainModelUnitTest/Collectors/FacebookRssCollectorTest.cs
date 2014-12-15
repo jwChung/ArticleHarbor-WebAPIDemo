@@ -28,7 +28,7 @@
 
             var article = new Article(
                 id: -1,
-                provider: facebookName,
+                provider: "Facebook: " + facebookName,
                 guid: dummyString,
                 subject: dummyString,
                 body: dummyString,
