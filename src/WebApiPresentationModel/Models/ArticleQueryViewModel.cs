@@ -10,6 +10,11 @@
         public const int MaxCount = 100;
         private int count = MaxCount;
 
+        public ArticleQueryViewModel()
+        {
+            this.Before = DateTime.Now;
+        }
+
         public int Count
         {
             get
@@ -36,10 +41,27 @@
 
         public string Body { get; set; }
 
+        public DateTime Before { get; set; }
+
+        public TimeSpan? Duration { get; set; }
+
+        public string Provider { get; set; }
+
+        public string UserId { get; set; }
+
         public virtual ISqlQuery ProvideQuery()
         {
+            var predicate = this.BuildPredicates().Count == 0
+                ? Predicate.None
+                : Predicate.And(this.BuildPredicates().ToArray());
+
+            return new SqlQuery(new Top(this.count), OrderByColumns.None, predicate);
+        }
+
+        private List<IPredicate> BuildPredicates()
+        {
             var predicates = new List<IPredicate>();
-            
+
             if (this.PreviousId != null)
                 predicates.Add(Predicate.GreatThan("Id", this.PreviousId));
 
@@ -48,11 +70,20 @@
 
             if (!string.IsNullOrEmpty(this.Body))
                 predicates.Add(Predicate.Contains("Body", this.Body));
-            
-            return new SqlQuery(
-                new Top(this.count),
-                OrderByColumns.None,
-                predicates.Count == 0 ? Predicate.None : Predicate.And(predicates.ToArray()));
+
+            if (this.Duration != null)
+            {
+                predicates.Add(Predicate.GreatOrEqualThan("Date", this.Before - this.Duration));
+                predicates.Add(Predicate.LessOrEqualThan("Date", this.Before));
+            }
+
+            if (!string.IsNullOrEmpty(this.Provider))
+                predicates.Add(Predicate.Contains("Provider", this.Provider));
+
+            if (!string.IsNullOrEmpty(this.UserId))
+                predicates.Add(Predicate.Contains("UserId", this.UserId));
+
+            return predicates;
         }
     }
 }

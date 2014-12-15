@@ -29,6 +29,10 @@
                 properties.Select(x => x.PreviousId),
                 properties.Select(x => x.Subject),
                 properties.Select(x => x.Body),
+                properties.Select(x => x.Before),
+                properties.Select(x => x.Duration),
+                properties.Select(x => x.Provider),
+                properties.Select(x => x.UserId),
             };
 
             return TestCases.WithArgs(testData).WithAuto<ReadWritablePropertyAssertion>()
@@ -49,6 +53,14 @@
         {
             Assert.Throws<ArgumentException>(
                 () => sut.Count = ArticleQueryViewModel.MaxCount + 1);
+        }
+
+        [Test]
+        public void BeforeIsCorrect(ArticleQueryViewModel sut)
+        {
+            var actual = sut.Before;
+            var gap = DateTime.Now - actual;
+            Assert.Equal(gap.Seconds, 0);
         }
 
         [Test]
@@ -144,18 +156,101 @@
             Assert.Equal(new NoPredicate(), actual.Predicate);
         }
 
+        [Test]
+        public void ProvideQueryWithNullDurationReturnsResultNotHavingDatePredicate(
+            string subject,
+            ArticleQueryViewModel sut)
+        {
+            sut.Duration = null;
+            var actual = sut.ProvideQuery();
+            Assert.Equal(new NoPredicate(), actual.Predicate);
+        }
+        
+        [Test]
+        public void ProvideQueryWithDurationReturnsResultHavingCorrectDatePredicate(
+            string subject,
+            ArticleQueryViewModel sut,
+            DateTime now,
+            TimeSpan duration)
+        {
+            sut.Before = now;
+            sut.Duration = duration;
+
+            var actual = sut.ProvideQuery();
+
+            var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
+            Assert.Contains(Predicate.GreatOrEqualThan("Date", now - duration), andPredicate.Predicates);
+            Assert.Contains(Predicate.LessOrEqualThan("Date", now), andPredicate.Predicates);
+        }
+
+        [Test]
+        [InlineData(null)]
+        [InlineData("")]
+        public void ProvideQueryWithNullOrEmptyProviderReturnsResultNotHavingProviderPredicate(
+            string provider,
+            ArticleQueryViewModel sut)
+        {
+            sut.Provider = provider;
+            var actual = sut.ProvideQuery();
+            Assert.Equal(new NoPredicate(), actual.Predicate);
+        }
+
+        [Test]
+        public void ProvideQueryWithProviderReturnsResultHavingCorrectProviderPredicate(
+            string userId,
+            ArticleQueryViewModel sut)
+        {
+            sut.Provider = userId;
+
+            var actual = sut.ProvideQuery();
+
+            var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
+            Assert.Contains(Predicate.Contains("Provider", userId), andPredicate.Predicates);
+        }
+
+        [Test]
+        [InlineData(null)]
+        [InlineData("")]
+        public void ProvideQueryWithNullOrEmptyUserIdReturnsResultNotHavingUserIdPredicate(
+            string userId,
+            ArticleQueryViewModel sut)
+        {
+            sut.UserId = userId;
+            var actual = sut.ProvideQuery();
+            Assert.Equal(new NoPredicate(), actual.Predicate);
+        }
+
+        [Test]
+        public void ProvideQueryWithUserIdReturnsResultHavingCorrectUserIdPredicate(
+            string userId,
+            ArticleQueryViewModel sut)
+        {
+            sut.UserId = userId;
+
+            var actual = sut.ProvideQuery();
+
+            var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
+            Assert.Contains(Predicate.Contains("UserId", userId), andPredicate.Predicates);
+        }
+        
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.PreviousId);
             yield return this.Properties.Select(x => x.Count);
             yield return this.Properties.Select(x => x.Subject);
             yield return this.Properties.Select(x => x.Body);
+            yield return this.Properties.Select(x => x.Before);
+            yield return this.Properties.Select(x => x.Duration);
+            yield return this.Properties.Select(x => x.Provider);
+            yield return this.Properties.Select(x => x.UserId);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyGuardClause()
         {
             yield return this.Properties.Select(x => x.Subject);
             yield return this.Properties.Select(x => x.Body);
+            yield return this.Properties.Select(x => x.Provider);
+            yield return this.Properties.Select(x => x.UserId);
         }
     }
 }
