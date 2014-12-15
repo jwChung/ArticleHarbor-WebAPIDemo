@@ -69,7 +69,8 @@
             if (query == null)
                 throw new ArgumentNullException("query");
 
-            return this.repositories.Articles.SelectAsync(query.ProvideQuery());
+            var sqlQuery = query.ProvideQuery();
+            return this.repositories.Articles.SelectAsync(sqlQuery);
         }
 
         [Authorize]

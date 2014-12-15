@@ -52,7 +52,7 @@
             return new SqlQuery(
                 new Top(this.count),
                 OrderByColumns.None,
-                Predicate.And(predicates.ToArray()));
+                predicates.Count == 0 ? Predicate.None : Predicate.And(predicates.ToArray()));
         }
     }
 }

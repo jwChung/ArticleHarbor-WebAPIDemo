@@ -78,14 +78,12 @@
         }
 
         [Test]
-        public void ProvideQueryWithNullPreviousEndIdReturnsResultNotHavingPreviousIdPredicate(
+        public void ProvideQueryWithNullPreviousIdReturnsResultNotHavingPreviousIdPredicate(
             ArticleQueryViewModel sut)
         {
+            sut.PreviousId = null;
             var actual = sut.ProvideQuery();
-
-            var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
-            Assert.False(andPredicate.Predicates.OfType<OperablePredicate>().Any(
-                x => x.ColumnName.Equals("Id", StringComparison.CurrentCultureIgnoreCase)));
+            Assert.Equal(new NoPredicate(), actual.Predicate);
         }
 
         [Test]
@@ -109,12 +107,8 @@
             ArticleQueryViewModel sut)
         {
             sut.Subject = subject;
-
             var actual = sut.ProvideQuery();
-
-            var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
-            Assert.False(andPredicate.Predicates.OfType<OperablePredicate>().Any(
-                x => x.ColumnName.Equals("Subject", StringComparison.CurrentCultureIgnoreCase)));
+            Assert.Equal(new NoPredicate(), actual.Predicate);
         }
 
         [Test]
@@ -138,12 +132,16 @@
             ArticleQueryViewModel sut)
         {
             sut.Body = body;
-
             var actual = sut.ProvideQuery();
+            Assert.Equal(new NoPredicate(), actual.Predicate);
+        }
 
-            var andPredicate = Assert.IsAssignableFrom<AndPredicate>(actual.Predicate);
-            Assert.False(andPredicate.Predicates.OfType<OperablePredicate>().Any(
-                x => x.ColumnName.Equals("Body", StringComparison.CurrentCultureIgnoreCase)));
+        [Test]
+        public void ProvideQueryWithEmptyPredicateReturnsResultHavingNoPredicate(
+            ArticleQueryViewModel sut)
+        {
+            var actual = sut.ProvideQuery();
+            Assert.Equal(new NoPredicate(), actual.Predicate);
         }
 
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
