@@ -23,6 +23,7 @@
     </Deprecated>
     <Compound>
       <Term CompoundAlternate="InAction">inaction</Term>
+      <Term CompoundAlternate="LessOr">lessor</Term>
     </Compound>
     <DiscreteExceptions>
       <Term></Term>
