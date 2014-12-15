@@ -51,8 +51,17 @@
 
         public virtual ISqlQuery ProvideQuery()
         {
+            var predicate = this.BuildPredicates().Count == 0
+                ? Predicate.None
+                : Predicate.And(this.BuildPredicates().ToArray());
+
+            return new SqlQuery(new Top(this.count), OrderByColumns.None, predicate);
+        }
+
+        private List<IPredicate> BuildPredicates()
+        {
             var predicates = new List<IPredicate>();
-            
+
             if (this.PreviousId != null)
                 predicates.Add(Predicate.GreatThan("Id", this.PreviousId));
 
@@ -73,11 +82,8 @@
 
             if (!string.IsNullOrEmpty(this.UserId))
                 predicates.Add(Predicate.Contains("UserId", this.UserId));
-            
-            return new SqlQuery(
-                new Top(this.count),
-                OrderByColumns.None,
-                predicates.Count == 0 ? Predicate.None : Predicate.And(predicates.ToArray()));
+
+            return predicates;
         }
     }
 }
