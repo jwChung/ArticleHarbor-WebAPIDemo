@@ -37,6 +37,31 @@
             return this.ExecuteAsyncWith(command);
         }
 
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != this.GetType())
+                return false;
+            return this.Equals((CompositeModel)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            var hash = this.models.First().GetHashCode();
+            return this.models.Skip(1).Aggregate(hash, (h, m) => (h * 397) ^ m.GetHashCode());
+        }
+
+        protected bool Equals(CompositeModel other)
+        {
+            if (other == null)
+                throw new ArgumentNullException("other");
+
+            return this.models.SequenceEqual(other.models);
+        }
+
         private async Task<IEnumerable<TReturn>> ExecuteAsyncWith<TReturn>(
             IModelCommand<TReturn> command)
         {
