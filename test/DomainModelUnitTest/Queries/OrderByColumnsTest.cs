@@ -62,5 +62,16 @@
             var actual = sut.GetHashCode();
             Assert.Equal(other.GetHashCode(), actual);
         }
+
+        [Test]
+        public void GetHasCodeWithEmptyColumnsReturnsCorrectResult()
+        {
+            var sut = new OrderByColumns();
+            var other = new OrderByColumns();
+
+            var actual = sut.GetHashCode();
+
+            Assert.Equal(other.GetHashCode(), actual);
+        }
     }
 }
