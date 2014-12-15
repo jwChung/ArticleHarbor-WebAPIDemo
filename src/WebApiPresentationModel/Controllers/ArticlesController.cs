@@ -63,8 +63,7 @@
             get { return this.deleteCommand; }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is action method.")]
-        public Task<IEnumerable<Article>> GetAsync(ArticleQueryViewModel query)
+        public Task<IEnumerable<Article>> GetAsync([FromUri] ArticleQueryViewModel query)
         {
             if (query == null)
                 throw new ArgumentNullException("query");

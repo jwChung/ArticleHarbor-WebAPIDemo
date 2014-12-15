@@ -36,6 +36,16 @@
         }
 
         [Test]
+        public void GetAsyncHasCorrectFromUriAttributeOnQueryParameter()
+        {
+            var method = this.Methods.Select(x => x.GetAsync(null));
+            var parameter = method.GetParameters().First();
+
+            Assert.Equal(typeof(ArticleQueryViewModel), parameter.ParameterType);
+            Assert.NotNull(parameter.GetCustomAttribute<FromUriAttribute>());
+        }
+
+        [Test]
         public async Task PostAsyncReturnsCorrectResult(
             ArticlesController sut,
             PostArticleViewModel postArticle,
