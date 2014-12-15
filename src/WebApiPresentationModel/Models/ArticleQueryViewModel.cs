@@ -36,7 +36,7 @@
 
         public string Body { get; set; }
 
-        public ISqlQuery ProvideQuery()
+        public virtual ISqlQuery ProvideQuery()
         {
             var predicates = new List<IPredicate>();
             

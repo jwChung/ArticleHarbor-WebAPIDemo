@@ -51,9 +51,7 @@
         {
             unchecked
             {
-                return this.predicates.Skip(1).Aggregate(
-                    this.predicates.First().GetHashCode(),
-                    (h, p) => (h * 397) ^ p.GetHashCode());    
+                return this.predicates.Aggregate(0, (h, p) => (h * 397) ^ p.GetHashCode());    
             }
         }
 

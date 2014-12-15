@@ -68,6 +68,17 @@
             Assert.Equal(other.GetHashCode(), actual);
         }
 
+        [Test]
+        public void GetHasCodeWithEmptyPredicateReturnsCorrectResult()
+        {
+            var sut = new AndPredicate();
+            var other = new AndPredicate();
+
+            var actual = sut.GetHashCode();
+
+            Assert.Equal(other.GetHashCode(), actual);
+        }
+
         protected override IEnumerable<MemberInfo> ExceptToVerifyInitialization()
         {
             yield return this.Properties.Select(x => x.SqlText);

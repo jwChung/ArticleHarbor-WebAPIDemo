@@ -64,9 +64,12 @@
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is action method.")]
-        public Task<IEnumerable<Article>> GetAsync()
+        public Task<IEnumerable<Article>> GetAsync(ArticleQueryViewModel query)
         {
-            return this.repositories.Articles.SelectAsync();
+            if (query == null)
+                throw new ArgumentNullException("query");
+
+            return this.repositories.Articles.SelectAsync(query.ProvideQuery());
         }
 
         [Authorize]
