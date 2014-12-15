@@ -167,7 +167,7 @@
         }
         
         [Test]
-        public void ProvideQueryWithDurationReturnsResultHavingCorretDatePredicate(
+        public void ProvideQueryWithDurationReturnsResultHavingCorrectDatePredicate(
             string subject,
             ArticleQueryViewModel sut,
             DateTime now,
@@ -186,7 +186,7 @@
         [Test]
         [InlineData(null)]
         [InlineData("")]
-        public void ProvideQueryWithNullOrEmptyProvierReturnsResultNotHavingProviderPredicate(
+        public void ProvideQueryWithNullOrEmptyProviderReturnsResultNotHavingProviderPredicate(
             string provider,
             ArticleQueryViewModel sut)
         {
@@ -196,7 +196,7 @@
         }
 
         [Test]
-        public void ProvideQueryWithProvierReturnsResultHavingCorrectProviderPredicate(
+        public void ProvideQueryWithProviderReturnsResultHavingCorrectProviderPredicate(
             string userId,
             ArticleQueryViewModel sut)
         {
