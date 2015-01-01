@@ -21,7 +21,7 @@
             User newUser,
             IEnumerable<TReturn> expected)
         {
-            sut.Transformer.Of(x => x.TransformAsync(user) == Task.FromResult(newUser));
+            sut.Transformation.Of(x => x.TransformAsync(user) == Task.FromResult(newUser));
             sut.InnerCommand.Of(x => x.ExecuteAsync(newUser) == Task.FromResult(expected));
 
             var actual = sut.ExecuteAsync(user).Result;
@@ -36,7 +36,7 @@
             Article newArticle,
             IEnumerable<TReturn> expected)
         {
-            sut.Transformer.Of(x => x.TransformAsync(article) == Task.FromResult(newArticle));
+            sut.Transformation.Of(x => x.TransformAsync(article) == Task.FromResult(newArticle));
             sut.InnerCommand.Of(x => x.ExecuteAsync(newArticle) == Task.FromResult(expected));
 
             var actual = sut.ExecuteAsync(article).Result;
@@ -51,7 +51,7 @@
             Keyword newKeyword,
             IEnumerable<TReturn> expected)
         {
-            sut.Transformer.Of(x => x.TransformAsync(keyword) == Task.FromResult(newKeyword));
+            sut.Transformation.Of(x => x.TransformAsync(keyword) == Task.FromResult(newKeyword));
             sut.InnerCommand.Of(x => x.ExecuteAsync(newKeyword) == Task.FromResult(expected));
 
             var actual = sut.ExecuteAsync(keyword).Result;
@@ -66,7 +66,7 @@
             Bookmark newBookmark,
             IEnumerable<TReturn> expected)
         {
-            sut.Transformer.Of(x => x.TransformAsync(bookmark) == Task.FromResult(newBookmark));
+            sut.Transformation.Of(x => x.TransformAsync(bookmark) == Task.FromResult(newBookmark));
             sut.InnerCommand.Of(x => x.ExecuteAsync(newBookmark) == Task.FromResult(expected));
 
             var actual = sut.ExecuteAsync(bookmark).Result;

@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
     using Models;
 
-    public interface IModelTransformer
+    public interface IModelTransformation
     {
         Task<User> TransformAsync(User user);
 

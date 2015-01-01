@@ -6,33 +6,33 @@
     using Models;
     using Xunit;
 
-    public class ModelTransformerTest : IdiomaticTest<ModelTransformer>
+    public class ModelTransformationTest : IdiomaticTest<ModelTransformation>
     {
         [Test]
-        public void SutIsModelTransformer(ModelTransformer sut)
+        public void SutIsModelTransformer(ModelTransformation sut)
         {
-            Assert.IsAssignableFrom<IModelTransformer>(sut);
+            Assert.IsAssignableFrom<IModelTransformation>(sut);
         }
 
         [Test]
         public IEnumerable<ITestCase> TransformAsyncReturnsArgumentItself()
         {
-            yield return TestCase.WithAuto<ModelTransformer, User>().Create((sut, user) =>
+            yield return TestCase.WithAuto<ModelTransformation, User>().Create((sut, user) =>
             {
                 var actual = sut.TransformAsync(user).Result;
                 Assert.Equal(user, actual);
             });
-            yield return TestCase.WithAuto<ModelTransformer, Article>().Create((sut, article) =>
+            yield return TestCase.WithAuto<ModelTransformation, Article>().Create((sut, article) =>
             {
                 var actual = sut.TransformAsync(article).Result;
                 Assert.Equal(article, actual);
             });
-            yield return TestCase.WithAuto<ModelTransformer, Keyword>().Create((sut, keyword) =>
+            yield return TestCase.WithAuto<ModelTransformation, Keyword>().Create((sut, keyword) =>
             {
                 var actual = sut.TransformAsync(keyword).Result;
                 Assert.Equal(keyword, actual);
             });
-            yield return TestCase.WithAuto<ModelTransformer, Bookmark>().Create((sut, bookmark) =>
+            yield return TestCase.WithAuto<ModelTransformation, Bookmark>().Create((sut, bookmark) =>
             {
                 var actual = sut.TransformAsync(bookmark).Result;
                 Assert.Equal(bookmark, actual);

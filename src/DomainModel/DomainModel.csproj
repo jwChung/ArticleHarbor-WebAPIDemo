@@ -60,7 +60,7 @@
     <Compile Include="Commands\DeleteConfirmableCommand.cs" />
     <Compile Include="Commands\DeleteKeywordsCommand.cs" />
     <Compile Include="Commands\ICommandCondition.cs" />
-    <Compile Include="Commands\IModelTransformer.cs" />
+    <Compile Include="Commands\IModelTransformation.cs" />
     <Compile Include="Queries\ContainsPredicate.cs" />
     <Compile Include="Queries\InClausePredicate.cs" />
     <Compile Include="Commands\InsertConfirmableCommand.cs" />
@@ -75,9 +75,9 @@
     <Compile Include="Models\IModel.cs" />
     <Compile Include="Models\Keyword.cs" />
     <Compile Include="Models\Bookmark.cs" />
-    <Compile Include="Commands\ModelTransformer.cs" />
+    <Compile Include="Commands\ModelTransformation.cs" />
     <Compile Include="Commands\SelectBookmarkedArticlesCommand.cs" />
-    <Compile Include="Commands\SubjectFromBodyTransformer.cs" />
+    <Compile Include="Commands\SubjectFromBodyTransformation.cs" />
     <Compile Include="Commands\TransformableCommand.cs" />
     <Compile Include="Commands\CommandCondition.cs" />
     <Compile Include="Commands\ModelCommand.cs" />

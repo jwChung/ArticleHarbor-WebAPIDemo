@@ -6,12 +6,12 @@
     using Xunit;
     using Xunit.Extensions;
 
-    public class SubjectFromBodyTransformerTest : IdiomaticTest<SubjectFromBodyTransformer>
+    public class SubjectFromBodyTransformationTest : IdiomaticTest<SubjectFromBodyTransformation>
     {
         [Test]
-        public void SutIsModelTransformer(SubjectFromBodyTransformer sut)
+        public void SutIsModelTransformer(SubjectFromBodyTransformation sut)
         {
-            Assert.IsAssignableFrom<IModelTransformer>(sut);
+            Assert.IsAssignableFrom<IModelTransformation>(sut);
         }
 
         [Test]
@@ -23,7 +23,7 @@
             IFixture fixture)
         {
             fixture.Inject(length);
-            var sut = fixture.Create<SubjectFromBodyTransformer>();
+            var sut = fixture.Create<SubjectFromBodyTransformation>();
 
             var actual = sut.TransformAsync(article).Result;
 
@@ -40,7 +40,7 @@
         {
             int length = 100;
             fixture.Inject(length);
-            var sut = fixture.Create<SubjectFromBodyTransformer>();
+            var sut = fixture.Create<SubjectFromBodyTransformation>();
 
             var actual = sut.TransformAsync(article).Result;
 
@@ -63,7 +63,7 @@
             int length = 100;
             fixture.Inject(length);
             article = article.WithBody(body);
-            var sut = fixture.Create<SubjectFromBodyTransformer>();
+            var sut = fixture.Create<SubjectFromBodyTransformation>();
 
             var actual = sut.TransformAsync(article).Result;
 

@@ -7,25 +7,25 @@
 
     public class TransformableCommand<TReturn> : ModelCommand<TReturn>
     {
-        private readonly IModelTransformer transformer;
+        private readonly IModelTransformation transformation;
         private readonly IModelCommand<TReturn> innerCommand;
 
         public TransformableCommand(
-            IModelTransformer transformer, IModelCommand<TReturn> innerCommand)
+            IModelTransformation transformation, IModelCommand<TReturn> innerCommand)
         {
-            if (transformer == null)
-                throw new ArgumentNullException("transformer");
+            if (transformation == null)
+                throw new ArgumentNullException("transformation");
 
             if (innerCommand == null)
                 throw new ArgumentNullException("innerCommand");
 
-            this.transformer = transformer;
+            this.transformation = transformation;
             this.innerCommand = innerCommand;
         }
 
-        public IModelTransformer Transformer
+        public IModelTransformation Transformation
         {
-            get { return this.transformer; }
+            get { return this.transformation; }
         }
 
         public IModelCommand<TReturn> InnerCommand
@@ -35,25 +35,25 @@
 
         public override async Task<IEnumerable<TReturn>> ExecuteAsync(User user)
         {
-            var newUser = await this.transformer.TransformAsync(user);
+            var newUser = await this.transformation.TransformAsync(user);
             return await this.innerCommand.ExecuteAsync(newUser);
         }
 
         public override async Task<IEnumerable<TReturn>> ExecuteAsync(Article article)
         {
-             var newArticle = await this.transformer.TransformAsync(article);
+             var newArticle = await this.transformation.TransformAsync(article);
              return await this.innerCommand.ExecuteAsync(newArticle);
         }
 
         public override async Task<IEnumerable<TReturn>> ExecuteAsync(Keyword keyword)
         {
-            var newKeyword = await this.transformer.TransformAsync(keyword);
+            var newKeyword = await this.transformation.TransformAsync(keyword);
             return await this.innerCommand.ExecuteAsync(newKeyword);
         }
 
         public override async Task<IEnumerable<TReturn>> ExecuteAsync(Bookmark bookmark)
         {
-            var newBookmark = await this.transformer.TransformAsync(bookmark);
+            var newBookmark = await this.transformation.TransformAsync(bookmark);
             return await this.innerCommand.ExecuteAsync(newBookmark);
         }
     }

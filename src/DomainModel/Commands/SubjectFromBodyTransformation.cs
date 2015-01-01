@@ -5,11 +5,11 @@
     using System.Threading.Tasks;
     using Models;
 
-    public class SubjectFromBodyTransformer : ModelTransformer
+    public class SubjectFromBodyTransformation : ModelTransformation
     {
         private readonly int length;
 
-        public SubjectFromBodyTransformer(int length)
+        public SubjectFromBodyTransformation(int length)
         {
             this.length = length;
         }

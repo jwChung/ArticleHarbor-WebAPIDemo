@@ -50,9 +50,9 @@
         private static IModelCommand<IModel> CreateFacebookCommand(Repositories repositories)
         {
             return new TransformableCommand<IModel>(
-                new RemoveUnnecessaryContentTransformer(),
+                new RemoveUnnecessaryContentTransformation(),
                 new TransformableCommand<IModel>(
-                    new SubjectFromBodyTransformer(50),
+                    new SubjectFromBodyTransformation(50),
                     CreateCommand(repositories)));
         }
 
@@ -76,7 +76,7 @@
                 new ArticleHarborDbContextTestInitializer());
         }
 
-        private class RemoveUnnecessaryContentTransformer : ModelTransformer
+        private class RemoveUnnecessaryContentTransformation : ModelTransformation
         {
             public override Task<Article> TransformAsync(Article article)
             {
