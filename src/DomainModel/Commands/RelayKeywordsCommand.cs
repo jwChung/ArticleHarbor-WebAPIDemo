@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using Models;
 
-    public class RelayKeywordsCommand : ModelCommand<IModel>
+    public class RelayKeywordsCommand : EmptyCommand<IModel>
     {
         private readonly Func<string, IEnumerable<string>> nounExtractor;
         private readonly IModelCommand<IModel> innerCommand;

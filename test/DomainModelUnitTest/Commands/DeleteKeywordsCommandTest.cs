@@ -11,7 +11,7 @@
         [Test]
         public void SutIsModelCommand(DeleteKeywordsCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
+            Assert.IsAssignableFrom<EmptyCommand<IModel>>(sut);
         }
 
         [Test]

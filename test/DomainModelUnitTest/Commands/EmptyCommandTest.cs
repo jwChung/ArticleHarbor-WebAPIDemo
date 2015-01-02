@@ -7,16 +7,16 @@
     using Models;
     using Xunit;
 
-    public class ModelCommandTest : IdiomaticTest<ModelCommand<object>>
+    public class EmptyCommandTest : IdiomaticTest<EmptyCommand<object>>
     {
         [Test]
-        public void SutIsModelCommand(ModelCommand<object> sut)
+        public void SutIsModelCommand(EmptyCommand<object> sut)
         {
             Assert.IsAssignableFrom<IModelCommand<object>>(sut);
         }
 
         [Test]
-        public IEnumerable<ITestCase> ExecuteAsyncReturnsEmpty(ModelCommand<object> sut)
+        public IEnumerable<ITestCase> ExecuteAsyncReturnsEmpty(EmptyCommand<object> sut)
         {
             yield return TestCase.WithAuto<User>().Create(
                 x =>
@@ -45,7 +45,7 @@
         }
 
         [Test]
-        public IEnumerable<ITestCase> ExecuteAsyncWithModelsReturnsCorrectResult(TssModelCommand sut)
+        public IEnumerable<ITestCase> ExecuteAsyncWithModelsReturnsCorrectResult(TssEmptyCommand sut)
         {
             yield return TestCase.WithAuto<IEnumerable<User>>().Create(
                 models =>
@@ -81,7 +81,7 @@
             yield return this.Methods.Select(x => x.ExecuteAsync(default(Keyword)));
         }
 
-        public class TssModelCommand : ModelCommand<object>
+        public class TssEmptyCommand : EmptyCommand<object>
         {
             public override Task<IEnumerable<object>> ExecuteAsync(User user)
             {

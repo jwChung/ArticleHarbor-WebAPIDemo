@@ -8,7 +8,7 @@
     using Queries;
     using Repositories;
 
-    public class DeleteConfirmableCommand : ModelCommand<IModel>
+    public class DeleteConfirmableCommand : EmptyCommand<IModel>
     {
         private readonly IPrincipal principal;
         private readonly IRepositories repositories;

@@ -10,7 +10,7 @@
         [Test]
         public void SutIsModelCommand(UpdateCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
+            Assert.IsAssignableFrom<EmptyCommand<IModel>>(sut);
         }
 
         [Test]

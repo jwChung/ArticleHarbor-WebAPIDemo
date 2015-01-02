@@ -66,7 +66,7 @@
                         KoreanNounExtractor.Execute,
                         new InsertCommand(
                             repositories,
-                            new ModelCommand<IModel>()))),
+                            new EmptyCommand<IModel>()))),
                 new AfterLogCommand());
         }
 
@@ -89,7 +89,7 @@
             }
         }
         
-        private class BeforeLogCommand : ModelCommand<IModel>
+        private class BeforeLogCommand : EmptyCommand<IModel>
         {
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String)", Justification = "This can be suppressed as the message is simple.")]
             public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)
@@ -107,7 +107,7 @@
             }
         }
 
-        private class AfterLogCommand : ModelCommand<IModel>
+        private class AfterLogCommand : EmptyCommand<IModel>
         {
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "System.Console.WriteLine(System.String)", Justification = "This can be suppressed as the message is simple.")]
             public override Task<IEnumerable<IModel>> ExecuteAsync(Article article)

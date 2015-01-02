@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using Models;
 
-    public class ConditionalCommand<TReturn> : ModelCommand<TReturn>
+    public class ConditionalCommand<TReturn> : EmptyCommand<TReturn>
     {
         private readonly ICommandCondition condition;
         private readonly IModelCommand<TReturn> innerCommand;

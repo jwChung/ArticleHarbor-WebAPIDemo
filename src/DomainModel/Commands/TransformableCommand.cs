@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using Models;
 
-    public class TransformableCommand<TReturn> : ModelCommand<TReturn>
+    public class TransformableCommand<TReturn> : EmptyCommand<TReturn>
     {
         private readonly IModelTransformation transformation;
         private readonly IModelCommand<TReturn> innerCommand;

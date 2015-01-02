@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
     using Models;
 
-    public class InsertConfirmableCommand : ModelCommand<IModel>
+    public class InsertConfirmableCommand : EmptyCommand<IModel>
     {
         private readonly IPrincipal principal;
 

@@ -9,7 +9,7 @@
         [Test]
         public void SutIsModelCommand(DeleteCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
+            Assert.IsAssignableFrom<EmptyCommand<IModel>>(sut);
         }
 
         [Test]

@@ -13,7 +13,7 @@
         [Test]
         public void SutIsModelCommand(InsertConfirmableCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
+            Assert.IsAssignableFrom<EmptyCommand<IModel>>(sut);
         }
 
         [Test]

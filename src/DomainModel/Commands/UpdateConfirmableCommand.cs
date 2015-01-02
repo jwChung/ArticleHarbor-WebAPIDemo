@@ -8,7 +8,7 @@
     using Queries;
     using Repositories;
 
-    public class UpdateConfirmableCommand : ModelCommand<IModel>
+    public class UpdateConfirmableCommand : EmptyCommand<IModel>
     {
         private readonly IRepositories repositories;
         private readonly IPrincipal principal;

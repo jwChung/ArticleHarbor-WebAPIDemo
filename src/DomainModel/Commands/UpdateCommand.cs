@@ -7,7 +7,7 @@
     using Models;
     using Repositories;
 
-    public class UpdateCommand : ModelCommand<IModel>
+    public class UpdateCommand : EmptyCommand<IModel>
     {
         private readonly IRepositories repositories;
 

@@ -8,7 +8,7 @@
     using Queries;
     using Repositories;
 
-    public class DeleteKeywordsCommand : ModelCommand<IModel>
+    public class DeleteKeywordsCommand : EmptyCommand<IModel>
     {
         private readonly IRepositories repositories;
 

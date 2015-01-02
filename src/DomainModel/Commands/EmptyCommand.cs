@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using Models;
 
-    public class ModelCommand<TReturn> : IModelCommand<TReturn>
+    public class EmptyCommand<TReturn> : IModelCommand<TReturn>
     {
         public virtual Task<IEnumerable<TReturn>> ExecuteAsync(IEnumerable<User> users)
         {

@@ -8,7 +8,7 @@
     using Queries;
     using Repositories;
 
-    public class DeleteBookmarksCommand : ModelCommand<IModel>
+    public class DeleteBookmarksCommand : EmptyCommand<IModel>
     {
         private readonly IRepositories repositories;
 

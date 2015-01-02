@@ -80,7 +80,7 @@
     <Compile Include="Commands\SubjectFromBodyTransformation.cs" />
     <Compile Include="Commands\TransformableCommand.cs" />
     <Compile Include="Commands\TrueCondition.cs" />
-    <Compile Include="Commands\ModelCommand.cs" />
+    <Compile Include="Commands\EmptyCommand.cs" />
     <Compile Include="Commands\InsertCommand.cs" />
     <Compile Include="Queries\ISqlQueryable.cs" />
     <Compile Include="Queries\ISqlQuery.cs" />

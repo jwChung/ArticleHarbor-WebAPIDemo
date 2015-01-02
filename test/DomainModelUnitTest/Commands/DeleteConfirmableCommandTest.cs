@@ -14,7 +14,7 @@
         [Test]
         public void SutIsModelCommand(DeleteConfirmableCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
+            Assert.IsAssignableFrom<EmptyCommand<IModel>>(sut);
         }
         
         [Test]

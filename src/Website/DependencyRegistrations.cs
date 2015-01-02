@@ -129,7 +129,7 @@ namespace ArticleHarbor.Website
                                 KoreanNounExtractor.Execute,
                                 new InsertCommand(
                                     c.Resolve<IRepositories>(),
-                                    new ModelCommand<IModel>())))),
+                                    new EmptyCommand<IModel>())))),
                     new CompositeCommand<IModel>(
                         c.Resolve<UpdateConfirmableCommand>(),
                         c.Resolve<UpdateCommand>(),
@@ -141,7 +141,7 @@ namespace ArticleHarbor.Website
                                     KoreanNounExtractor.Execute,
                                     new InsertCommand(
                                         c.Resolve<IRepositories>(),
-                                        new ModelCommand<IModel>()))))),
+                                        new EmptyCommand<IModel>()))))),
                     new CompositeCommand<IModel>(
                         c.Resolve<DeleteConfirmableCommand>(),
                         c.Resolve<DeleteKeywordsCommand>(),
@@ -155,8 +155,8 @@ namespace ArticleHarbor.Website
                     c.Resolve<SelectBookmarkedArticlesCommand>(),
                     new InsertCommand(
                         c.Resolve<IRepositories>(),
-                        new ModelCommand<IModel>()),
-                    new ModelCommand<IModel>()))
+                        new EmptyCommand<IModel>()),
+                    new EmptyCommand<IModel>()))
                 .ReusedWithinContainer();
 
             return this;

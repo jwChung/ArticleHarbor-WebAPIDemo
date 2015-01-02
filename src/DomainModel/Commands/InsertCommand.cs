@@ -7,7 +7,7 @@
     using Models;
     using Repositories;
 
-    public class InsertCommand : ModelCommand<IModel>
+    public class InsertCommand : EmptyCommand<IModel>
     {
         private readonly IRepositories repositories;
         private readonly IModelCommand<IModel> innerCommand;

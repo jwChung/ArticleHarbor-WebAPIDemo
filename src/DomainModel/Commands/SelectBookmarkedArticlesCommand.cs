@@ -8,7 +8,7 @@
     using Queries;
     using Repositories;
 
-    public class SelectBookmarkedArticlesCommand : ModelCommand<IModel>
+    public class SelectBookmarkedArticlesCommand : EmptyCommand<IModel>
     {
         private readonly IRepositories repositories;
         

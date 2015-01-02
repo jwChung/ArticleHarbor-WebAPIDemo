@@ -10,7 +10,7 @@
         [Test]
         public void SutIsModelCommand(ConditionalCommand<int> sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<int>>(sut);
+            Assert.IsAssignableFrom<EmptyCommand<int>>(sut);
         }
 
         [Test]

@@ -11,7 +11,7 @@
         [Test]
         public void SutIsModelCommand(InsertCommand sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<IModel>>(sut);
+            Assert.IsAssignableFrom<EmptyCommand<IModel>>(sut);
         }
 
         [Test]

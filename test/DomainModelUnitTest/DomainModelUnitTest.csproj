@@ -117,7 +117,7 @@
     <Compile Include="Commands\SubjectFromBodyTransformationTest.cs" />
     <Compile Include="Commands\TransformableCommandTest.cs" />
     <Compile Include="Commands\TrueConditionTest.cs" />
-    <Compile Include="Commands\ModelCommandTest.cs" />
+    <Compile Include="Commands\EmptyCommandTest.cs" />
     <Compile Include="Commands\InsertCommandTest.cs" />
     <Compile Include="Queries\NoOrderByColumnsTest.cs" />
     <Compile Include="Queries\NoPredicateTest.cs" />

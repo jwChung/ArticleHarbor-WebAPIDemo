@@ -11,7 +11,7 @@
         [Test]
         public void SutIsModelCommand(TransformableCommand<TReturn> sut)
         {
-            Assert.IsAssignableFrom<ModelCommand<TReturn>>(sut);
+            Assert.IsAssignableFrom<EmptyCommand<TReturn>>(sut);
         }
 
         [Test]
