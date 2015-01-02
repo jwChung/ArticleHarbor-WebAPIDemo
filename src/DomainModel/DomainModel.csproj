@@ -75,7 +75,7 @@
     <Compile Include="Models\IModel.cs" />
     <Compile Include="Models\Keyword.cs" />
     <Compile Include="Models\Bookmark.cs" />
-    <Compile Include="Commands\ModelTransformation.cs" />
+    <Compile Include="Commands\NonTransformation.cs" />
     <Compile Include="Commands\SelectBookmarkedArticlesCommand.cs" />
     <Compile Include="Commands\SubjectFromBodyTransformation.cs" />
     <Compile Include="Commands\TransformableCommand.cs" />

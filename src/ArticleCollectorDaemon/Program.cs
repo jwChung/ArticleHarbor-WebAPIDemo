@@ -76,7 +76,7 @@
                 new ArticleHarborDbContextTestInitializer());
         }
 
-        private class RemoveUnnecessaryContentTransformation : ModelTransformation
+        private class RemoveUnnecessaryContentTransformation : NonTransformation
         {
             public override Task<Article> TransformAsync(Article article)
             {

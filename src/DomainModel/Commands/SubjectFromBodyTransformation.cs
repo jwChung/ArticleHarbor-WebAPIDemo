@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using Models;
 
-    public class SubjectFromBodyTransformation : ModelTransformation
+    public class SubjectFromBodyTransformation : NonTransformation
     {
         private readonly int length;
 
