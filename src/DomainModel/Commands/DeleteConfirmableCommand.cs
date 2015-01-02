@@ -71,8 +71,10 @@
             if (this.principal.IsInRole("Administrator"))
                 return base.ExecuteAsync(bookmark);
 
-            if (this.principal.IsInRole("Author") && bookmark.UserId.Equals(
-                this.principal.Identity.Name, StringComparison.CurrentCultureIgnoreCase))
+            if ((this.principal.IsInRole("Author") || this.principal.IsInRole("User"))
+                && bookmark.UserId.Equals(
+                    this.principal.Identity.Name,
+                    StringComparison.CurrentCultureIgnoreCase))
                 return base.ExecuteAsync(bookmark);
 
             throw new UnauthorizedException();

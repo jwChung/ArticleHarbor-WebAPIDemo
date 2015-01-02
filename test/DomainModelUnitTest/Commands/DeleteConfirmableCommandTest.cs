@@ -136,6 +136,28 @@
         }
 
         [Test]
+        public void ExecuteAsyncBookmarkWithUserRoleAndCorrectOwnerIdDoesNotThrow(
+            DeleteConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            sut.Principal.Of(x => x.IsInRole("User") == true);
+            sut.Principal.Identity.Of(x => x.Name == bookmark.UserId);
+
+            var actual = sut.ExecuteAsync(bookmark).Result;
+
+            Assert.Empty(actual);
+        }
+
+        [Test]
+        public void ExecuteAsyncBookmarkWithUserRoleAndIncorrectOwnerIdThrow(
+            DeleteConfirmableCommand sut,
+            Bookmark bookmark)
+        {
+            sut.Principal.Of(x => x.IsInRole("User") == true);
+            Assert.Throws<UnauthorizedException>(() => sut.ExecuteAsync(bookmark).Result);
+        }
+
+        [Test]
         public void ExecuteAsyncBookmarkIgnoresUserNameCase(
             DeleteConfirmableCommand sut,
             Bookmark bookmark)
