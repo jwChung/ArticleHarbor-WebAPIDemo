@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
     using Models;
 
-    public class CommandCondition : ICommandCondition
+    public class TrueCondition : ICommandCondition
     {
         public virtual Task<bool> CanExecuteAsync(User user)
         {

@@ -79,7 +79,7 @@
     <Compile Include="Commands\SelectBookmarkedArticlesCommand.cs" />
     <Compile Include="Commands\SubjectFromBodyTransformation.cs" />
     <Compile Include="Commands\TransformableCommand.cs" />
-    <Compile Include="Commands\CommandCondition.cs" />
+    <Compile Include="Commands\TrueCondition.cs" />
     <Compile Include="Commands\ModelCommand.cs" />
     <Compile Include="Commands\InsertCommand.cs" />
     <Compile Include="Queries\ISqlQueryable.cs" />

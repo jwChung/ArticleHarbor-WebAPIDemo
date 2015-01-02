@@ -116,7 +116,7 @@
     <Compile Include="Commands\SelectBookmarkedArticlesCommandTest.cs" />
     <Compile Include="Commands\SubjectFromBodyTransformationTest.cs" />
     <Compile Include="Commands\TransformableCommandTest.cs" />
-    <Compile Include="Commands\CommandConditionTest.cs" />
+    <Compile Include="Commands\TrueConditionTest.cs" />
     <Compile Include="Commands\ModelCommandTest.cs" />
     <Compile Include="Commands\InsertCommandTest.cs" />
     <Compile Include="Queries\NoOrderByColumnsTest.cs" />

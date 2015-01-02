@@ -6,7 +6,7 @@
     using Queries;
     using Repositories;
 
-    public class UpdateKeywordsCondition : CommandCondition
+    public class UpdateKeywordsCondition : TrueCondition
     {
         private readonly IRepositories repositories;
 
