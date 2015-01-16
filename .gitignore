@@ -5,3 +5,4 @@ StyleCop.Cache
 *.user
 /Build.sh
 App_Data/
+.DS_Store
