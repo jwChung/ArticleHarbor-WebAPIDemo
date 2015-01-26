@@ -1,8 +1,6 @@
 ArticleHarbor [![Build status](https://ci.appveyor.com/api/projects/status/k9k4dd8qjsga7kvp?svg=true)](https://ci.appveyor.com/project/jwChung/articleharbor-webapidemo)
 ===============
 
-Architecture
-------------
 PresentationModel ==> DomainModel <== PersistenceModel
 
 **View 역할**
@@ -72,6 +70,12 @@ Scenarios
 
   - CreateFacebookCommand Method(Transformation)
 
+General Purpose
+---------------
+  - Funtional programming:  
+    Pattern matching = Visitor pattern  
+    Record type (F#) = IModel
+  - [Homoiconicity](http://vimeo.com/68236489)
 
 DomainModel과 PersistenceModel 분리
 ----------------------------------
