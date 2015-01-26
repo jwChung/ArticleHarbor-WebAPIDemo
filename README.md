@@ -61,8 +61,8 @@ Scenarios
   - Structure Inspection 대신에 모두 Acceptance test로 실시하는 것이 좋으나,
     간단한 조건의 변화들이 만드는 조합의 수로 인해 모두 Acceptance test로 한다는 것은
     상당한 비용이 든다.
-  - 수동테스트보다 자동테스트를
-  - Integration test보다 Unit test(Structure Inspection)
+  - 수동테스트보다 자동테스트로 해결하고,
+  - Integration test보다 Unit test(Structure Inspection)로 해결하는 것이 비용면에서 좋다.
 
 **Insert Scenario**
 
