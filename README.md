@@ -76,7 +76,7 @@ DomainModel과 PersistenceModel 분리
 ----------------------------------
 
  - Direct reference: DIP 위배
- - Enitities 공용: ORM 대치 가능
+ - Repository 패턴, Enitities 공용: ORM 대치 가능
  - Enitities까지 분리: DB normalization/denormalization 가능.
 
 
@@ -84,7 +84,6 @@ DomainModel과 PersistenceModel 분리
 
  - Repository 패턴
  - IPredicate
- - EqualPredicate DEMO
  - ISqlQuery
 
 Article delete Scenario 예제
