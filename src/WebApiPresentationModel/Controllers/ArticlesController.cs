@@ -98,7 +98,7 @@
 
             var article = new Article(id, none, none, none, none, default(DateTime), none, userId);
 
-            await this.deleteCommand.ExecuteAsync(article);
+            await article.ExecuteAsync(this.deleteCommand);
         }
 
         private async Task<ArticleDetailViewModel> PostAsyncWith(PostArticleViewModel postArticle)
@@ -134,7 +134,7 @@
                 putArticle.Url,
                 userId);
 
-            await this.updateCommand.ExecuteAsync(article);
+            await article.ExecuteAsync(this.updateCommand);
         }
     }
 }
