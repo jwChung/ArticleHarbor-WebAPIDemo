@@ -3,12 +3,6 @@ ArticleHarbor [![Build status](https://ci.appveyor.com/api/projects/status/k9k4d
 
 PresentationModel ==> DomainModel <== PersistenceModel
 
-**View 역할**
-
- - Views
- - [Composition Root(Mark Seemann)](http://blog.ploeh.dk/2011/07/28/CompositionRoot/)
-
-
 주제
 -----
 Web API에서 흔히 Service라고 하는 클래스들은 좋은 Abstraction을 가졌는가?
