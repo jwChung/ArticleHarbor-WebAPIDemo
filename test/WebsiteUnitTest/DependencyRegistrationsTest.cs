@@ -4,7 +4,9 @@
     using ArticleHarbor.DomainModel.Commands;
     using ArticleHarbor.WebApiPresentationModel.Controllers;
     using DomainModel.Models;
+    using DomainModel.Repositories;
     using Jwc.Funz;
+    using Moq;
     using Xunit;
 
     public class DependencyRegistrationsTest
@@ -12,9 +14,11 @@
         [Test]
         public void DeleteCommandIsCorrectlyStructured(
             DependencyRegistrations sut,
-            Container container)
+            Container container,
+            IRepositories repositories)
         {
             container.Accept(sut);
+            container.Register(c => repositories);
             var expected = new[]
             {
                 typeof(DeleteConfirmableCommand),
