@@ -51,8 +51,8 @@ Scenarios
   - 전체가 잘 작동된다는 것을 보장하기 위해서는 먼저 Structure Inspection을 실시한다.
   - 그러나 Structure Inspection 만으로는 Acceptance(sanity)를 보장할 수 없으므로,
     Structure Inspection 작성 후에 몇몇 주요부분에 Acceptance 확인을 한다.
-  - Structure Inspection 대신에 모두 Acceptance test로 실시하는 것이 좋으나,
-    간단한 조건의 변화들이 만드는 조합의 수로 인해 모두 Acceptance test로 한다는 것은
+  - Structure Inspection 대신에 모든 경우를 Acceptance test로 실시하는 것이 좋으나,
+    간단한 조건의 변화들이 만드는 모든 조합의 수를 Acceptance test로 커버하기에는
     상당한 비용이 든다.
   - 수동테스트보다 자동테스트로 해결하고,
   - Integration test보다 Unit test(Structure Inspection)로 해결하는 것이 비용면에서 좋다.
