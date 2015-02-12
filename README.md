@@ -22,6 +22,8 @@ Web API에서 흔히 Service라고 하는 클래스들은 좋은 Abstraction을 
 Scenarios
 ---------
 
+ - ERD
+
 **Roles**
 
   - Administrator
@@ -31,7 +33,6 @@ Scenarios
 
 **Visitor Pattern**
 
-  - ERD
   - IModel: Element (Visitee)
   - IModelCommand: Visitor
   - EmptyCommand
