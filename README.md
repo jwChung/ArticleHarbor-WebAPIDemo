@@ -50,7 +50,7 @@ Scenarios
 
   - 전체가 잘 작동된다는 것을 보장하기 위해서는 먼저 Structure Inspection을 실시한다.
   - 그러나 Structure Inspection 만으로는 Acceptance(sanity)를 보장할 수 없으므로,
-    Structure Inspection 작성 후에 몇몇 주요부분에 Acceptance 확인을 한다.
+    몇몇 주요부분에 Acceptance test를 실시한다.
   - Structure Inspection 대신에 모든 경우를 Acceptance test로 실시하는 것이 좋으나,
     간단한 조건의 변화들이 만드는 모든 조합의 수를 Acceptance test로 커버하기에는
     상당한 비용이 든다.
