@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website", "src\Website\Website.csproj", "{B2B50410-34DF-4CF5-8F1D-4DDA6D24D46B}"
 EndProject
@@ -43,6 +43,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{91D4E546
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleCollectorDaemon", "src\ArticleCollectorDaemon\ArticleCollectorDaemon.csproj", "{21CF575B-8895-4382-84DB-7EB282447379}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebsiteUnitTest", "test\WebsiteUnitTest\WebsiteUnitTest.csproj", "{AE8813D1-D040-46F8-9041-7D41D334E81B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,6 +92,10 @@ Global
 		{21CF575B-8895-4382-84DB-7EB282447379}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21CF575B-8895-4382-84DB-7EB282447379}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21CF575B-8895-4382-84DB-7EB282447379}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE8813D1-D040-46F8-9041-7D41D334E81B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE8813D1-D040-46F8-9041-7D41D334E81B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE8813D1-D040-46F8-9041-7D41D334E81B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE8813D1-D040-46F8-9041-7D41D334E81B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,5 +111,6 @@ Global
 		{B17271D2-8B1D-4DB2-B77F-09CCAC1A675A} = {EB8E3D97-61B9-4998-81F0-545773DA3A2B}
 		{AF7D629B-85F1-413D-A9FE-0F6AA33567CC} = {EB8E3D97-61B9-4998-81F0-545773DA3A2B}
 		{21CF575B-8895-4382-84DB-7EB282447379} = {BE06B466-525C-4F91-9AA6-4FE5B95F7D42}
+		{AE8813D1-D040-46F8-9041-7D41D334E81B} = {EB8E3D97-61B9-4998-81F0-545773DA3A2B}
 	EndGlobalSection
 EndGlobal
