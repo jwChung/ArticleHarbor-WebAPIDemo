@@ -16,7 +16,7 @@ Web API에서 흔히 Service라고 하는 클래스들은 좋은 Abstraction을 
  - Service는 Repository 단순 대리자 역할
  - C++ Header interfaces: 하나의 implemention class
 
-**===> The best abstration for Web API(IMO)???** 
+**===> The best abstration for Web API???** 
 
 
 Scenarios
@@ -31,6 +31,7 @@ Scenarios
 
 **Visitor Pattern**
 
+  - ERD
   - IModel: Element (Visitee)
   - IModelCommand: Visitor
   - EmptyCommand
@@ -39,7 +40,6 @@ Scenarios
 
 **Delete Scenario**
 
-  - ERD
   - DeleteCommand
   - DeleteBookmarksCommand
   - DeleteKeywordsCommand
