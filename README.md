@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/jwChung/ArticleHarbor-WebAPIDemo.png?label=ready&title=Ready)](https://waffle.io/jwChung/ArticleHarbor-WebAPIDemo)
 ArticleHarbor [![Build status](https://ci.appveyor.com/api/projects/status/k9k4dd8qjsga7kvp?svg=true)](https://ci.appveyor.com/project/jwChung/articleharbor-webapidemo)
 ===============
 
